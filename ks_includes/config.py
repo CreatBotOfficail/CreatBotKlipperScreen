@@ -319,7 +319,7 @@ class KlipperScreenConfig:
             {"print_sort_dir": {"section": "main", "type": None, "value": "name_asc"}},
             {"print_view": {"section": "main", "type": None, "value": "thumbs"}},
             {"language": {"section": "main", "name": _("Language"), "type": None, "value": "system_lang"}},
-            {"onboarding": {"section": "main", "type": "binary", "value": "False"}},
+            {"onboarding": {"section": "main", "type": None, "value": "False"}},
         ]
 
         self.configurable_options.extend(panel_options)
