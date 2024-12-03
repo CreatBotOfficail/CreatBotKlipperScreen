@@ -23,7 +23,15 @@ class Panel(ScreenPanel):
                     "type": "button",
                     "callback": self.show_select_model,
                 }
-            }
+            },
+            {
+                "Enable Guide": {
+                    "section": "main",
+                    "name": _("Enable The Guide Page"),
+                    "type": "button",
+                    "callback": self.enable_guide,
+                }
+            },
         ]
         self.settings = {}
         self.select_model = False
@@ -84,3 +92,8 @@ class Panel(ScreenPanel):
             self.content.add(self.labels["setting_menu"])
             self.content.show_all()
         self.select_model = False
+
+    def enable_guide(self, widget, option):
+        self._config.set("main", "onboarding", "True")
+        self._config.save_user_config_options()
+        self._screen.show_popup_message("Successfully enabled the guide page", level=1)
