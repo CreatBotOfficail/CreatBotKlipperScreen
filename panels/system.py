@@ -17,6 +17,8 @@ class Panel(ScreenPanel):
         self.current_row = 0
         self.mem_multiplier = None
         self.model_config = None
+        self.info_panel = None
+        self.select_model = False
         self.scales = {}
         self.labels = {}
         self.models = {}
@@ -34,15 +36,20 @@ class Panel(ScreenPanel):
                 screen.printer.system_info = self.sysinfo['system_info']
                 self.sysinfo = self.sysinfo['system_info']
         logging.debug(self.sysinfo)
+
         if self.sysinfo:
-            self.content.add(self.create_layout())
+            self.info_panel = self.create_layout()
         else:
             self.content.add(Gtk.Label(label=_("No info available"), vexpand=True))
 
     def back(self):
+        if self.select_model:
+            self.hide_select_model()
+            return True
         if not self.sysinfo:
             self._screen.panels_reinit.append("system")
         return False
+
     def create_layout(self):
         self.labels["cpu_usage"] = Gtk.Label(label="", xalign=0)
         self.grid.attach(self.labels["cpu_usage"], 0, self.current_row, 1, 1)
@@ -70,6 +77,11 @@ class Panel(ScreenPanel):
         scroll = self._gtk.ScrolledWindow()
         scroll.add(self.grid)
         self.content.add(scroll)
+        return scroll
+        
+    def create_select_model(self):
+        if "model_menu" in self.labels:
+            return
         if self.model_config is None:
             self.model_config = ModelConfig()
         self.labels["model_menu"] = self._gtk.ScrolledWindow()
@@ -91,9 +103,10 @@ class Panel(ScreenPanel):
                 self.add_option(
                     "model", self.models, model_name, self.models[model_name]
                 )
-        return scroll
+
     def change_model(self, widget, event):
         self.model_config.generate_config(event)
+
     def on_model_click(self, widget, event):
         current_time = time.time()
         if (current_time - self.last_click_time) <= self.click_threshold:
@@ -101,9 +114,22 @@ class Panel(ScreenPanel):
         else:
             self.click_count = 0
         self.last_click_time = current_time
-        if self.click_count == self.target_clicks:
+        if self.click_count >= self.target_clicks:
+            for child in self.content.get_children():
+                self.content.remove(child)
             self.click_count = 0
-            self.load_menu(self, "model", _("model select"))
+            self.create_select_model()
+            self.content.add(self.labels["model_menu"])
+            self.content.show_all()
+            self.select_model = True
+
+    def hide_select_model(self):
+        for child in self.content.get_children():
+            self.content.remove(child)
+        if self.info_panel:
+            self.content.add(self.info_panel)
+            self.content.show_all()
+        self.select_model = False
 
     def set_mem_multiplier(self, data):
         memory_units = data.get("memory_units", "kB").lower()
@@ -122,12 +148,13 @@ class Panel(ScreenPanel):
         label = Gtk.Label(label=text, use_markup=True, xalign=0, wrap=True)
         self.grid.attach(label, column, self.current_row, 1, 1)
         self.current_row += 1
+
     def machine_info(self):
         self.add_label_to_grid(self.prettify("device"), 0, bold=True)
         self.current_row -= 1
         self.add_label_to_grid("Maker: CreatBot", 1)
         event_box = Gtk.EventBox()
-        event_box.connect("button-press-event", self.on_model_click)
+        event_box.connect("button-release-event", self.on_model_click)
         mode = self._screen.connecting_to_printer.split("-")[0]
         label = Gtk.Label(label=f"Model: {mode}", use_markup=True, xalign=0, wrap=True)
         self.grid.attach(event_box, 1, self.current_row, 1, 1)

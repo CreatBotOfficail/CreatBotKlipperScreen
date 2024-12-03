@@ -167,7 +167,10 @@ class KlipperScreen(Gtk.Window):
         self.base_panel.activate()
         self.set_screenblanking_timeout(self._config.get_main_config().get('screen_blanking'))
         self.log_notification("KlipperScreen Started", 1)
-        self.initial_connection()
+
+        lang = self._config.get_main_config().get("language", 'system_lang')
+        (self.show_language_select() if lang == 'system_lang' else self.initial_connection())
+
 
     def state_execute(self, state, callback):
         self.close_screensaver()
@@ -716,9 +719,16 @@ class KlipperScreen(Gtk.Window):
         self.reset_screensaver_timeout()
         return
 
+    def show_language_select(self, widget=None):
+        self.show_panel("language_select", remove_all=True)
+
+    def show_onboarding(self, widget=None):
+        self.show_panel("onboarding", remove_all=True)
+
     def show_printer_select(self, widget=None):
-        self.base_panel.show_heaters(False)
-        self.show_panel("printer_select", remove_all=True)
+        if 'printer_select' not in self._cur_panels:
+            self.base_panel.show_heaters(False)
+            self.show_panel("printer_select", remove_all=True)
 
     def websocket_connection_cancel(self):
         self.printer_initializing(
@@ -781,8 +791,12 @@ class KlipperScreen(Gtk.Window):
             self.printer.state = "not ready"
             return
         self.files.refresh_files()
-        self.show_panel("main_menu", remove_all=True, items=self._config.get_menu_items("__main"))
-        self._ws.klippy.gcode_script("UPDATE_DELAYED_GCODE ID=_CHECK_POWER_LOSS_RECOVERY DURATION=0.1")
+        guided = self._config.get_main_config().get("onboarding", False)
+        if guided == 'True':
+            self.show_onboarding()
+        else:
+            self.show_panel("main_menu", remove_all=True, items=self._config.get_menu_items("__main"))
+            self._ws.klippy.gcode_script("UPDATE_DELAYED_GCODE ID=_CHECK_POWER_LOSS_RECOVERY DURATION=0.1")
 
     def state_startup(self):
         self.printer_initializing(_("Klipper is attempting to start"))
@@ -938,7 +952,8 @@ class KlipperScreen(Gtk.Window):
 
     def printer_initializing(self, msg, go_to_splash=False):
         if 'splash_screen' not in self.panels or go_to_splash:
-            self.show_panel("splash_screen", remove_all=True)
+            if self._cur_panels != ['splash_screen']:
+                self.show_panel("splash_screen", remove_all=True)
         self.panels['splash_screen'].update_text(msg)
         self.log_notification(msg, 0)
 

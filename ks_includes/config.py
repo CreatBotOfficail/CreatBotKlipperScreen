@@ -161,7 +161,7 @@ class KlipperScreenConfig:
                 bools = (
                     'invert_x', 'invert_y', 'invert_z', '24htime', 'only_heaters', 'show_cursor', 'confirm_estop',
                     'autoclose_popups', 'use_dpms', 'use_default_menu', 'side_macro_shortcut', 'use-matchbox-keyboard',
-                    'show_heater_power', "show_scroll_steppers", "auto_open_extrude"
+                    'show_heater_power', "show_scroll_steppers", "auto_open_extrude" , 'onboarding'
                 )
                 strs = (
                     'default_printer', 'language', 'print_sort_dir', 'theme', 'screen_blanking_printing', 'font_size',
@@ -319,6 +319,7 @@ class KlipperScreenConfig:
             {"print_sort_dir": {"section": "main", "type": None, "value": "name_asc"}},
             {"print_view": {"section": "main", "type": None, "value": "thumbs"}},
             {"language": {"section": "main", "name": _("Language"), "type": None, "value": "system_lang"}},
+            {"onboarding": {"section": "main", "type": None, "value": "False"}},
         ]
 
         self.configurable_options.extend(panel_options)

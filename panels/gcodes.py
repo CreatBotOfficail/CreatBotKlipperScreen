@@ -67,6 +67,7 @@ class Panel(ScreenPanel):
 
         self.loading_msg = _('Loading...')
         self.labels['path'] = Gtk.Label(label=self.loading_msg, vexpand=True, no_show_all=True)
+        self.labels['path'].set_ellipsize(Pango.EllipsizeMode.END)
         self.labels['path'].show()
         self.thumbsize = self._gtk.img_scale * self._gtk.button_image_scale * 2.5
         logging.info(f"Thumbsize: {self.thumbsize}")

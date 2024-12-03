@@ -50,7 +50,7 @@ class Panel(ScreenPanel):
         scroll.add(self.labels["text"])
 
         info = Gtk.Box()
-        info.pack_start(image, False, True, 8)
+        info.pack_start(image, False, True, 50)
         info.pack_end(scroll, True, True, 8)
 
         main = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)

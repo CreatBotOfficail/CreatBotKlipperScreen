@@ -1,29 +1,14 @@
+import logging
 import gi
 
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk
+from gi.repository import Gtk, GLib
 from ks_includes.screen_panel import ScreenPanel
-
 
 class Panel(ScreenPanel):
     def __init__(self, screen, title):
-        title = title or _("Settings")
+        title = title or "Select Language"
         super().__init__(screen, title)
-        self.printers = self.settings = self.langs = {}
-        self.menu = ['settings_menu']
-        options = self._config.get_configurable_options().copy()
-        options.append({"lang": {
-            "name": _("Language"),
-            "type": "menu",
-            "menu": "lang"
-        }})
-        self.labels['settings_menu'] = self._gtk.ScrolledWindow()
-        self.labels['settings'] = Gtk.Grid()
-        self.labels['settings_menu'].add(self.labels['settings'])
-        for option in options:
-            name = list(option)[0]
-            self.add_option('settings', self.settings, name, option[name])
-
         self.language_map = {
             'cs': 'Čeština',
             'da': 'Dansk',
@@ -52,22 +37,25 @@ class Panel(ScreenPanel):
             'zh_CN': '简体中文',
             'zh_TW': '繁體中文',
         }
-
+        self.langs = {}
         self.labels['lang_menu'] = self._gtk.ScrolledWindow()
         self.labels['lang'] = Gtk.Grid()
         self.labels['lang_menu'].add(self.labels['lang'])
+        self.labels['lang'].set_margin_start(50)
         for lang in self._config.lang_list:
             name = self.language_map.get(lang)
-            self.langs[lang] = {
-                "name": name,
-                "type": "button",
-                "callback": self.change_language,
-            }
-            self.add_option("lang", self.langs, lang, self.langs[lang])
-
-        self.content.add(self.labels['settings_menu'])
+            if name:
+                self.langs[lang] = {
+                    "name": name,
+                    "type": "button",
+                    "callback": self.change_language,
+                }
+                self.add_option("lang", self.langs, lang, self.langs[lang])
+        self.content.add(self.labels["lang_menu"])
+        self.content.show_all()
 
     def change_language(self, widget, lang):
         reverse_language_map = {v: k for k, v in self.language_map.items()}
         language_code = reverse_language_map.get(lang, 'en')
         self._screen.change_language(widget, language_code)
+        self._screen.initial_connection()

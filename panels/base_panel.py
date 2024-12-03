@@ -30,11 +30,12 @@ class BasePanel(ScreenPanel):
         self.control['back'].set_no_show_all(True)
         self.control['home'] = self._gtk.Button('main', scale=abscale)
         self.control['home'].connect("clicked", self._screen._menu_go_back, True)
+        self.control['home'].set_no_show_all(True)
         self.move = {
             "panel": "move",
         }
         self.control['move'] = self._gtk.Button('move', scale=abscale)
-        self.control['move'].connect("clicked", self.menu_item_clicked, self.move) 
+        self.control['move'].connect("clicked", self.menu_item_clicked, self.move)
         self.control['move'].set_no_show_all(True)
         self.extrude = {
             "panel": "extrude",
@@ -82,7 +83,6 @@ class BasePanel(ScreenPanel):
             self.action_bar.set_hexpand(False)
             self.action_bar.set_vexpand(True)
         self.action_bar.get_style_context().add_class('action_bar')
-        self.action_bar.set_size_request(self._gtk.action_bar_width, self._gtk.action_bar_height)
         self.action_bar.add(self.control['back'])
         self.action_bar.add(self.control['home'])
         self.action_bar.add(self.control['move'])
@@ -229,10 +229,15 @@ class BasePanel(ScreenPanel):
         panels_has_back = ['gcodes', 'temperature']
         cur_panel_count = len(self._screen._cur_panels)
         is_last_panel_in_back_list = self._screen._cur_panels[-1] in panels_has_back
-        if cur_panel_count > 2 or is_last_panel_in_back_list:
-            self.control['back'].set_visible(True)
+
+        should_show_back = (cur_panel_count > 2 or is_last_panel_in_back_list or
+                    (self._screen._cur_panels[0] != 'main_menu' and cur_panel_count >= 2))
+        self.control['back'].set_visible(should_show_back)
+        if any(child.get_visible() for child in self.action_bar.get_children()):
+            self.show_action_bar()
         else:
-            self.control['back'].set_visible(False)
+            self.hide_action_bar()
+
         self.current_panel = panel
         self.set_title(panel.title)
         self.content.add(panel.content)
@@ -321,7 +326,7 @@ class BasePanel(ScreenPanel):
 
     def set_control_sensitive(self, value=True, control='home'):
         self.control[control].set_sensitive(value)
-        
+
     def show_shortcut(self, show=True):
         show = (
             show
@@ -334,6 +339,14 @@ class BasePanel(ScreenPanel):
         self.set_control_sensitive(self._screen._cur_panels[-1] != self.extrude['panel'], control='extrude')
         self.set_control_sensitive(self._screen._cur_panels[-1] != self.files['panel'], control='files')
         self.set_control_sensitive(self._screen._cur_panels[-1] != self.more['panel'], control='more')
+
+    def show_action_bar(self):
+        self.action_bar.set_size_request(self._gtk.action_bar_width, self._gtk.action_bar_height)
+        self.control['home'].set_visible(True)
+
+    def hide_action_bar(self):
+        self.action_bar.set_size_request(-1, -1)
+        self.control['home'].set_visible(False)
 
     def show_printer_select(self, show=True):
         self.control['printer_select'].set_visible(

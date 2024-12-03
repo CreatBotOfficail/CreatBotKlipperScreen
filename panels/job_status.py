@@ -166,7 +166,7 @@ class Panel(ScreenPanel):
                                                         'extra': extruder})
             self.buttons['extruder'][extruder].set_halign(Gtk.Align.START)
 
-        self.labels['temp_grid'] = Gtk.Grid()
+        self.labels['temp_grid'] = Gtk.Grid(column_homogeneous=True)
         nlimit = 3 if self._screen.width <= 500 else 4
         n = 0
         if nlimit > 2 and len(self._printer.get_tools()) == 2:
@@ -179,6 +179,7 @@ class Panel(ScreenPanel):
                 self.labels['temp_grid'].attach(self.buttons['extruder'][self.current_extruder], n, 0, 1, 1)
                 n += 1
         self.buttons['heater'] = {}
+        n = 0
         for dev in self._printer.get_heaters():
             if n >= nlimit:
                 break
@@ -194,7 +195,7 @@ class Panel(ScreenPanel):
             self.buttons['heater'][dev].connect("clicked", self.menu_item_clicked,
                                                 {"panel": "numpad", "extra": dev})
             self.buttons['heater'][dev].set_halign(Gtk.Align.START)
-            self.labels['temp_grid'].attach(self.buttons['heater'][dev], n, 0, 1, 1)
+            self.labels['temp_grid'].attach(self.buttons['heater'][dev], n, 1, 1, 1)
             n += 1
         extra_item = not self._show_heater_power
         if self.ks_printer_cfg is not None:
@@ -218,7 +219,7 @@ class Panel(ScreenPanel):
                             self.buttons['heater'][device].connect("clicked", self.menu_item_clicked,
                                                                    {"panel": "numpad"})
                             self.buttons['heater'][device].set_halign(Gtk.Align.START)
-                            self.labels['temp_grid'].attach(self.buttons['heater'][device], n, 0, 1, 1)
+                            self.labels['temp_grid'].attach(self.buttons['heater'][device], n, 1, 1, 1)
                             n += 1
                             break
 
@@ -232,10 +233,10 @@ class Panel(ScreenPanel):
 
         info = Gtk.Grid(row_homogeneous=True)
         info.get_style_context().add_class("printing-info")
-        info.attach(self.labels['temp_grid'], 0, 0, 1, 1)
-        info.attach(szfe, 0, 1, 1, 2)
-        info.attach(self.buttons['elapsed'], 0, 3, 1, 1)
-        info.attach(self.buttons['left'], 0, 4, 1, 1)
+        info.attach(self.labels['temp_grid'], 0, 0, 1, 2)
+        info.attach(szfe, 0, 2, 1, 2)
+        info.attach(self.buttons['elapsed'], 0, 4, 1, 1)
+        info.attach(self.buttons['left'], 0, 5, 1, 1)
         self.status_grid = info
 
     def create_extrusion_grid(self, widget=None):
