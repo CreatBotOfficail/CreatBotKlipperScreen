@@ -166,6 +166,7 @@ class KlipperScreenConfig:
                 strs = (
                     'default_printer', 'language', 'print_sort_dir', 'theme', 'screen_blanking_printing', 'font_size',
                     'print_estimate_method', 'screen_blanking', "screen_on_devices", "screen_off_devices", 'print_view',
+                    'version_info',
                 )
                 numbers = (
                     'job_complete_timeout', 'job_error_timeout', 'move_speed_xy', 'move_speed_z',
@@ -320,6 +321,7 @@ class KlipperScreenConfig:
             {"print_view": {"section": "main", "type": None, "value": "thumbs"}},
             {"language": {"section": "main", "name": _("Language"), "type": None, "value": "system_lang"}},
             {"onboarding": {"section": "main", "type": None, "value": "False"}},
+            {"version_info": {"section": "main","name": _("Stable"), "type": None, "value": "stable"}},
         ]
 
         self.configurable_options.extend(panel_options)
