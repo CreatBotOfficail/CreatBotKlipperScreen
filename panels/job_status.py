@@ -739,9 +739,10 @@ class Panel(ScreenPanel):
             self.enable_button("resume", "cancel")
             self.can_close = False
         else:
+            active_extruder = self._printer.get_stat("toolhead", "extruder")
             offset = self._printer.get_stat("gcode_move", "homing_origin")
             self.zoffset = float(offset[2]) if offset else 0
-            if self.zoffset != 0:
+            if self.zoffset != 0 and active_extruder == "extruder":
                 if "Z_OFFSET_APPLY_ENDSTOP" in self._printer.available_commands:
                     self.buttons['button_grid'].attach(self.buttons["save_offset_endstop"], 0, 0, 1, 1)
                 else:
