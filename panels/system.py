@@ -1,14 +1,10 @@
 import logging
 import gi
 import time
-import os.path
-import pathlib
 
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 from ks_includes.screen_panel import ScreenPanel
-from ks_includes.ModelConfig import ModelConfig
-
 
 class Panel(ScreenPanel):
     def __init__(self, screen, title):
@@ -18,10 +14,8 @@ class Panel(ScreenPanel):
         self.mem_multiplier = None
         self.model_config = None
         self.info_panel = None
-        self.select_model = False
         self.scales = {}
         self.labels = {}
-        self.models = {}
         self.click_count = 0
         self.last_click_time = 0
         self.click_threshold = 0.2
@@ -42,14 +36,6 @@ class Panel(ScreenPanel):
         else:
             self.content.add(Gtk.Label(label=_("No info available"), vexpand=True))
 
-    def back(self):
-        if self.select_model:
-            self.hide_select_model()
-            return True
-        if not self.sysinfo:
-            self._screen.panels_reinit.append("system")
-        return False
-
     def create_layout(self):
         self.labels["cpu_usage"] = Gtk.Label(label="", xalign=0)
         self.grid.attach(self.labels["cpu_usage"], 0, self.current_row, 1, 1)
@@ -58,7 +44,6 @@ class Panel(ScreenPanel):
         )
         self.grid.attach(self.scales["cpu_usage"], 1, self.current_row, 1, 1)
         self.current_row += 1
-
 
         self.labels["memory_usage"] = Gtk.Label(label="", xalign=0)
         self.grid.attach(self.labels["memory_usage"], 0, self.current_row, 1, 1)
@@ -78,34 +63,6 @@ class Panel(ScreenPanel):
         scroll.add(self.grid)
         self.content.add(scroll)
         return scroll
-        
-    def create_select_model(self):
-        if "model_menu" in self.labels:
-            return
-        if self.model_config is None:
-            self.model_config = ModelConfig()
-        self.labels["model_menu"] = self._gtk.ScrolledWindow()
-        self.labels["model"] = Gtk.Grid()
-        self.labels["model_menu"].add(self.labels["model"])
-        klipperscreendir = pathlib.Path(__file__).parent.resolve().parent
-        self.model_list_path = os.path.join(
-            klipperscreendir, "config", "model_menu.conf"
-        )
-        self.model_list = pathlib.Path(self.model_list_path).read_text()
-        with open(self.model_list_path) as file:
-            for line in file:
-                model_name = line.strip()
-                self.models[model_name] = {
-                    "name": model_name,
-                    "type": "button",
-                    "callback": self.change_model,
-                }
-                self.add_option(
-                    "model", self.models, model_name, self.models[model_name]
-                )
-
-    def change_model(self, widget, event):
-        self.model_config.generate_config(event)
 
     def on_model_click(self, widget, event):
         current_time = time.time()
@@ -115,21 +72,8 @@ class Panel(ScreenPanel):
             self.click_count = 0
         self.last_click_time = current_time
         if self.click_count >= self.target_clicks:
-            for child in self.content.get_children():
-                self.content.remove(child)
             self.click_count = 0
-            self.create_select_model()
-            self.content.add(self.labels["model_menu"])
-            self.content.show_all()
-            self.select_model = True
-
-    def hide_select_model(self):
-        for child in self.content.get_children():
-            self.content.remove(child)
-        if self.info_panel:
-            self.content.add(self.info_panel)
-            self.content.show_all()
-        self.select_model = False
+            self._screen.show_panel("factory_settings", remove_all=False)
 
     def set_mem_multiplier(self, data):
         memory_units = data.get("memory_units", "kB").lower()
@@ -152,7 +96,7 @@ class Panel(ScreenPanel):
     def machine_info(self):
         self.add_label_to_grid(self.prettify("device"), 0, bold=True)
         self.current_row -= 1
-        self.add_label_to_grid("Maker: CreatBot", 1)
+        self.add_label_to_grid("Manufacturer: CreatBot", 1)
         event_box = Gtk.EventBox()
         event_box.connect("button-release-event", self.on_model_click)
         mode = self._screen.connecting_to_printer.split("-")[0]

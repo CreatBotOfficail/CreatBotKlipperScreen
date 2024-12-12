@@ -15,7 +15,7 @@ class Panel(ScreenPanel):
         self.advanced_options = [
             {"adaptive_leveling": {"section": "main", "name": _("Adaptive Bed Leveling"), "type": "binary",
                                "tooltip": _("Leveling Only in the Actual Print Area"),
-                               "value": "True", "callback": self.set_adaptive_leveling}},
+                               "value": "False", "callback": self.set_adaptive_leveling}},
             {"power_loss_recovery": {"section": "main", "name": _("Power Loss Recovery"), "type": "binary",
                                "tooltip": _("Restores your print job after a power outage"),
                                "value": "True", "callback": self.set_power_loss_recovery}},
@@ -50,5 +50,8 @@ class Panel(ScreenPanel):
             variables = data['save_variables']['variables']
             if 'adaptive_meshing' in variables:
                 self.menu_list['adaptive_leveling'].set_active(variables['adaptive_meshing'])
+            else:
+                self.menu_list["adaptive_leveling"].set_active(False)
+
             if 'power_loss_recovery' in variables:
                 self.menu_list['power_loss_recovery'].set_active(variables['power_loss_recovery'])
