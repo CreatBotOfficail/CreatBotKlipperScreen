@@ -184,7 +184,8 @@ class Panel(ScreenPanel):
             self._screen._ws.klippy.gcode_script("BED_MESH_CLEAR")
             if method == "probe":
                 self._move_to_position(*self._get_probe_location())
-                self._screen._ws.klippy.gcode_script("PROBE_CALIBRATE")
+                if len(self._printer.get_tools()) > 1 and "T0" in self._printer.get_gcode_macros():
+                    self._screen._ws.klippy.gcode_script("T0")
                 self._screen._ws.klippy.gcode_script("PROBE_CALIBRATE PROBE_SPEED=100")
             elif method == "delta":
                 self._screen._ws.klippy.gcode_script("DELTA_CALIBRATE")
