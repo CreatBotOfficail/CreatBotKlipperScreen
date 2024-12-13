@@ -185,6 +185,7 @@ class Panel(ScreenPanel):
             if method == "probe":
                 self._move_to_position(*self._get_probe_location())
                 self._screen._ws.klippy.gcode_script("PROBE_CALIBRATE")
+                self._screen._ws.klippy.gcode_script("PROBE_CALIBRATE PROBE_SPEED=100")
             elif method == "delta":
                 self._screen._ws.klippy.gcode_script("DELTA_CALIBRATE")
             elif method == "delta_manual":
