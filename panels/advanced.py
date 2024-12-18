@@ -19,6 +19,9 @@ class Panel(ScreenPanel):
             {"power_loss_recovery": {"section": "main", "name": _("Power Loss Recovery"), "type": "binary",
                                "tooltip": _("Restores your print job after a power outage"),
                                "value": "True", "callback": self.set_power_loss_recovery}},
+            {"auto_change_nozzle": {"section": "main", "name": _("Auto Change Nozzle"), "type": "binary",
+                               "tooltip": _("Auto change nozzle when filament runout"),
+                               "value": "False", "callback": self.set_auto_change_nozzle}},
         ]
         options = self.advanced_options
         self.labels['advanced_menu'] = self._gtk.ScrolledWindow()
@@ -35,6 +38,9 @@ class Panel(ScreenPanel):
 
     def set_power_loss_recovery(self, *args):
         self.set_configuration_feature("power_loss_recovery", *args)
+
+    def set_auto_change_nozzle(self, *args):
+        self.set_configuration_feature("auto_change_nozzle", *args)
 
     def set_configuration_feature(self, feature_name, *args):
         enable_feature = any(args)
@@ -55,3 +61,7 @@ class Panel(ScreenPanel):
 
             if 'power_loss_recovery' in variables:
                 self.menu_list['power_loss_recovery'].set_active(variables['power_loss_recovery'])
+            if 'auto_change_nozzle' in variables:
+                self.menu_list['auto_change_nozzle'].set_active(variables['auto_change_nozzle'])
+            else:
+                self.menu_list["auto_change_nozzle"].set_active(False)
