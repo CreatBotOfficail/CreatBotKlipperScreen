@@ -185,7 +185,9 @@ class Panel(ScreenPanel):
             if method == "probe":
                 self._move_to_position(*self._get_probe_location())
                 if len(self._printer.get_tools()) > 1 and "T0" in self._printer.get_gcode_macros():
-                    self._screen._ws.klippy.gcode_script("T0")
+                    active_extruder = self._printer.get_stat("toolhead", "extruder")
+                    if active_extruder != "extruder":
+                        self._screen._ws.klippy.gcode_script("T0")
                 self._screen._ws.klippy.gcode_script("PROBE_CALIBRATE PROBE_SPEED=100")
             elif method == "delta":
                 self._screen._ws.klippy.gcode_script("DELTA_CALIBRATE")
