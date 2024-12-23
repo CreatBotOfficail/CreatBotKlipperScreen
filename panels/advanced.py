@@ -3,7 +3,7 @@ import logging
 import gi
 
 gi.require_version("Gtk", "3.0")
-from gi.repository import GLib, Gtk
+from gi.repository import Gtk
 
 from ks_includes.KlippyFactory import KlippyFactory
 from ks_includes.KlippyGcodes import KlippyGcodes
@@ -33,6 +33,16 @@ class Panel(ScreenPanel):
                 "factory_settings": {
                     "section": "main",
                     "name": _("Restore Factory Settings"),
+                    "type": "button",
+                    "tooltip": _("This operation will clear the user data"),
+                    "value": "True",
+                    "callback": self.reset_factory_settings,
+                }
+            },
+            {
+                "factory_settings": {
+                    "section": "main",
+                    "name": _("Restore factory settings"),
                     "type": "button",
                     "tooltip": _("This operation will clear the user data"),
                     "value": "True",
@@ -70,9 +80,6 @@ class Panel(ScreenPanel):
             res = self.add_option("advanced", self.advanced, name, option[name])
             self.menu_list.update(res)
         self.content.add(self.labels["advanced_menu"])
-
-        if "door_open_detection" in self.menu_list:
-            self.menu_list["door_open_detection"].connect("notify::popup-shown", self.on_popup_shown)
 
     def reset_factory_settings(self, *args):
         text = _("Confirm factory reset?\n") + "\n\n" + _("The system will reboot!")
@@ -116,25 +123,8 @@ class Panel(ScreenPanel):
         if response_id == Gtk.ResponseType.OK:
             KlippyFactory.user_factory_reset(self._screen._ws.klippy, self._config, clear_files_checkbox.get_active())
 
-    def on_popup_shown(self, combo_box, param):
-        if combo_box.get_property("popup-shown"):
-            logging.debug("Dropdown popup show")
-            self.last_drop_time = datetime.now()
-        else:
-            elapsed = (datetime.now() - self.last_drop_time).total_seconds()
-            if elapsed < 0.1:
-                logging.debug(f"Dropdown closed too fast ({elapsed}s)")
-                GLib.timeout_add(50, lambda: self.dropdown_keep_open(combo_box))
-                return
-            logging.debug("Dropdown popup close")
-
-    def dropdown_keep_open(self, combo_box):
-        if isinstance(combo_box, Gtk.ComboBox):
-            combo_box.popup()
-        return False
-
-    def door_open_detection(self, str):
-        self.set_configuration_string("door_detect", str)
+    def set_adaptive_leveling(self, *args):
+        self.set_configuration_feature("adaptive_meshing", *args)
 
     def set_power_loss_recovery(self, *args):
         self.set_configuration_feature("power_loss_recovery", *args)

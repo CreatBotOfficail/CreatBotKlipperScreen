@@ -1,0 +1,357 @@
+/* Colorized theme created by Alfredo Monclus 2021 */
+/* Using solarized colors */
+
+@define-color white-opa-10 rgba(255, 255, 255, 0.1);
+@define-color white-opa-20 rgba(255, 255, 255, 0.2);
+@define-color white-opa-30 rgba(255, 255, 255, 0.3);
+@define-color white-opa-50 rgba(255, 255, 255, 0.5);
+@define-color white-opa-100 rgba(255, 255, 255, 1);
+
+@define-color black-opa-5 rgba(0, 0, 0, 0.05);
+@define-color black-opa-10 rgba(0, 0, 0, 0.1);
+@define-color black-opa-80 rgba(0, 0, 0, 0.8);
+
+@define-color blue-opa-20 rgba(29, 140, 198, 0.2);
+@define-color blue-opa-50 rgba(29, 140, 198, 0.5);
+@define-color blue-opa-100 rgba(29, 140, 198, 1);
+
+@define-color pale-cyan-opa-100 rgba(147, 161, 161, 1);
+@define-color cyan-opa-100 rgba(42, 161, 152, 1);
+
+@define-color pale-yellow-opa-100 rgba(181, 137, 0, 1);
+@define-color yellow-opa-100 rgba(253, 246, 227, 1);
+
+@define-color orange-opa-100 rgba(203, 75, 22, 1);
+
+@define-color red-opa-100 rgba(220, 50, 47, 1);
+
+@define-color magenta-opa-100 rgba(211, 54, 130, 1);
+
+@define-color green-opa-100 rgba(133, 153, 0, 1);
+
+* {
+    color: @yellow-opa-100;
+}
+
+list row,
+treeview.view,
+window {
+    background-color: #0D0C1B;
+    background-size: cover;
+}
+
+button {
+
+    background-color: @white-opa-10;
+    padding: 0px 0px;
+    margin: 0px;
+    border: 0.1px solid #000000;
+}
+
+button:active {
+    background-color: @blue-opa-100;
+}
+
+.button_active {
+    border-color: @blue-opa-50;
+    border-style: solid;
+    background-color: @blue-opa-50;
+}
+
+.action_bar :disabled{
+    background-color: rgba(20, 76, 112, 1);
+    opacity: 1;
+}
+button.color1 {
+    border-radius: 0;
+    background-color: @white-opa-10;
+    padding: 0px 0px;
+    margin: 0px;
+    border: 0.8px solid #000000;
+}
+
+button.color2 {
+    border-radius: 0;
+    background-color: @white-opa-10;
+    padding: 0px 0px;
+    margin: 0px;
+    border: 0.8px solid #000000;
+}
+
+button.color3 {
+    border-radius: 0;
+    background-color: @white-opa-10;
+    padding: 0px 0px;
+    margin: 0px;
+    border: 0.8px solid #000000;
+}
+
+button.color4 {
+    border-radius: 0;
+    background-color: @white-opa-10;
+    padding: 0px 0px;
+    margin: 0px;
+    border: 0.8px solid #000000;
+}
+
+button.color1:active,
+button.color2:active,
+button.color3:active,
+button.color4:active,
+button.update:active,
+button.invalid:active,
+.dialog button:active {
+    background-color: @blue-opa-50;
+    border-color: @blue-opa-50;
+}
+
+button.active {
+    background-color: @white-opa-20;
+}
+
+button.update {
+    background-color: @white-opa-20;
+    border: 0;
+    border-radius: .5em;
+}
+
+button.invalid {
+    background-color: @white-opa-20;
+    border: 0;
+    border-bottom: .3em solid;
+    border-bottom-color: @red-opa-100;
+    border-radius: .75em;
+}
+
+.custom-icon-button {
+    background-color: rgba(0, 0, 0, 0);
+    border: 0px solid;
+}
+.custom-icon-button:active {
+    background-color: rgba(0, 0, 0, 0);
+    opacity: 0.4;
+}
+menu,
+menuitem,
+combobox button,
+combobox arrow,
+combobox menuitem,
+popover,
+popover button {
+    background-color: @black-opa-5;
+    border-color: rgba(0, 0, 0, 0.5);
+}
+
+treeview.view check,
+switch {
+    border-radius: 0.5em;
+    background-color: @white-opa-20;
+    min-height: 2.5em;
+    min-width: 5em;
+}
+switch slider {
+    border-radius: 0.5em;
+}
+
+treeview.view check:checked,
+switch:checked {
+    background-color: @blue-opa-100;
+
+}
+
+entry {
+    background-color: @white-opa-20;
+    border-color: @white-opa-100;
+    border-width: 0;
+}
+
+label {
+    color: @yellow-opa-100;
+}
+
+trough {
+    background-color: #000000;
+    color: @yellow-opa-100;
+    border-color: @white-opa-50;
+    border-radius: 0.5em;
+}
+
+trough highlight,
+trough progress {
+    background-color: @blue-opa-100;
+    color: @yellow-opa-100;
+    border-color: @white-opa-50;
+    border-radius: 0.5em;
+}
+
+scale-mark {
+    color: @yellow-opa-100;
+}
+
+checkbutton,
+checkbutton check{
+    min-height: 1.1em;
+    min-width: 1.1em;
+    padding: 5px;
+}
+
+checkbutton:checked check{
+    background: @blue-opa-100;
+}
+
+scrollbar,
+scrollbar button,
+scrollbar trough {
+    background-color: rgba(255, 255, 255, 0);
+}
+scale trough {
+    border-color: @blue-opa-50;
+    border-width: 2;
+}
+scale trough slider {
+    min-height: 2.5em;
+    min-width: 2.5em;
+    border-radius: 0.5em;
+}
+
+scrollbar slider {
+    background-color: @blue-opa-50;
+}
+
+textview .time {
+    color: @pale-cyan-opa-100;
+}
+
+.measure_button {
+    background-color: rgba(25, 24, 39, 1);
+}
+.dialog {
+    background-color: @white-opa-10;
+}
+
+.dialog button {
+    background-color: @white-opa-10;
+    border-radius: 0;
+}
+
+.filament_sensor {
+    border-radius: 0.5em;
+}
+.filament_sensor switch {
+    margin: 0;
+}
+.filament_sensor_detected {
+    background-color: @blue-opa-20;
+}
+.filament_sensor_empty {
+    background-color: @red-opa-100;
+}
+
+.horizontal_togglebuttons {
+    border-width: 3;
+    border-color: rgba(0, 0, 0, 0.5);
+    background-color: @white-opa-10;
+    border-radius: 0;
+}
+
+.horizontal_togglebuttons_active {
+    background-color: @blue-opa-50;
+    border-color: rgba(0, 0, 0, 0);
+}
+
+.fan_slider {
+    color: @yellow-opa-100;
+}
+
+.frame-item {
+    border-bottom-color: @white-opa-30;
+}
+
+.message_popup {
+    border-bottom-color: @yellow-opa-100;
+}
+
+.message_popup button {
+    background-color: @red-opa-100;
+}
+
+.message_popup_echo,
+.message_popup_echo button {
+    background-color: @green-opa-100;
+}
+
+.message_popup_warning,
+.message_popup_warning button {
+    background-color: @orange-opa-100;
+}
+
+.message_popup_error,
+.message_popup_error button {
+    background-color: @red-opa-100;
+}
+
+.numpad_key {
+    border-radius: 0;
+    border-width: 3;
+    border-color: @black-opa-80;
+    background-color: @white-opa-10;
+}
+
+.printing-status {
+    color: @yellow-opa-100;
+}
+
+.printing-progress-text {
+    color: @yellow-opa-100;
+}
+
+.printing-status-label {
+    color: @pale-cyan-opa-100;
+}
+
+.message {
+    border-color: @red-opa-100;
+    color: @yellow-opa-100;
+    background-color: @red-opa-100;
+}
+
+.message button {
+    background-color: @yellow-opa-100;
+    color: @white-opa-100;
+}
+
+.warning {
+    background-color: @pale-yellow-opa-100;
+}
+
+.error {
+    background-color: @red-opa-100;
+}
+
+.keyboard_pad {
+    background-color: @white-opa-20;
+}
+
+.dialog-error {
+    border-bottom-color: @red-opa-100;
+}
+
+.dialog-warning {
+    border-bottom-color: @olarized-yellow;
+}
+
+.dialog-info {
+    border-bottom-color: @cyan-opa-100;
+}
+
+.dialog-default {
+    border-bottom-color: @green-opa-100;
+}
+
+.dialog-secondary {
+    border-bottom-color: @magenta-opa-100;
+}
+
+.dialog-primary {
+    border-bottom-color: @orange-opa-100;
+}
