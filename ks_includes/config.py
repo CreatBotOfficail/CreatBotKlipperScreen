@@ -578,6 +578,49 @@ class KlipperScreenConfig:
     def set(self, section, name, value):
         self.config.set(section, name, value)
 
+    def del_all(self, guide=False):
+        if self.config_path == self.default_config_path:
+            user_def = ""
+            saved_def = None
+        else:
+            user_def, saved_def = self.separate_saved_config(self.config_path)
+        save_output = ""
+        if guide:
+            save_config = configparser.ConfigParser()
+            save_config.add_section("main")
+            save_config.set("main", "onboarding", str(True))
+            save_output = self._build_config_string(save_config).split("\n")
+            print(f"{save_output}")
+            for i in range(len(save_output)):
+                save_output[i] = f"{self.do_not_edit_prefix} {save_output[i]}"
+
+        contents = (
+            f"{user_def}\n"
+            f"{self.do_not_edit_line}\n"
+            f"{self.do_not_edit_prefix}\n" + "\n".join(save_output) + f"\n"
+            f"{self.do_not_edit_prefix}\n"
+        )
+
+        if self.config_path != self.default_config_path:
+            filepath = self.config_path
+        else:
+            if os.path.exists(printer_data_config):
+                filepath = os.path.join(printer_data_config, self.configfile_name)
+            else:
+                try:
+                    if not os.path.exists(xdg_config):
+                        pathlib.Path(xdg_config).mkdir(parents=True, exist_ok=True)
+                    filepath = os.path.join(xdg_config, self.configfile_name)
+                except Exception as e:
+                    logging.error(e)
+                    filepath = klipperscreendir
+            logging.info(f"Creating a new config file in {filepath}")
+        try:
+            with open(filepath, "w") as file:
+                file.write(contents)
+        except Exception as e:
+            logging.error(f"Error writing configuration file in {filepath}:\n{e}")
+
     def log_config(self, config):
         lines = [
             " "

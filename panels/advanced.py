@@ -4,6 +4,8 @@ import gi
 
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
+
+from ks_includes.KlippyFactory import KlippyFactory
 from ks_includes.KlippyGcodes import KlippyGcodes
 from ks_includes.screen_panel import ScreenPanel
 
@@ -45,6 +47,16 @@ class Panel(ScreenPanel):
                     "callback": self.set_auto_change_nozzle,
                 }
             },
+            {
+                "factory_settings": {
+                    "section": "main",
+                    "name": _("Restore factory settings"),
+                    "type": "button",
+                    "tooltip": _("This operation will clear the user data"),
+                    "value": "True",
+                    "callback": self.reset_factory_settings,
+                }
+            },
         ]
         options = self.advanced_options
         self.labels["advanced_menu"] = self._gtk.ScrolledWindow()
@@ -55,6 +67,48 @@ class Panel(ScreenPanel):
             res = self.add_option("advanced", self.advanced, name, option[name])
             self.menu_list.update(res)
         self.content.add(self.labels["advanced_menu"])
+
+    def reset_factory_settings(self, *args):
+        text = _("Confirm factory reset?\n") + "\n\n" + _("The system will reboot!")
+        label = Gtk.Label(wrap=True, vexpand=True)
+        label.set_markup(text)
+        label.set_margin_top(100)
+
+        clear_files_checkbox = Gtk.CheckButton(label=" " + _("Clear Internal G-code Files"))
+        clear_files_checkbox.set_halign(Gtk.Align.CENTER)
+        clear_files_checkbox.set_valign(Gtk.Align.CENTER)
+
+        buttons = [
+            {
+                "name": _("Accept"),
+                "response": Gtk.ResponseType.OK,
+                "style": "dialog-error",
+            },
+            {
+                "name": _("Cancel"),
+                "response": Gtk.ResponseType.CANCEL,
+                "style": "dialog-info",
+            },
+        ]
+
+        grid = Gtk.Grid(row_homogeneous=True, column_homogeneous=True)
+        grid.set_row_spacing(20)
+        grid.set_column_spacing(0)
+        grid.attach(label, 0, 0, 1, 1)
+        grid.attach(clear_files_checkbox, 0, 1, 1, 1)
+
+        self._gtk.Dialog(
+            _("factory settings"),
+            buttons,
+            grid,
+            self.confirm_reset_factory_settings,
+            clear_files_checkbox,
+        )
+
+    def confirm_reset_factory_settings(self, dialog, response_id, clear_files_checkbox):
+        self._gtk.remove_dialog(dialog)
+        if response_id == Gtk.ResponseType.OK:
+            KlippyFactory.user_factory_reset(self._screen._ws.klippy, self._config, clear_files_checkbox.get_active())
 
     def set_adaptive_leveling(self, *args):
         self.set_configuration_feature("adaptive_meshing", *args)

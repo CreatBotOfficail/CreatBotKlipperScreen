@@ -229,6 +229,17 @@ scale-mark {
     color: @bg;
 }
 
+checkbutton,
+checkbutton check{
+    min-height: 1.1em;
+    min-width: 1.1em;
+    padding: 5px;
+}
+
+checkbutton:checked check{
+    background: @active;
+}
+
 scrollbar,
 scrollbar button,
 scrollbar trough {
