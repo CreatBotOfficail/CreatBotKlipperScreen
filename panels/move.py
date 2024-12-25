@@ -81,12 +81,8 @@ class Panel(ScreenPanel):
                 grid.attach(self.buttons["x-"], 2, 1, 1, 1)
             grid.attach(self.buttons["y+"], 1, 0, 1, 1)
             grid.attach(self.buttons["y-"], 1, 1, 1, 1)
-            if self._config.get_config()["main"].getboolean("invert_z", False):
-                grid.attach(self.buttons["z+"], 3, 0, 1, 1)
-                grid.attach(self.buttons["z-"], 3, 1, 1, 1)
-            else:
-                grid.attach(self.buttons["z+"], 3, 1, 1, 1)
-                grid.attach(self.buttons["z-"], 3, 0, 1, 1)
+            grid.attach(self.buttons["z+"], 3, 1, 1, 1)
+            grid.attach(self.buttons["z-"], 3, 0, 1, 1)
 
         grid.attach(self.buttons["home"], 0, 0, 1, 1)
         grid.attach(self.buttons["motors_off"], 2, 0, 1, 1)
@@ -115,9 +111,7 @@ class Panel(ScreenPanel):
         if not self._screen.vertical_mode:
             bottomgrid.attach(adjust, 3, 0, 1, 2)
 
-        self.labels["move_menu"] = Gtk.Grid(
-            row_homogeneous=True, column_homogeneous=True
-        )
+        self.labels["move_menu"] = Gtk.Grid(row_homogeneous=True, column_homogeneous=True)
         self.labels["move_menu"].attach(grid, 0, 0, 1, 3)
         self.labels["move_menu"].attach(bottomgrid, 0, 3, 1, 1)
         self.labels["move_menu"].attach(distgrid, 0, 4, 1, 1)
@@ -134,38 +128,6 @@ class Panel(ScreenPanel):
             self.max_z_velocity = max_velocity
 
         configurable_options = [
-            {
-                "invert_x": {
-                    "section": "main",
-                    "name": _("Invert X"),
-                    "type": "binary",
-                    "tooltip": _("This will affect screw positions and mesh graph"),
-                    "value": "False",
-                    "callback": self.reinit_panels,
-                }
-            },
-            {
-                "invert_y": {
-                    "section": "main",
-                    "name": _("Invert Y"),
-                    "type": "binary",
-                    "tooltip": _("This will affect screw positions and mesh graph"),
-                    "value": "False",
-                    "callback": self.reinit_panels,
-                }
-            },
-            {
-                "invert_z": {
-                    "section": "main",
-                    "name": _("Invert Z"),
-                    "tooltip": _(
-                        "Swaps buttons if they are on top of each other, affects other panels"
-                    ),
-                    "type": "binary",
-                    "value": "False",
-                    "callback": self.reinit_move,
-                }
-            },
             {
                 "move_speed_xy": {
                     "section": "main",
@@ -200,14 +162,6 @@ class Panel(ScreenPanel):
                 self.add_option("options", self.settings, name, option[name])
             )
 
-    def reinit_panels(self, value):
-        self._screen.panels_reinit.append("bed_level")
-        self._screen.panels_reinit.append("bed_mesh")
-
-    def reinit_move(self, widget):
-        self._screen.panels_reinit.append("move")
-        self._screen.panels_reinit.append("zcalibrate")
-        self.menu.clear()
 
     def process_update(self, action, data):
         if action != "notify_status_update":

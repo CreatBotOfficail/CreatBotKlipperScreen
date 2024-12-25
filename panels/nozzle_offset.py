@@ -85,12 +85,8 @@ class Panel(ScreenPanel):
 
         self.grid = Gtk.Grid(column_homogeneous=True)
         if self._screen.vertical_mode:
-            if self._config.get_config()["main"].getboolean("invert_z", False):
-                self.grid.attach(self.buttons["z+"], 0, 1, 1, 1)
-                self.grid.attach(self.buttons["z-"], 0, 0, 1, 1)
-            else:
-                self.grid.attach(self.buttons["z+"], 0, 0, 1, 1)
-                self.grid.attach(self.buttons["z-"], 0, 1, 1, 1)
+            self.grid.attach(self.buttons["z+"], 0, 1, 1, 1)
+            self.grid.attach(self.buttons["z-"], 0, 0, 1, 1)
             self.grid.attach(self.buttons["start_z_offset"], 1, 0, 1, 1)
             self.grid.attach(pos, 1, 1, 2, 1)
             self.grid.attach(self.buttons["start_xy_offset"], 2, 0, 1, 1)
@@ -98,12 +94,8 @@ class Panel(ScreenPanel):
             self.grid.attach(self.buttons["cancel"], 3, 1, 1, 1)
             self.grid.attach(distances, 0, 2, 4, 1)
         else:
-            if self._config.get_config()["main"].getboolean("invert_z", False):
-                self.grid.attach(self.buttons["z+"], 0, 2, 1, 1)
-                self.grid.attach(self.buttons["z-"], 0, 1, 1, 1)
-            else:
-                self.grid.attach(self.buttons["z+"], 0, 1, 1, 1)
-                self.grid.attach(self.buttons["z-"], 0, 2, 1, 1)
+            self.grid.attach(self.buttons["z+"], 0, 2, 1, 1)
+            self.grid.attach(self.buttons["z-"], 0, 1, 1, 1)
             self.grid.attach(self.buttons["start_z_offset"], 0, 0, 2, 1)
             self.grid.attach(self.buttons["start_xy_offset"], 2, 0, 2, 1)
             self.grid.attach(pos, 1, 1, 2, 2)
