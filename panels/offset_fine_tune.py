@@ -103,7 +103,9 @@ class Panel(ScreenPanel):
             distgrid.attach(self.labels[i], j, 0, 1, 1)
 
         for p in ("x_offset_val", "y_offset_val", "z_offset_val"):
-            self.labels[p] = Gtk.Label(f"{p[0].upper()} " + _("Offset") + ": 0")
+            self.labels[p] = Gtk.Label(f"{p[0].upper()} " + _("Offset") + "\n" + "0")
+            self.labels[p].set_justify(Gtk.Justification.CENTER)
+            self.labels[p].set_line_wrap(True)
         self.labels["move_dist"] = Gtk.Label(label=_("Move Distance (mm)"))
 
         bottomgrid = Gtk.Grid(row_homogeneous=True, column_homogeneous=True)
@@ -133,7 +135,7 @@ class Panel(ScreenPanel):
                 if offset in variables:
                     axis = offset.split("_")[1]
                     self.labels[f"{axis}_offset_val"].set_text(
-                        f"{axis.upper()} " + _("Offset") + f": {variables[offset]}"
+                        f"{axis.upper()} " + _("Offset") + "\n" + f"{variables[offset]}"
                     )
         if "print_stats" in data:
             if "state" in data["print_stats"]:
