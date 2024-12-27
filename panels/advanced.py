@@ -22,7 +22,7 @@ class Panel(ScreenPanel):
                     "section": "main",
                     "name": _("Adaptive Bed Leveling"),
                     "type": "binary",
-                    "tooltip": _("Leveling Only in the Actual Print Area"),
+                    "tooltip": _("Leveling only in the actual print area"),
                     "value": "False",
                     "callback": self.set_adaptive_leveling,
                 }
@@ -50,7 +50,7 @@ class Panel(ScreenPanel):
             {
                 "factory_settings": {
                     "section": "main",
-                    "name": _("Restore factory settings"),
+                    "name": _("Restore Factory Settings"),
                     "type": "button",
                     "tooltip": _("This operation will clear the user data"),
                     "value": "True",

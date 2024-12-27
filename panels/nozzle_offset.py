@@ -48,8 +48,8 @@ class Panel(ScreenPanel):
             if isinstance(label, Gtk.Label):
                 label.set_ellipsize(Pango.EllipsizeMode.END)
         self.buttons = {
-            "z+": self._gtk.Button("z-farther", _("Lower Bed"), "color4"),
-            "z-": self._gtk.Button("z-closer", _("Raise Bed"), "color1"),
+            "z+": self._gtk.Button("z-farther", "Z+", "color4"),
+            "z-": self._gtk.Button("z-closer", "Z-", "color1"),
             "start_z_offset": self._gtk.Button("offset_z", _("Z offset Calibrate"), "color3"),
             "start_xy_offset": self._gtk.Button("resume", _("XY offset Calibrate"), "color3"),
             "complete": self._gtk.Button("complete", _("Save"), "color3"),
@@ -108,7 +108,7 @@ class Panel(ScreenPanel):
         text = (
             _("Start testing the Z offset value of the second nozzle?\n")
             + "\n\n"
-            + _("Please ensure that the Z Calibrate has been performed")
+            + _("Please ensure that the Probe Calibrate has been performed")
         )
         label = Gtk.Label(wrap=True, vexpand=True)
         label.set_markup(text)

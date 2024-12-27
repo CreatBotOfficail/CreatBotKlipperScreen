@@ -362,7 +362,7 @@ class Panel(ScreenPanel):
             'fine_tune': self._gtk.Button("fine-tune", _("Fine Tuning"), "color4"),
             'menu': self._gtk.Button("main-menu", _("Main Menu"), "color4"),
             'pause': self._gtk.Button("pause", _("Pause"), "color1"),
-            'restart': self._gtk.Button("refresh", _("Restart"), "color3"),
+            'restart': self._gtk.Button("refresh", _("Reprint"), "color3"),
             'resume': self._gtk.Button("resume", _("Resume"), "color1"),
             'save_offset_probe': self._gtk.Button("home-z", _("Save Z") + "\n" + "Probe", "color1"),
             'save_offset_endstop': self._gtk.Button("home-z", _("Save Z") + "\n" + "Endstop", "color2"),

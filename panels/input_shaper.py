@@ -28,21 +28,13 @@ class Panel(ScreenPanel):
         self.calibrating_axis = None
 
         auto_calibration_label = Gtk.Label(hexpand=True)
-        auto_calibration_label.set_markup('<big><b>Auto Calibration</b></big>')
+        auto_calibration_label.set_markup("<big><b>{}</b></big>".format(_("Auto Calibration")))
 
         auto_grid = Gtk.Grid()
         auto_grid.attach(auto_calibration_label, 0, 0, 1, 1)
         auto_grid.attach(self.calibrate_btn, 1, 0, 1, 1)
 
-        manual_calibration_label = Gtk.Label(vexpand=True)
-        manual_calibration_label.set_markup('<big><b>Manual Calibration</b></big>')
-
-        disclaimer = Gtk.Label(wrap=True, halign=Gtk.Align.CENTER)
-        disclaimer.set_markup('<small>NOTE: Edit your printer.cfg to save manual calibration changes.</small>')
-
         input_grid = Gtk.Grid()
-        input_grid.attach(manual_calibration_label, 0, 0, 3, 1)
-        input_grid.attach(disclaimer, 0, 1, 3, 1)
 
         for i, dim_freq in enumerate(XY_FREQ):
             axis_lbl = Gtk.Label(hexpand=False, vexpand=True, halign=Gtk.Align.START, valign=Gtk.Align.CENTER,

@@ -50,8 +50,8 @@ class Panel(ScreenPanel):
             if isinstance(label, Gtk.Label):
                 label.set_ellipsize(Pango.EllipsizeMode.END)
         self.buttons = {
-            'zpos': self._gtk.Button('z-farther', _("Raise Nozzle"), 'color4'),
-            'zneg': self._gtk.Button('z-closer', _("Lower Nozzle"), 'color1'),
+            'zpos': self._gtk.Button('z-farther', "Z+", 'color4'),
+            'zneg': self._gtk.Button('z-closer', "Z-", 'color1'),
             'start': self._gtk.Button('resume', _("Start"), 'color3'),
             'complete': self._gtk.Button('complete', _('Accept'), 'color3'),
             'cancel': self._gtk.Button('cancel', _('Abort'), 'color2'),
