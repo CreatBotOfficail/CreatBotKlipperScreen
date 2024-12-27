@@ -42,7 +42,8 @@ class Panel(ScreenPanel):
                     "section": "main",
                     "name": _("Auto Change Nozzle"),
                     "type": "binary",
-                    "tooltip": _("Auto change nozzle when filament runout"),
+                    "tooltip": _("Auto change nozzle when filament runout")
+                    + _("(Disable during dual extrusion printing)"),
                     "value": "False",
                     "callback": self.set_auto_change_nozzle,
                 }
