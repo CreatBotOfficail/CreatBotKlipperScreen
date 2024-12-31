@@ -10,6 +10,7 @@ from datetime import datetime
 
 from gi.repository import GLib, Gtk
 
+from ks_includes.KlippyFactory import KlippyFactory
 from ks_includes.ModelConfig import ModelConfig
 from ks_includes.screen_panel import ScreenPanel
 
@@ -31,9 +32,9 @@ class Panel(ScreenPanel):
             {
                 "Enable Guide": {
                     "section": "main",
-                    "name": _("Enable The Guide Page"),
+                    "name": _("Pack"),
                     "type": "button",
-                    "callback": self.enable_guide,
+                    "callback": self.reset_factory_settings,
                 }
             },
             {
@@ -131,10 +132,20 @@ class Panel(ScreenPanel):
             self.content.show_all()
         self.select_model = False
 
-    def enable_guide(self, widget, option):
-        self._config.set("main", "onboarding", "True")
-        self._config.save_user_config_options()
-        self._screen.show_popup_message("Successfully enabled the guide page", level=1)
+    def reset_factory_settings(self, *args):
+        text = _("Are you sure?\n") + "\n\n" + _("The system will reboot!")
+        label = Gtk.Label(wrap=True, vexpand=True)
+        label.set_markup(text)
+        buttons = [
+            {"name": _("Accept"), "response": Gtk.ResponseType.OK, "style": "dialog-error"},
+            {"name": _("Cancel"), "response": Gtk.ResponseType.CANCEL, "style": "dialog-info"},
+        ]
+        self._gtk.Dialog(_("factory settings"), buttons, label, self.confirm_factory_reset_production)
+
+    def confirm_factory_reset_production(self, dialog, response_id):
+        self._gtk.remove_dialog(dialog)
+        if response_id == Gtk.ResponseType.OK:
+            KlippyFactory.production_factory_reset(self._screen._ws.klippy, self._config)
 
     def version_selection(self, val):
         config_updater = ConfigMoonrakerUpdateManager()

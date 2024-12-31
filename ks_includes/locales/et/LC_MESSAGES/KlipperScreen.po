@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KlipperScreen\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-15 10:10+0800\n"
+"POT-Creation-Date: 2024-12-31 14:57+0800\n"
 "PO-Revision-Date: 2024-06-02 12:00+0000\n"
 "Last-Translator: ChatGPT <noreply@openai.com>\n"
 "Language-Team: Estonian <https://hosted.weblate.org/projects/klipperscreen/"
@@ -18,11 +18,38 @@ msgstr ""
 msgid "%s will be updated to version"
 msgstr "%s uuendatakse versioonile"
 
+msgid "(Disable during dual extrusion printing)"
+msgstr ""
+
 msgid "(default)"
 msgstr "(vaikimisi)"
 
+msgid ""
+"1. Ensure that all fixed components have been properly removed before "
+"proceeding."
+msgstr ""
+
+msgid ""
+"1. For first use, refer to the accompanying diagram to disassemble the fixed "
+"components of the X, Y, and Z axes."
+msgstr ""
+
+msgid ""
+"2. Once the disassembly is complete, click the 'Next' button to proceed."
+msgstr ""
+
+msgid ""
+"2. Press the 'Raise Platform' button to lift the platform and remove the "
+"items underneath."
+msgstr ""
+
 msgid "24 Hour Time"
 msgstr "24-tunnine aeg"
+
+msgid ""
+"3. Once the operation is complete, click the 'Finish' button to conclude the "
+"process."
+msgstr ""
 
 msgid "A FIRMWARE_RESTART may fix the issue."
 msgstr "Probleemi võib lahendada FIRMWARE_RESTART."
@@ -39,8 +66,14 @@ msgstr "Kiirendus:"
 msgid "Accept"
 msgstr "Nõustu"
 
+msgid "Adaptive Bed Leveling"
+msgstr ""
+
 msgid "Add profile"
 msgstr "Lisa profiil"
+
+msgid "Advanced"
+msgstr ""
 
 msgid "Air filter fan"
 msgstr ""
@@ -62,8 +95,8 @@ msgstr "Rakenda %s%.3f nihe andurile?"
 msgid "Archived"
 msgstr "Arhiveeritud"
 
-msgid "Are you sure do you want to exclude the object?"
-msgstr "Kas olete kindel, et soovite objekti välistada?"
+msgid "Are you sure you want to exclude the object?"
+msgstr ""
 
 msgid "Are you sure you want to run Emergency Stop?"
 msgstr "Kas olete kindel, et soovite käivitada hädapidurduse?"
@@ -74,6 +107,9 @@ msgstr "Kas olete kindel, et soovite kalibreerimise peatada?"
 msgid "Are you sure you wish to cancel this print?"
 msgstr "Kas olete kindel, et soovite selle printimise tühistada?"
 
+msgid "Are you sure you wish to cancel this test?"
+msgstr ""
+
 msgid "Are you sure you wish to disable motors?"
 msgstr "Kas olete kindel, et soovite mootorid välja lülitada?"
 
@@ -83,11 +119,23 @@ msgstr "Kas olete kindel, et soovite süsteemi taaskäivitada?"
 msgid "Are you sure you wish to shutdown the system?"
 msgstr "Kas olete kindel, et soovite süsteemi sulgeda?"
 
+msgid "Are you sure?\n"
+msgstr ""
+
 msgid "Asks for confirmation before stopping"
 msgstr "Küsib kinnitust enne peatamist"
 
 msgid "Auto"
 msgstr "Automaatne"
+
+msgid "Auto Calibration"
+msgstr ""
+
+msgid "Auto Change Nozzle"
+msgstr ""
+
+msgid "Auto change nozzle when filament runout"
+msgstr ""
 
 msgid "Auto-calibrate"
 msgstr "Automaatne kalibreerimine"
@@ -107,11 +155,20 @@ msgstr "Voodi tase"
 msgid "Bed Mesh"
 msgstr "Voodi võrk"
 
+msgid "Beta"
+msgstr ""
+
 msgid "Both"
 msgstr "Mõlemad"
 
 msgid "Calibrate"
 msgstr "Kalibreeri"
+
+msgid "Calibrate Nozzle XY Offset"
+msgstr ""
+
+msgid "Calibrate Nozzle Z Offset"
+msgstr ""
 
 msgid "Calibrated"
 msgstr "Kalibreeritud"
@@ -146,9 +203,6 @@ msgstr "Muutused liidese välimuses"
 msgid "Changes how the time remaining is calculated"
 msgstr "Muutused järelejäänud aja arvutamises"
 
-msgid "Channel"
-msgstr "Kanal"
-
 msgid "Check ADXL Wiring"
 msgstr "Kontrollige ADXL juhtmeid"
 
@@ -157,6 +211,9 @@ msgstr "Uuenduste kontrollimine, palun oodake..."
 
 msgid "Clear"
 msgstr "Kustuta"
+
+msgid "Clear Internal G-code Files"
+msgstr ""
 
 msgid "Close"
 msgstr "Sulge"
@@ -169,6 +226,9 @@ msgstr "Lõpetatud"
 
 msgid "Confirm Emergency Stop"
 msgstr "Kinnitage hädapidur"
+
+msgid "Confirm factory reset?\n"
+msgstr ""
 
 msgid "Connected"
 msgstr "Ühendatud"
@@ -186,6 +246,9 @@ msgstr ""
 msgid "Console"
 msgstr "Konsool"
 
+msgid "Continue"
+msgstr ""
+
 msgid "Cooldown"
 msgstr "Jahutus"
 
@@ -201,6 +264,9 @@ msgstr ""
 msgid "Current percentage and graph line"
 msgstr "Praegune protsent ja graafiku joon"
 
+msgid "Current value:"
+msgstr ""
+
 msgid "DPMS has failed to load and has been disabled"
 msgstr "DPMS-i laadimine ebaõnnestus ja see on keelatud"
 
@@ -212,6 +278,9 @@ msgstr "Kustuta kataloog?"
 
 msgid "Delete File?"
 msgstr "Kustuta fail?"
+
+msgid "Dev"
+msgstr ""
 
 msgid "Disable Motors"
 msgstr "Keela mootorid"
@@ -407,6 +476,9 @@ msgstr "Algata PID kalibreerimine jaoks:"
 msgid "Input Shaper"
 msgstr "Sisendvormija"
 
+msgid "Inserted"
+msgstr ""
+
 msgid "Insufficient privileges"
 msgstr ""
 
@@ -421,15 +493,6 @@ msgstr "Kehtetu parool"
 
 msgid "Inversely affects the icon size"
 msgstr "Mõjutab pöördeliselt ikooni suurust"
-
-msgid "Invert X"
-msgstr "Pööra X"
-
-msgid "Invert Y"
-msgstr "Pööra Y"
-
-msgid "Invert Z"
-msgstr "Pööra Z"
 
 msgid "It may take more than 5 minutes depending on the heater power."
 msgstr "See võib võtta rohkem kui 5 minutit, sõltuvalt kütteseadme võimsusest."
@@ -482,8 +545,17 @@ msgstr "Kiht:"
 msgid "Leds"
 msgstr "LEDid"
 
+msgid "Left extruder detects no filament, please load filament and continue."
+msgstr ""
+
+msgid "Left extruder not hot enough, will reheat and continue."
+msgstr ""
+
 msgid "Left:"
 msgstr "Vasakul:"
+
+msgid "Leveling only in the actual print area"
+msgstr ""
 
 msgid "Limits"
 msgstr "Piirangud"
@@ -496,9 +568,6 @@ msgstr "Laadimine..."
 
 msgid "Lost Connection to Moonraker"
 msgstr "Ühendus Moonrakeriga katkes"
-
-msgid "Lower Nozzle"
-msgstr "Alumine otsik"
 
 msgid "Macros"
 msgstr "Makrod"
@@ -517,9 +586,6 @@ msgstr "Maksimaalne kiirendus"
 
 msgid "Max Velocity"
 msgstr "Maksimaalne kiirus"
-
-msgid "Max:"
-msgstr ""
 
 msgid "Maximum"
 msgstr "Maksimaalne"
@@ -569,6 +635,9 @@ msgstr "Liiguta"
 msgid "Move Distance (mm)"
 msgstr "Liigutuskaugus (mm)"
 
+msgid "Move setting"
+msgstr ""
+
 msgid "Name"
 msgstr "Nimi"
 
@@ -590,14 +659,26 @@ msgstr "Mitte kunagi"
 msgid "New"
 msgstr "Uus"
 
+msgid "Next"
+msgstr ""
+
 msgid "No elegible macros:"
 msgstr "Sobivaid makrosid pole:"
+
+msgid "No info available"
+msgstr ""
 
 msgid "No mesh has been loaded"
 msgstr "Võrku ei ole laaditud"
 
 msgid "No wireless interface has been found"
 msgstr "Juhtmeta liidest ei leitud"
+
+msgid "Not Enabled"
+msgstr ""
+
+msgid "Not Inserted"
+msgstr ""
 
 msgid "Not all screens support this"
 msgstr "Mitte kõik ekraanid ei toeta seda"
@@ -614,7 +695,25 @@ msgstr "Teavituste logi tühi"
 msgid "Notifications"
 msgstr "Teavitused"
 
+msgid "Noting! All extruders filament has been run out."
+msgstr ""
+
+msgid "Noting! Left extruder filament has been run out."
+msgstr ""
+
+msgid "Noting! Right extruder filament has been run out."
+msgstr ""
+
+msgid "Nozzle Offset"
+msgstr ""
+
 msgid "Numpad"
+msgstr ""
+
+msgid "Offset"
+msgstr ""
+
+msgid "Ok"
 msgstr ""
 
 msgid "Only for the move panel"
@@ -624,16 +723,16 @@ msgstr "Ainult liigutuspaneelile"
 msgid "Outdated by %d"
 msgstr "Aegunud %d võrra"
 
-msgid "PSK for"
-msgstr "PSK jaoks"
+msgid "Pack"
+msgstr ""
 
 msgid "Package will be updated"
 msgid_plural "Packages will be updated"
 msgstr[0] "Pakett uuendatakse"
 msgstr[1] "Paketid uuendatakse"
 
-msgid "Password saved"
-msgstr "Parool salvestatud"
+msgid "Password"
+msgstr ""
 
 msgid "Pause"
 msgstr "Paus"
@@ -647,6 +746,15 @@ msgstr "Kas sooritada täisuuendus?"
 msgid "Pins"
 msgstr "Nõelad"
 
+msgid "Please ensure that the Probe Calibrate has been performed"
+msgstr ""
+
+msgid "Please enter a valid number"
+msgstr ""
+
+msgid "Please load two different colored PLA filaments!"
+msgstr ""
+
 msgid "Please recompile and flash the micro-controller."
 msgstr "Palun kompileerige ja välgake mikro-kontroller."
 
@@ -655,6 +763,9 @@ msgstr "Palun oodake"
 
 msgid "Power"
 msgstr "Võimsus"
+
+msgid "Power Loss Recovery"
+msgstr ""
 
 msgid "Power On Printer"
 msgstr "Printeri sisselülitamine"
@@ -677,14 +788,14 @@ msgstr "Prindi juhtimine"
 msgid "Printer"
 msgstr "Printer"
 
-msgid "Printer Connections"
-msgstr "Printeri ühendused"
-
 msgid "Printer Select"
 msgstr "Vali printer"
 
 msgid "Printing"
 msgstr "Printimine"
+
+msgid "Probe Calibrate"
+msgstr ""
 
 msgid "Probe Offset"
 msgstr "Sondi nihe"
@@ -698,8 +809,11 @@ msgstr "Abi küsimisel andke KlipperScreen.log.\n"
 msgid "Quad Gantry Level"
 msgstr "Neljandikurea tase"
 
-msgid "Raise Nozzle"
-msgstr "Tõsta otsik"
+msgid "RESUME ABORTED !"
+msgstr ""
+
+msgid "Raise Platform"
+msgstr ""
 
 msgid "Recover"
 msgstr "Taasta"
@@ -709,6 +823,9 @@ msgstr "Taasta raskelt"
 
 msgid "Recover Soft"
 msgstr "Taasta pehmelt"
+
+msgid "Recovery in progress, please wait"
+msgstr ""
 
 msgid "Reference"
 msgstr "Viide"
@@ -722,8 +839,23 @@ msgstr ""
 msgid "Rename/Move:"
 msgstr "Nimeta ümber/Liiguta:"
 
+msgid "Reprint"
+msgstr ""
+
 msgid "Restart"
 msgstr "Taaskäivita"
+
+msgid "Restore Factory Settings"
+msgstr ""
+
+msgid "Restores your print job after a power outage"
+msgstr ""
+
+msgid "Restoring Left extruder temperature, this may take some time"
+msgstr ""
+
+msgid "Restoring Right extruder temperature, this may take some time"
+msgstr ""
 
 msgid "Resume"
 msgstr "Jätka"
@@ -745,6 +877,12 @@ msgstr "Proovi uuesti"
 
 msgid "Retrying"
 msgstr "Uuesti proovimine"
+
+msgid "Right extruder detects no filament, please load filament and continue."
+msgstr ""
+
+msgid "Right extruder not hot enough, will reheat and continue."
+msgstr ""
 
 msgid "Rotation invalid"
 msgstr "Pööramine kehtetu"
@@ -779,6 +917,9 @@ msgstr "Kruvide reguleerimine"
 
 msgid "Screws not used:"
 msgstr "Kruvid ei ole kasutatud:"
+
+msgid "Select Model"
+msgstr ""
 
 msgid "Send"
 msgstr "Saada"
@@ -831,20 +972,26 @@ msgstr "Kiirus:"
 msgid "Square Corner Velocity"
 msgstr "Ruudukujuline nurga kiirus"
 
+msgid "Stable"
+msgstr ""
+
 msgid "Standby"
 msgstr "Valmisolek"
 
 msgid "Start"
 msgstr "Alusta"
 
+msgid "Start testing the Z offset value of the second nozzle?\n"
+msgstr ""
+
+msgid "Starting WiFi Association"
+msgstr "WiFi ühenduse loomine"
+
 msgid "Starting recovery for"
 msgstr "Taastamise alustamine"
 
 msgid "Starting update for"
 msgstr "Uuenduse alustamine"
-
-msgid "Swaps buttons if they are on top of each other, affects other panels"
-msgstr "Vahetab nuppe, kui need on üksteise peal, mõjutab teisi paneele"
 
 msgid "System"
 msgstr "Süsteem"
@@ -861,14 +1008,23 @@ msgstr ""
 msgid "Temperature"
 msgstr "Temperatuur"
 
+msgid "The last print job was not completed continue printing?"
+msgstr ""
+
 msgid "The system doesn't meet the minimum requirement"
+msgstr ""
+
+msgid "The system will reboot!"
+msgstr ""
+
+msgid "This operation is about to print the model"
+msgstr ""
+
+msgid "This operation will clear the user data"
 msgstr ""
 
 msgid "This panel supports up-to 9 screws in a 3x3 Grid"
 msgstr "See paneel toetab kuni 9 kruvi 3x3 võrgus"
-
-msgid "This will affect screw positions and mesh graph"
-msgstr "See mõjutab kruvide asukohti ja võrgugraafikut"
 
 msgid "Timeout for screen black-out or power-off"
 msgstr "Ekraani pimenemise või väljalülitamise ajapiirang"
@@ -909,10 +1065,22 @@ msgstr "Üles laaditud"
 msgid "Useful for un-responsive touchscreens"
 msgstr "Kasulik mitte reageerivate puuteekraanide jaoks"
 
+msgid "User"
+msgstr ""
+
+msgid "Version Selection"
+msgstr ""
+
 msgid "WebRTC is not supported by the backend trying Stream"
 msgstr "WebRTC-d ei toeta taustsüsteem, mis proovib voogu"
 
+msgid "Welcome"
+msgstr ""
+
 msgid "Working"
+msgstr ""
+
+msgid "X Offset"
 msgstr ""
 
 msgid "XY Move Speed (mm/s)"
@@ -921,17 +1089,32 @@ msgstr "XY liikumise kiirus (mm/s)"
 msgid "XY Speed (mm/s)"
 msgstr "XY kiirus (mm/s)"
 
+msgid "XY offset Calibrate"
+msgstr ""
+
+msgid "Y Offset"
+msgstr ""
+
 msgid "Z Calibrate"
 msgstr "Z kalibreerimine"
 
 msgid "Z Move Speed (mm/s)"
 msgstr "Z liikumise kiirus (mm/s)"
 
+msgid "Z Offset"
+msgstr ""
+
 msgid "Z Speed (mm/s)"
 msgstr "Z kiirus (mm/s)"
 
 msgid "Z Tilt"
 msgstr "Z kalle"
+
+msgid "Z axis cannot move to negative values"
+msgstr ""
+
+msgid "Z offset Calibrate"
+msgstr ""
 
 msgid "Z offset:"
 msgstr "Z nihe:"
@@ -945,6 +1128,9 @@ msgid "day"
 msgid_plural "days"
 msgstr[0] "päev"
 msgstr[1] "päeva"
+
+msgid "factory settings"
+msgstr ""
 
 msgid "hour"
 msgid_plural "hours"
@@ -974,7 +1160,7 @@ msgstr "mm/s²"
 msgid "mm³/s"
 msgstr "mm³/s"
 
-msgid "model select"
+msgid "offset fine tune"
 msgstr ""
 
 msgid "s"
@@ -984,6 +1170,33 @@ msgid "second"
 msgid_plural "seconds"
 msgstr[0] "sekund"
 msgstr[1] "sekundit"
+
+#~ msgid "Channel"
+#~ msgstr "Kanal"
+
+#~ msgid "Invert X"
+#~ msgstr "Pööra X"
+
+#~ msgid "Invert Y"
+#~ msgstr "Pööra Y"
+
+#~ msgid "Invert Z"
+#~ msgstr "Pööra Z"
+
+#~ msgid "Lower Nozzle"
+#~ msgstr "Alumine otsik"
+
+#~ msgid "PSK for"
+#~ msgstr "PSK jaoks"
+
+#~ msgid "Printer Connections"
+#~ msgstr "Printeri ühendused"
+
+#~ msgid "Swaps buttons if they are on top of each other, affects other panels"
+#~ msgstr "Vahetab nuppe, kui need on üksteise peal, mõjutab teisi paneele"
+
+#~ msgid "This will affect screw positions and mesh graph"
+#~ msgstr "See mõjutab kruvide asukohti ja võrgugraafikut"
 
 #~ msgid "Hide"
 #~ msgstr "Peida"
@@ -1014,9 +1227,6 @@ msgstr[1] "sekundit"
 
 #~ msgid "Print Time"
 #~ msgstr "Printimise aeg"
-
-#~ msgid "Starting WiFi Association"
-#~ msgstr "WiFi ühenduse loomine"
 
 #~ msgid "Warning"
 #~ msgstr "Hoiatus"

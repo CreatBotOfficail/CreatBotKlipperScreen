@@ -159,7 +159,7 @@ class KlipperScreenConfig:
             bools = strs = numbers = ()
             if section == 'main':
                 bools = (
-                    'invert_x', 'invert_y', 'invert_z', '24htime', 'only_heaters', 'show_cursor', 'confirm_estop',
+                    '24htime', 'only_heaters', 'show_cursor', 'confirm_estop',
                     'autoclose_popups', 'use_dpms', 'use_default_menu', 'side_macro_shortcut', 'use-matchbox-keyboard',
                     'show_heater_power', "show_scroll_steppers", "auto_open_extrude" , 'onboarding'
                 )
@@ -173,9 +173,7 @@ class KlipperScreenConfig:
                     'print_estimate_compensation', 'width', 'height',
                 )
             elif section.startswith('printer '):
-                bools = (
-                    'invert_x', 'invert_y', 'invert_z',
-                )
+                bools = ()
                 strs = (
                     'moonraker_api_key', 'moonraker_host', 'titlebar_name_type',
                     'screw_positions', 'power_devices', 'titlebar_items', 'z_babystep_values',
@@ -312,9 +310,6 @@ class KlipperScreenConfig:
 
         # Options that are in panels and shouldn't be added to the main settings
         panel_options = [
-            {"invert_x": {"section": "main", "name": _("Invert X"), "type": None, "value": "False"}},
-            {"invert_y": {"section": "main", "name": _("Invert Y"), "type": None, "value": "False"}},
-            {"invert_z": {"section": "main", "name": _("Invert Z"), "type": None, "value": "False"}},
             {"move_speed_xy": {"section": "main", "name": _("XY Move Speed (mm/s)"), "type": None, "value": "50"}},
             {"move_speed_z": {"section": "main", "name": _("Z Move Speed (mm/s)"), "type": None, "value": "10"}},
             {"print_sort_dir": {"section": "main", "type": None, "value": "name_asc"}},
@@ -577,6 +572,49 @@ class KlipperScreenConfig:
 
     def set(self, section, name, value):
         self.config.set(section, name, value)
+
+    def del_all(self, guide=False):
+        if self.config_path == self.default_config_path:
+            user_def = ""
+            saved_def = None
+        else:
+            user_def, saved_def = self.separate_saved_config(self.config_path)
+        save_output = ""
+        if guide:
+            save_config = configparser.ConfigParser()
+            save_config.add_section("main")
+            save_config.set("main", "onboarding", str(True))
+            save_output = self._build_config_string(save_config).split("\n")
+            print(f"{save_output}")
+            for i in range(len(save_output)):
+                save_output[i] = f"{self.do_not_edit_prefix} {save_output[i]}"
+
+        contents = (
+            f"{user_def}\n"
+            f"{self.do_not_edit_line}\n"
+            f"{self.do_not_edit_prefix}\n" + "\n".join(save_output) + f"\n"
+            f"{self.do_not_edit_prefix}\n"
+        )
+
+        if self.config_path != self.default_config_path:
+            filepath = self.config_path
+        else:
+            if os.path.exists(printer_data_config):
+                filepath = os.path.join(printer_data_config, self.configfile_name)
+            else:
+                try:
+                    if not os.path.exists(xdg_config):
+                        pathlib.Path(xdg_config).mkdir(parents=True, exist_ok=True)
+                    filepath = os.path.join(xdg_config, self.configfile_name)
+                except Exception as e:
+                    logging.error(e)
+                    filepath = klipperscreendir
+            logging.info(f"Creating a new config file in {filepath}")
+        try:
+            with open(filepath, "w") as file:
+                file.write(contents)
+        except Exception as e:
+            logging.error(f"Error writing configuration file in {filepath}:\n{e}")
 
     def log_config(self, config):
         lines = [

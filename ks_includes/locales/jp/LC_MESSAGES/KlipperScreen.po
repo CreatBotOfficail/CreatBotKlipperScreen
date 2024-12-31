@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KlipperScreen\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-15 10:10+0800\n"
+"POT-Creation-Date: 2024-12-31 14:57+0800\n"
 "PO-Revision-Date: 2024-04-13 16:48+0000\n"
 "Last-Translator: Anonymous <noreply@weblate.org>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/klipperscreen/"
@@ -18,11 +18,38 @@ msgstr ""
 msgid "%s will be updated to version"
 msgstr "%s を最新にアップデートします"
 
+msgid "(Disable during dual extrusion printing)"
+msgstr ""
+
 msgid "(default)"
 msgstr "(デフォルト)"
 
+msgid ""
+"1. Ensure that all fixed components have been properly removed before "
+"proceeding."
+msgstr ""
+
+msgid ""
+"1. For first use, refer to the accompanying diagram to disassemble the fixed "
+"components of the X, Y, and Z axes."
+msgstr ""
+
+msgid ""
+"2. Once the disassembly is complete, click the 'Next' button to proceed."
+msgstr ""
+
+msgid ""
+"2. Press the 'Raise Platform' button to lift the platform and remove the "
+"items underneath."
+msgstr ""
+
 msgid "24 Hour Time"
 msgstr "24時間表記"
+
+msgid ""
+"3. Once the operation is complete, click the 'Finish' button to conclude the "
+"process."
+msgstr ""
 
 msgid "A FIRMWARE_RESTART may fix the issue."
 msgstr "ファームウェアの更新を行うと不具合が解決する場合があります"
@@ -39,8 +66,14 @@ msgstr "加速度:"
 msgid "Accept"
 msgstr "承諾する"
 
+msgid "Adaptive Bed Leveling"
+msgstr ""
+
 msgid "Add profile"
 msgstr "プロファイルの追加"
+
+msgid "Advanced"
+msgstr ""
 
 msgid "Air filter fan"
 msgstr ""
@@ -62,8 +95,8 @@ msgstr ""
 msgid "Archived"
 msgstr ""
 
-msgid "Are you sure do you want to exclude the object?"
-msgstr "対象を除外しますか？"
+msgid "Are you sure you want to exclude the object?"
+msgstr ""
 
 msgid "Are you sure you want to run Emergency Stop?"
 msgstr "緊急停止しますか？"
@@ -74,6 +107,9 @@ msgstr ""
 msgid "Are you sure you wish to cancel this print?"
 msgstr "印刷を中断しますか？"
 
+msgid "Are you sure you wish to cancel this test?"
+msgstr ""
+
 msgid "Are you sure you wish to disable motors?"
 msgstr "モーターの制御を無効にしますか？"
 
@@ -83,11 +119,23 @@ msgstr "システムを再起動しますか？"
 msgid "Are you sure you wish to shutdown the system?"
 msgstr "システムをシャットダウンしますか？"
 
+msgid "Are you sure?\n"
+msgstr ""
+
 msgid "Asks for confirmation before stopping"
 msgstr ""
 
 msgid "Auto"
 msgstr "自動"
+
+msgid "Auto Calibration"
+msgstr ""
+
+msgid "Auto Change Nozzle"
+msgstr ""
+
+msgid "Auto change nozzle when filament runout"
+msgstr ""
 
 msgid "Auto-calibrate"
 msgstr "自動校正"
@@ -107,11 +155,20 @@ msgstr "ベッドレベル"
 msgid "Bed Mesh"
 msgstr "ベッドメッシュ"
 
+msgid "Beta"
+msgstr ""
+
 msgid "Both"
 msgstr ""
 
 msgid "Calibrate"
 msgstr "校正"
+
+msgid "Calibrate Nozzle XY Offset"
+msgstr ""
+
+msgid "Calibrate Nozzle Z Offset"
+msgstr ""
 
 msgid "Calibrated"
 msgstr "構成済み"
@@ -146,9 +203,6 @@ msgstr ""
 msgid "Changes how the time remaining is calculated"
 msgstr ""
 
-msgid "Channel"
-msgstr "チャンネル"
-
 msgid "Check ADXL Wiring"
 msgstr "ADXL Wiring を検査する"
 
@@ -157,6 +211,9 @@ msgstr ""
 
 msgid "Clear"
 msgstr "クリア"
+
+msgid "Clear Internal G-code Files"
+msgstr ""
 
 msgid "Close"
 msgstr "終了"
@@ -169,6 +226,9 @@ msgstr "完了"
 
 msgid "Confirm Emergency Stop"
 msgstr "緊急停止時に確認する"
+
+msgid "Confirm factory reset?\n"
+msgstr ""
 
 msgid "Connected"
 msgstr "接続済み"
@@ -186,6 +246,9 @@ msgstr ""
 msgid "Console"
 msgstr "コンソール"
 
+msgid "Continue"
+msgstr "継続"
+
 msgid "Cooldown"
 msgstr "クールダウン"
 
@@ -201,6 +264,9 @@ msgstr ""
 msgid "Current percentage and graph line"
 msgstr ""
 
+msgid "Current value:"
+msgstr ""
+
 msgid "DPMS has failed to load and has been disabled"
 msgstr ""
 
@@ -212,6 +278,9 @@ msgstr ""
 
 msgid "Delete File?"
 msgstr "ファイルを削除しますか？"
+
+msgid "Dev"
+msgstr ""
 
 msgid "Disable Motors"
 msgstr "モーターの無効化"
@@ -407,6 +476,9 @@ msgstr ""
 msgid "Input Shaper"
 msgstr ""
 
+msgid "Inserted"
+msgstr ""
+
 msgid "Insufficient privileges"
 msgstr ""
 
@@ -421,15 +493,6 @@ msgstr ""
 
 msgid "Inversely affects the icon size"
 msgstr ""
-
-msgid "Invert X"
-msgstr "X軸を反対にする"
-
-msgid "Invert Y"
-msgstr "Y軸を反対にする"
-
-msgid "Invert Z"
-msgstr "X軸を反対にする"
 
 msgid "It may take more than 5 minutes depending on the heater power."
 msgstr ""
@@ -480,8 +543,17 @@ msgstr "レイヤー:"
 msgid "Leds"
 msgstr ""
 
+msgid "Left extruder detects no filament, please load filament and continue."
+msgstr ""
+
+msgid "Left extruder not hot enough, will reheat and continue."
+msgstr ""
+
 msgid "Left:"
 msgstr "左:"
+
+msgid "Leveling only in the actual print area"
+msgstr ""
 
 msgid "Limits"
 msgstr "制限"
@@ -494,9 +566,6 @@ msgstr ""
 
 msgid "Lost Connection to Moonraker"
 msgstr ""
-
-msgid "Lower Nozzle"
-msgstr "ノズルが低い"
 
 msgid "Macros"
 msgstr "マクロ"
@@ -515,9 +584,6 @@ msgstr "最大加速度"
 
 msgid "Max Velocity"
 msgstr "最大速度"
-
-msgid "Max:"
-msgstr ""
 
 msgid "Maximum"
 msgstr "最大"
@@ -567,6 +633,9 @@ msgstr "移動"
 msgid "Move Distance (mm)"
 msgstr "移動距離"
 
+msgid "Move setting"
+msgstr ""
+
 msgid "Name"
 msgstr "名称"
 
@@ -588,13 +657,25 @@ msgstr "未"
 msgid "New"
 msgstr "新"
 
+msgid "Next"
+msgstr ""
+
 msgid "No elegible macros:"
+msgstr ""
+
+msgid "No info available"
 msgstr ""
 
 msgid "No mesh has been loaded"
 msgstr ""
 
 msgid "No wireless interface has been found"
+msgstr ""
+
+msgid "Not Enabled"
+msgstr ""
+
+msgid "Not Inserted"
 msgstr ""
 
 msgid "Not all screens support this"
@@ -612,7 +693,25 @@ msgstr ""
 msgid "Notifications"
 msgstr ""
 
+msgid "Noting! All extruders filament has been run out."
+msgstr ""
+
+msgid "Noting! Left extruder filament has been run out."
+msgstr ""
+
+msgid "Noting! Right extruder filament has been run out."
+msgstr ""
+
+msgid "Nozzle Offset"
+msgstr ""
+
 msgid "Numpad"
+msgstr ""
+
+msgid "Offset"
+msgstr ""
+
+msgid "Ok"
 msgstr ""
 
 msgid "Only for the move panel"
@@ -622,15 +721,15 @@ msgstr ""
 msgid "Outdated by %d"
 msgstr ""
 
-msgid "PSK for"
+msgid "Pack"
 msgstr ""
 
 msgid "Package will be updated"
 msgid_plural "Packages will be updated"
 msgstr[0] ""
 
-msgid "Password saved"
-msgstr "パスワードを保存しました"
+msgid "Password"
+msgstr ""
 
 msgid "Pause"
 msgstr "一時停止"
@@ -644,6 +743,15 @@ msgstr "フルアップデートしますか？"
 msgid "Pins"
 msgstr "Pins"
 
+msgid "Please ensure that the Probe Calibrate has been performed"
+msgstr ""
+
+msgid "Please enter a valid number"
+msgstr ""
+
+msgid "Please load two different colored PLA filaments!"
+msgstr ""
+
 msgid "Please recompile and flash the micro-controller."
 msgstr "マイクロコントローラーをリコンパイル＆フラッシュしてください"
 
@@ -652,6 +760,9 @@ msgstr ""
 
 msgid "Power"
 msgstr "電源"
+
+msgid "Power Loss Recovery"
+msgstr ""
 
 msgid "Power On Printer"
 msgstr "プリンター電源"
@@ -674,14 +785,14 @@ msgstr "印刷制御"
 msgid "Printer"
 msgstr "プリンター"
 
-msgid "Printer Connections"
-msgstr "プリンター接続状態"
-
 msgid "Printer Select"
 msgstr "プリンターの選択"
 
 msgid "Printing"
 msgstr "印刷中"
+
+msgid "Probe Calibrate"
+msgstr ""
 
 msgid "Probe Offset"
 msgstr "プローブオフセット"
@@ -695,7 +806,10 @@ msgstr ""
 msgid "Quad Gantry Level"
 msgstr "ガントリーレベル"
 
-msgid "Raise Nozzle"
+msgid "RESUME ABORTED !"
+msgstr ""
+
+msgid "Raise Platform"
 msgstr ""
 
 msgid "Recover"
@@ -705,6 +819,9 @@ msgid "Recover Hard"
 msgstr ""
 
 msgid "Recover Soft"
+msgstr ""
+
+msgid "Recovery in progress, please wait"
 msgstr ""
 
 msgid "Reference"
@@ -719,8 +836,23 @@ msgstr ""
 msgid "Rename/Move:"
 msgstr ""
 
+msgid "Reprint"
+msgstr ""
+
 msgid "Restart"
 msgstr "再起動"
+
+msgid "Restore Factory Settings"
+msgstr ""
+
+msgid "Restores your print job after a power outage"
+msgstr ""
+
+msgid "Restoring Left extruder temperature, this may take some time"
+msgstr ""
+
+msgid "Restoring Right extruder temperature, this may take some time"
+msgstr ""
 
 msgid "Resume"
 msgstr "再開"
@@ -742,6 +874,12 @@ msgstr "再試行"
 
 msgid "Retrying"
 msgstr "再試行中"
+
+msgid "Right extruder detects no filament, please load filament and continue."
+msgstr ""
+
+msgid "Right extruder not hot enough, will reheat and continue."
+msgstr ""
 
 msgid "Rotation invalid"
 msgstr ""
@@ -775,6 +913,9 @@ msgid "Screws Adjust"
 msgstr ""
 
 msgid "Screws not used:"
+msgstr ""
+
+msgid "Select Model"
 msgstr ""
 
 msgid "Send"
@@ -828,20 +969,26 @@ msgstr ""
 msgid "Square Corner Velocity"
 msgstr "四隅の速度"
 
+msgid "Stable"
+msgstr ""
+
 msgid "Standby"
 msgstr ""
 
 msgid "Start"
 msgstr "開始"
 
+msgid "Start testing the Z offset value of the second nozzle?\n"
+msgstr ""
+
+msgid "Starting WiFi Association"
+msgstr "Wifi接続開始中"
+
 msgid "Starting recovery for"
 msgstr "回復中"
 
 msgid "Starting update for"
 msgstr "更新中"
-
-msgid "Swaps buttons if they are on top of each other, affects other panels"
-msgstr ""
 
 msgid "System"
 msgstr "システム"
@@ -858,13 +1005,22 @@ msgstr ""
 msgid "Temperature"
 msgstr "温度"
 
+msgid "The last print job was not completed continue printing?"
+msgstr ""
+
 msgid "The system doesn't meet the minimum requirement"
 msgstr ""
 
-msgid "This panel supports up-to 9 screws in a 3x3 Grid"
+msgid "The system will reboot!"
 msgstr ""
 
-msgid "This will affect screw positions and mesh graph"
+msgid "This operation is about to print the model"
+msgstr ""
+
+msgid "This operation will clear the user data"
+msgstr ""
+
+msgid "This panel supports up-to 9 screws in a 3x3 Grid"
 msgstr ""
 
 msgid "Timeout for screen black-out or power-off"
@@ -906,10 +1062,22 @@ msgstr "アップロード済"
 msgid "Useful for un-responsive touchscreens"
 msgstr ""
 
+msgid "User"
+msgstr ""
+
+msgid "Version Selection"
+msgstr ""
+
 msgid "WebRTC is not supported by the backend trying Stream"
 msgstr ""
 
+msgid "Welcome"
+msgstr ""
+
 msgid "Working"
+msgstr ""
+
+msgid "X Offset"
 msgstr ""
 
 msgid "XY Move Speed (mm/s)"
@@ -918,16 +1086,31 @@ msgstr "XY移動速度 (mm/s)"
 msgid "XY Speed (mm/s)"
 msgstr "XY速度 (mm/s)"
 
+msgid "XY offset Calibrate"
+msgstr ""
+
+msgid "Y Offset"
+msgstr ""
+
 msgid "Z Calibrate"
 msgstr "Z軸 校正"
 
 msgid "Z Move Speed (mm/s)"
 msgstr "X軸 移動速度 (mm/s)"
 
+msgid "Z Offset"
+msgstr ""
+
 msgid "Z Speed (mm/s)"
 msgstr ""
 
 msgid "Z Tilt"
+msgstr ""
+
+msgid "Z axis cannot move to negative values"
+msgstr ""
+
+msgid "Z offset Calibrate"
 msgstr ""
 
 msgid "Z offset:"
@@ -940,6 +1123,9 @@ msgstr[0] ""
 msgid "day"
 msgid_plural "days"
 msgstr[0] ""
+
+msgid "factory settings"
+msgstr ""
 
 msgid "hour"
 msgid_plural "hours"
@@ -967,7 +1153,7 @@ msgstr ""
 msgid "mm³/s"
 msgstr ""
 
-msgid "model select"
+msgid "offset fine tune"
 msgstr ""
 
 msgid "s"
@@ -976,6 +1162,21 @@ msgstr ""
 msgid "second"
 msgid_plural "seconds"
 msgstr[0] ""
+
+#~ msgid "Channel"
+#~ msgstr "チャンネル"
+
+#~ msgid "Invert X"
+#~ msgstr "X軸を反対にする"
+
+#~ msgid "Invert Y"
+#~ msgstr "Y軸を反対にする"
+
+#~ msgid "Invert Z"
+#~ msgstr "X軸を反対にする"
+
+#~ msgid "Printer Connections"
+#~ msgstr "プリンター接続状態"
 
 #~ msgid "Hide"
 #~ msgstr "隠す"
@@ -998,9 +1199,6 @@ msgstr[0] ""
 #~ msgid "Print Time"
 #~ msgstr "印刷時間"
 
-#~ msgid "Starting WiFi Association"
-#~ msgstr "Wifi接続開始中"
-
 #~ msgid "Bed screw configuration:"
 #~ msgstr "ベッドスクリュー設定:"
 
@@ -1009,9 +1207,6 @@ msgstr[0] ""
 
 #~ msgid "Max Acceleration to Deceleration"
 #~ msgstr "減速時の最大加速度"
-
-#~ msgid "Continue"
-#~ msgstr "継続"
 
 #~ msgid "Actions"
 #~ msgstr "操作"

@@ -83,6 +83,7 @@ class KlipperScreen(Gtk.Window):
         GLib.set_prgname('KlipperScreen')
         self.blanking_time = 600
         self.use_dpms = True
+        self.offset_fine_tune_mode = False
         self.apiclient = None
         self.dialogs = []
         self.confirm = None
@@ -780,7 +781,10 @@ class KlipperScreen(Gtk.Window):
             self.show_panel("extrude")
 
     def state_printing(self):
-        self.show_panel("job_status", remove_all=True)
+        if not self.offset_fine_tune_mode:
+            self.show_panel("job_status", remove_all=True)
+        else:
+            self.show_panel("offset_fine_tune", remove_all=True)
 
     def state_ready(self, wait=True):
         # Do not return to main menu if completing a job, timeouts/user input will return
@@ -797,6 +801,8 @@ class KlipperScreen(Gtk.Window):
         else:
             self.show_panel("main_menu", remove_all=True, items=self._config.get_menu_items("__main"))
             self._ws.klippy.gcode_script("UPDATE_DELAYED_GCODE ID=_CHECK_POWER_LOSS_RECOVERY DURATION=0.1")
+        if self.offset_fine_tune_mode:
+            self.offset_fine_tune_mode = False
 
     def state_startup(self):
         self.printer_initializing(_("Klipper is attempting to start"))
@@ -870,7 +876,7 @@ class KlipperScreen(Gtk.Window):
         elif action == "notify_update_response":
             if 'message' in data and 'Error' in data['message']:
                 logging.error(f"{action}:{data['message']}")
-                self.show_popup_message(data['message'], 3, from_ws=True)
+                self.show_popup_message(_(data['message'].lstrip()), 3, from_ws=True)
                 if "KlipperScreen" in data['message']:
                     self.restart_ks()
         elif action == "notify_power_changed":
@@ -889,9 +895,9 @@ class KlipperScreen(Gtk.Window):
                         return
                     self.prompt.decode(action)
                 elif data.startswith("echo: "):
-                    self.show_popup_message(data[6:], 1, from_ws=True)
+                    self.show_popup_message(_(data[6:].lstrip()), 1, from_ws=True)
                 elif data.startswith("!! "):
-                    self.show_popup_message(data[3:], 3, from_ws=True)
+                    self.show_popup_message(_(data[3:].lstrip()), 3, from_ws=True)
                 elif "unknown" in data.lower() and \
                         not ("TESTZ" in data or "MEASURE_AXES_NOISE" in data or "ACCELEROMETER_QUERY" in data):
                     self.show_popup_message(data, from_ws=True)

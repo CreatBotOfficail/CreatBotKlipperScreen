@@ -131,6 +131,17 @@ class ModelConfig:
             except Exception as e:
                 logging.error(f"Copy error printer file: {e.stderr}")
 
+    def wirte_hostname(self, device_name):
+
+        try:
+            current_hostname = subprocess.check_output(["hostname"], text=True).strip()
+            logging.info(f"Current hostname: {current_hostname}")
+            subprocess.run(["hostnamectl", "set-hostname", device_name], check=True)
+            logging.info(f"Hostname has been changed to: {device_name}")
+        except subprocess.CalledProcessError as e:
+            logging.error(f"Error while executing command: {e}")
+        except Exception as e:
+            logging.error(f"An unexpected error occurred: {e}")
 
     def generate_config(self, model):
         model_name = model
@@ -139,6 +150,7 @@ class ModelConfig:
         self.write_mdns_config(device_name)
         self.write_device_name_config(device_name)
         self.wirte_printer_config(model)
+        self.wirte_hostname(device_name)
         os.system("systemctl restart klipper.service")
         os.system("systemctl restart moonraker.service")
         os.system("systemctl restart KlipperScreen.service")

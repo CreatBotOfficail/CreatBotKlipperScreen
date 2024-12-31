@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KlipperScreen\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-15 10:10+0800\n"
+"POT-Creation-Date: 2024-12-31 14:57+0800\n"
 "PO-Revision-Date: 2024-06-07 08:09+0000\n"
 "Last-Translator: gallegonovato <fran-carro@hotmail.es>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/klipperscreen/"
@@ -23,11 +23,38 @@ msgstr ""
 msgid "%s will be updated to version"
 msgstr "%s será actualizado a la versión"
 
+msgid "(Disable during dual extrusion printing)"
+msgstr ""
+
 msgid "(default)"
 msgstr "(por defecto)"
 
+msgid ""
+"1. Ensure that all fixed components have been properly removed before "
+"proceeding."
+msgstr ""
+
+msgid ""
+"1. For first use, refer to the accompanying diagram to disassemble the fixed "
+"components of the X, Y, and Z axes."
+msgstr ""
+
+msgid ""
+"2. Once the disassembly is complete, click the 'Next' button to proceed."
+msgstr ""
+
+msgid ""
+"2. Press the 'Raise Platform' button to lift the platform and remove the "
+"items underneath."
+msgstr ""
+
 msgid "24 Hour Time"
 msgstr "Formato 24 Horas"
+
+msgid ""
+"3. Once the operation is complete, click the 'Finish' button to conclude the "
+"process."
+msgstr ""
 
 msgid "A FIRMWARE_RESTART may fix the issue."
 msgstr "Un FIRMWARE_RESTART puede solucionar el problema."
@@ -44,8 +71,14 @@ msgstr "Aceleración:"
 msgid "Accept"
 msgstr "Aceptar"
 
+msgid "Adaptive Bed Leveling"
+msgstr ""
+
 msgid "Add profile"
 msgstr "Agregar perfil"
+
+msgid "Advanced"
+msgstr ""
 
 msgid "Air filter fan"
 msgstr ""
@@ -67,8 +100,8 @@ msgstr "Aplicar %s%.3f al sensor?"
 msgid "Archived"
 msgstr "Archivados"
 
-msgid "Are you sure do you want to exclude the object?"
-msgstr "¿Está seguro de excluir este objeto?"
+msgid "Are you sure you want to exclude the object?"
+msgstr ""
 
 msgid "Are you sure you want to run Emergency Stop?"
 msgstr "¿Parada de emergencia?"
@@ -79,6 +112,9 @@ msgstr "¿Está seguro de que desea detener la calibración?"
 msgid "Are you sure you wish to cancel this print?"
 msgstr "¿Está seguro que desea cancelar esta impresión?"
 
+msgid "Are you sure you wish to cancel this test?"
+msgstr ""
+
 msgid "Are you sure you wish to disable motors?"
 msgstr "¿Está seguro que desea desactivar los motores?"
 
@@ -88,11 +124,23 @@ msgstr "¿Está seguro que desea reiniciar el sistema?"
 msgid "Are you sure you wish to shutdown the system?"
 msgstr "¿Está seguro que desea apagar el sistema?"
 
+msgid "Are you sure?\n"
+msgstr ""
+
 msgid "Asks for confirmation before stopping"
 msgstr "Pedir confirmación antes de parar"
 
 msgid "Auto"
 msgstr "Auto"
+
+msgid "Auto Calibration"
+msgstr ""
+
+msgid "Auto Change Nozzle"
+msgstr ""
+
+msgid "Auto change nozzle when filament runout"
+msgstr ""
 
 msgid "Auto-calibrate"
 msgstr "Auto-Calibrar"
@@ -112,11 +160,20 @@ msgstr "Nivelar cama"
 msgid "Bed Mesh"
 msgstr "Malla de cama"
 
+msgid "Beta"
+msgstr ""
+
 msgid "Both"
 msgstr "Ambos"
 
 msgid "Calibrate"
 msgstr "Calibrar"
+
+msgid "Calibrate Nozzle XY Offset"
+msgstr ""
+
+msgid "Calibrate Nozzle Z Offset"
+msgstr ""
 
 msgid "Calibrated"
 msgstr "Calibrado"
@@ -151,9 +208,6 @@ msgstr "Cambia la apariencia de la interfaz"
 msgid "Changes how the time remaining is calculated"
 msgstr "Cambia la forma en que se calcula el tiempo restante"
 
-msgid "Channel"
-msgstr "Canal"
-
 msgid "Check ADXL Wiring"
 msgstr "Verificar cableado del ADXL"
 
@@ -162,6 +216,9 @@ msgstr "Buscando actualizaciones, espere por favor..."
 
 msgid "Clear"
 msgstr "Limpiar"
+
+msgid "Clear Internal G-code Files"
+msgstr ""
 
 msgid "Close"
 msgstr "Cerrar"
@@ -174,6 +231,9 @@ msgstr "Completado"
 
 msgid "Confirm Emergency Stop"
 msgstr "Confirmar Emergencia"
+
+msgid "Confirm factory reset?\n"
+msgstr ""
 
 msgid "Connected"
 msgstr "Conectado"
@@ -191,6 +251,9 @@ msgstr "La conexión falló"
 msgid "Console"
 msgstr "Consola"
 
+msgid "Continue"
+msgstr "Continuar"
+
 msgid "Cooldown"
 msgstr "Enfriar"
 
@@ -206,6 +269,9 @@ msgstr ""
 msgid "Current percentage and graph line"
 msgstr "Porcentaje actual y línea del gráfico"
 
+msgid "Current value:"
+msgstr ""
+
 msgid "DPMS has failed to load and has been disabled"
 msgstr "DPMS falló en cargar y ha sido deshabilitado"
 
@@ -217,6 +283,9 @@ msgstr "Borrar Carpeta?"
 
 msgid "Delete File?"
 msgstr "¿Borrar archivo?"
+
+msgid "Dev"
+msgstr ""
 
 msgid "Disable Motors"
 msgstr "Desactivar Motores"
@@ -412,6 +481,9 @@ msgstr "Iniciar calibración PID para:"
 msgid "Input Shaper"
 msgstr "Corrección de Resonancias"
 
+msgid "Inserted"
+msgstr ""
+
 msgid "Insufficient privileges"
 msgstr "Privilegios insuficientes"
 
@@ -426,15 +498,6 @@ msgstr "Contraseña invalida"
 
 msgid "Inversely affects the icon size"
 msgstr "Afecta inversamente al tamaño del icono"
-
-msgid "Invert X"
-msgstr "Invertir X"
-
-msgid "Invert Y"
-msgstr "Invertir Y"
-
-msgid "Invert Z"
-msgstr "Invertir Z"
 
 msgid "It may take more than 5 minutes depending on the heater power."
 msgstr ""
@@ -488,8 +551,17 @@ msgstr "Capa:"
 msgid "Leds"
 msgstr "Leds"
 
+msgid "Left extruder detects no filament, please load filament and continue."
+msgstr ""
+
+msgid "Left extruder not hot enough, will reheat and continue."
+msgstr ""
+
 msgid "Left:"
 msgstr "Restante:"
+
+msgid "Leveling only in the actual print area"
+msgstr ""
 
 msgid "Limits"
 msgstr "Limites"
@@ -502,9 +574,6 @@ msgstr "Cargando..."
 
 msgid "Lost Connection to Moonraker"
 msgstr "Conexión perdida a Moonraker"
-
-msgid "Lower Nozzle"
-msgstr "Bajar Boquilla"
 
 msgid "Macros"
 msgstr "Macros"
@@ -523,9 +592,6 @@ msgstr "Aceleración Máxima"
 
 msgid "Max Velocity"
 msgstr "Max. Velocidad"
-
-msgid "Max:"
-msgstr "Máx:"
 
 msgid "Maximum"
 msgstr "Maximo"
@@ -575,6 +641,9 @@ msgstr "Mover"
 msgid "Move Distance (mm)"
 msgstr "Mover Distancia (mm)"
 
+msgid "Move setting"
+msgstr ""
+
 msgid "Name"
 msgstr "Nombre"
 
@@ -596,14 +665,26 @@ msgstr "Nunca"
 msgid "New"
 msgstr "Nuevo"
 
+msgid "Next"
+msgstr ""
+
 msgid "No elegible macros:"
 msgstr "No hay macros elegibles:"
+
+msgid "No info available"
+msgstr ""
 
 msgid "No mesh has been loaded"
 msgstr "Ninguna malla cargada"
 
 msgid "No wireless interface has been found"
 msgstr "Ninguna interfaz inalámbrica encontrada"
+
+msgid "Not Enabled"
+msgstr ""
+
+msgid "Not Inserted"
+msgstr ""
 
 msgid "Not all screens support this"
 msgstr "No todas las pantallas soportan esto"
@@ -620,7 +701,25 @@ msgstr "Registro de notificaciones vacío"
 msgid "Notifications"
 msgstr "Notificaciones"
 
+msgid "Noting! All extruders filament has been run out."
+msgstr ""
+
+msgid "Noting! Left extruder filament has been run out."
+msgstr ""
+
+msgid "Noting! Right extruder filament has been run out."
+msgstr ""
+
+msgid "Nozzle Offset"
+msgstr ""
+
 msgid "Numpad"
+msgstr ""
+
+msgid "Offset"
+msgstr ""
+
+msgid "Ok"
 msgstr ""
 
 msgid "Only for the move panel"
@@ -630,16 +729,16 @@ msgstr "Solo para el panel de movimiento"
 msgid "Outdated by %d"
 msgstr "Desactualizado por %d"
 
-msgid "PSK for"
-msgstr "PSK para"
+msgid "Pack"
+msgstr ""
 
 msgid "Package will be updated"
 msgid_plural "Packages will be updated"
 msgstr[0] "Paquete será actualizado"
 msgstr[1] "Paquetes serán actualizados"
 
-msgid "Password saved"
-msgstr "Contraseña guardada"
+msgid "Password"
+msgstr ""
 
 msgid "Pause"
 msgstr "Pausar"
@@ -653,6 +752,15 @@ msgstr "¿Actualizar Todo?"
 msgid "Pins"
 msgstr "Pines"
 
+msgid "Please ensure that the Probe Calibrate has been performed"
+msgstr ""
+
+msgid "Please enter a valid number"
+msgstr ""
+
+msgid "Please load two different colored PLA filaments!"
+msgstr ""
+
 msgid "Please recompile and flash the micro-controller."
 msgstr "Por favor recompile y flashee el micro-controlador."
 
@@ -661,6 +769,9 @@ msgstr "Espere, por favor"
 
 msgid "Power"
 msgstr "Energía"
+
+msgid "Power Loss Recovery"
+msgstr ""
 
 msgid "Power On Printer"
 msgstr "Encender Impresora"
@@ -683,14 +794,14 @@ msgstr "Control de impresión"
 msgid "Printer"
 msgstr "Impresora"
 
-msgid "Printer Connections"
-msgstr "Conexiones a impresoras"
-
 msgid "Printer Select"
 msgstr "Seleccionar Impresora"
 
 msgid "Printing"
 msgstr "Imprimiendo"
+
+msgid "Probe Calibrate"
+msgstr ""
 
 msgid "Probe Offset"
 msgstr "Desfase del sensor"
@@ -704,8 +815,11 @@ msgstr "Proporcione KlipperScreen.log cuando pida ayuda.\n"
 msgid "Quad Gantry Level"
 msgstr "Nivelación cuádruple"
 
-msgid "Raise Nozzle"
-msgstr "Levantar Boquilla"
+msgid "RESUME ABORTED !"
+msgstr ""
+
+msgid "Raise Platform"
+msgstr ""
 
 msgid "Recover"
 msgstr "Recuperar"
@@ -715,6 +829,9 @@ msgstr "Recuperar Hard"
 
 msgid "Recover Soft"
 msgstr "Recuperar Soft"
+
+msgid "Recovery in progress, please wait"
+msgstr ""
 
 msgid "Reference"
 msgstr "Referencia"
@@ -728,8 +845,23 @@ msgstr "Red eliminada"
 msgid "Rename/Move:"
 msgstr "Renombrar/Mover:"
 
+msgid "Reprint"
+msgstr ""
+
 msgid "Restart"
 msgstr "Reiniciar"
+
+msgid "Restore Factory Settings"
+msgstr ""
+
+msgid "Restores your print job after a power outage"
+msgstr ""
+
+msgid "Restoring Left extruder temperature, this may take some time"
+msgstr ""
+
+msgid "Restoring Right extruder temperature, this may take some time"
+msgstr ""
 
 msgid "Resume"
 msgstr "Continuar"
@@ -751,6 +883,12 @@ msgstr "Reintentar"
 
 msgid "Retrying"
 msgstr "Reintentando"
+
+msgid "Right extruder detects no filament, please load filament and continue."
+msgstr ""
+
+msgid "Right extruder not hot enough, will reheat and continue."
+msgstr ""
 
 msgid "Rotation invalid"
 msgstr "Rotación no válida"
@@ -785,6 +923,9 @@ msgstr "Ajustar Tornillos"
 
 msgid "Screws not used:"
 msgstr "Tornillos no utilizados:"
+
+msgid "Select Model"
+msgstr ""
 
 msgid "Send"
 msgstr "Enviar"
@@ -837,21 +978,26 @@ msgstr "Velocidad:"
 msgid "Square Corner Velocity"
 msgstr "Velocidad de esquina"
 
+msgid "Stable"
+msgstr ""
+
 msgid "Standby"
 msgstr "En espera"
 
 msgid "Start"
 msgstr "Iniciar"
 
+msgid "Start testing the Z offset value of the second nozzle?\n"
+msgstr ""
+
+msgid "Starting WiFi Association"
+msgstr "Iniciando asociación WiFi"
+
 msgid "Starting recovery for"
 msgstr "Iniciando recuperación de"
 
 msgid "Starting update for"
 msgstr "Iniciando actualización de"
-
-msgid "Swaps buttons if they are on top of each other, affects other panels"
-msgstr ""
-"Intercambiar los botones si están uno encima del otro, afecta a otros paneles"
 
 msgid "System"
 msgstr "Sistema"
@@ -868,14 +1014,23 @@ msgstr "Sistema:"
 msgid "Temperature"
 msgstr "Temperatura"
 
+msgid "The last print job was not completed continue printing?"
+msgstr ""
+
 msgid "The system doesn't meet the minimum requirement"
 msgstr "El sistema no cumple con los requisitos mínimos"
 
+msgid "The system will reboot!"
+msgstr ""
+
+msgid "This operation is about to print the model"
+msgstr ""
+
+msgid "This operation will clear the user data"
+msgstr ""
+
 msgid "This panel supports up-to 9 screws in a 3x3 Grid"
 msgstr "Este panel soporta hasta 9 tornillos en una grilla 3x3"
-
-msgid "This will affect screw positions and mesh graph"
-msgstr ""
 
 msgid "Timeout for screen black-out or power-off"
 msgstr "Tiempo hasta apagar u oscurecer la pantalla"
@@ -918,10 +1073,22 @@ msgstr "Subido"
 msgid "Useful for un-responsive touchscreens"
 msgstr "Útil para pantallas táctiles poco responsivas"
 
+msgid "User"
+msgstr ""
+
+msgid "Version Selection"
+msgstr ""
+
 msgid "WebRTC is not supported by the backend trying Stream"
 msgstr "WebRTC no es soportado por el backend intentando con Stream"
 
+msgid "Welcome"
+msgstr ""
+
 msgid "Working"
+msgstr ""
+
+msgid "X Offset"
 msgstr ""
 
 msgid "XY Move Speed (mm/s)"
@@ -930,17 +1097,32 @@ msgstr "Velocidad XY (mm/s)"
 msgid "XY Speed (mm/s)"
 msgstr "XY Velocidad (mm/s)"
 
+msgid "XY offset Calibrate"
+msgstr ""
+
+msgid "Y Offset"
+msgstr ""
+
 msgid "Z Calibrate"
 msgstr "Calibrar Z"
 
 msgid "Z Move Speed (mm/s)"
 msgstr "Velocidad Z (mm/s)"
 
+msgid "Z Offset"
+msgstr ""
+
 msgid "Z Speed (mm/s)"
 msgstr "Z Velocidad (mm/s)"
 
 msgid "Z Tilt"
 msgstr "Inclinación Z"
+
+msgid "Z axis cannot move to negative values"
+msgstr ""
+
+msgid "Z offset Calibrate"
+msgstr ""
 
 msgid "Z offset:"
 msgstr "Desfase Z:"
@@ -954,6 +1136,9 @@ msgid "day"
 msgid_plural "days"
 msgstr[0] "día"
 msgstr[1] "días"
+
+msgid "factory settings"
+msgstr ""
 
 msgid "hour"
 msgid_plural "hours"
@@ -983,7 +1168,7 @@ msgstr "mm/s²"
 msgid "mm³/s"
 msgstr "mm³/s"
 
-msgid "model select"
+msgid "offset fine tune"
 msgstr ""
 
 msgid "s"
@@ -993,6 +1178,35 @@ msgid "second"
 msgid_plural "seconds"
 msgstr[0] "segundo"
 msgstr[1] "segundos"
+
+#~ msgid "Channel"
+#~ msgstr "Canal"
+
+#~ msgid "Invert X"
+#~ msgstr "Invertir X"
+
+#~ msgid "Invert Y"
+#~ msgstr "Invertir Y"
+
+#~ msgid "Invert Z"
+#~ msgstr "Invertir Z"
+
+#~ msgid "Lower Nozzle"
+#~ msgstr "Bajar Boquilla"
+
+#~ msgid "Max:"
+#~ msgstr "Máx:"
+
+#~ msgid "PSK for"
+#~ msgstr "PSK para"
+
+#~ msgid "Printer Connections"
+#~ msgstr "Conexiones a impresoras"
+
+#~ msgid "Swaps buttons if they are on top of each other, affects other panels"
+#~ msgstr ""
+#~ "Intercambiar los botones si están uno encima del otro, afecta a otros "
+#~ "paneles"
 
 #~ msgid "Do you want to let KlipperScreen try to solve the issue?"
 #~ msgstr "¿Quieres dejar que KlipperScreen intente resolver el problema?"
@@ -1030,17 +1244,11 @@ msgstr[1] "segundos"
 #~ msgid "Print Time"
 #~ msgstr "Tiempo de impresión"
 
-#~ msgid "Starting WiFi Association"
-#~ msgstr "Iniciando asociación WiFi"
-
 #~ msgid "Warning"
 #~ msgstr "Advertencia"
 
 #~ msgid "dBm"
 #~ msgstr "dBm"
-
-#~ msgid "Select"
-#~ msgstr "Seleccionar"
 
 #~ msgid "Bed screw configuration:"
 #~ msgstr "Configuración de tornillos:"
@@ -1057,9 +1265,6 @@ msgstr[1] "segundos"
 
 #~ msgid "Max Acceleration to Deceleration"
 #~ msgstr "Max. Aceleración a Desaceleración"
-
-#~ msgid "Continue"
-#~ msgstr "Continuar"
 
 #~ msgid "Fullscreen"
 #~ msgstr "Pantalla Completa"

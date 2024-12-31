@@ -212,6 +212,58 @@ class MoonrakerApi:
             *args
         )
 
+    def get_database_list(self, callback=None, *args):
+        return self._ws.send_method(
+            "server.database.list",
+            {},
+            callback,
+            *args
+        )
+
+    def add_database_item(self, namespace, key=None, val=None, callback=None, *args):
+        return self._ws.send_method(
+            "server.database.post_item",
+            {"namespace": namespace,
+             "key": key,
+             "value": val},
+            callback,
+            *args
+        )
+
+    def get_database_item(self, namespace, key=None, callback=None, *args):
+        return self._ws.send_method(
+            "server.database.get_item",
+            {"namespace": namespace,
+             "key": key},
+            callback,
+            *args
+        )
+
+    def del_database_item(self, namespace, key=None, callback=None, *args):
+        return self._ws.send_method(
+            "server.database.delete_item",
+            {"namespace": namespace,
+             "key": key},
+            callback,
+            *args
+        )
+
+    def reset_job_history_totals(self, callback=None, *args):
+        return self._ws.send_method(
+            "server.history.reset_totals",
+            {},
+            callback,
+            *args
+        )
+
+    def del_all_job_history(self, callback=None, *args):
+        return self._ws.send_method(
+            "server.history.delete_job",
+            {"all": "true"},
+            callback,
+            *args
+        )
+
     def object_subscription(self, updates):
         logging.debug("Sending printer.objects.subscribe")
         return self._ws.send_method(

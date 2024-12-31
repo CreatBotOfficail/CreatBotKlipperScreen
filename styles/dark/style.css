@@ -188,6 +188,17 @@ scale-mark {
     color: @yellow-opa-100;
 }
 
+checkbutton,
+checkbutton check{
+    min-height: 1.1em;
+    min-width: 1.1em;
+    padding: 5px;
+}
+
+checkbutton:checked check{
+    background: @blue-opa-100;
+}
+
 scrollbar,
 scrollbar button,
 scrollbar trough {

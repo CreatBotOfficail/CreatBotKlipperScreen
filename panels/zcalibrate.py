@@ -50,8 +50,8 @@ class Panel(ScreenPanel):
             if isinstance(label, Gtk.Label):
                 label.set_ellipsize(Pango.EllipsizeMode.END)
         self.buttons = {
-            'zpos': self._gtk.Button('z-farther', _("Raise Nozzle"), 'color4'),
-            'zneg': self._gtk.Button('z-closer', _("Lower Nozzle"), 'color1'),
+            'zpos': self._gtk.Button('z-farther', "Z+", 'color4'),
+            'zneg': self._gtk.Button('z-closer', "Z-", 'color1'),
             'start': self._gtk.Button('resume', _("Start"), 'color3'),
             'complete': self._gtk.Button('complete', _('Accept'), 'color3'),
             'cancel': self._gtk.Button('cancel', _('Abort'), 'color2'),
@@ -86,24 +86,16 @@ class Panel(ScreenPanel):
 
         grid = Gtk.Grid(column_homogeneous=True)
         if self._screen.vertical_mode:
-            if self._config.get_config()["main"].getboolean("invert_z", False):
-                grid.attach(self.buttons['zpos'], 0, 2, 1, 1)
-                grid.attach(self.buttons['zneg'], 0, 1, 1, 1)
-            else:
-                grid.attach(self.buttons['zpos'], 0, 1, 1, 1)
-                grid.attach(self.buttons['zneg'], 0, 2, 1, 1)
+            grid.attach(self.buttons['zpos'], 0, 2, 1, 1)
+            grid.attach(self.buttons['zneg'], 0, 1, 1, 1)
             grid.attach(self.buttons['start'], 0, 0, 1, 1)
             grid.attach(pos, 1, 0, 1, 1)
             grid.attach(self.buttons['complete'], 1, 1, 1, 1)
             grid.attach(self.buttons['cancel'], 1, 2, 1, 1)
             grid.attach(distances, 0, 3, 2, 1)
         else:
-            if self._config.get_config()["main"].getboolean("invert_z", False):
-                grid.attach(self.buttons['zpos'], 0, 1, 1, 1)
-                grid.attach(self.buttons['zneg'], 0, 0, 1, 1)
-            else:
-                grid.attach(self.buttons['zpos'], 0, 0, 1, 1)
-                grid.attach(self.buttons['zneg'], 0, 1, 1, 1)
+            grid.attach(self.buttons['zpos'], 0, 1, 1, 1)
+            grid.attach(self.buttons['zneg'], 0, 0, 1, 1)
             grid.attach(self.buttons['start'], 1, 0, 1, 1)
             grid.attach(pos, 1, 1, 1, 1)
             grid.attach(self.buttons['complete'], 2, 0, 1, 1)
@@ -184,7 +176,11 @@ class Panel(ScreenPanel):
             self._screen._ws.klippy.gcode_script("BED_MESH_CLEAR")
             if method == "probe":
                 self._move_to_position(*self._get_probe_location())
-                self._screen._ws.klippy.gcode_script("PROBE_CALIBRATE")
+                if len(self._printer.get_tools()) > 1 and "T0" in self._printer.get_gcode_macros():
+                    active_extruder = self._printer.get_stat("toolhead", "extruder")
+                    if active_extruder != "extruder":
+                        self._screen._ws.klippy.gcode_script("T0")
+                self._screen._ws.klippy.gcode_script("PROBE_CALIBRATE PROBE_SPEED=100")
             elif method == "delta":
                 self._screen._ws.klippy.gcode_script("DELTA_CALIBRATE")
             elif method == "delta_manual":
