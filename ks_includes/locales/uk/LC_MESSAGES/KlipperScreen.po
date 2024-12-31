@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 24-05-17 16.20\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-15 10:10+0800\n"
+"POT-Creation-Date: 2024-12-31 14:57+0800\n"
 "PO-Revision-Date: 2024-05-12 16:39+0300\n"
 "Last-Translator: Andrii Komarovskyi\n"
 "Language-Team: Andrii Komarovskyi\n"
@@ -15,19 +15,46 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Poedit 3.4.1\n"
 
 #, python-format
 msgid "%s will be updated to version"
 msgstr "%s буде оновлено до версії"
 
+msgid "(Disable during dual extrusion printing)"
+msgstr ""
+
 msgid "(default)"
 msgstr "(за замовчуванням)"
 
+msgid ""
+"1. Ensure that all fixed components have been properly removed before "
+"proceeding."
+msgstr ""
+
+msgid ""
+"1. For first use, refer to the accompanying diagram to disassemble the fixed "
+"components of the X, Y, and Z axes."
+msgstr ""
+
+msgid ""
+"2. Once the disassembly is complete, click the 'Next' button to proceed."
+msgstr ""
+
+msgid ""
+"2. Press the 'Raise Platform' button to lift the platform and remove the "
+"items underneath."
+msgstr ""
+
 msgid "24 Hour Time"
 msgstr "24-годинний час"
+
+msgid ""
+"3. Once the operation is complete, click the 'Finish' button to conclude the "
+"process."
+msgstr ""
 
 msgid "A FIRMWARE_RESTART may fix the issue."
 msgstr "РЕСТАРТ ПРОШИВКИ може вирішити проблему."
@@ -44,8 +71,14 @@ msgstr "Прискорення:"
 msgid "Accept"
 msgstr "Прийняти"
 
+msgid "Adaptive Bed Leveling"
+msgstr ""
+
 msgid "Add profile"
 msgstr "Додати профіль"
+
+msgid "Advanced"
+msgstr ""
 
 msgid "Air filter fan"
 msgstr ""
@@ -67,8 +100,8 @@ msgstr "Застосувати зміщення %s%.3f до зонда?"
 msgid "Archived"
 msgstr "Архівовано"
 
-msgid "Are you sure do you want to exclude the object?"
-msgstr "Ви впевнені, що бажаєте виключити об’єкт?"
+msgid "Are you sure you want to exclude the object?"
+msgstr ""
 
 msgid "Are you sure you want to run Emergency Stop?"
 msgstr "Ви впевнені, що хочете зробити аварійну зупинку?"
@@ -79,6 +112,9 @@ msgstr "Ви впевнені, що хочете припинити калібр
 msgid "Are you sure you wish to cancel this print?"
 msgstr "Ви впевнені, що хочете скасувати друк?"
 
+msgid "Are you sure you wish to cancel this test?"
+msgstr ""
+
 msgid "Are you sure you wish to disable motors?"
 msgstr "Ви дійсно бажаєте вимкнути двигуни?"
 
@@ -88,11 +124,23 @@ msgstr "Ви впевнені, що хочете перезавантажити 
 msgid "Are you sure you wish to shutdown the system?"
 msgstr "Ви впевнені, що хочете вимкнути систему?"
 
+msgid "Are you sure?\n"
+msgstr ""
+
 msgid "Asks for confirmation before stopping"
 msgstr "Запитує підтвердження перед зупинкою"
 
 msgid "Auto"
 msgstr "Автоматично"
+
+msgid "Auto Calibration"
+msgstr "Автоматичне калібрування"
+
+msgid "Auto Change Nozzle"
+msgstr ""
+
+msgid "Auto change nozzle when filament runout"
+msgstr ""
 
 msgid "Auto-calibrate"
 msgstr "Автоматичне калібрування"
@@ -112,11 +160,20 @@ msgstr "Вирівнювання столу"
 msgid "Bed Mesh"
 msgstr "Сітка столу"
 
+msgid "Beta"
+msgstr ""
+
 msgid "Both"
 msgstr "Обидва"
 
 msgid "Calibrate"
 msgstr "Калібрування"
+
+msgid "Calibrate Nozzle XY Offset"
+msgstr ""
+
+msgid "Calibrate Nozzle Z Offset"
+msgstr ""
 
 msgid "Calibrated"
 msgstr "Відкалібрований"
@@ -151,9 +208,6 @@ msgstr "Змінює вигляд інтерфейсу"
 msgid "Changes how the time remaining is calculated"
 msgstr "Змінює спосіб розрахунку часу, що залишився"
 
-msgid "Channel"
-msgstr "Канал"
-
 msgid "Check ADXL Wiring"
 msgstr "Перевірте підключення ADXL"
 
@@ -162,6 +216,9 @@ msgstr "Перевірка оновлень, зачекайте..."
 
 msgid "Clear"
 msgstr "Очистити"
+
+msgid "Clear Internal G-code Files"
+msgstr ""
 
 msgid "Close"
 msgstr "Закрити"
@@ -174,6 +231,9 @@ msgstr "Завершено"
 
 msgid "Confirm Emergency Stop"
 msgstr "Підтвердьте АВАРІЙНУ ЗУПИНКУ"
+
+msgid "Confirm factory reset?\n"
+msgstr ""
 
 msgid "Connected"
 msgstr "Підключено"
@@ -191,6 +251,9 @@ msgstr ""
 msgid "Console"
 msgstr "Консоль"
 
+msgid "Continue"
+msgstr "Продовжити"
+
 msgid "Cooldown"
 msgstr "Охолодження"
 
@@ -206,6 +269,9 @@ msgstr ""
 msgid "Current percentage and graph line"
 msgstr "Поточний відсоток і лінія графіка"
 
+msgid "Current value:"
+msgstr ""
+
 msgid "DPMS has failed to load and has been disabled"
 msgstr "DPMS не вдалося завантажити, і його було вимкнено"
 
@@ -217,6 +283,9 @@ msgstr "Видалити Теку?"
 
 msgid "Delete File?"
 msgstr "Видалити файл?"
+
+msgid "Dev"
+msgstr ""
 
 msgid "Disable Motors"
 msgstr "Вимкнути мотори"
@@ -412,6 +481,9 @@ msgstr "Почати калібрування PID для:"
 msgid "Input Shaper"
 msgstr "Input Shaper"
 
+msgid "Inserted"
+msgstr ""
+
 msgid "Insufficient privileges"
 msgstr ""
 
@@ -426,15 +498,6 @@ msgstr "Недійсний пароль"
 
 msgid "Inversely affects the icon size"
 msgstr "Зворотно впливає на розмір іконки"
-
-msgid "Invert X"
-msgstr "Інвертувати X"
-
-msgid "Invert Y"
-msgstr "Інвертувати Y"
-
-msgid "Invert Z"
-msgstr "Інвертувати Z"
 
 msgid "It may take more than 5 minutes depending on the heater power."
 msgstr "Залежно від потужності обігрівача це може зайняти більше 5 хвилин."
@@ -487,8 +550,17 @@ msgstr "Шар:"
 msgid "Leds"
 msgstr "Освітлення"
 
+msgid "Left extruder detects no filament, please load filament and continue."
+msgstr ""
+
+msgid "Left extruder not hot enough, will reheat and continue."
+msgstr ""
+
 msgid "Left:"
 msgstr "Залишилось:"
+
+msgid "Leveling only in the actual print area"
+msgstr ""
 
 msgid "Limits"
 msgstr "Ліміти"
@@ -501,9 +573,6 @@ msgstr "Завантаження..."
 
 msgid "Lost Connection to Moonraker"
 msgstr "Втрачено з’єднання з Moonraker"
-
-msgid "Lower Nozzle"
-msgstr "Опустити сопло"
 
 msgid "Macros"
 msgstr "Макрос"
@@ -522,9 +591,6 @@ msgstr "Макс. прискорення"
 
 msgid "Max Velocity"
 msgstr "Макс. швидкість"
-
-msgid "Max:"
-msgstr ""
 
 msgid "Maximum"
 msgstr "Максимум"
@@ -574,6 +640,9 @@ msgstr "Переміщення"
 msgid "Move Distance (mm)"
 msgstr "Переміщення (мм)"
 
+msgid "Move setting"
+msgstr ""
+
 msgid "Name"
 msgstr "Ім'я"
 
@@ -595,14 +664,26 @@ msgstr "Ніколи"
 msgid "New"
 msgstr "Новий"
 
+msgid "Next"
+msgstr ""
+
 msgid "No elegible macros:"
 msgstr "Непридатний макрос:"
+
+msgid "No info available"
+msgstr ""
 
 msgid "No mesh has been loaded"
 msgstr "Не завантажено жодної сітки"
 
 msgid "No wireless interface has been found"
 msgstr "Бездротовий інтерфейс не знайдено"
+
+msgid "Not Enabled"
+msgstr ""
+
+msgid "Not Inserted"
+msgstr ""
 
 msgid "Not all screens support this"
 msgstr "Не всі екрани підтримують це"
@@ -619,7 +700,25 @@ msgstr "Журнал сповіщень порожній"
 msgid "Notifications"
 msgstr "Сповіщення"
 
+msgid "Noting! All extruders filament has been run out."
+msgstr ""
+
+msgid "Noting! Left extruder filament has been run out."
+msgstr ""
+
+msgid "Noting! Right extruder filament has been run out."
+msgstr ""
+
+msgid "Nozzle Offset"
+msgstr ""
+
 msgid "Numpad"
+msgstr ""
+
+msgid "Offset"
+msgstr ""
+
+msgid "Ok"
 msgstr ""
 
 msgid "Only for the move panel"
@@ -629,8 +728,8 @@ msgstr ""
 msgid "Outdated by %d"
 msgstr "Застаріло на %d"
 
-msgid "PSK for"
-msgstr "PSK для"
+msgid "Pack"
+msgstr ""
 
 msgid "Package will be updated"
 msgid_plural "Packages will be updated"
@@ -638,8 +737,8 @@ msgstr[0] "Пакет буде оновлено"
 msgstr[1] "Пакети будуть оновлені"
 msgstr[2] "Пакети будуть оновлені"
 
-msgid "Password saved"
-msgstr "Пароль збережено"
+msgid "Password"
+msgstr ""
 
 msgid "Pause"
 msgstr "Пауза"
@@ -653,6 +752,15 @@ msgstr "Виконати повне оновлення?"
 msgid "Pins"
 msgstr "Піни"
 
+msgid "Please ensure that the Probe Calibrate has been performed"
+msgstr ""
+
+msgid "Please enter a valid number"
+msgstr ""
+
+msgid "Please load two different colored PLA filaments!"
+msgstr ""
+
 msgid "Please recompile and flash the micro-controller."
 msgstr "Будь ласка, перекомпілюйте та перепрошійте мікроконтролер."
 
@@ -661,6 +769,9 @@ msgstr ""
 
 msgid "Power"
 msgstr "Живлення"
+
+msgid "Power Loss Recovery"
+msgstr ""
 
 msgid "Power On Printer"
 msgstr "Увімкнути принтер"
@@ -683,14 +794,14 @@ msgstr "Контроль друку"
 msgid "Printer"
 msgstr "Принтер"
 
-msgid "Printer Connections"
-msgstr "Підключення принтера"
-
 msgid "Printer Select"
 msgstr "Вибір Принтера"
 
 msgid "Printing"
 msgstr "Друк"
+
+msgid "Probe Calibrate"
+msgstr ""
 
 msgid "Probe Offset"
 msgstr "Зміщення зонда"
@@ -704,8 +815,11 @@ msgstr "Надайте KlipperScreen.log, коли звертаєтесь по �
 msgid "Quad Gantry Level"
 msgstr "Портальне вирівнювання"
 
-msgid "Raise Nozzle"
-msgstr "Підняти сопло"
+msgid "RESUME ABORTED !"
+msgstr ""
+
+msgid "Raise Platform"
+msgstr ""
 
 msgid "Recover"
 msgstr "Відновити"
@@ -715,6 +829,9 @@ msgstr "Відновити все"
 
 msgid "Recover Soft"
 msgstr "Відновити легко"
+
+msgid "Recovery in progress, please wait"
+msgstr ""
 
 msgid "Reference"
 msgstr "Довідка"
@@ -728,8 +845,23 @@ msgstr ""
 msgid "Rename/Move:"
 msgstr "Перейменувати/перемістити:"
 
+msgid "Reprint"
+msgstr ""
+
 msgid "Restart"
 msgstr "Перезапуск"
+
+msgid "Restore Factory Settings"
+msgstr ""
+
+msgid "Restores your print job after a power outage"
+msgstr ""
+
+msgid "Restoring Left extruder temperature, this may take some time"
+msgstr ""
+
+msgid "Restoring Right extruder temperature, this may take some time"
+msgstr ""
 
 msgid "Resume"
 msgstr "ВІДНОВИТИ"
@@ -751,6 +883,12 @@ msgstr "Повторіть спробу"
 
 msgid "Retrying"
 msgstr "Повторна спроба"
+
+msgid "Right extruder detects no filament, please load filament and continue."
+msgstr ""
+
+msgid "Right extruder not hot enough, will reheat and continue."
+msgstr ""
 
 msgid "Rotation invalid"
 msgstr "Обертання недійсне"
@@ -785,6 +923,9 @@ msgstr "Регулювання гвинтів"
 
 msgid "Screws not used:"
 msgstr "Гвинти не використовувалися:"
+
+msgid "Select Model"
+msgstr ""
 
 msgid "Send"
 msgstr "Надіслати"
@@ -837,20 +978,26 @@ msgstr "Швидкість:"
 msgid "Square Corner Velocity"
 msgstr "Квадратно кутова швидкість"
 
+msgid "Stable"
+msgstr ""
+
 msgid "Standby"
 msgstr "Очікування"
 
 msgid "Start"
 msgstr "СТАРТ"
 
+msgid "Start testing the Z offset value of the second nozzle?\n"
+msgstr ""
+
+msgid "Starting WiFi Association"
+msgstr "Запуск асоціації WiFi"
+
 msgid "Starting recovery for"
 msgstr "Початок відновлення для"
 
 msgid "Starting update for"
 msgstr "Початок оновлення для"
-
-msgid "Swaps buttons if they are on top of each other, affects other panels"
-msgstr ""
 
 msgid "System"
 msgstr "Системна"
@@ -867,14 +1014,23 @@ msgstr ""
 msgid "Temperature"
 msgstr "Температура"
 
+msgid "The last print job was not completed continue printing?"
+msgstr ""
+
 msgid "The system doesn't meet the minimum requirement"
+msgstr ""
+
+msgid "The system will reboot!"
+msgstr ""
+
+msgid "This operation is about to print the model"
+msgstr ""
+
+msgid "This operation will clear the user data"
 msgstr ""
 
 msgid "This panel supports up-to 9 screws in a 3x3 Grid"
 msgstr "Ця панель підтримує до 9 гвинтів у сітці 3x3"
-
-msgid "This will affect screw positions and mesh graph"
-msgstr ""
 
 msgid "Timeout for screen black-out or power-off"
 msgstr "Тайм-аут для затемнення екрана або вимкнення живлення"
@@ -915,10 +1071,22 @@ msgstr "Завантажено"
 msgid "Useful for un-responsive touchscreens"
 msgstr "Корисно для сенсорних екранів, які не реагують"
 
+msgid "User"
+msgstr ""
+
+msgid "Version Selection"
+msgstr ""
+
 msgid "WebRTC is not supported by the backend trying Stream"
 msgstr "WebRTC не підтримується бекендом, який намагається використати Stream"
 
+msgid "Welcome"
+msgstr ""
+
 msgid "Working"
+msgstr ""
+
+msgid "X Offset"
 msgstr ""
 
 msgid "XY Move Speed (mm/s)"
@@ -927,17 +1095,32 @@ msgstr "Швидкість переміщення XY (мм/с)"
 msgid "XY Speed (mm/s)"
 msgstr "Швидкість XY (мм/с)"
 
+msgid "XY offset Calibrate"
+msgstr ""
+
+msgid "Y Offset"
+msgstr ""
+
 msgid "Z Calibrate"
 msgstr "Калібровка Z"
 
 msgid "Z Move Speed (mm/s)"
 msgstr "Швидкість переміщення Z (мм/с)"
 
+msgid "Z Offset"
+msgstr ""
+
 msgid "Z Speed (mm/s)"
 msgstr "Швидкість Z (мм/с)"
 
 msgid "Z Tilt"
 msgstr "Z Нахил"
+
+msgid "Z axis cannot move to negative values"
+msgstr ""
+
+msgid "Z offset Calibrate"
+msgstr ""
 
 msgid "Z offset:"
 msgstr "Зміщення по Z:"
@@ -953,6 +1136,9 @@ msgid_plural "days"
 msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
+
+msgid "factory settings"
+msgstr ""
 
 msgid "hour"
 msgid_plural "hours"
@@ -984,7 +1170,7 @@ msgstr "мм/с²"
 msgid "mm³/s"
 msgstr "мм/с³"
 
-msgid "model select"
+msgid "offset fine tune"
 msgstr ""
 
 msgid "s"
@@ -995,6 +1181,27 @@ msgid_plural "seconds"
 msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
+
+#~ msgid "Channel"
+#~ msgstr "Канал"
+
+#~ msgid "Invert X"
+#~ msgstr "Інвертувати X"
+
+#~ msgid "Invert Y"
+#~ msgstr "Інвертувати Y"
+
+#~ msgid "Invert Z"
+#~ msgstr "Інвертувати Z"
+
+#~ msgid "Lower Nozzle"
+#~ msgstr "Опустити сопло"
+
+#~ msgid "PSK for"
+#~ msgstr "PSK для"
+
+#~ msgid "Printer Connections"
+#~ msgstr "Підключення принтера"
 
 #~ msgid "Hide"
 #~ msgstr "Сховати"
@@ -1026,17 +1233,11 @@ msgstr[2] ""
 #~ msgid "Print Time"
 #~ msgstr "Час друку"
 
-#~ msgid "Starting WiFi Association"
-#~ msgstr "Запуск асоціації WiFi"
-
 #~ msgid "Warning"
 #~ msgstr "Попередження"
 
 #~ msgid "dBm"
 #~ msgstr "dBm"
-
-#~ msgid "Select"
-#~ msgstr "Вибрати"
 
 #~ msgid "Bed screw configuration:"
 #~ msgstr "Конфігурація гвинтів ліжка:"
@@ -1053,9 +1254,6 @@ msgstr[2] ""
 
 #~ msgid "Max Acceleration to Deceleration"
 #~ msgstr "Макс. прискорення до гальмування"
-
-#~ msgid "Continue"
-#~ msgstr "Продовжити"
 
 #~ msgid "Fullscreen"
 #~ msgstr "Повноекранний режим"
@@ -1133,9 +1331,6 @@ msgstr[2] ""
 
 #~ msgid "Sort by: "
 #~ msgstr "Сортувати за: "
-
-#~ msgid "Auto Calibration"
-#~ msgstr "Автоматичне калібрування"
 
 #~ msgid "Manual Calibration"
 #~ msgstr "Ручне калібрування"

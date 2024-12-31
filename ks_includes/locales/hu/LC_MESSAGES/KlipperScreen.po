@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KlipperScreen\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-15 10:10+0800\n"
+"POT-Creation-Date: 2024-12-31 14:57+0800\n"
 "PO-Revision-Date: 2024-06-01 12:09+0000\n"
 "Last-Translator: \"Zs.Antal\" <zsikaiantal@icloud.com>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/klipperscreen/"
@@ -18,11 +18,38 @@ msgstr ""
 msgid "%s will be updated to version"
 msgstr "%s verzió frissítése"
 
+msgid "(Disable during dual extrusion printing)"
+msgstr ""
+
 msgid "(default)"
 msgstr "(alapértelmezett)"
 
+msgid ""
+"1. Ensure that all fixed components have been properly removed before "
+"proceeding."
+msgstr ""
+
+msgid ""
+"1. For first use, refer to the accompanying diagram to disassemble the fixed "
+"components of the X, Y, and Z axes."
+msgstr ""
+
+msgid ""
+"2. Once the disassembly is complete, click the 'Next' button to proceed."
+msgstr ""
+
+msgid ""
+"2. Press the 'Raise Platform' button to lift the platform and remove the "
+"items underneath."
+msgstr ""
+
 msgid "24 Hour Time"
 msgstr "24 órás idő"
+
+msgid ""
+"3. Once the operation is complete, click the 'Finish' button to conclude the "
+"process."
+msgstr ""
 
 msgid "A FIRMWARE_RESTART may fix the issue."
 msgstr "A FIRMWARE_RESTART javíthatja a problémát."
@@ -39,8 +66,14 @@ msgstr "Gyorsulás:"
 msgid "Accept"
 msgstr "Elfogad"
 
+msgid "Adaptive Bed Leveling"
+msgstr ""
+
 msgid "Add profile"
 msgstr "Profil hozzáadása"
+
+msgid "Advanced"
+msgstr ""
 
 msgid "Air filter fan"
 msgstr ""
@@ -62,8 +95,8 @@ msgstr "Alkalmazod a(z) %s%.3f szonda eltolást?"
 msgid "Archived"
 msgstr "Archivált"
 
-msgid "Are you sure do you want to exclude the object?"
-msgstr "Biztosan kizárod az objektumot?"
+msgid "Are you sure you want to exclude the object?"
+msgstr ""
 
 msgid "Are you sure you want to run Emergency Stop?"
 msgstr "Biztosan vészleállítást szeretnél?"
@@ -74,6 +107,9 @@ msgstr "Biztos, hogy leállítod a kalibrálást?"
 msgid "Are you sure you wish to cancel this print?"
 msgstr "Biztosan megszakítod ezt a nyomtatást?"
 
+msgid "Are you sure you wish to cancel this test?"
+msgstr ""
+
 msgid "Are you sure you wish to disable motors?"
 msgstr "Biztosan le szeretnéd tiltani a motorokat?"
 
@@ -83,11 +119,23 @@ msgstr "Biztos, hogy újra akarod indítani a rendszert?"
 msgid "Are you sure you wish to shutdown the system?"
 msgstr "Biztos, hogy le szeretnéd állítani a rendszert?"
 
+msgid "Are you sure?\n"
+msgstr ""
+
 msgid "Asks for confirmation before stopping"
 msgstr "Megállítás előtt megerősítést kér"
 
 msgid "Auto"
 msgstr "Auto"
+
+msgid "Auto Calibration"
+msgstr ""
+
+msgid "Auto Change Nozzle"
+msgstr ""
+
+msgid "Auto change nozzle when filament runout"
+msgstr ""
 
 msgid "Auto-calibrate"
 msgstr "Automatikus kalibrálás"
@@ -107,11 +155,20 @@ msgstr "Ágyszint"
 msgid "Bed Mesh"
 msgstr "Ágyháló"
 
+msgid "Beta"
+msgstr ""
+
 msgid "Both"
 msgstr "Mindkettő"
 
 msgid "Calibrate"
 msgstr "Kalibrálás"
+
+msgid "Calibrate Nozzle XY Offset"
+msgstr ""
+
+msgid "Calibrate Nozzle Z Offset"
+msgstr ""
 
 msgid "Calibrated"
 msgstr "Kalibrálva"
@@ -146,9 +203,6 @@ msgstr "Megváltoztatja a felület kinézetét"
 msgid "Changes how the time remaining is calculated"
 msgstr "Megváltoztatja a hátralévő idő kiszámításának módját"
 
-msgid "Channel"
-msgstr "Csatorna"
-
 msgid "Check ADXL Wiring"
 msgstr "Ellenőrizd az ADXL kábelezését"
 
@@ -157,6 +211,9 @@ msgstr "Frissítések keresése, kérlek, várj..."
 
 msgid "Clear"
 msgstr "Tisztítás"
+
+msgid "Clear Internal G-code Files"
+msgstr ""
 
 msgid "Close"
 msgstr "Bezárás"
@@ -169,6 +226,9 @@ msgstr "Befejezve"
 
 msgid "Confirm Emergency Stop"
 msgstr "Vészleállítás megerősítése"
+
+msgid "Confirm factory reset?\n"
+msgstr ""
 
 msgid "Connected"
 msgstr "Csatlakoztatva"
@@ -186,6 +246,9 @@ msgstr ""
 msgid "Console"
 msgstr "Konzol"
 
+msgid "Continue"
+msgstr ""
+
 msgid "Cooldown"
 msgstr "Lehűtés"
 
@@ -201,6 +264,9 @@ msgstr ""
 msgid "Current percentage and graph line"
 msgstr "Aktuális százalék és grafikonvonal"
 
+msgid "Current value:"
+msgstr ""
+
 msgid "DPMS has failed to load and has been disabled"
 msgstr "A DPMS betöltése nem sikerült, ezért le van tiltva"
 
@@ -212,6 +278,9 @@ msgstr "Törlöd a könyvtárat?"
 
 msgid "Delete File?"
 msgstr "Törlöd a fájlt?"
+
+msgid "Dev"
+msgstr ""
 
 msgid "Disable Motors"
 msgstr "Motorok letiltása"
@@ -407,6 +476,9 @@ msgstr "PID-kalibráció kezdeményezése:"
 msgid "Input Shaper"
 msgstr "Bemeneti alakító"
 
+msgid "Inserted"
+msgstr ""
+
 msgid "Insufficient privileges"
 msgstr ""
 
@@ -421,15 +493,6 @@ msgstr "Érvénytelen jelszó"
 
 msgid "Inversely affects the icon size"
 msgstr "Fordítottan befolyásolja az ikon méretét"
-
-msgid "Invert X"
-msgstr "Fordított X"
-
-msgid "Invert Y"
-msgstr "Fordított Y"
-
-msgid "Invert Z"
-msgstr "Fordított Z"
 
 msgid "It may take more than 5 minutes depending on the heater power."
 msgstr "A fűtés teljesítményétől függően több mint 5 percig tarthat."
@@ -481,8 +544,17 @@ msgstr "Réteg:"
 msgid "Leds"
 msgstr "LED-ek"
 
+msgid "Left extruder detects no filament, please load filament and continue."
+msgstr ""
+
+msgid "Left extruder not hot enough, will reheat and continue."
+msgstr ""
+
 msgid "Left:"
 msgstr "Maradt:"
+
+msgid "Leveling only in the actual print area"
+msgstr ""
 
 msgid "Limits"
 msgstr "Korlátok"
@@ -495,9 +567,6 @@ msgstr "Betöltés..."
 
 msgid "Lost Connection to Moonraker"
 msgstr "Megszakadt a kapcsolat a Moonraker-el"
-
-msgid "Lower Nozzle"
-msgstr "Fúvóka le"
 
 msgid "Macros"
 msgstr "Makrók"
@@ -516,9 +585,6 @@ msgstr "Max gyorsulás"
 
 msgid "Max Velocity"
 msgstr "Max sebesség"
-
-msgid "Max:"
-msgstr ""
 
 msgid "Maximum"
 msgstr "Maximum"
@@ -568,6 +634,9 @@ msgstr "Mozgatás"
 msgid "Move Distance (mm)"
 msgstr "Mozgás távolsága (mm)"
 
+msgid "Move setting"
+msgstr ""
+
 msgid "Name"
 msgstr "Név"
 
@@ -589,14 +658,26 @@ msgstr "Soha"
 msgid "New"
 msgstr "Új"
 
+msgid "Next"
+msgstr ""
+
 msgid "No elegible macros:"
 msgstr "Nincs választható makró:"
+
+msgid "No info available"
+msgstr ""
 
 msgid "No mesh has been loaded"
 msgstr "Nincs háló betöltve"
 
 msgid "No wireless interface has been found"
 msgstr "Nem található vezeték nélküli interfész"
+
+msgid "Not Enabled"
+msgstr ""
+
+msgid "Not Inserted"
+msgstr ""
 
 msgid "Not all screens support this"
 msgstr "Nem minden képernyő támogatja ezt"
@@ -613,7 +694,25 @@ msgstr "Értesítési napló üres"
 msgid "Notifications"
 msgstr "Értesítések"
 
+msgid "Noting! All extruders filament has been run out."
+msgstr ""
+
+msgid "Noting! Left extruder filament has been run out."
+msgstr ""
+
+msgid "Noting! Right extruder filament has been run out."
+msgstr ""
+
+msgid "Nozzle Offset"
+msgstr ""
+
 msgid "Numpad"
+msgstr ""
+
+msgid "Offset"
+msgstr ""
+
+msgid "Ok"
 msgstr ""
 
 msgid "Only for the move panel"
@@ -623,16 +722,16 @@ msgstr "Csak a mozgatópanelhez"
 msgid "Outdated by %d"
 msgstr "%d által elavult"
 
-msgid "PSK for"
-msgstr "PSK-nak"
+msgid "Pack"
+msgstr ""
 
 msgid "Package will be updated"
 msgid_plural "Packages will be updated"
 msgstr[0] "A csomag frissítésre kerül"
 msgstr[1] "Csomag frissül"
 
-msgid "Password saved"
-msgstr "Jelszó mentve"
+msgid "Password"
+msgstr ""
 
 msgid "Pause"
 msgstr "Szünet"
@@ -646,6 +745,15 @@ msgstr "Teljes frissítést szeretnél?"
 msgid "Pins"
 msgstr "Tűk"
 
+msgid "Please ensure that the Probe Calibrate has been performed"
+msgstr ""
+
+msgid "Please enter a valid number"
+msgstr ""
+
+msgid "Please load two different colored PLA filaments!"
+msgstr ""
+
 msgid "Please recompile and flash the micro-controller."
 msgstr "Fordítsd újra és frissítsd a mikrovezérlőt."
 
@@ -654,6 +762,9 @@ msgstr "Kérlek várj"
 
 msgid "Power"
 msgstr "Bekapcsolás"
+
+msgid "Power Loss Recovery"
+msgstr ""
 
 msgid "Power On Printer"
 msgstr "Nyomtató bekapcsolása"
@@ -676,14 +787,14 @@ msgstr "Nyomtatásvezérlés"
 msgid "Printer"
 msgstr "Nyomtató"
 
-msgid "Printer Connections"
-msgstr "Nyomtató csatlakozások"
-
 msgid "Printer Select"
 msgstr "Nyomtató kiválasztása"
 
 msgid "Printing"
 msgstr "Nyomtatás"
+
+msgid "Probe Calibrate"
+msgstr ""
 
 msgid "Probe Offset"
 msgstr "Szonda eltolás"
@@ -697,8 +808,11 @@ msgstr "Csatold a KlipperScreen.log-ot, amikor segítséget kérsz.\n"
 msgid "Quad Gantry Level"
 msgstr "Négy állású szint"
 
-msgid "Raise Nozzle"
-msgstr "Fúvóka fel"
+msgid "RESUME ABORTED !"
+msgstr ""
+
+msgid "Raise Platform"
+msgstr ""
 
 msgid "Recover"
 msgstr "Visszaállítása"
@@ -708,6 +822,9 @@ msgstr "Hárdver visszaállítása"
 
 msgid "Recover Soft"
 msgstr "Program visszaállítása"
+
+msgid "Recovery in progress, please wait"
+msgstr ""
 
 msgid "Reference"
 msgstr "Referencia"
@@ -721,8 +838,23 @@ msgstr ""
 msgid "Rename/Move:"
 msgstr "Átnevez/Áthelyez:"
 
+msgid "Reprint"
+msgstr ""
+
 msgid "Restart"
 msgstr "Újraindítás"
+
+msgid "Restore Factory Settings"
+msgstr ""
+
+msgid "Restores your print job after a power outage"
+msgstr ""
+
+msgid "Restoring Left extruder temperature, this may take some time"
+msgstr ""
+
+msgid "Restoring Right extruder temperature, this may take some time"
+msgstr ""
 
 msgid "Resume"
 msgstr "Folytat"
@@ -744,6 +876,12 @@ msgstr "Újra"
 
 msgid "Retrying"
 msgstr "Újrapróbálkozás"
+
+msgid "Right extruder detects no filament, please load filament and continue."
+msgstr ""
+
+msgid "Right extruder not hot enough, will reheat and continue."
+msgstr ""
 
 msgid "Rotation invalid"
 msgstr "Forgatás érvénytelen"
@@ -778,6 +916,9 @@ msgstr "Csavarok beállítása"
 
 msgid "Screws not used:"
 msgstr "Nem használt csavarok:"
+
+msgid "Select Model"
+msgstr ""
 
 msgid "Send"
 msgstr "Küldés"
@@ -830,21 +971,26 @@ msgstr "Sebesség:"
 msgid "Square Corner Velocity"
 msgstr "Sebesség a sarkokban"
 
+msgid "Stable"
+msgstr ""
+
 msgid "Standby"
 msgstr "Készenlét"
 
 msgid "Start"
 msgstr "Indítás"
 
+msgid "Start testing the Z offset value of the second nozzle?\n"
+msgstr ""
+
+msgid "Starting WiFi Association"
+msgstr "A WiFi társítás elindítása"
+
 msgid "Starting recovery for"
 msgstr "Helyreállítás megkezdése"
 
 msgid "Starting update for"
 msgstr "Frissítés indítása"
-
-msgid "Swaps buttons if they are on top of each other, affects other panels"
-msgstr ""
-"Felcseréli a gombokat, ha egymáson vannak, más panelekre is hatással van"
 
 msgid "System"
 msgstr "Rendszer"
@@ -861,14 +1007,23 @@ msgstr ""
 msgid "Temperature"
 msgstr "Hőfok"
 
+msgid "The last print job was not completed continue printing?"
+msgstr ""
+
 msgid "The system doesn't meet the minimum requirement"
+msgstr ""
+
+msgid "The system will reboot!"
+msgstr ""
+
+msgid "This operation is about to print the model"
+msgstr ""
+
+msgid "This operation will clear the user data"
 msgstr ""
 
 msgid "This panel supports up-to 9 screws in a 3x3 Grid"
 msgstr "Ez a panel akár 9 csavart is elbír egy 3x3-as rácsban"
-
-msgid "This will affect screw positions and mesh graph"
-msgstr "Ez befolyásolja a csavarok helyzetét és a háló grafikonját"
 
 msgid "Timeout for screen black-out or power-off"
 msgstr "A képernyő elsötétítés / kikapcsolás időkorlátja"
@@ -910,10 +1065,22 @@ msgstr "Feltöltve"
 msgid "Useful for un-responsive touchscreens"
 msgstr "Hasznos a nem reagáló érintőképernyőknél"
 
+msgid "User"
+msgstr ""
+
+msgid "Version Selection"
+msgstr ""
+
 msgid "WebRTC is not supported by the backend trying Stream"
 msgstr "A WebRTC-t a Streamet próbáló háttérrendszer nem támogatja"
 
+msgid "Welcome"
+msgstr ""
+
 msgid "Working"
+msgstr ""
+
+msgid "X Offset"
 msgstr ""
 
 msgid "XY Move Speed (mm/s)"
@@ -922,17 +1089,32 @@ msgstr "XY Mozgási seb. (mm/s)"
 msgid "XY Speed (mm/s)"
 msgstr "XY Sebesség (mm/s)"
 
+msgid "XY offset Calibrate"
+msgstr ""
+
+msgid "Y Offset"
+msgstr ""
+
 msgid "Z Calibrate"
 msgstr "Z Kalibrálás"
 
 msgid "Z Move Speed (mm/s)"
 msgstr "Z Mozgási seb. (mm/s)"
 
+msgid "Z Offset"
+msgstr ""
+
 msgid "Z Speed (mm/s)"
 msgstr "Z Sebesség (mm/s)"
 
 msgid "Z Tilt"
 msgstr "Z Dőlés"
+
+msgid "Z axis cannot move to negative values"
+msgstr ""
+
+msgid "Z offset Calibrate"
+msgstr ""
 
 msgid "Z offset:"
 msgstr "Z eltolás:"
@@ -946,6 +1128,9 @@ msgid "day"
 msgid_plural "days"
 msgstr[0] "nap"
 msgstr[1] "napok"
+
+msgid "factory settings"
+msgstr ""
 
 msgid "hour"
 msgid_plural "hours"
@@ -975,7 +1160,7 @@ msgstr "mm/s²"
 msgid "mm³/s"
 msgstr "mm³/s"
 
-msgid "model select"
+msgid "offset fine tune"
 msgstr ""
 
 msgid "s"
@@ -985,6 +1170,34 @@ msgid "second"
 msgid_plural "seconds"
 msgstr[0] "másodperc"
 msgstr[1] "másodperc"
+
+#~ msgid "Channel"
+#~ msgstr "Csatorna"
+
+#~ msgid "Invert X"
+#~ msgstr "Fordított X"
+
+#~ msgid "Invert Y"
+#~ msgstr "Fordított Y"
+
+#~ msgid "Invert Z"
+#~ msgstr "Fordított Z"
+
+#~ msgid "Lower Nozzle"
+#~ msgstr "Fúvóka le"
+
+#~ msgid "PSK for"
+#~ msgstr "PSK-nak"
+
+#~ msgid "Printer Connections"
+#~ msgstr "Nyomtató csatlakozások"
+
+#~ msgid "Swaps buttons if they are on top of each other, affects other panels"
+#~ msgstr ""
+#~ "Felcseréli a gombokat, ha egymáson vannak, más panelekre is hatással van"
+
+#~ msgid "This will affect screw positions and mesh graph"
+#~ msgstr "Ez befolyásolja a csavarok helyzetét és a háló grafikonját"
 
 #~ msgid "Hide"
 #~ msgstr "Elrejt"
@@ -1016,17 +1229,11 @@ msgstr[1] "másodperc"
 #~ msgid "Print Time"
 #~ msgstr "Nyomtatási idő"
 
-#~ msgid "Starting WiFi Association"
-#~ msgstr "A WiFi társítás elindítása"
-
 #~ msgid "Warning"
 #~ msgstr "Figyelem"
 
 #~ msgid "dBm"
 #~ msgstr "dBm"
-
-#~ msgid "Select"
-#~ msgstr "Kijelölés"
 
 #~ msgid "Bed screw configuration:"
 #~ msgstr "Az ágycsavar konfigurációja:"

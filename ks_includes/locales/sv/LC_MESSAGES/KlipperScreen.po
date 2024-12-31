@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-15 10:10+0800\n"
+"POT-Creation-Date: 2024-12-31 14:57+0800\n"
 "PO-Revision-Date: 2024-04-13 16:48+0000\n"
 "Last-Translator: bittin1ddc447d824349b2 <bittin@reimu.nl>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/klipperscreen/"
@@ -23,11 +23,38 @@ msgstr ""
 msgid "%s will be updated to version"
 msgstr "%s uppdateras till version"
 
+msgid "(Disable during dual extrusion printing)"
+msgstr ""
+
 msgid "(default)"
 msgstr "(standard)"
 
+msgid ""
+"1. Ensure that all fixed components have been properly removed before "
+"proceeding."
+msgstr ""
+
+msgid ""
+"1. For first use, refer to the accompanying diagram to disassemble the fixed "
+"components of the X, Y, and Z axes."
+msgstr ""
+
+msgid ""
+"2. Once the disassembly is complete, click the 'Next' button to proceed."
+msgstr ""
+
+msgid ""
+"2. Press the 'Raise Platform' button to lift the platform and remove the "
+"items underneath."
+msgstr ""
+
 msgid "24 Hour Time"
 msgstr "24 timmars tid"
+
+msgid ""
+"3. Once the operation is complete, click the 'Finish' button to conclude the "
+"process."
+msgstr ""
 
 msgid "A FIRMWARE_RESTART may fix the issue."
 msgstr "En FIRMWARE_RESTART kan lösa problemet."
@@ -44,8 +71,14 @@ msgstr "Acceleration:"
 msgid "Accept"
 msgstr "Godkänn"
 
+msgid "Adaptive Bed Leveling"
+msgstr ""
+
 msgid "Add profile"
 msgstr "Lägg till profil"
+
+msgid "Advanced"
+msgstr ""
 
 msgid "Air filter fan"
 msgstr ""
@@ -67,8 +100,8 @@ msgstr "Tillämpa %s%.3f offset på sonden?"
 msgid "Archived"
 msgstr "Arkiverad"
 
-msgid "Are you sure do you want to exclude the object?"
-msgstr "Är du säker på att du vill utesluta objektet?"
+msgid "Are you sure you want to exclude the object?"
+msgstr ""
 
 msgid "Are you sure you want to run Emergency Stop?"
 msgstr "Är du säker på att du vill köra Nödstopp?"
@@ -79,6 +112,9 @@ msgstr ""
 msgid "Are you sure you wish to cancel this print?"
 msgstr "Är du säker på att du vill avbryta denna utskrift?"
 
+msgid "Are you sure you wish to cancel this test?"
+msgstr ""
+
 msgid "Are you sure you wish to disable motors?"
 msgstr "Är du säker på att du vill inaktivera motorer?"
 
@@ -88,11 +124,23 @@ msgstr "Är du säker på att du vill starta om systemet?"
 msgid "Are you sure you wish to shutdown the system?"
 msgstr "Är du säker på att du vill stänga av systemet?"
 
+msgid "Are you sure?\n"
+msgstr ""
+
 msgid "Asks for confirmation before stopping"
 msgstr ""
 
 msgid "Auto"
 msgstr "Automatisk"
+
+msgid "Auto Calibration"
+msgstr ""
+
+msgid "Auto Change Nozzle"
+msgstr ""
+
+msgid "Auto change nozzle when filament runout"
+msgstr ""
 
 msgid "Auto-calibrate"
 msgstr "Auto-kalibrera"
@@ -112,11 +160,20 @@ msgstr "Bädd Level"
 msgid "Bed Mesh"
 msgstr "Bädd Mesh"
 
+msgid "Beta"
+msgstr ""
+
 msgid "Both"
 msgstr ""
 
 msgid "Calibrate"
 msgstr "Kalibrera"
+
+msgid "Calibrate Nozzle XY Offset"
+msgstr ""
+
+msgid "Calibrate Nozzle Z Offset"
+msgstr ""
 
 msgid "Calibrated"
 msgstr "Kalibrerad"
@@ -151,9 +208,6 @@ msgstr ""
 msgid "Changes how the time remaining is calculated"
 msgstr ""
 
-msgid "Channel"
-msgstr "Kanal"
-
 msgid "Check ADXL Wiring"
 msgstr "Kontrollera ADXL-ledningar"
 
@@ -162,6 +216,9 @@ msgstr "Söker efter uppdateringar, vänta..."
 
 msgid "Clear"
 msgstr "Rensa"
+
+msgid "Clear Internal G-code Files"
+msgstr ""
 
 msgid "Close"
 msgstr "Stäng"
@@ -174,6 +231,9 @@ msgstr "Färdig"
 
 msgid "Confirm Emergency Stop"
 msgstr "Bekräfta nödstopp"
+
+msgid "Confirm factory reset?\n"
+msgstr ""
 
 msgid "Connected"
 msgstr "Ansluten"
@@ -191,6 +251,9 @@ msgstr ""
 msgid "Console"
 msgstr "Konsol"
 
+msgid "Continue"
+msgstr "Fortsätt"
+
 msgid "Cooldown"
 msgstr "Nedkylning"
 
@@ -206,6 +269,9 @@ msgstr ""
 msgid "Current percentage and graph line"
 msgstr ""
 
+msgid "Current value:"
+msgstr ""
+
 msgid "DPMS has failed to load and has been disabled"
 msgstr "DPMS kunde inte laddas och har inaktiverats"
 
@@ -217,6 +283,9 @@ msgstr "Ta bort katalogen?"
 
 msgid "Delete File?"
 msgstr "Radera fil?"
+
+msgid "Dev"
+msgstr ""
 
 msgid "Disable Motors"
 msgstr "Inaktivera motorer"
@@ -412,6 +481,9 @@ msgstr "Initiera en PID-kalibrering för:"
 msgid "Input Shaper"
 msgstr "Input Shaper"
 
+msgid "Inserted"
+msgstr ""
+
 msgid "Insufficient privileges"
 msgstr ""
 
@@ -426,15 +498,6 @@ msgstr "Felaktigt lösenord"
 
 msgid "Inversely affects the icon size"
 msgstr ""
-
-msgid "Invert X"
-msgstr "Invertera X"
-
-msgid "Invert Y"
-msgstr "Invertera Y"
-
-msgid "Invert Z"
-msgstr "Invertera Z"
 
 msgid "It may take more than 5 minutes depending on the heater power."
 msgstr "Det kan ta mer än 5 minuter beroende på värmarens effekt."
@@ -486,8 +549,17 @@ msgstr "Lager:"
 msgid "Leds"
 msgstr "Lysdioder"
 
+msgid "Left extruder detects no filament, please load filament and continue."
+msgstr ""
+
+msgid "Left extruder not hot enough, will reheat and continue."
+msgstr ""
+
 msgid "Left:"
 msgstr "Återstående:"
+
+msgid "Leveling only in the actual print area"
+msgstr ""
 
 msgid "Limits"
 msgstr "Begränsningar"
@@ -500,9 +572,6 @@ msgstr "Läser in..."
 
 msgid "Lost Connection to Moonraker"
 msgstr ""
-
-msgid "Lower Nozzle"
-msgstr "Sänk munstycket"
 
 msgid "Macros"
 msgstr "Makron"
@@ -521,9 +590,6 @@ msgstr "Max acceleration"
 
 msgid "Max Velocity"
 msgstr "Max Hastighet"
-
-msgid "Max:"
-msgstr ""
 
 msgid "Maximum"
 msgstr "Maximal"
@@ -573,6 +639,9 @@ msgstr "Flytta"
 msgid "Move Distance (mm)"
 msgstr "Förflyttningsavstånd (mm)"
 
+msgid "Move setting"
+msgstr ""
+
 msgid "Name"
 msgstr "Namn"
 
@@ -594,14 +663,26 @@ msgstr "Aldrig"
 msgid "New"
 msgstr "Ny"
 
+msgid "Next"
+msgstr ""
+
 msgid "No elegible macros:"
 msgstr "Inga kvalificerade makron:"
+
+msgid "No info available"
+msgstr ""
 
 msgid "No mesh has been loaded"
 msgstr "Ingen mesh har laddats"
 
 msgid "No wireless interface has been found"
 msgstr "Inget trådlöst gränssnitt har hittats"
+
+msgid "Not Enabled"
+msgstr ""
+
+msgid "Not Inserted"
+msgstr ""
 
 msgid "Not all screens support this"
 msgstr ""
@@ -618,7 +699,25 @@ msgstr "Aviseringsloggen tom"
 msgid "Notifications"
 msgstr "Aviseringar"
 
+msgid "Noting! All extruders filament has been run out."
+msgstr ""
+
+msgid "Noting! Left extruder filament has been run out."
+msgstr ""
+
+msgid "Noting! Right extruder filament has been run out."
+msgstr ""
+
+msgid "Nozzle Offset"
+msgstr ""
+
 msgid "Numpad"
+msgstr ""
+
+msgid "Offset"
+msgstr ""
+
+msgid "Ok"
 msgstr ""
 
 msgid "Only for the move panel"
@@ -628,16 +727,16 @@ msgstr ""
 msgid "Outdated by %d"
 msgstr "Föråldrad av %d"
 
-msgid "PSK for"
-msgstr "PSK för"
+msgid "Pack"
+msgstr ""
 
 msgid "Package will be updated"
 msgid_plural "Packages will be updated"
 msgstr[0] "Paketet kommer att uppdateras"
 msgstr[1] "Paketen kommer att uppdateras"
 
-msgid "Password saved"
-msgstr "Lösenordet har sparats"
+msgid "Password"
+msgstr ""
 
 msgid "Pause"
 msgstr "Pausa"
@@ -651,6 +750,15 @@ msgstr "Utför en fullständig uppgradering?"
 msgid "Pins"
 msgstr "Pins"
 
+msgid "Please ensure that the Probe Calibrate has been performed"
+msgstr ""
+
+msgid "Please enter a valid number"
+msgstr ""
+
+msgid "Please load two different colored PLA filaments!"
+msgstr ""
+
 msgid "Please recompile and flash the micro-controller."
 msgstr "Vänligen kompilera om och flasha mikrokontrollern."
 
@@ -659,6 +767,9 @@ msgstr ""
 
 msgid "Power"
 msgstr "Ström"
+
+msgid "Power Loss Recovery"
+msgstr ""
 
 msgid "Power On Printer"
 msgstr "Slå på skrivaren"
@@ -681,14 +792,14 @@ msgstr "Utskriftskontroll"
 msgid "Printer"
 msgstr "Skrivare"
 
-msgid "Printer Connections"
-msgstr "Skrivaranslutningar"
-
 msgid "Printer Select"
 msgstr "Välj skrivare"
 
 msgid "Printing"
 msgstr "Skriver ut"
+
+msgid "Probe Calibrate"
+msgstr ""
 
 msgid "Probe Offset"
 msgstr "Sond-offset"
@@ -702,8 +813,11 @@ msgstr "Ange KlipperScreen.log när du ber om hjälp.\n"
 msgid "Quad Gantry Level"
 msgstr "Quad Gantry nivå"
 
-msgid "Raise Nozzle"
-msgstr "Höj munstycket"
+msgid "RESUME ABORTED !"
+msgstr ""
+
+msgid "Raise Platform"
+msgstr ""
 
 msgid "Recover"
 msgstr "Återställ"
@@ -713,6 +827,9 @@ msgstr "Hård återställning"
 
 msgid "Recover Soft"
 msgstr "Mjuk återställning"
+
+msgid "Recovery in progress, please wait"
+msgstr ""
 
 msgid "Reference"
 msgstr "Referens"
@@ -726,8 +843,23 @@ msgstr ""
 msgid "Rename/Move:"
 msgstr "Byt namn/flytta:"
 
+msgid "Reprint"
+msgstr ""
+
 msgid "Restart"
 msgstr "Starta om"
+
+msgid "Restore Factory Settings"
+msgstr ""
+
+msgid "Restores your print job after a power outage"
+msgstr ""
+
+msgid "Restoring Left extruder temperature, this may take some time"
+msgstr ""
+
+msgid "Restoring Right extruder temperature, this may take some time"
+msgstr ""
 
 msgid "Resume"
 msgstr "Återuppta"
@@ -749,6 +881,12 @@ msgstr "Försök igen"
 
 msgid "Retrying"
 msgstr "Försöker igen"
+
+msgid "Right extruder detects no filament, please load filament and continue."
+msgstr ""
+
+msgid "Right extruder not hot enough, will reheat and continue."
+msgstr ""
 
 msgid "Rotation invalid"
 msgstr ""
@@ -782,6 +920,9 @@ msgid "Screws Adjust"
 msgstr "Skruvar Justera"
 
 msgid "Screws not used:"
+msgstr ""
+
+msgid "Select Model"
 msgstr ""
 
 msgid "Send"
@@ -835,20 +976,26 @@ msgstr "Hastighet:"
 msgid "Square Corner Velocity"
 msgstr "Fyrkantigt hörn hastighet"
 
+msgid "Stable"
+msgstr ""
+
 msgid "Standby"
 msgstr "Vilar"
 
 msgid "Start"
 msgstr "Starta"
 
+msgid "Start testing the Z offset value of the second nozzle?\n"
+msgstr ""
+
+msgid "Starting WiFi Association"
+msgstr "Startar WiFi Association"
+
 msgid "Starting recovery for"
 msgstr "Börjar återhämtning för"
 
 msgid "Starting update for"
 msgstr "Startar uppdatering för"
-
-msgid "Swaps buttons if they are on top of each other, affects other panels"
-msgstr ""
 
 msgid "System"
 msgstr "System"
@@ -865,13 +1012,22 @@ msgstr ""
 msgid "Temperature"
 msgstr "Temperatur"
 
+msgid "The last print job was not completed continue printing?"
+msgstr ""
+
 msgid "The system doesn't meet the minimum requirement"
 msgstr ""
 
-msgid "This panel supports up-to 9 screws in a 3x3 Grid"
+msgid "The system will reboot!"
 msgstr ""
 
-msgid "This will affect screw positions and mesh graph"
+msgid "This operation is about to print the model"
+msgstr ""
+
+msgid "This operation will clear the user data"
+msgstr ""
+
+msgid "This panel supports up-to 9 screws in a 3x3 Grid"
 msgstr ""
 
 msgid "Timeout for screen black-out or power-off"
@@ -913,10 +1069,22 @@ msgstr "Uppladdad"
 msgid "Useful for un-responsive touchscreens"
 msgstr ""
 
+msgid "User"
+msgstr ""
+
+msgid "Version Selection"
+msgstr ""
+
 msgid "WebRTC is not supported by the backend trying Stream"
 msgstr "WebRTC stöds inte av backend provar Stream"
 
+msgid "Welcome"
+msgstr ""
+
 msgid "Working"
+msgstr ""
+
+msgid "X Offset"
 msgstr ""
 
 msgid "XY Move Speed (mm/s)"
@@ -925,17 +1093,32 @@ msgstr "XY rörelsehastighet (mm/s)"
 msgid "XY Speed (mm/s)"
 msgstr "XY-hastighet (mm/s)"
 
+msgid "XY offset Calibrate"
+msgstr ""
+
+msgid "Y Offset"
+msgstr ""
+
 msgid "Z Calibrate"
 msgstr "Z Kalibrering"
 
 msgid "Z Move Speed (mm/s)"
 msgstr "Z rörelsehastighet (mm/s)"
 
+msgid "Z Offset"
+msgstr ""
+
 msgid "Z Speed (mm/s)"
 msgstr "Z hastighet (mm/s)"
 
 msgid "Z Tilt"
 msgstr "Z Lutning"
+
+msgid "Z axis cannot move to negative values"
+msgstr ""
+
+msgid "Z offset Calibrate"
+msgstr ""
 
 msgid "Z offset:"
 msgstr "Z-offset:"
@@ -949,6 +1132,9 @@ msgid "day"
 msgid_plural "days"
 msgstr[0] ""
 msgstr[1] ""
+
+msgid "factory settings"
+msgstr ""
 
 msgid "hour"
 msgid_plural "hours"
@@ -978,7 +1164,7 @@ msgstr "mm/s²"
 msgid "mm³/s"
 msgstr "mm³/s"
 
-msgid "model select"
+msgid "offset fine tune"
 msgstr ""
 
 msgid "s"
@@ -988,6 +1174,27 @@ msgid "second"
 msgid_plural "seconds"
 msgstr[0] ""
 msgstr[1] ""
+
+#~ msgid "Channel"
+#~ msgstr "Kanal"
+
+#~ msgid "Invert X"
+#~ msgstr "Invertera X"
+
+#~ msgid "Invert Y"
+#~ msgstr "Invertera Y"
+
+#~ msgid "Invert Z"
+#~ msgstr "Invertera Z"
+
+#~ msgid "Lower Nozzle"
+#~ msgstr "Sänk munstycket"
+
+#~ msgid "PSK for"
+#~ msgstr "PSK för"
+
+#~ msgid "Printer Connections"
+#~ msgstr "Skrivaranslutningar"
 
 #~ msgid "Hide"
 #~ msgstr "Dölj"
@@ -1019,17 +1226,11 @@ msgstr[1] ""
 #~ msgid "Print Time"
 #~ msgstr "Utskriftstid"
 
-#~ msgid "Starting WiFi Association"
-#~ msgstr "Startar WiFi Association"
-
 #~ msgid "Warning"
 #~ msgstr "Varning"
 
 #~ msgid "dBm"
 #~ msgstr "dBm"
-
-#~ msgid "Select"
-#~ msgstr "Välj"
 
 #~ msgid "Bed screw configuration:"
 #~ msgstr "Konfiguration bädd skruvar:"
@@ -1046,9 +1247,6 @@ msgstr[1] ""
 
 #~ msgid "Max Acceleration to Deceleration"
 #~ msgstr "Max acceleration till inbromsning"
-
-#~ msgid "Continue"
-#~ msgstr "Fortsätt"
 
 #~ msgid "Actions"
 #~ msgstr "Åtgärder"
