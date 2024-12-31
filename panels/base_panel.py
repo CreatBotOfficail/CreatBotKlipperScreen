@@ -366,7 +366,8 @@ class BasePanel(ScreenPanel):
         except Exception as e:
             logging.debug(f"Error parsing jinja for title: {title}\n{e}")
 
-        self.titlelbl.set_label(f"{self._screen.connecting_to_printer} | {title}")
+        title_text = f"{self._screen.connecting_to_printer} | {title}" if self._screen.connecting_to_printer is not None else title
+        self.titlelbl.set_label(title_text)
 
     def update_time(self):
         now = datetime.now()

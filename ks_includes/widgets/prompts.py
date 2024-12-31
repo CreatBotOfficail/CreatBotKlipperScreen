@@ -23,14 +23,14 @@ class Prompt:
     def decode(self, data):
         logging.info(f'{data}')
         if data.startswith('prompt_begin'):
-            self.header = data.replace('prompt_begin', '')
+            self.header = _(data.replace('prompt_begin', '').lstrip())
             if self.header:
                 self.window_title = self.header
             self.text = ""
             self.buttons = []
             return
         elif data.startswith('prompt_text'):
-            self.text = data.replace('prompt_text ', '')
+            self.text = _(data.replace('prompt_text ', '').lstrip())
             return
         elif data.startswith('prompt_button ') or data.startswith('prompt_footer_button'):
             data = data.replace('prompt_button ', '')
@@ -58,7 +58,7 @@ class Prompt:
     def set_button(self, name, gcode, style='default'):
         logging.info(f'{name} {self.id} {gcode} {style}')
         self.buttons.append(
-            {"name": name, "response": self.id, 'gcode': gcode, 'style': f'dialog-{style}'}
+            {"name": _(name), "response": self.id, 'gcode': gcode, 'style': f'dialog-{style}'}
         )
         self.id += 1
 

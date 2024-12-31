@@ -876,7 +876,7 @@ class KlipperScreen(Gtk.Window):
         elif action == "notify_update_response":
             if 'message' in data and 'Error' in data['message']:
                 logging.error(f"{action}:{data['message']}")
-                self.show_popup_message(data['message'], 3, from_ws=True)
+                self.show_popup_message(_(data['message'].lstrip()), 3, from_ws=True)
                 if "KlipperScreen" in data['message']:
                     self.restart_ks()
         elif action == "notify_power_changed":
@@ -895,9 +895,9 @@ class KlipperScreen(Gtk.Window):
                         return
                     self.prompt.decode(action)
                 elif data.startswith("echo: "):
-                    self.show_popup_message(data[6:], 1, from_ws=True)
+                    self.show_popup_message(_(data[6:].lstrip()), 1, from_ws=True)
                 elif data.startswith("!! "):
-                    self.show_popup_message(data[3:], 3, from_ws=True)
+                    self.show_popup_message(_(data[3:].lstrip()), 3, from_ws=True)
                 elif "unknown" in data.lower() and \
                         not ("TESTZ" in data or "MEASURE_AXES_NOISE" in data or "ACCELEROMETER_QUERY" in data):
                     self.show_popup_message(data, from_ws=True)

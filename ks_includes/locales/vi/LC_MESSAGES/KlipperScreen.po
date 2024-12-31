@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-15 10:10+0800\n"
+"POT-Creation-Date: 2024-12-31 14:57+0800\n"
 "PO-Revision-Date: 2024-06-02 12:00+0000\n"
 "Last-Translator: ChatGPT <noreply@openai.com>\n"
 "Language-Team: Vietnamese <https://hosted.weblate.org/projects/klipperscreen/"
@@ -18,11 +18,38 @@ msgstr ""
 msgid "%s will be updated to version"
 msgstr "%s sẽ được cập nhật lên phiên bản"
 
+msgid "(Disable during dual extrusion printing)"
+msgstr ""
+
 msgid "(default)"
 msgstr "(mặc định)"
 
+msgid ""
+"1. Ensure that all fixed components have been properly removed before "
+"proceeding."
+msgstr ""
+
+msgid ""
+"1. For first use, refer to the accompanying diagram to disassemble the fixed "
+"components of the X, Y, and Z axes."
+msgstr ""
+
+msgid ""
+"2. Once the disassembly is complete, click the 'Next' button to proceed."
+msgstr ""
+
+msgid ""
+"2. Press the 'Raise Platform' button to lift the platform and remove the "
+"items underneath."
+msgstr ""
+
 msgid "24 Hour Time"
 msgstr "Thời gian định dạng 24 giờ"
+
+msgid ""
+"3. Once the operation is complete, click the 'Finish' button to conclude the "
+"process."
+msgstr ""
 
 msgid "A FIRMWARE_RESTART may fix the issue."
 msgstr "Một FIRMWARE_RESTART có thể sửa được vấn đề."
@@ -39,8 +66,14 @@ msgstr "Gia tốc:"
 msgid "Accept"
 msgstr "Chấp nhận"
 
+msgid "Adaptive Bed Leveling"
+msgstr ""
+
 msgid "Add profile"
 msgstr "Thêm hồ sơ"
+
+msgid "Advanced"
+msgstr ""
 
 msgid "Air filter fan"
 msgstr ""
@@ -62,8 +95,8 @@ msgstr "Áp dụng %s%.3f offset cho Probe?"
 msgid "Archived"
 msgstr "Đã lưu trữ"
 
-msgid "Are you sure do you want to exclude the object?"
-msgstr "Bạn có chắc chắn muốn loại bỏ vật này không?"
+msgid "Are you sure you want to exclude the object?"
+msgstr ""
 
 msgid "Are you sure you want to run Emergency Stop?"
 msgstr "Bạn có chắc chắn muốn chạy Dừng Khẩn cấp không?"
@@ -74,6 +107,9 @@ msgstr "Bạn có chắc chắn muốn dừng việc hiệu chuẩn không?"
 msgid "Are you sure you wish to cancel this print?"
 msgstr "Bạn có chắc chắn muốn hủy in này không?"
 
+msgid "Are you sure you wish to cancel this test?"
+msgstr ""
+
 msgid "Are you sure you wish to disable motors?"
 msgstr "Bạn có chắc chắn muốn tắt các động cơ không?"
 
@@ -83,11 +119,23 @@ msgstr "Bạn có chắc chắn muốn khởi động lại hệ thống không?
 msgid "Are you sure you wish to shutdown the system?"
 msgstr "Bạn có chắc chắn muốn tắt hệ thống không?"
 
+msgid "Are you sure?\n"
+msgstr ""
+
 msgid "Asks for confirmation before stopping"
 msgstr "Yêu cầu xác nhận trước khi dừng lại"
 
 msgid "Auto"
 msgstr "Tự động"
+
+msgid "Auto Calibration"
+msgstr ""
+
+msgid "Auto Change Nozzle"
+msgstr ""
+
+msgid "Auto change nozzle when filament runout"
+msgstr ""
 
 msgid "Auto-calibrate"
 msgstr "Tự động hiệu chuẩn"
@@ -107,11 +155,20 @@ msgstr "Cân bằng bàn"
 msgid "Bed Mesh"
 msgstr "Lưới bàn"
 
+msgid "Beta"
+msgstr ""
+
 msgid "Both"
 msgstr "Cả hai"
 
 msgid "Calibrate"
 msgstr "Hiệu chuẩn"
+
+msgid "Calibrate Nozzle XY Offset"
+msgstr ""
+
+msgid "Calibrate Nozzle Z Offset"
+msgstr ""
 
 msgid "Calibrated"
 msgstr "Đã hiệu chuẩn"
@@ -146,9 +203,6 @@ msgstr "Thay đổi cách giao diện hiển thị"
 msgid "Changes how the time remaining is calculated"
 msgstr "Thay đổi cách tính thời gian còn lại"
 
-msgid "Channel"
-msgstr "Kênh"
-
 msgid "Check ADXL Wiring"
 msgstr "Kiểm tra dây kết nối ADXL"
 
@@ -157,6 +211,9 @@ msgstr "Đang kiểm tra cập nhật, vui lòng đợi..."
 
 msgid "Clear"
 msgstr "Xóa"
+
+msgid "Clear Internal G-code Files"
+msgstr ""
 
 msgid "Close"
 msgstr "Đóng"
@@ -169,6 +226,9 @@ msgstr "Hoàn thành"
 
 msgid "Confirm Emergency Stop"
 msgstr "Xác nhận Dừng Khẩn cấp"
+
+msgid "Confirm factory reset?\n"
+msgstr ""
 
 msgid "Connected"
 msgstr "Đã kết nối"
@@ -186,6 +246,9 @@ msgstr ""
 msgid "Console"
 msgstr "Bảng điều khiển"
 
+msgid "Continue"
+msgstr ""
+
 msgid "Cooldown"
 msgstr "Làm nguội"
 
@@ -201,6 +264,9 @@ msgstr ""
 msgid "Current percentage and graph line"
 msgstr "Phần trăm hiện tại và đường đồ thị"
 
+msgid "Current value:"
+msgstr ""
+
 msgid "DPMS has failed to load and has been disabled"
 msgstr "DPMS không thể tải và đã bị vô hiệu hóa"
 
@@ -212,6 +278,9 @@ msgstr "Xóa Thư mục?"
 
 msgid "Delete File?"
 msgstr "Xóa File?"
+
+msgid "Dev"
+msgstr ""
 
 msgid "Disable Motors"
 msgstr "Tắt Động cơ"
@@ -407,6 +476,9 @@ msgstr "Bắt đầu hiệu chỉnh PID cho:"
 msgid "Input Shaper"
 msgstr "Bộ định hình đầu vào"
 
+msgid "Inserted"
+msgstr ""
+
 msgid "Insufficient privileges"
 msgstr ""
 
@@ -421,15 +493,6 @@ msgstr "Mật khẩu không hợp lệ"
 
 msgid "Inversely affects the icon size"
 msgstr "Mật khẩu không hợp lệ"
-
-msgid "Invert X"
-msgstr "Đảo ngược trục X"
-
-msgid "Invert Y"
-msgstr "Đảo ngược trục Y"
-
-msgid "Invert Z"
-msgstr "Đảo ngược trục Z"
 
 msgid "It may take more than 5 minutes depending on the heater power."
 msgstr "Có thể mất hơn 5 phút tùy thuộc vào công suất máy sưởi."
@@ -480,8 +543,17 @@ msgstr "Lớp:"
 msgid "Leds"
 msgstr "Đèn LED"
 
+msgid "Left extruder detects no filament, please load filament and continue."
+msgstr ""
+
+msgid "Left extruder not hot enough, will reheat and continue."
+msgstr ""
+
 msgid "Left:"
 msgstr "Còn lại:"
+
+msgid "Leveling only in the actual print area"
+msgstr ""
 
 msgid "Limits"
 msgstr "Giới hạn"
@@ -494,9 +566,6 @@ msgstr "Đang tải..."
 
 msgid "Lost Connection to Moonraker"
 msgstr "Mất kết nối tới Moonraker"
-
-msgid "Lower Nozzle"
-msgstr "Hạ đầu phun"
 
 msgid "Macros"
 msgstr "Các macro"
@@ -515,9 +584,6 @@ msgstr "Gia tốc tối đa"
 
 msgid "Max Velocity"
 msgstr "Vận tốc tối đa"
-
-msgid "Max:"
-msgstr ""
 
 msgid "Maximum"
 msgstr "Cực đại"
@@ -567,6 +633,9 @@ msgstr "Di chuyển"
 msgid "Move Distance (mm)"
 msgstr "Khoảng cách di chuyển (mm)"
 
+msgid "Move setting"
+msgstr ""
+
 msgid "Name"
 msgstr "Tên"
 
@@ -588,14 +657,26 @@ msgstr "Không bao giờ"
 msgid "New"
 msgstr "Mới"
 
+msgid "Next"
+msgstr ""
+
 msgid "No elegible macros:"
 msgstr "Không có macro hợp lệ:"
+
+msgid "No info available"
+msgstr ""
 
 msgid "No mesh has been loaded"
 msgstr "Không có lưới nào được tải"
 
 msgid "No wireless interface has been found"
 msgstr "Không tìm thấy giao diện không dây"
+
+msgid "Not Enabled"
+msgstr ""
+
+msgid "Not Inserted"
+msgstr ""
 
 msgid "Not all screens support this"
 msgstr "Không phải tất cả các màn hình đều hỗ trợ điều này"
@@ -612,7 +693,25 @@ msgstr "Nhật ký thông báo trống"
 msgid "Notifications"
 msgstr "Thông báo"
 
+msgid "Noting! All extruders filament has been run out."
+msgstr ""
+
+msgid "Noting! Left extruder filament has been run out."
+msgstr ""
+
+msgid "Noting! Right extruder filament has been run out."
+msgstr ""
+
+msgid "Nozzle Offset"
+msgstr ""
+
 msgid "Numpad"
+msgstr ""
+
+msgid "Offset"
+msgstr ""
+
+msgid "Ok"
 msgstr ""
 
 msgid "Only for the move panel"
@@ -622,15 +721,15 @@ msgstr "Chỉ dành cho bảng điều khiển di chuyển"
 msgid "Outdated by %d"
 msgstr "Lỗi thời bởi %d"
 
-msgid "PSK for"
-msgstr "PSK cho"
+msgid "Pack"
+msgstr ""
 
 msgid "Package will be updated"
 msgid_plural "Packages will be updated"
 msgstr[0] "Gói sẽ được cập nhật"
 
-msgid "Password saved"
-msgstr "Mật khẩu đã lưu"
+msgid "Password"
+msgstr ""
 
 msgid "Pause"
 msgstr "Tạm dừng"
@@ -644,6 +743,15 @@ msgstr "Thực hiện nâng cấp toàn bộ?"
 msgid "Pins"
 msgstr "Chân cắm"
 
+msgid "Please ensure that the Probe Calibrate has been performed"
+msgstr ""
+
+msgid "Please enter a valid number"
+msgstr ""
+
+msgid "Please load two different colored PLA filaments!"
+msgstr ""
+
 msgid "Please recompile and flash the micro-controller."
 msgstr "Vui lòng biên dịch lại và nạp lại bộ điều khiển."
 
@@ -652,6 +760,9 @@ msgstr "Vui lòng đợi"
 
 msgid "Power"
 msgstr "Nguồn điện"
+
+msgid "Power Loss Recovery"
+msgstr ""
 
 msgid "Power On Printer"
 msgstr "Bật nguồn máy in"
@@ -674,14 +785,14 @@ msgstr "Điều khiển in"
 msgid "Printer"
 msgstr "Máy in"
 
-msgid "Printer Connections"
-msgstr "Kết nối máy in"
-
 msgid "Printer Select"
 msgstr "Chọn máy in"
 
 msgid "Printing"
 msgstr "Đang in"
+
+msgid "Probe Calibrate"
+msgstr ""
 
 msgid "Probe Offset"
 msgstr "Sai lệch đầu dò"
@@ -695,8 +806,11 @@ msgstr "Cung cấp KlipperScreen.log khi cần trợ giúp.\n"
 msgid "Quad Gantry Level"
 msgstr "Cân chỉnh bốn trục"
 
-msgid "Raise Nozzle"
-msgstr "Nâng đầu phun"
+msgid "RESUME ABORTED !"
+msgstr ""
+
+msgid "Raise Platform"
+msgstr ""
 
 msgid "Recover"
 msgstr "Khôi phục"
@@ -706,6 +820,9 @@ msgstr "Khôi phục cứng"
 
 msgid "Recover Soft"
 msgstr "Khôi phục mềm"
+
+msgid "Recovery in progress, please wait"
+msgstr ""
 
 msgid "Reference"
 msgstr "Tham chiếu"
@@ -719,8 +836,23 @@ msgstr ""
 msgid "Rename/Move:"
 msgstr "Đổi tên/Di chuyển:"
 
+msgid "Reprint"
+msgstr ""
+
 msgid "Restart"
 msgstr "Khởi động lại"
+
+msgid "Restore Factory Settings"
+msgstr ""
+
+msgid "Restores your print job after a power outage"
+msgstr ""
+
+msgid "Restoring Left extruder temperature, this may take some time"
+msgstr ""
+
+msgid "Restoring Right extruder temperature, this may take some time"
+msgstr ""
 
 msgid "Resume"
 msgstr "Tiếp tục"
@@ -742,6 +874,12 @@ msgstr "Thử lại"
 
 msgid "Retrying"
 msgstr "Đang thử lại"
+
+msgid "Right extruder detects no filament, please load filament and continue."
+msgstr ""
+
+msgid "Right extruder not hot enough, will reheat and continue."
+msgstr ""
 
 msgid "Rotation invalid"
 msgstr "Vị trí không hợp lệ"
@@ -776,6 +914,9 @@ msgstr "Điều chỉnh Ốc vít"
 
 msgid "Screws not used:"
 msgstr "Ốc vít không được sử dụng:"
+
+msgid "Select Model"
+msgstr ""
 
 msgid "Send"
 msgstr "Gửi"
@@ -828,22 +969,26 @@ msgstr "Tốc độ:"
 msgid "Square Corner Velocity"
 msgstr "Tốc độ Góc Vuông"
 
+msgid "Stable"
+msgstr ""
+
 msgid "Standby"
 msgstr "Chế độ Chờ"
 
 msgid "Start"
 msgstr "Bắt đầu"
 
+msgid "Start testing the Z offset value of the second nozzle?\n"
+msgstr ""
+
+msgid "Starting WiFi Association"
+msgstr "Bắt đầu Liên kết WiFi"
+
 msgid "Starting recovery for"
 msgstr "Bắt đầu phục hồi cho"
 
 msgid "Starting update for"
 msgstr "Bắt đầu cập nhật cho"
-
-msgid "Swaps buttons if they are on top of each other, affects other panels"
-msgstr ""
-"Đổi chỗ các nút nếu chúng nằm trên đỉnh nhau, ảnh hưởng đến các bảng điều "
-"khác"
 
 msgid "System"
 msgstr "Hệ thống"
@@ -860,14 +1005,23 @@ msgstr ""
 msgid "Temperature"
 msgstr "Nhiệt độ"
 
+msgid "The last print job was not completed continue printing?"
+msgstr ""
+
 msgid "The system doesn't meet the minimum requirement"
+msgstr ""
+
+msgid "The system will reboot!"
+msgstr ""
+
+msgid "This operation is about to print the model"
+msgstr ""
+
+msgid "This operation will clear the user data"
 msgstr ""
 
 msgid "This panel supports up-to 9 screws in a 3x3 Grid"
 msgstr "Bảng điều này hỗ trợ tối đa 9 ốc vít trong lưới 3x3"
-
-msgid "This will affect screw positions and mesh graph"
-msgstr "Điều này sẽ ảnh hưởng đến vị trí ốc vít và biểu đồ lưới"
 
 msgid "Timeout for screen black-out or power-off"
 msgstr "Thời gian chờ để màn hình tắt hoặc nguồn tắt"
@@ -908,10 +1062,22 @@ msgstr "Đã tải lên"
 msgid "Useful for un-responsive touchscreens"
 msgstr "Hữu ích cho màn hình cảm ứng không phản hồi"
 
+msgid "User"
+msgstr ""
+
+msgid "Version Selection"
+msgstr ""
+
 msgid "WebRTC is not supported by the backend trying Stream"
 msgstr "WebRTC không được hỗ trợ bởi backend đang thử Stream"
 
+msgid "Welcome"
+msgstr ""
+
 msgid "Working"
+msgstr ""
+
+msgid "X Offset"
 msgstr ""
 
 msgid "XY Move Speed (mm/s)"
@@ -920,17 +1086,32 @@ msgstr "Tốc độ Di chuyển XY (mm/s)"
 msgid "XY Speed (mm/s)"
 msgstr "Tốc độ XY (mm/s)"
 
+msgid "XY offset Calibrate"
+msgstr ""
+
+msgid "Y Offset"
+msgstr ""
+
 msgid "Z Calibrate"
 msgstr "Hiệu chuẩn Z"
 
 msgid "Z Move Speed (mm/s)"
 msgstr "Tốc độ Di chuyển Z (mm/s)"
 
+msgid "Z Offset"
+msgstr ""
+
 msgid "Z Speed (mm/s)"
 msgstr "Tốc độ Z (mm/s)"
 
 msgid "Z Tilt"
 msgstr "Nghiêng Z"
+
+msgid "Z axis cannot move to negative values"
+msgstr ""
+
+msgid "Z offset Calibrate"
+msgstr ""
 
 msgid "Z offset:"
 msgstr "Độ lệch Z:"
@@ -942,6 +1123,9 @@ msgstr[0] "commit"
 msgid "day"
 msgid_plural "days"
 msgstr[0] "ngày"
+
+msgid "factory settings"
+msgstr ""
 
 msgid "hour"
 msgid_plural "hours"
@@ -969,7 +1153,7 @@ msgstr "mm/s²"
 msgid "mm³/s"
 msgstr "mm³/s"
 
-msgid "model select"
+msgid "offset fine tune"
 msgstr ""
 
 msgid "s"
@@ -978,6 +1162,35 @@ msgstr ""
 msgid "second"
 msgid_plural "seconds"
 msgstr[0] "giây"
+
+#~ msgid "Channel"
+#~ msgstr "Kênh"
+
+#~ msgid "Invert X"
+#~ msgstr "Đảo ngược trục X"
+
+#~ msgid "Invert Y"
+#~ msgstr "Đảo ngược trục Y"
+
+#~ msgid "Invert Z"
+#~ msgstr "Đảo ngược trục Z"
+
+#~ msgid "Lower Nozzle"
+#~ msgstr "Hạ đầu phun"
+
+#~ msgid "PSK for"
+#~ msgstr "PSK cho"
+
+#~ msgid "Printer Connections"
+#~ msgstr "Kết nối máy in"
+
+#~ msgid "Swaps buttons if they are on top of each other, affects other panels"
+#~ msgstr ""
+#~ "Đổi chỗ các nút nếu chúng nằm trên đỉnh nhau, ảnh hưởng đến các bảng điều "
+#~ "khác"
+
+#~ msgid "This will affect screw positions and mesh graph"
+#~ msgstr "Điều này sẽ ảnh hưởng đến vị trí ốc vít và biểu đồ lưới"
 
 #~ msgid "Hide"
 #~ msgstr "Ẩn"
@@ -1008,9 +1221,6 @@ msgstr[0] "giây"
 
 #~ msgid "Print Time"
 #~ msgstr "Thời gian in"
-
-#~ msgid "Starting WiFi Association"
-#~ msgstr "Bắt đầu Liên kết WiFi"
 
 #~ msgid "Warning"
 #~ msgstr "Cảnh báo"

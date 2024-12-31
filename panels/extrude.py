@@ -145,7 +145,7 @@ class Panel(ScreenPanel):
                     break
                 name = x[23:].strip()
                 self.labels[x] = {
-                    'label': Gtk.Label(label=self.prettify(name), hexpand=True, halign=Gtk.Align.CENTER,
+                    'label': Gtk.Label(label=_("Not Enabled"), hexpand=True, halign=Gtk.Align.CENTER,
                                        ellipsize=Pango.EllipsizeMode.END),
                     'switch': Gtk.Switch(width_request=round(self._gtk.font_size * 2),
                                          height_request=round(self._gtk.font_size)),
@@ -234,9 +234,11 @@ class Panel(ScreenPanel):
                         if data[x]['filament_detected']:
                             self.labels[x]['box'].get_style_context().remove_class("filament_sensor_empty")
                             self.labels[x]['box'].get_style_context().add_class("filament_sensor_detected")
+                            self.labels[x]['label'].set_text(_("Inserted"))
                         else:
                             self.labels[x]['box'].get_style_context().remove_class("filament_sensor_detected")
                             self.labels[x]['box'].get_style_context().add_class("filament_sensor_empty")
+                            self.labels[x]['label'].set_text(_("Not Inserted"))
                 logging.info(f"{x}: {self._printer.get_stat(x)}")
 
     def change_distance(self, widget, distance):
@@ -286,12 +288,15 @@ class Panel(ScreenPanel):
             self._screen._ws.klippy.gcode_script(f"SET_FILAMENT_SENSOR SENSOR={name} ENABLE=1")
             if self._printer.get_stat(x, "filament_detected"):
                 self.labels[x]['box'].get_style_context().add_class("filament_sensor_detected")
+                self.labels[x]['label'].set_text(_("Inserted"))
             else:
                 self.labels[x]['box'].get_style_context().add_class("filament_sensor_empty")
+                self.labels[x]['label'].set_text(_("Not Inserted"))
         else:
             self._screen._ws.klippy.gcode_script(f"SET_FILAMENT_SENSOR SENSOR={name} ENABLE=0")
             self.labels[x]['box'].get_style_context().remove_class("filament_sensor_empty")
             self.labels[x]['box'].get_style_context().remove_class("filament_sensor_detected")
+            self.labels[x]['label'].set_text(_("Not Enabled"))
 
     def update_temp(self, extruder, temp, target, power):
         if not temp:

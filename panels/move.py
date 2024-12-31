@@ -54,7 +54,7 @@ class Panel(ScreenPanel):
         adjust = self._gtk.Button(
             "settings", None, "color2", 1, Gtk.PositionType.LEFT, 1
         )
-        adjust.connect("clicked", self.load_menu, "options", _("Settings"))
+        adjust.connect("clicked", self.menu_item_clicked, {"panel": "move_setting"})
         adjust.set_hexpand(False)
         grid = Gtk.Grid(row_homogeneous=True, column_homogeneous=True)
         if self._screen.vertical_mode:
@@ -81,12 +81,8 @@ class Panel(ScreenPanel):
                 grid.attach(self.buttons["x-"], 2, 1, 1, 1)
             grid.attach(self.buttons["y+"], 1, 0, 1, 1)
             grid.attach(self.buttons["y-"], 1, 1, 1, 1)
-            if self._config.get_config()["main"].getboolean("invert_z", False):
-                grid.attach(self.buttons["z+"], 3, 0, 1, 1)
-                grid.attach(self.buttons["z-"], 3, 1, 1, 1)
-            else:
-                grid.attach(self.buttons["z+"], 3, 1, 1, 1)
-                grid.attach(self.buttons["z-"], 3, 0, 1, 1)
+            grid.attach(self.buttons["z+"], 3, 1, 1, 1)
+            grid.attach(self.buttons["z-"], 3, 0, 1, 1)
 
         grid.attach(self.buttons["home"], 0, 0, 1, 1)
         grid.attach(self.buttons["motors_off"], 2, 0, 1, 1)
@@ -115,107 +111,17 @@ class Panel(ScreenPanel):
         if not self._screen.vertical_mode:
             bottomgrid.attach(adjust, 3, 0, 1, 2)
 
-        self.labels["move_menu"] = Gtk.Grid(
-            row_homogeneous=True, column_homogeneous=True
-        )
+        self.labels["move_menu"] = Gtk.Grid(row_homogeneous=True, column_homogeneous=True)
         self.labels["move_menu"].attach(grid, 0, 0, 1, 3)
         self.labels["move_menu"].attach(bottomgrid, 0, 3, 1, 1)
         self.labels["move_menu"].attach(distgrid, 0, 4, 1, 1)
 
         self.content.add(self.labels["move_menu"])
 
-        printer_cfg = self._printer.get_config_section("printer")
-        # The max_velocity parameter is not optional in klipper config.
-        # The minimum is 1, but least 2 values are needed to create a scale
-        max_velocity = max(int(float(printer_cfg["max_velocity"])), 2)
-        if "max_z_velocity" in printer_cfg:
-            self.max_z_velocity = max(int(float(printer_cfg["max_z_velocity"])), 2)
-        else:
-            self.max_z_velocity = max_velocity
-
-        configurable_options = [
-            {
-                "invert_x": {
-                    "section": "main",
-                    "name": _("Invert X"),
-                    "type": "binary",
-                    "tooltip": _("This will affect screw positions and mesh graph"),
-                    "value": "False",
-                    "callback": self.reinit_panels,
-                }
-            },
-            {
-                "invert_y": {
-                    "section": "main",
-                    "name": _("Invert Y"),
-                    "type": "binary",
-                    "tooltip": _("This will affect screw positions and mesh graph"),
-                    "value": "False",
-                    "callback": self.reinit_panels,
-                }
-            },
-            {
-                "invert_z": {
-                    "section": "main",
-                    "name": _("Invert Z"),
-                    "tooltip": _(
-                        "Swaps buttons if they are on top of each other, affects other panels"
-                    ),
-                    "type": "binary",
-                    "value": "False",
-                    "callback": self.reinit_move,
-                }
-            },
-            {
-                "move_speed_xy": {
-                    "section": "main",
-                    "name": _("XY Speed (mm/s)"),
-                    "type": "scale",
-                    "tooltip": _("Only for the move panel"),
-                    "value": "50",
-                    "range": [1, max_velocity],
-                    "step": 1,
-                }
-            },
-            {
-                "move_speed_z": {
-                    "section": "main",
-                    "name": _("Z Speed (mm/s)"),
-                    "type": "scale",
-                    "tooltip": _("Only for the move panel"),
-                    "value": "10",
-                    "range": [1, self.max_z_velocity],
-                    "step": 1,
-                }
-            },
-        ]
-
-        self.labels["options_menu"] = self._gtk.ScrolledWindow()
-        self.labels["options"] = Gtk.Grid()
-        self.labels["options_menu"].add(self.labels["options"])
-        self.options = {}
-        for option in configurable_options:
-            name = list(option)[0]
-            self.options.update(
-                self.add_option("options", self.settings, name, option[name])
-            )
-
-    def reinit_panels(self, value):
-        self._screen.panels_reinit.append("bed_level")
-        self._screen.panels_reinit.append("bed_mesh")
-
-    def reinit_move(self, widget):
-        self._screen.panels_reinit.append("move")
-        self._screen.panels_reinit.append("zcalibrate")
-        self.menu.clear()
-
     def process_update(self, action, data):
         if action != "notify_status_update":
             return
-        if "toolhead" in data and "max_velocity" in data["toolhead"]:
-            max_vel = max(int(float(data["toolhead"]["max_velocity"])), 2)
-            adj = self.options["move_speed_xy"].get_adjustment()
-            adj.set_upper(max_vel)
+
         if (
             "gcode_move" in data
             or "toolhead" in data

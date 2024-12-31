@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Klipperscreen\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-15 10:10+0800\n"
+"POT-Creation-Date: 2024-12-31 14:57+0800\n"
 "PO-Revision-Date: 2024-04-13 16:48+0000\n"
 "Last-Translator: Anonymous <noreply@weblate.org>\n"
 "Language-Team: Hebrew <https://hosted.weblate.org/projects/klipperscreen/"
@@ -25,11 +25,38 @@ msgstr ""
 msgid "%s will be updated to version"
 msgstr "%s יעודכן לגרסה"
 
+msgid "(Disable during dual extrusion printing)"
+msgstr ""
+
 msgid "(default)"
 msgstr "(ברירת מחדל)"
 
+msgid ""
+"1. Ensure that all fixed components have been properly removed before "
+"proceeding."
+msgstr ""
+
+msgid ""
+"1. For first use, refer to the accompanying diagram to disassemble the fixed "
+"components of the X, Y, and Z axes."
+msgstr ""
+
+msgid ""
+"2. Once the disassembly is complete, click the 'Next' button to proceed."
+msgstr ""
+
+msgid ""
+"2. Press the 'Raise Platform' button to lift the platform and remove the "
+"items underneath."
+msgstr ""
+
 msgid "24 Hour Time"
 msgstr "זמן 24 שעות"
+
+msgid ""
+"3. Once the operation is complete, click the 'Finish' button to conclude the "
+"process."
+msgstr ""
 
 msgid "A FIRMWARE_RESTART may fix the issue."
 msgstr "FIRMWARE_RESTART עשוי לפתור את הבעיה."
@@ -46,8 +73,14 @@ msgstr "האצה"
 msgid "Accept"
 msgstr "אשר"
 
+msgid "Adaptive Bed Leveling"
+msgstr ""
+
 msgid "Add profile"
 msgstr "הוסף פרופיל"
+
+msgid "Advanced"
+msgstr ""
 
 msgid "Air filter fan"
 msgstr ""
@@ -69,7 +102,7 @@ msgstr ""
 msgid "Archived"
 msgstr ""
 
-msgid "Are you sure do you want to exclude the object?"
+msgid "Are you sure you want to exclude the object?"
 msgstr ""
 
 msgid "Are you sure you want to run Emergency Stop?"
@@ -81,6 +114,9 @@ msgstr ""
 msgid "Are you sure you wish to cancel this print?"
 msgstr "האם אתה בטוח שברצונך לבטל את ההדפסה?"
 
+msgid "Are you sure you wish to cancel this test?"
+msgstr ""
+
 msgid "Are you sure you wish to disable motors?"
 msgstr "האם אתה בטוח שברצונך להשבית מנועים?"
 
@@ -90,11 +126,23 @@ msgstr "האם אתה בטוח שברצונך לאתחל את המערכת?"
 msgid "Are you sure you wish to shutdown the system?"
 msgstr "האם אתה בטוח שברצונך לכבות את המערכת?"
 
+msgid "Are you sure?\n"
+msgstr ""
+
 msgid "Asks for confirmation before stopping"
 msgstr ""
 
 msgid "Auto"
 msgstr "אוטומטי"
+
+msgid "Auto Calibration"
+msgstr "כיול אוטומטי"
+
+msgid "Auto Change Nozzle"
+msgstr ""
+
+msgid "Auto change nozzle when filament runout"
+msgstr ""
 
 msgid "Auto-calibrate"
 msgstr "כיול אוטומטי"
@@ -114,11 +162,20 @@ msgstr "פילוס מיטה"
 msgid "Bed Mesh"
 msgstr "מיפוי מיטה"
 
+msgid "Beta"
+msgstr ""
+
 msgid "Both"
 msgstr ""
 
 msgid "Calibrate"
 msgstr "לכייל"
+
+msgid "Calibrate Nozzle XY Offset"
+msgstr ""
+
+msgid "Calibrate Nozzle Z Offset"
+msgstr ""
 
 msgid "Calibrated"
 msgstr "מכויל"
@@ -153,9 +210,6 @@ msgstr ""
 msgid "Changes how the time remaining is calculated"
 msgstr ""
 
-msgid "Channel"
-msgstr "ערוץ"
-
 msgid "Check ADXL Wiring"
 msgstr "בדוק את החיווט של ה ADXL"
 
@@ -164,6 +218,9 @@ msgstr "בודק עדכונים, אנא המתן"
 
 msgid "Clear"
 msgstr "נקה"
+
+msgid "Clear Internal G-code Files"
+msgstr ""
 
 msgid "Close"
 msgstr "סגור"
@@ -176,6 +233,9 @@ msgstr "הסתיים"
 
 msgid "Confirm Emergency Stop"
 msgstr "אשר עצירת חירום"
+
+msgid "Confirm factory reset?\n"
+msgstr ""
 
 msgid "Connected"
 msgstr "מחובר"
@@ -193,6 +253,9 @@ msgstr ""
 msgid "Console"
 msgstr "קונסול"
 
+msgid "Continue"
+msgstr "המשך"
+
 msgid "Cooldown"
 msgstr "הפעל קירור"
 
@@ -208,6 +271,9 @@ msgstr ""
 msgid "Current percentage and graph line"
 msgstr ""
 
+msgid "Current value:"
+msgstr ""
+
 msgid "DPMS has failed to load and has been disabled"
 msgstr ""
 
@@ -219,6 +285,9 @@ msgstr ""
 
 msgid "Delete File?"
 msgstr "מחק קובץ"
+
+msgid "Dev"
+msgstr ""
 
 msgid "Disable Motors"
 msgstr "השבת מנועים"
@@ -414,6 +483,9 @@ msgstr ""
 msgid "Input Shaper"
 msgstr "מעצב גימור"
 
+msgid "Inserted"
+msgstr ""
+
 msgid "Insufficient privileges"
 msgstr ""
 
@@ -428,15 +500,6 @@ msgstr ""
 
 msgid "Inversely affects the icon size"
 msgstr ""
-
-msgid "Invert X"
-msgstr "הפוך את X"
-
-msgid "Invert Y"
-msgstr "הפוך את Y"
-
-msgid "Invert Z"
-msgstr "הפוך את Z"
 
 msgid "It may take more than 5 minutes depending on the heater power."
 msgstr ""
@@ -487,8 +550,17 @@ msgstr "שכבה"
 msgid "Leds"
 msgstr ""
 
+msgid "Left extruder detects no filament, please load filament and continue."
+msgstr ""
+
+msgid "Left extruder not hot enough, will reheat and continue."
+msgstr ""
+
 msgid "Left:"
 msgstr "זמן שנותר:"
+
+msgid "Leveling only in the actual print area"
+msgstr ""
 
 msgid "Limits"
 msgstr "גבולות"
@@ -501,9 +573,6 @@ msgstr ""
 
 msgid "Lost Connection to Moonraker"
 msgstr ""
-
-msgid "Lower Nozzle"
-msgstr "הנמך דיזה"
 
 msgid "Macros"
 msgstr "מקרואים"
@@ -522,9 +591,6 @@ msgstr "מקסימום תאוצה"
 
 msgid "Max Velocity"
 msgstr "מהירות מרבית"
-
-msgid "Max:"
-msgstr ""
 
 msgid "Maximum"
 msgstr ""
@@ -574,6 +640,9 @@ msgstr "הזזת צירים"
 msgid "Move Distance (mm)"
 msgstr "מרחק הזזה (מ''מ)"
 
+msgid "Move setting"
+msgstr ""
+
 msgid "Name"
 msgstr "שם"
 
@@ -595,13 +664,25 @@ msgstr ""
 msgid "New"
 msgstr "חדש"
 
+msgid "Next"
+msgstr ""
+
 msgid "No elegible macros:"
+msgstr ""
+
+msgid "No info available"
 msgstr ""
 
 msgid "No mesh has been loaded"
 msgstr ""
 
 msgid "No wireless interface has been found"
+msgstr ""
+
+msgid "Not Enabled"
+msgstr ""
+
+msgid "Not Inserted"
 msgstr ""
 
 msgid "Not all screens support this"
@@ -619,7 +700,25 @@ msgstr ""
 msgid "Notifications"
 msgstr ""
 
+msgid "Noting! All extruders filament has been run out."
+msgstr ""
+
+msgid "Noting! Left extruder filament has been run out."
+msgstr ""
+
+msgid "Noting! Right extruder filament has been run out."
+msgstr ""
+
+msgid "Nozzle Offset"
+msgstr ""
+
 msgid "Numpad"
+msgstr ""
+
+msgid "Offset"
+msgstr ""
+
+msgid "Ok"
 msgstr ""
 
 msgid "Only for the move panel"
@@ -629,8 +728,8 @@ msgstr ""
 msgid "Outdated by %d"
 msgstr "מיושן על ידי %d"
 
-msgid "PSK for"
-msgstr "PSK עבור"
+msgid "Pack"
+msgstr ""
 
 msgid "Package will be updated"
 msgid_plural "Packages will be updated"
@@ -639,8 +738,8 @@ msgstr[1] "חבילות יעודכנו"
 msgstr[2] "חבילות יעודכנו"
 msgstr[3] "חבילות יעודכנו"
 
-msgid "Password saved"
-msgstr "הסיסמה נשמרה"
+msgid "Password"
+msgstr ""
 
 msgid "Pause"
 msgstr "השהיה"
@@ -654,6 +753,15 @@ msgstr "לבצע שדרוג מלא?"
 msgid "Pins"
 msgstr "פינים"
 
+msgid "Please ensure that the Probe Calibrate has been performed"
+msgstr ""
+
+msgid "Please enter a valid number"
+msgstr ""
+
+msgid "Please load two different colored PLA filaments!"
+msgstr ""
+
 msgid "Please recompile and flash the micro-controller."
 msgstr "אנא הדר (קמפל) מחדש ובצע פלאש למיקרו-בקר."
 
@@ -662,6 +770,9 @@ msgstr ""
 
 msgid "Power"
 msgstr "הפעלה"
+
+msgid "Power Loss Recovery"
+msgstr ""
 
 msgid "Power On Printer"
 msgstr "הפעל מדפסת"
@@ -684,14 +795,14 @@ msgstr "שליטה בהדפסה"
 msgid "Printer"
 msgstr "מדפסת"
 
-msgid "Printer Connections"
-msgstr "חיבורי מדפסת"
-
 msgid "Printer Select"
 msgstr ""
 
 msgid "Printing"
 msgstr "מדפיס"
+
+msgid "Probe Calibrate"
+msgstr ""
 
 msgid "Probe Offset"
 msgstr "פרוב אוף-סט"
@@ -705,8 +816,11 @@ msgstr ""
 msgid "Quad Gantry Level"
 msgstr "יישור הגנטרי הריבועי"
 
-msgid "Raise Nozzle"
-msgstr "הגבה דיזה"
+msgid "RESUME ABORTED !"
+msgstr ""
+
+msgid "Raise Platform"
+msgstr ""
 
 msgid "Recover"
 msgstr "שחזור"
@@ -716,6 +830,9 @@ msgstr "שחזור מלא"
 
 msgid "Recover Soft"
 msgstr "שחזור עדין"
+
+msgid "Recovery in progress, please wait"
+msgstr ""
 
 msgid "Reference"
 msgstr "התייחסות"
@@ -729,8 +846,23 @@ msgstr ""
 msgid "Rename/Move:"
 msgstr ""
 
+msgid "Reprint"
+msgstr ""
+
 msgid "Restart"
 msgstr "אתחל"
+
+msgid "Restore Factory Settings"
+msgstr ""
+
+msgid "Restores your print job after a power outage"
+msgstr ""
+
+msgid "Restoring Left extruder temperature, this may take some time"
+msgstr ""
+
+msgid "Restoring Right extruder temperature, this may take some time"
+msgstr ""
 
 msgid "Resume"
 msgstr "המשך"
@@ -752,6 +884,12 @@ msgstr ""
 
 msgid "Retrying"
 msgstr "מנסה שוב"
+
+msgid "Right extruder detects no filament, please load filament and continue."
+msgstr ""
+
+msgid "Right extruder not hot enough, will reheat and continue."
+msgstr ""
 
 msgid "Rotation invalid"
 msgstr ""
@@ -785,6 +923,9 @@ msgid "Screws Adjust"
 msgstr "סידור ברגים"
 
 msgid "Screws not used:"
+msgstr ""
+
+msgid "Select Model"
 msgstr ""
 
 msgid "Send"
@@ -838,20 +979,26 @@ msgstr "מהירות"
 msgid "Square Corner Velocity"
 msgstr "מהירות פינה מרובעת"
 
+msgid "Stable"
+msgstr ""
+
 msgid "Standby"
 msgstr ""
 
 msgid "Start"
 msgstr "התחל"
 
+msgid "Start testing the Z offset value of the second nozzle?\n"
+msgstr ""
+
+msgid "Starting WiFi Association"
+msgstr "מתחיל איגוד WiFi"
+
 msgid "Starting recovery for"
 msgstr "החל התאוששות עבור"
 
 msgid "Starting update for"
 msgstr "מתחיל עדכון עבור"
-
-msgid "Swaps buttons if they are on top of each other, affects other panels"
-msgstr ""
 
 msgid "System"
 msgstr "מערכת"
@@ -868,13 +1015,22 @@ msgstr ""
 msgid "Temperature"
 msgstr "טמפרטורה"
 
+msgid "The last print job was not completed continue printing?"
+msgstr ""
+
 msgid "The system doesn't meet the minimum requirement"
 msgstr ""
 
-msgid "This panel supports up-to 9 screws in a 3x3 Grid"
+msgid "The system will reboot!"
 msgstr ""
 
-msgid "This will affect screw positions and mesh graph"
+msgid "This operation is about to print the model"
+msgstr ""
+
+msgid "This operation will clear the user data"
+msgstr ""
+
+msgid "This panel supports up-to 9 screws in a 3x3 Grid"
 msgstr ""
 
 msgid "Timeout for screen black-out or power-off"
@@ -916,10 +1072,22 @@ msgstr "הועלה"
 msgid "Useful for un-responsive touchscreens"
 msgstr ""
 
+msgid "User"
+msgstr ""
+
+msgid "Version Selection"
+msgstr ""
+
 msgid "WebRTC is not supported by the backend trying Stream"
 msgstr ""
 
+msgid "Welcome"
+msgstr ""
+
 msgid "Working"
+msgstr ""
+
+msgid "X Offset"
 msgstr ""
 
 msgid "XY Move Speed (mm/s)"
@@ -928,17 +1096,32 @@ msgstr "מהירות תנועה XY (מ\"מ/שנייה)"
 msgid "XY Speed (mm/s)"
 msgstr "מהירות XY (mm/s)"
 
+msgid "XY offset Calibrate"
+msgstr ""
+
+msgid "Y Offset"
+msgstr ""
+
 msgid "Z Calibrate"
 msgstr "כיול Z"
 
 msgid "Z Move Speed (mm/s)"
 msgstr "מהירות תנועה Z (מ\"מ/שניות)"
 
+msgid "Z Offset"
+msgstr ""
+
 msgid "Z Speed (mm/s)"
 msgstr "מהירות Z (mm/s)"
 
 msgid "Z Tilt"
 msgstr "הטיה Z"
+
+msgid "Z axis cannot move to negative values"
+msgstr ""
+
+msgid "Z offset Calibrate"
+msgstr ""
 
 msgid "Z offset:"
 msgstr "Z אוף-סט"
@@ -956,6 +1139,9 @@ msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 msgstr[3] ""
+
+msgid "factory settings"
+msgstr ""
 
 msgid "hour"
 msgid_plural "hours"
@@ -989,7 +1175,7 @@ msgstr "mm/s²"
 msgid "mm³/s"
 msgstr ""
 
-msgid "model select"
+msgid "offset fine tune"
 msgstr ""
 
 msgid "s"
@@ -1001,6 +1187,27 @@ msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 msgstr[3] ""
+
+#~ msgid "Channel"
+#~ msgstr "ערוץ"
+
+#~ msgid "Invert X"
+#~ msgstr "הפוך את X"
+
+#~ msgid "Invert Y"
+#~ msgstr "הפוך את Y"
+
+#~ msgid "Invert Z"
+#~ msgstr "הפוך את Z"
+
+#~ msgid "Lower Nozzle"
+#~ msgstr "הנמך דיזה"
+
+#~ msgid "PSK for"
+#~ msgstr "PSK עבור"
+
+#~ msgid "Printer Connections"
+#~ msgstr "חיבורי מדפסת"
 
 #~ msgid "Hide"
 #~ msgstr "הסתר"
@@ -1026,14 +1233,8 @@ msgstr[3] ""
 #~ msgid "Print Time"
 #~ msgstr "זמן הדפסה"
 
-#~ msgid "Starting WiFi Association"
-#~ msgstr "מתחיל איגוד WiFi"
-
 #~ msgid "dBm"
 #~ msgstr "dBm"
-
-#~ msgid "Select"
-#~ msgstr "בחר"
 
 #~ msgid "Bed screw configuration:"
 #~ msgstr "הגדרת בורג מיטה"
@@ -1048,9 +1249,6 @@ msgstr[3] ""
 
 #~ msgid "Max Acceleration to Deceleration"
 #~ msgstr "האצה מרבית להאטה"
-
-#~ msgid "Continue"
-#~ msgstr "המשך"
 
 #~ msgid "Actions"
 #~ msgstr "פעולות"
@@ -1125,9 +1323,6 @@ msgstr[3] ""
 
 #~ msgid "Manual Calibration"
 #~ msgstr "כיול ידני"
-
-#~ msgid "Auto Calibration"
-#~ msgstr "כיול אוטומטי"
 
 #~ msgid "Sort by: "
 #~ msgstr "מיין לפי: "

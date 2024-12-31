@@ -48,8 +48,8 @@ class Panel(ScreenPanel):
             if isinstance(label, Gtk.Label):
                 label.set_ellipsize(Pango.EllipsizeMode.END)
         self.buttons = {
-            "z+": self._gtk.Button("z-farther", _("Lower Bed"), "color4"),
-            "z-": self._gtk.Button("z-closer", _("Raise Bed"), "color1"),
+            "z+": self._gtk.Button("z-farther", "Z+", "color4"),
+            "z-": self._gtk.Button("z-closer", "Z-", "color1"),
             "start_z_offset": self._gtk.Button("offset_z", _("Z offset Calibrate"), "color3"),
             "start_xy_offset": self._gtk.Button("resume", _("XY offset Calibrate"), "color3"),
             "complete": self._gtk.Button("complete", _("Save"), "color3"),
@@ -85,12 +85,8 @@ class Panel(ScreenPanel):
 
         self.grid = Gtk.Grid(column_homogeneous=True)
         if self._screen.vertical_mode:
-            if self._config.get_config()["main"].getboolean("invert_z", False):
-                self.grid.attach(self.buttons["z+"], 0, 1, 1, 1)
-                self.grid.attach(self.buttons["z-"], 0, 0, 1, 1)
-            else:
-                self.grid.attach(self.buttons["z+"], 0, 0, 1, 1)
-                self.grid.attach(self.buttons["z-"], 0, 1, 1, 1)
+            self.grid.attach(self.buttons["z+"], 0, 1, 1, 1)
+            self.grid.attach(self.buttons["z-"], 0, 0, 1, 1)
             self.grid.attach(self.buttons["start_z_offset"], 1, 0, 1, 1)
             self.grid.attach(pos, 1, 1, 2, 1)
             self.grid.attach(self.buttons["start_xy_offset"], 2, 0, 1, 1)
@@ -98,12 +94,8 @@ class Panel(ScreenPanel):
             self.grid.attach(self.buttons["cancel"], 3, 1, 1, 1)
             self.grid.attach(distances, 0, 2, 4, 1)
         else:
-            if self._config.get_config()["main"].getboolean("invert_z", False):
-                self.grid.attach(self.buttons["z+"], 0, 2, 1, 1)
-                self.grid.attach(self.buttons["z-"], 0, 1, 1, 1)
-            else:
-                self.grid.attach(self.buttons["z+"], 0, 1, 1, 1)
-                self.grid.attach(self.buttons["z-"], 0, 2, 1, 1)
+            self.grid.attach(self.buttons["z+"], 0, 2, 1, 1)
+            self.grid.attach(self.buttons["z-"], 0, 1, 1, 1)
             self.grid.attach(self.buttons["start_z_offset"], 0, 0, 2, 1)
             self.grid.attach(self.buttons["start_xy_offset"], 2, 0, 2, 1)
             self.grid.attach(pos, 1, 1, 2, 2)
@@ -116,7 +108,7 @@ class Panel(ScreenPanel):
         text = (
             _("Start testing the Z offset value of the second nozzle?\n")
             + "\n\n"
-            + _("Please ensure that the Z Calibrate has been performed")
+            + _("Please ensure that the Probe Calibrate has been performed")
         )
         label = Gtk.Label(wrap=True, vexpand=True)
         label.set_markup(text)
