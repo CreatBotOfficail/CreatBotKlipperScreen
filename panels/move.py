@@ -118,6 +118,15 @@ class Panel(ScreenPanel):
 
         self.content.add(self.labels["move_menu"])
 
+        printer_cfg = self._printer.get_config_section("printer")
+        # The max_velocity parameter is not optional in klipper config.
+        # The minimum is 1, but least 2 values are needed to create a scale
+        max_velocity = max(int(float(printer_cfg["max_velocity"])), 2)
+        if "max_z_velocity" in printer_cfg:
+            self.max_z_velocity = max(int(float(printer_cfg["max_z_velocity"])), 2)
+        else:
+            self.max_z_velocity = max_velocity
+
     def process_update(self, action, data):
         if action != "notify_status_update":
             return
