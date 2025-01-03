@@ -23,14 +23,14 @@ class Prompt:
     def decode(self, data):
         logging.info(f'{data}')
         if data.startswith('prompt_begin'):
-            self.header = _(data.replace('prompt_begin', '').lstrip())
+            self.header = _(cleaned_data) if (cleaned_data := data.replace("prompt_begin", "").strip()) else ""
             if self.header:
                 self.window_title = self.header
             self.text = ""
             self.buttons = []
             return
         elif data.startswith('prompt_text'):
-            self.text = _(data.replace('prompt_text ', '').lstrip())
+            self.text = _(cleaned_data) if (cleaned_data := data.replace("prompt_text", "").strip()) else ""
             return
         elif data.startswith('prompt_button ') or data.startswith('prompt_footer_button'):
             data = data.replace('prompt_button ', '')
