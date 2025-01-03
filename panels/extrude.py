@@ -138,6 +138,10 @@ class Panel(ScreenPanel):
         speedbox.add(speedgrid)
 
         filament_sensors = self._printer.get_filament_sensors()
+        res = self._screen.apiclient.send_request("printer/objects/query?" + "&".join(filament_sensors))
+        if res.get('status'):
+            self._printer.data.update(res['status'])
+
         sensors = Gtk.Grid(valign=Gtk.Align.CENTER, row_spacing=5, column_spacing=5)
         if len(filament_sensors) > 0:
             for s, x in enumerate(filament_sensors):
