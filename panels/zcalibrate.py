@@ -285,9 +285,18 @@ class Panel(ScreenPanel):
     def move(self, widget, direction):
         self._screen._ws.klippy.gcode_script(f"TESTZ Z={direction}{self.distance}")
 
+    def is_z_within_range(self):
+        position = self._printer.get_stat("toolhead", "position")
+        z_cur_pos = position[2]
+        if z_cur_pos - self.z_offset > 0:
+            self._screen.show_popup_message(_("The new value is not within the valid range."))
+            return False
+        return True
+
     def accept(self, widget):
-        logging.info("Accepting Z position")
-        self._screen._ws.klippy.gcode_script("ACCEPT")
+        if self.is_z_within_range():
+            logging.info("Accepting Z position")
+            self._screen._ws.klippy.gcode_script("ACCEPT")
 
     def buttons_calibrating(self):
         self.buttons['start'].get_style_context().remove_class('color3')
