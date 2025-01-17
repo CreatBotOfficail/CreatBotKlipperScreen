@@ -1010,6 +1010,9 @@ msgstr "溫度"
 msgid "The last print job was not completed continue printing?"
 msgstr "上一個打印任務未完成，是否繼續打印？"
 
+msgid "The new value is not within the valid range."
+msgstr "新值不在有效範圍內。"
+
 msgid "The system doesn't meet the minimum requirement"
 msgstr ""
 
