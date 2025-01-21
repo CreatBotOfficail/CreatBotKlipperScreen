@@ -18,8 +18,8 @@ class Panel(ScreenPanel):
         self.labels = {}
         self.click_count = 0
         self.last_click_time = 0
-        self.click_threshold = 0.2
-        self.target_clicks = 10
+        self.click_threshold = 2.0
+        self.target_clicks = 5
         self.grid = Gtk.Grid(column_spacing=10, row_spacing=5)
 
         self.sysinfo = screen.printer.system_info
