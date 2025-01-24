@@ -175,23 +175,32 @@ class SdbusNm:
         networks = []
         try:
             if self.wlan_device:
+                seen_networks = {}
                 all_aps = [AccessPoint(result) for result in self.wlan_device.access_points]
-                networks.extend(
-                    {
-                        "SSID": ap.ssid.decode("utf-8"),
-                        "known": self.is_known(ap.ssid.decode("utf-8")),
-                        "security": get_encryption(
-                            ap.rsn_flags or ap.wpa_flags or ap.flags
-                        ),
-                        "frequency": WifiChannels(ap.frequency)[0],
-                        "channel": WifiChannels(ap.frequency)[1],
-                        "signal_level": ap.strength,
-                        "max_bitrate": ap.max_bitrate,
-                        "BSSID": ap.hw_address,
-                    }
-                    for ap in all_aps
-                    if ap.ssid
-                )
+                for ap in all_aps:
+                    if not ap.ssid:
+                        continue
+
+                    ssid = ap.ssid.decode("utf-8")
+                    signal_level = ap.strength
+                    if ssid in seen_networks:
+                        if signal_level > seen_networks[ssid]["signal_level"]:
+                            seen_networks[ssid] = {
+                                "SSID": ssid,
+                                "known": self.is_known(ssid),
+                                "security": get_encryption(ap.rsn_flags or ap.wpa_flags or ap.flags),
+                                "signal_level": signal_level,
+                                "BSSID": ap.hw_address,
+                            }
+                    else:
+                        seen_networks[ssid] = {
+                            "SSID": ssid,
+                            "known": self.is_known(ssid),
+                            "security": get_encryption(ap.rsn_flags or ap.wpa_flags or ap.flags),
+                            "signal_level": signal_level,
+                            "BSSID": ap.hw_address,
+                        }
+                networks = list(seen_networks.values())
                 return sorted(networks, key=lambda i: i["signal_level"], reverse=True)
             return networks
         except Exception as e:
@@ -199,6 +208,15 @@ class SdbusNm:
 
     def get_bssid_from_ssid(self, ssid):
         return next(net["BSSID"] for net in self.get_networks() if ssid == net["SSID"])
+
+    def get_is_connected(self):
+        state = self.wlan_device.state
+        if state in [
+            enums.DeviceState.ACTIVATED,
+        ]:
+            return True
+        else:
+            return False
 
     def get_connected_ap(self):
         if self.wlan_device.active_access_point == "/":
@@ -350,8 +368,6 @@ class SdbusNm:
 
     def connect(self, ssid):
         if target_connection := self.get_connection_path_by_ssid(ssid):
-            message = ssid + "\n" + _("Starting WiFi Association")
-            self.popup(message, 1)
             try:
                 active_connection = self.nm.activate_connection(target_connection)
                 return target_connection
