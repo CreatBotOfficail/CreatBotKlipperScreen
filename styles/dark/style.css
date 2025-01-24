@@ -33,6 +33,7 @@
     color: @yellow-opa-100;
 }
 
+list,
 list row,
 treeview.view,
 window {
@@ -101,6 +102,18 @@ button.color4:active,
 button.update:active,
 button.invalid:active,
 .dialog button:active {
+    background-color: @blue-opa-50;
+    border-color: @blue-opa-50;
+}
+
+button.color1:hover,
+button.color2:hover,
+button.color3:hover,
+button.color4:hover,
+button.update:hover,
+button.invalid:hover,
+.dialog button:hover,
+row:hover {
     background-color: @blue-opa-50;
     border-color: @blue-opa-50;
 }
