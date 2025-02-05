@@ -266,9 +266,7 @@ class SdbusNm:
         }
 
         if security_type == "Open":
-            properties["802-11-wireless-security"] = {
-                "key-mgmt": ("s", "none"),
-            }
+            properties["802-11-wireless"]["security"] = ("s", "none")
         elif "WPA-PSK" in security_type:
             properties["802-11-wireless-security"] = {
                 "key-mgmt": ("s", "wpa-psk"),
