@@ -19,6 +19,7 @@
     color: @text ;
 }
 
+list,
 list row,
 treeview.view,
 window {
@@ -114,6 +115,17 @@ button.color4:active,
 button.update:active,
 button.invalid:active,
 .dialog button:active {
+    background-color: @active;
+}
+
+row:hover,
+button.color1:hover,
+button.color2:hover,
+button.color3:hover,
+button.color4:hover,
+button.update:hover,
+button.invalid:hover,
+.dialog button:hover {
     background-color: @active;
 }
 
