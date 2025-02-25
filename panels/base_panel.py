@@ -100,6 +100,14 @@ class BasePanel(ScreenPanel):
 
         self.titlelbl = Gtk.Label(hexpand=True, halign=Gtk.Align.CENTER, ellipsize=Pango.EllipsizeMode.END)
 
+        if self._screen.license.is_interface_valid() and not self._screen.license.is_active():
+            img_size = self._gtk.img_scale * self.bts
+            self.control["license"] = self._gtk.Image("license", img_size, img_size)
+            license_eventbox = Gtk.EventBox()
+            license_eventbox.add(self.control["license"])
+            license_eventbox.connect("button-press-event", self.show_license_key_page)
+            self.control["license_box"] = Gtk.Box(halign=Gtk.Align.END)
+            self.control["license_box"].pack_end(license_eventbox, True, True, 5)
         self.control['time'] = Gtk.Label(label="00:00 AM")
         self.control['time_box'] = Gtk.Box(halign=Gtk.Align.END)
         self.control['time_box'].pack_end(self.control['time'], True, True, 10)
@@ -108,6 +116,8 @@ class BasePanel(ScreenPanel):
         self.titlebar.get_style_context().add_class("title_bar")
         self.titlebar.add(self.control['temp_box'])
         self.titlebar.add(self.titlelbl)
+        if self._screen.license.is_interface_valid() and not self._screen.license.is_active():
+            self.titlebar.add(self.control["license_box"])
         self.titlebar.add(self.control['time_box'])
         self.set_title(title)
 
@@ -126,6 +136,10 @@ class BasePanel(ScreenPanel):
             self.main_grid.attach(self.content, 1, 1, 1, 1)
 
         self.update_time()
+
+    def show_license_key_page(self, widget, event):
+        if "license" not in self._screen._cur_panels:
+            self._screen.show_panel("license", remove_all=False)
 
     def reload_icons(self):
         button: Gtk.Button

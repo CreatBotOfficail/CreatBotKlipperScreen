@@ -38,6 +38,14 @@ class Panel(ScreenPanel):
                 }
             },
             {
+                "License key": {
+                    "section": "main",
+                    "name": _("License key"),
+                    "type": "button",
+                    "callback": self.license_key,
+                }
+            },
+            {
                 "version_info": {
                     "section": "main",
                     "name": _("Version Selection"),
@@ -132,19 +140,47 @@ class Panel(ScreenPanel):
             self.content.show_all()
         self.select_model = False
 
+    def license_key(self, *args):
+        self._screen.show_panel("license", title="license", remove_all=False, full=True)
+
     def reset_factory_settings(self, *args):
-        text = _("Are you sure?\n") + "\n\n" + _("The system will reboot!")
-        label = Gtk.Label(wrap=True, vexpand=True)
-        label.set_markup(text)
         buttons = [
             {"name": _("Accept"), "response": Gtk.ResponseType.OK, "style": "dialog-error"},
             {"name": _("Cancel"), "response": Gtk.ResponseType.CANCEL, "style": "dialog-info"},
         ]
-        self._gtk.Dialog(_("factory settings"), buttons, label, self.confirm_factory_reset_production)
+        
+        text = _("Are you sure?\n") + "\n\n" + _("The system will reboot!")
+        label = Gtk.Label(wrap=True, vexpand=True)
+        label.set_markup(text)
+        label.set_margin_top(100)
 
-    def confirm_factory_reset_production(self, dialog, response_id):
+        checkbox = Gtk.CheckButton(label=" " + _("Enable Registration Code"))
+        checkbox.set_halign(Gtk.Align.CENTER)
+        checkbox.set_valign(Gtk.Align.CENTER)
+
+
+        grid = Gtk.Grid(row_homogeneous=True, column_homogeneous=True)
+        grid.set_row_spacing(20)
+        grid.set_column_spacing(0)
+        grid.attach(label, 0, 0, 1, 1)
+        if self._screen.license.is_interface_valid() and self._screen.license.is_active():
+            grid.attach(checkbox, 0, 1, 1, 1)
+
+        self._gtk.Dialog(
+            _("factory settings"),
+            buttons,
+            grid,
+            self.confirm_factory_reset_production,
+            checkbox,
+        )
+        
+
+    def confirm_factory_reset_production(self, dialog, response_id, checkbox):
         self._gtk.remove_dialog(dialog)
         if response_id == Gtk.ResponseType.OK:
+            if checkbox.get_active():
+                if self._screen.license.is_interface_valid():
+                    self._screen.license.enabled_registration()
             KlippyFactory.production_factory_reset(self._screen._ws.klippy, self._config)
 
     def version_selection(self, val):
