@@ -77,9 +77,7 @@ class Panel(ScreenPanel):
 
         self.labels['interface'] = Gtk.Label(hexpand=True)
         self.labels['ip'] = Gtk.Label(hexpand=True)
-        if self.interface is not None:
-            self.labels['interface'].set_text(_("Interface") + f': {self.interface}')
-            self.labels['ip'].set_text(f"IP: {self.sdbus_nm.get_ip_address()}")
+        self.network_interface_refresh()
 
         self.reload_button = self._gtk.Button("refresh", None, "custom-icon-button", self.bts)
         self.reload_button.set_no_show_all(True)
@@ -120,12 +118,19 @@ class Panel(ScreenPanel):
         self.network_list.connect("row-activated", self.handle_wifi_selection)
 
     def popup_callback(self, msg, level=3):
+        self.network_interface_refresh()
         if not self.refresh_status(msg):
             for item in self.network_rows:
                 if self.network_rows[item]["label_state"] is not None:
                     self.network_rows[item]["label_state"].set_no_show_all(True)
                     self.network_rows[item]["label_state"].hide()
             self._screen.show_popup_message(msg, level)
+
+    def network_interface_refresh(self):
+        if self.interface is not None:
+            self.interface = self.sdbus_nm.get_primary_interface()
+            self.labels['interface'].set_text(_("Interface") + f': {self.interface}')
+            self.labels['ip'].set_text(f"IP: {self.sdbus_nm.get_ip_address()}")
 
     def handle_wifi_selection(self, list_box, row):
         index = row.get_index()
@@ -407,6 +412,7 @@ class Panel(ScreenPanel):
         if self.delay_reload_timer_id:
             GLib.source_remove(self.delay_reload_timer_id)
             self.delay_reload_timer_id = None
+        self.network_interface_refresh()
 
         return self.sdbus_nm.nm.wireless_enabled
 
@@ -438,7 +444,7 @@ class Panel(ScreenPanel):
             return
         if self.sdbus_nm.wifi:
             if self.sdbus_nm.is_wifi_enabled():
-                self.delay_reload_networks(1000)
+                self.delay_reload_networks(2000)
                 self.start_refresh_timer()
 
     def deactivate(self):
@@ -464,3 +470,4 @@ class Panel(ScreenPanel):
             self.reload_button.hide()
             self.network_list.set_no_show_all(True)
             self.network_list.hide()
+        self.network_interface_refresh()
