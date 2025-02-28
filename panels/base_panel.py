@@ -8,6 +8,7 @@ from gi.repository import GLib, Gtk, Pango
 from jinja2 import Environment
 from datetime import datetime
 from math import log
+from ks_includes.sdbus_nm import SdbusNm
 from ks_includes.screen_panel import ScreenPanel
 
 
@@ -18,11 +19,37 @@ class BasePanel(ScreenPanel):
         self.time_min = -1
         self.time_format = self._config.get_main_config().getboolean("24htime", True)
         self.time_update = None
+        self.network_update = None
         self.titlebar_items = []
         self.titlebar_name_type = None
         self.current_extruder = None
         self.last_usage_report = datetime.now()
         self.usage_report = 0
+
+        icon_size_width = self._gtk.content_width * 0.05
+        icon_size_height = self._gtk.content_height * 0.05
+
+        network_icons_map = {
+            "excellent": "wifi_excellent",
+            "good": "wifi_good",
+            "fair": "wifi_fair",
+            "weak": "wifi_weak",
+            "ethernet": "ethernet",
+        }
+
+
+    	self.network_icons = {
+            key: self._gtk.PixbufFromIcon(value, width=icon_size_width, height=icon_size_height)
+            for key, value in network_icons_map.items()
+        }
+
+        try:
+            self.sdbus_nm = SdbusNm(self.network_interface_refresh)
+        except Exception as e:
+            logging.exception("Failed to initialize SdbusNm: %s", e)
+            self.sdbus_nm = None
+
+
         # Action bar buttons
         abscale = self.bts * 1.1
         self.control['back'] = self._gtk.Button('back', scale=abscale)
@@ -108,6 +135,18 @@ class BasePanel(ScreenPanel):
             license_eventbox.connect("button-press-event", self.show_license_key_page)
             self.control["license_box"] = Gtk.Box(halign=Gtk.Align.END)
             self.control["license_box"].pack_end(license_eventbox, True, True, 5)
+
+        if self.sdbus_nm:
+            img_size = self._gtk.img_scale * self.bts
+            self.control["network_ico"] = self._gtk.Image("wifi_excellent", img_size, img_size)
+            network_eventbox = Gtk.EventBox()
+            network_eventbox.add(self.control["network_ico"])
+            network_eventbox.connect("button-press-event", self.show_network_page)
+            self.control["network_box"] = Gtk.Box(halign=Gtk.Align.END)
+            self.control["network_box"].pack_end(network_eventbox, True, True, 5)
+            self.control["network_ico"].set_no_show_all(True)
+            self.control["network_ico"].set_visible(False)
+
         self.control['time'] = Gtk.Label(label="00:00 AM")
         self.control['time_box'] = Gtk.Box(halign=Gtk.Align.END)
         self.control['time_box'].pack_end(self.control['time'], True, True, 10)
@@ -118,6 +157,8 @@ class BasePanel(ScreenPanel):
         self.titlebar.add(self.titlelbl)
         if self._screen.license.is_interface_valid() and not self._screen.license.is_active():
             self.titlebar.add(self.control["license_box"])
+        if self.sdbus_nm:
+            self.titlebar.add(self.control["network_box"])
         self.titlebar.add(self.control['time_box'])
         self.set_title(title)
 
@@ -140,6 +181,10 @@ class BasePanel(ScreenPanel):
     def show_license_key_page(self, widget, event):
         if "license" not in self._screen._cur_panels:
             self._screen.show_panel("license", remove_all=False)
+
+    def show_network_page(self, widget, event):
+        if "network" not in self._screen._cur_panels:
+            self._screen.show_panel("network", remove_all=False)
 
     def reload_icons(self):
         button: Gtk.Button
@@ -226,6 +271,8 @@ class BasePanel(ScreenPanel):
     def activate(self):
         if self.time_update is None:
             self.time_update = GLib.timeout_add_seconds(1, self.update_time)
+        if self.sdbus_nm and self.network_update is None:
+            self.network_update = GLib.timeout_add_seconds(5, self.network_interface_refresh)
 
     def add_content(self, panel):
         printing = self._printer and self._printer.state in {"printing", "paused"}
@@ -394,6 +441,35 @@ class BasePanel(ScreenPanel):
             self.time_min = now.minute
             self.time_format = confopt
         return True
+
+    def network_interface_refresh(self, msg=None, level=3):
+        if self.sdbus_nm:
+            self.interface = self.sdbus_nm.get_primary_interface()
+            if self.interface:
+                if '?' not in self.sdbus_nm.get_ip_address(): 
+                    if self.interface == "eth0":
+                        self.control["network_ico"].set_from_pixbuf(self.network_icons["ethernet"])
+                        self.control["network_ico"].set_visible(True)
+                    elif self.interface == "wlan0":
+                        strength = self.sdbus_nm.get_signal_strength()
+                        if strength:
+                            self.control["network_ico"].set_from_pixbuf(self.get_signal_strength_icon(strength))
+                            self.control["network_ico"].set_visible(True)
+                        else:
+                            self.control["network_ico"].set_visible(False)
+                else:
+                    self.control["network_ico"].set_visible(False)
+        return True
+
+    def get_signal_strength_icon(self, signal_level):
+        if signal_level > 75:
+            return self.network_icons["excellent"]
+        elif signal_level > 60:
+            return self.network_icons["good"]
+        elif signal_level > 30:
+            return self.network_icons["fair"]
+        else:
+            return self.network_icons["weak"]
 
     def set_ks_printer_cfg(self, printer):
         ScreenPanel.ks_printer_cfg = self._config.get_printer_config(printer)
