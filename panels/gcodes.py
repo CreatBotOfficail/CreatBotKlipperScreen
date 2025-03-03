@@ -341,6 +341,17 @@ class Panel(ScreenPanel):
     def confirm_print_response(self, dialog, response_id, filename):
         self._gtk.remove_dialog(dialog)
         if response_id == Gtk.ResponseType.OK:
+            if self._screen.license.is_interface_valid() and not self._screen.license.is_active():
+                if not self._screen.license.is_time_sufficient():
+                    if "license" not in self._screen._cur_panels:
+                        self._screen.show_panel(
+                            "license",
+                            title="license",
+                            remove_all=False,
+                            func=self._screen._ws.klippy.print_start,
+                            file=filename,
+                        )
+                    return
             logging.info(f"Starting print: {filename}")
             self._screen._ws.klippy.print_start(filename)
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KlipperScreen\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-07 17:11+0800\n"
+"POT-Creation-Date: 2025-02-26 11:12+0800\n"
 "PO-Revision-Date: 2024-06-01 12:09+0000\n"
 "Last-Translator: 峻瑜哥 <a728728728@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <https://hosted.weblate.org/projects/"
@@ -70,6 +70,9 @@ msgstr "加速度:"
 
 msgid "Accept"
 msgstr "接受"
+
+msgid "Activate"
+msgstr "激活"
 
 msgid "Adaptive Bed Leveling"
 msgstr "自適應床調平"
@@ -235,9 +238,6 @@ msgstr "緊急停止需確認"
 msgid "Confirm factory reset?\n"
 msgstr "確定恢復出廠設置？\n"
 
-msgid "Connected"
-msgstr "已連線"
-
 msgid "Connecting"
 msgstr "連接中"
 
@@ -307,14 +307,23 @@ msgstr "您要忘記或斷開%s的連接嗎?"
 msgid "Do you want to recover %s?"
 msgstr "你想恢復 %s 嗎？"
 
+msgid "Elapsed trial time:"
+msgstr "已用時間"
+
 msgid "Elapsed:"
 msgstr "已用時間："
 
 msgid "Emergency Stop"
 msgstr "緊急停止"
 
+msgid "Enable Registration Code"
+msgstr "啟用註冊碼"
+
 msgid "Enable screen power management"
 msgstr "開啟螢幕功率管理功能"
+
+msgid "Enabled successfully"
+msgstr "啟用成功"
 
 msgid "Error"
 msgstr "錯誤"
@@ -463,9 +472,6 @@ msgstr "Z軸歸零"
 msgid "Host"
 msgstr "主機"
 
-msgid "Hostname"
-msgstr "主機名"
-
 msgid "ID"
 msgstr "ID"
 
@@ -507,6 +513,18 @@ msgstr "設置文件可能存在錯誤"
 
 msgid "Job Status"
 msgstr "工作狀態"
+
+msgid "Key is empty"
+msgstr "密鑰為空"
+
+msgid "Key is invalid"
+msgstr "密鑰無效"
+
+msgid "Key is valid"
+msgstr "密鑰有效"
+
+msgid "Key:"
+msgstr "密鑰："
 
 msgid "Klipper Restart"
 msgstr "重啟Klipper"
@@ -559,6 +577,9 @@ msgstr "剩餘時間："
 
 msgid "Leveling only in the actual print area"
 msgstr "僅在實際打印區域進行床調平"
+
+msgid "License key"
+msgstr "許可證密鑰"
 
 msgid "Limits"
 msgstr "列印機限制"
@@ -683,6 +704,9 @@ msgstr "未啟用"
 msgid "Not Inserted"
 msgstr "未裝載"
 
+msgid "Not activated"
+msgstr "未激活"
+
 msgid "Not all screens support this"
 msgstr "不一定所有屏幕都支持這項功能"
 
@@ -745,11 +769,17 @@ msgstr "已暫停"
 msgid "Perform a full upgrade?"
 msgstr "是否全部升級？"
 
+msgid "Permanent Activation"
+msgstr "永久激活"
+
 msgid "Pins"
 msgstr "引腳"
 
 msgid "Please ensure that the Probe Calibrate has been performed"
 msgstr "請確保已完成探針偏移校準"
+
+msgid "Please enter a key to activate"
+msgstr "請輸入密鑰激活"
 
 msgid "Please enter a valid number"
 msgstr "請輸入有效的數字"
@@ -835,6 +865,9 @@ msgstr "參考"
 msgid "Refresh"
 msgstr "重新整理"
 
+msgid "Remaining Time:"
+msgstr "剩余時間："
+
 msgid "Remove network"
 msgstr "刪除網絡"
 
@@ -843,6 +876,12 @@ msgstr "重新命名/移動："
 
 msgid "Reprint"
 msgstr "再次打印"
+
+msgid "Reset"
+msgstr "重置"
+
+msgid "Reset successfully"
+msgstr "重置成功"
 
 msgid "Restart"
 msgstr "重啟"
@@ -923,6 +962,9 @@ msgstr "選擇型號"
 msgid "Send"
 msgstr "發送"
 
+msgid "Serial Number:"
+msgstr "序列號"
+
 msgid "Settings"
 msgstr "設定"
 
@@ -943,6 +985,9 @@ msgstr "散熱風扇"
 
 msgid "Size"
 msgstr "大小"
+
+msgid "Skip"
+msgstr "跳過"
 
 msgid "Slicer"
 msgstr "切片軟體"
@@ -983,14 +1028,14 @@ msgstr "開始"
 msgid "Start testing the Z offset value of the second nozzle?\n"
 msgstr "開始測試第二個噴嘴的 Z 偏移值嗎？\n"
 
-msgid "Starting WiFi Association"
-msgstr "開始WiFi連線"
-
 msgid "Starting recovery for"
 msgstr "開始恢復"
 
 msgid "Starting update for"
 msgstr "開始更新"
+
+msgid "State:"
+msgstr "狀態："
 
 msgid "System"
 msgstr "系統"
@@ -1019,6 +1064,9 @@ msgstr ""
 msgid "The system will reboot!"
 msgstr "系統將重新啟動！"
 
+msgid "This device is not activated and is available for trial use only"
+msgstr "此設備尚未激活，僅供試用"
+
 msgid "This operation is about to print the model"
 msgstr "此操作即將開始打印模型"
 
@@ -1036,6 +1084,15 @@ msgstr "打印過程中超過倒計時後關閉屏幕"
 
 msgid "Total:"
 msgstr "合計："
+
+msgid "Trial"
+msgstr "試用"
+
+msgid "Trial Time:"
+msgstr "試用時間："
+
+msgid "Unknown"
+msgstr "未知"
 
 msgid "Unknown Heater"
 msgstr "未知加熱器"
@@ -1136,6 +1193,9 @@ msgid "hour"
 msgid_plural "hours"
 msgstr[0] "小時"
 
+msgid "license"
+msgstr "許可證"
+
 msgid "macros that use 'rename_existing' are hidden"
 msgstr "使用\"rename_existing\"的宏將被隱藏"
 
@@ -1167,6 +1227,15 @@ msgstr "s"
 msgid "second"
 msgid_plural "seconds"
 msgstr[0] "秒"
+
+#~ msgid "Connected"
+#~ msgstr "已連線"
+
+#~ msgid "Hostname"
+#~ msgstr "主機名"
+
+#~ msgid "Starting WiFi Association"
+#~ msgstr "開始WiFi連線"
 
 #~ msgid "Restoring Left extruder temperature, this may take some time"
 #~ msgstr "恢復左擠出機溫度，這可能需要一些時間"
@@ -1215,9 +1284,6 @@ msgstr[0] "秒"
 
 #~ msgid "Hidden"
 #~ msgstr "隱藏的"
-
-#~ msgid "Print Time"
-#~ msgstr "列印時間"
 
 #~ msgid "dBm"
 #~ msgstr "dBm"
@@ -1390,6 +1456,3 @@ msgstr[0] "秒"
 
 #~ msgid "Load Average"
 #~ msgstr "平均负载"
-
-#~ msgid "Screen Blanking Time"
-#~ msgstr "关闭屏幕时间"
