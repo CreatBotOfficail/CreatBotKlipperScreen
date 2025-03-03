@@ -230,6 +230,10 @@ class SdbusNm:
             else None
         )
 
+    def get_signal_strength(self):
+        ap = self.get_connected_ap()
+        return ap.strength if ap else None
+
     def get_security_type(self, ssid):
         return next(
             (

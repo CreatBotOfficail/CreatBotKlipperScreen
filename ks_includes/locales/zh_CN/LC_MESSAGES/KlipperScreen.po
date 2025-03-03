@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KlipperScreen\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-07 17:11+0800\n"
+"POT-Creation-Date: 2025-02-26 11:12+0800\n"
 "PO-Revision-Date: 2024-06-03 19:09+0000\n"
 "Last-Translator: wsj20050623 <2129426599@qq.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
@@ -63,13 +63,16 @@ msgid "ADXL Not Configured"
 msgstr "未配置加速度计"
 
 msgid "Abort"
-msgstr "中止打印"
+msgstr "终止"
 
 msgid "Acceleration:"
 msgstr "加速度："
 
 msgid "Accept"
 msgstr "确定"
+
+msgid "Activate"
+msgstr "激活"
 
 msgid "Adaptive Bed Leveling"
 msgstr "自适应床调平"
@@ -235,9 +238,6 @@ msgstr "紧急停止需要二次确认"
 msgid "Confirm factory reset?\n"
 msgstr "确定恢复出厂设置？\n"
 
-msgid "Connected"
-msgstr "已连接"
-
 msgid "Connecting"
 msgstr "连接中"
 
@@ -307,14 +307,23 @@ msgstr "您要忘记或断开%s的连接吗?"
 msgid "Do you want to recover %s?"
 msgstr "你想恢复 %s 吗？"
 
+msgid "Elapsed trial time:"
+msgstr "已用时间："
+
 msgid "Elapsed:"
 msgstr "已用时间："
 
 msgid "Emergency Stop"
 msgstr "紧急停止"
 
+msgid "Enable Registration Code"
+msgstr "启用注册码"
+
 msgid "Enable screen power management"
 msgstr "开启屏幕功率管理功能"
+
+msgid "Enabled successfully"
+msgstr "启用成功"
 
 msgid "Error"
 msgstr "错误"
@@ -463,9 +472,6 @@ msgstr "Z轴归零"
 msgid "Host"
 msgstr "主机"
 
-msgid "Hostname"
-msgstr "主机名"
-
 msgid "ID"
 msgstr "ID"
 
@@ -507,6 +513,18 @@ msgstr "设置文件可能存在错误"
 
 msgid "Job Status"
 msgstr "工作状态"
+
+msgid "Key is empty"
+msgstr "密钥为空"
+
+msgid "Key is invalid"
+msgstr "密钥无效"
+
+msgid "Key is valid"
+msgstr "密钥有效"
+
+msgid "Key:"
+msgstr "密钥："
 
 msgid "Klipper Restart"
 msgstr "重启Klipper"
@@ -559,6 +577,9 @@ msgstr "剩余时间："
 
 msgid "Leveling only in the actual print area"
 msgstr "仅在实际打印区域进行床调平"
+
+msgid "License key"
+msgstr "许可证密钥"
 
 msgid "Limits"
 msgstr "打印机限制"
@@ -683,6 +704,9 @@ msgstr "未启用"
 msgid "Not Inserted"
 msgstr "未装载"
 
+msgid "Not activated"
+msgstr "未激活"
+
 msgid "Not all screens support this"
 msgstr "不一定所有屏幕都支持这项功能"
 
@@ -745,11 +769,17 @@ msgstr "已暂停"
 msgid "Perform a full upgrade?"
 msgstr "是否更新全部？"
 
+msgid "Permanent Activation"
+msgstr "永久激活"
+
 msgid "Pins"
 msgstr "引脚"
 
 msgid "Please ensure that the Probe Calibrate has been performed"
 msgstr "请确保已完成探针偏移校准"
+
+msgid "Please enter a key to activate"
+msgstr "请输入密钥激活"
 
 msgid "Please enter a valid number"
 msgstr "请输入有效的数字"
@@ -835,6 +865,9 @@ msgstr "参考"
 msgid "Refresh"
 msgstr "检查更新"
 
+msgid "Remaining Time:"
+msgstr "剩余时间："
+
 msgid "Remove network"
 msgstr "删除网络"
 
@@ -843,6 +876,12 @@ msgstr "重命名/移动："
 
 msgid "Reprint"
 msgstr "再次打印"
+
+msgid "Reset"
+msgstr "重置"
+
+msgid "Reset successfully"
+msgstr "重置成功"
 
 msgid "Restart"
 msgstr "重启"
@@ -923,6 +962,9 @@ msgstr "选择型号"
 msgid "Send"
 msgstr "发送"
 
+msgid "Serial Number:"
+msgstr "序列号："
+
 msgid "Settings"
 msgstr "设置"
 
@@ -943,6 +985,9 @@ msgstr "散热风扇"
 
 msgid "Size"
 msgstr "大小"
+
+msgid "Skip"
+msgstr "跳过"
 
 msgid "Slicer"
 msgstr "切片软件"
@@ -983,14 +1028,14 @@ msgstr "开始"
 msgid "Start testing the Z offset value of the second nozzle?\n"
 msgstr "开始测试第二个喷嘴的 Z 偏移值吗？\n"
 
-msgid "Starting WiFi Association"
-msgstr "开始WiFi连接"
-
 msgid "Starting recovery for"
 msgstr "开始恢复"
 
 msgid "Starting update for"
 msgstr "开始更新"
+
+msgid "State:"
+msgstr "状态："
 
 msgid "System"
 msgstr "系统"
@@ -1019,6 +1064,9 @@ msgstr ""
 msgid "The system will reboot!"
 msgstr "系统将重新启动！"
 
+msgid "This device is not activated and is available for trial use only"
+msgstr "此设备尚未激活，仅供试用"
+
 msgid "This operation is about to print the model"
 msgstr "此操作即将开始打印模型"
 
@@ -1036,6 +1084,15 @@ msgstr "打印过程中超过倒计时后关闭屏幕"
 
 msgid "Total:"
 msgstr "合计："
+
+msgid "Trial"
+msgstr "试用"
+
+msgid "Trial Time:"
+msgstr "试用时间："
+
+msgid "Unknown"
+msgstr "未知"
 
 msgid "Unknown Heater"
 msgstr "未知加热器"
@@ -1136,6 +1193,9 @@ msgid "hour"
 msgid_plural "hours"
 msgstr[0] "小时"
 
+msgid "license"
+msgstr "许可证"
+
 msgid "macros that use 'rename_existing' are hidden"
 msgstr "使用\"rename_existing\"的宏将被隐藏"
 
@@ -1167,6 +1227,15 @@ msgstr "s"
 msgid "second"
 msgid_plural "seconds"
 msgstr[0] "秒"
+
+#~ msgid "Connected"
+#~ msgstr "已连接"
+
+#~ msgid "Hostname"
+#~ msgstr "主机名"
+
+#~ msgid "Starting WiFi Association"
+#~ msgstr "开始WiFi连接"
 
 #~ msgid "Restoring Left extruder temperature, this may take some time"
 #~ msgstr "恢复左挤出机温度，这可能需要一些时间"
@@ -1242,9 +1311,6 @@ msgstr[0] "秒"
 
 #~ msgid "KlipperScreen will drop support in June 2024"
 #~ msgstr "KlipperScreen将于2024 年6月停止适配"
-
-#~ msgid "Print Time"
-#~ msgstr "打印用时"
 
 #~ msgid "Warning"
 #~ msgstr "警告"
@@ -1420,6 +1486,3 @@ msgstr[0] "秒"
 
 #~ msgid "Load Average"
 #~ msgstr "平均负载"
-
-#~ msgid "Screen Blanking Time"
-#~ msgstr "关闭屏幕时间"
