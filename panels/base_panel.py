@@ -25,31 +25,12 @@ class BasePanel(ScreenPanel):
         self.current_extruder = None
         self.last_usage_report = datetime.now()
         self.usage_report = 0
-
-        icon_size_width = self._gtk.content_width * 0.05
-        icon_size_height = self._gtk.content_height * 0.05
-
-        network_icons_map = {
-            "excellent": "wifi_excellent",
-            "good": "wifi_good",
-            "fair": "wifi_fair",
-            "weak": "wifi_weak",
-            "ethernet": "ethernet",
-        }
-
-
-    	self.network_icons = {
-            key: self._gtk.PixbufFromIcon(value, width=icon_size_width, height=icon_size_height)
-            for key, value in network_icons_map.items()
-        }
-
+        self.load_network_icons()
         try:
             self.sdbus_nm = SdbusNm(self.network_interface_refresh)
         except Exception as e:
             logging.exception("Failed to initialize SdbusNm: %s", e)
             self.sdbus_nm = None
-
-
         # Action bar buttons
         abscale = self.bts * 1.1
         self.control['back'] = self._gtk.Button('back', scale=abscale)
@@ -195,6 +176,7 @@ class BasePanel(ScreenPanel):
             width = pixbuf.get_width()
             height = pixbuf.get_height()
             button.set_image(self._gtk.Image(name, width, height))
+        self.load_network_icons()
 
     def show_heaters(self, show=True):
         try:
@@ -470,6 +452,21 @@ class BasePanel(ScreenPanel):
             return self.network_icons["fair"]
         else:
             return self.network_icons["weak"]
+
+    def load_network_icons(self):
+        icon_size_width = self._gtk.content_width * 0.05
+        icon_size_height = self._gtk.content_height * 0.05
+        network_icons_map = {
+            "excellent": "wifi_excellent",
+            "good": "wifi_good",
+            "fair": "wifi_fair",
+            "weak": "wifi_weak",
+            "ethernet": "ethernet",
+        }
+        self.network_icons = {
+            key: self._gtk.PixbufFromIcon(value, width=icon_size_width, height=icon_size_height)
+            for key, value in network_icons_map.items()
+        }
 
     def set_ks_printer_cfg(self, printer):
         ScreenPanel.ks_printer_cfg = self._config.get_printer_config(printer)
