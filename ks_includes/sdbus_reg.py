@@ -35,7 +35,15 @@ class RegistrationInterface(DbusInterfaceCommonAsync, interface_name="org.regist
         raise NotImplementedError
 
     @dbus_method_async(input_signature="s", result_signature="b")
-    async def reset_registration(self, val: str) -> bool:
+    async def test_registration(self, val: str) -> bool:
+        raise NotImplementedError
+
+    @dbus_method_async(result_signature="b")
+    async def add_registration_time(self) -> bool:
+        raise NotImplementedError
+
+    @dbus_method_async(result_signature="b")
+    async def minus_registration_time(self) -> bool:
         raise NotImplementedError
 
     @dbus_property_async(property_signature="b")
@@ -146,11 +154,23 @@ class LicenseManager:
 
         return self._async_call(_verify, default=False)
 
-    def reset_registration(self, code: str) -> bool:
+    def test_registration(self, code: str) -> bool:
         async def _reset():
-            return await self.registration_interface.proxy.reset_registration(code)
+            return await self.registration_interface.proxy.test_registration(code)
 
         return self._async_call(_reset, default=False)
+
+    def add_registration_time(self) -> bool:
+        async def _add():
+            return await self.registration_interface.proxy.add_registration_time()
+
+        return self._async_call(_add, default=False)
+
+    def minus_registration_time(self) -> bool:
+        async def _minus():
+            return await self.registration_interface.proxy.minus_registration_time()
+
+        return self._async_call(_minus, default=False)
 
     def enabled_registration(self) -> bool:
         async def _get():
