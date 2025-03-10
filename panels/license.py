@@ -17,6 +17,9 @@ class Panel(ScreenPanel):
             + _("Please enter a key to activate")
         )
         self.key_len = 15
+        self.key_val_test = 1
+        self.key_val_add = 2
+        self.key_val_minus = 3
         self.full = False
         self.interface = screen.license
         self.serial_num = self.interface.get_unique_id() or _("Unknown")
@@ -71,6 +74,13 @@ class Panel(ScreenPanel):
         for child in self.content.get_children():
             self.content.remove(child)
 
+    def display_test_dialog(self, key_text=""):
+        buttons = [
+            {"name": _("Add"), "response": self.key_val_add, "style": "dialog-secondary"},
+            {"name": _("Minus"), "response": self.key_val_minus, "style": "dialog-info"},
+            {"name": _("Close"), "response": Gtk.ResponseType.CLOSE, "style": "dialog-error"},
+        ]
+        self.create_license_key_dialog(buttons=buttons, key=key_text)
     def display_dialog(self, full=False, key=""):
         BUTTON_CONFIGS = {
             "trial_with_callback": [
@@ -78,7 +88,7 @@ class Panel(ScreenPanel):
                 {"name": _("Skip"), "response": Gtk.ResponseType.CANCEL, "style": "dialog-error"},
             ],
             "full_features": [
-                {"name": _("Reset"), "response": Gtk.ResponseType.APPLY, "style": "dialog-secondary"},
+                {"name": _("Test Mode"), "response": self.key_val_test, "style": "dialog-secondary"},
                 {"name": _("Activate"), "response": Gtk.ResponseType.OK, "style": "dialog-info"},
                 {"name": _("Close"), "response": Gtk.ResponseType.CLOSE, "style": "dialog-error"},
             ],
@@ -133,6 +143,7 @@ class Panel(ScreenPanel):
             status_text = _("Unknown")
         elif self.is_active:
             status_text = _("Permanent Activation")
+            self.title_label.set_markup(f"<big>{status_text}</big>\n")
         self.license_box["state_text"], self.license_box["state_text_value"] = add_labeled_value(
             0, _("State:"), status_text
         )
@@ -180,16 +191,6 @@ class Panel(ScreenPanel):
         if response_id == Gtk.ResponseType.YES:
             if self.interface.enabled_registration():
                 self.state_update(_("Enabled successfully"))
-        elif response_id == Gtk.ResponseType.APPLY:
-            if len(self.license_box["key_input"].get_text()) == 0:
-                self.state_update(_("Key is empty"))
-                return
-            else:
-                if self.interface.reset_registration(self.license_box["key_input"].get_text()):
-                    self.update_time()
-                    self.state_update(_("Reset successfully"))
-                else:
-                    self.state_update(_("Key is invalid"))
         elif response_id == Gtk.ResponseType.CLOSE:
             self._gtk.remove_dialog(dialog)
             self._screen._menu_go_back()
@@ -204,6 +205,21 @@ class Panel(ScreenPanel):
                 self.state_update(_("Key is empty"))
                 return
             self.verify_key(self.license_box["key_input"].get_text())
+            self.update_time()
+        elif response_id == self.key_val_test:
+            if len(self.license_box["key_input"].get_text()) == 0:
+                self.state_update(_("Key is empty"))
+                return
+            if self.interface.test_registration(self.license_box["key_input"].get_text()):
+                self._gtk.remove_dialog(dialog)
+                self.display_test_dialog()
+            else:
+                self.state_update(_("Key is invalid"))
+        elif response_id == self.key_val_add:
+            self.interface.add_registration_time()
+            self.update_time()
+        elif response_id == self.key_val_minus:
+            self.interface.minus_registration_time()
             self.update_time()
 
     def on_show_keyboard(self, entry=None, event=None):
