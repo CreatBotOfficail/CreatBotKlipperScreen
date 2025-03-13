@@ -93,7 +93,7 @@ class Panel(ScreenPanel):
                 {"name": _("Close"), "response": Gtk.ResponseType.CLOSE, "style": "dialog-error"},
             ],
             "Trial": [
-                {"name": _("Activate"), "response": Gtk.ResponseType.OK, "style": "dialog-info"},
+                {"name": _("Activate"), "response": Gtk.ResponseType.YES, "style": "dialog-info"},
                 {"name": _("Trial"), "response": Gtk.ResponseType.CLOSE, "style": "dialog-error"},
             ],
             "default": [
@@ -189,8 +189,14 @@ class Panel(ScreenPanel):
 
     def confirm_license_response(self, dialog, response_id):
         if response_id == Gtk.ResponseType.YES:
-            if self.interface.enabled_registration():
-                self.state_update(_("Enabled successfully"))
+            if len(self.license_box["key_input"].get_text()) == 0:
+                self.state_update(_("Key is empty"))
+                return
+            self.verify_key(self.license_box["key_input"].get_text())
+            self.update_time()
+            if self.interface.is_active():
+                self._gtk.remove_dialog(dialog)
+                self._screen._menu_go_back()
         elif response_id == Gtk.ResponseType.CLOSE:
             self._gtk.remove_dialog(dialog)
             self._screen._menu_go_back()
