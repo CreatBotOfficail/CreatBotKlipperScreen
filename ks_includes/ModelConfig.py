@@ -101,8 +101,16 @@ class ModelConfig:
                 )
 
     def wirte_printer_config(self, device_name):
+        config_dict = {
+            "CreatBot_F430NX": "CreatBot_F430NX",
+            "CreatBot_D600Pro2HS": "CreatBot_D600Pro2",
+            "CreatBot_D600Pro2HS_KIT": "CreatBot_D600Pro2_V0",
+            "CreatBot_D1000HS": "CreatBot_D1000",
+            "CreatBot_D1000HS_KIT": "CreatBot_D1000_V0",
+            "CreatBot_P800": "CreatBot_P800",
+        }
         if device_name:
-            source_path = f"{os.path.expanduser('~')}/klipper/config/{device_name}/"
+            source_path = f"{os.path.expanduser('~')}/klipper/config/{config_dict.get(device_name)}/"
             target_path = f"{os.path.expanduser('~')}/printer_data/config/"
             if not os.path.exists(target_path):
                 os.makedirs(target_path)
