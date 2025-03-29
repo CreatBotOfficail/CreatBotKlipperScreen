@@ -135,7 +135,6 @@ class Panel(ScreenPanel):
         versions = [v.strip() for v in versions_str.split(",") if v.strip()]
         self.create_list_menu(versions, self._on_version_selected)
         self.select_model_version = True
-        self.model = model
 
     def _on_model_selected(self, widget, event):
         for child in self.content.get_children():
@@ -147,7 +146,7 @@ class Panel(ScreenPanel):
     def _on_version_selected(self, widget, version):
         if not hasattr(self, "model_config") or self.model_config is None:
             self.model_config = ModelConfig()
-            self.model_config.generate_config(self.model, version)
+            self.model_config.generate_config(self.select_model, version)
 
     def hide_select_model_version(self):
         for child in self.content.get_children():
