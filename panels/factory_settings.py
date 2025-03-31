@@ -19,6 +19,10 @@ class Panel(ScreenPanel):
     def __init__(self, screen, title):
         title = title or "factory settings"
         super().__init__(screen, title)
+        klipperscreendir = pathlib.Path(__file__).parent.resolve().parent
+        self.model_list_path = os.path.join(klipperscreendir, "config", "model_menu.conf")
+        self.model_list_config = configparser.ConfigParser()
+        self.model_list_config.read(self.model_list_path, encoding="utf-8")
         self.last_drop_time = datetime.now()
         self.factory_settings_list = [
             {
@@ -62,6 +66,7 @@ class Panel(ScreenPanel):
         ]
         self.settings = {}
         self.select_model = False
+        self.select_model_version = False
         self.labels["setting_menu"] = self._gtk.ScrolledWindow()
         self.labels["settings"] = Gtk.Grid()
         self.labels["setting_menu"].add(self.labels["settings"])
@@ -77,6 +82,9 @@ class Panel(ScreenPanel):
         self.content.show_all()
 
     def back(self):
+        if self.select_model_version:
+            self.hide_select_model_version()
+            return True
         if self.select_model:
             self.hide_select_model()
             return True
@@ -99,38 +107,53 @@ class Panel(ScreenPanel):
             combo_box.popup()
         return False
 
-    def show_select_model(self, widget, option):
-        self.create_select_model()
+    def create_list_menu(self, menu_list, callback=None):
+        if "model_menu" in self.labels:
+            del self.labels["model_menu"]
+        self.labels["model_menu"] = self._gtk.ScrolledWindow()
+        self.labels["model"] = Gtk.Grid()
+        self.labels["model_menu"].add(self.labels["model"])
+        self.models = {}
+        for value in menu_list:
+            self.models[value] = {
+                "name": value,
+                "type": "button",
+                "callback": callback,
+            }
+            self.add_option("model", self.models, value, self.models[value])
+
+    def show_select_model(self, widget=None, option=None):
+        self.create_list_menu(self.model_list_config.sections(), self._on_model_selected)
         for child in self.content.get_children():
             self.content.remove(child)
         self.content.add(self.labels["model_menu"])
         self.content.show_all()
         self.select_model = True
 
-    def create_select_model(self):
-        if "model_menu" in self.labels:
-            return
+    def show_select_model_version(self, model):
+        versions_str = self.model_list_config[model].get("versions", "")
+        versions = [v.strip() for v in versions_str.split(",") if v.strip()]
+        self.create_list_menu(versions, self._on_version_selected)
+        self.select_model_version = True
+        self.model = model
+
+    def _on_model_selected(self, widget, event):
+        for child in self.content.get_children():
+            self.content.remove(child)
+        self.show_select_model_version(event)
+        self.content.add(self.labels["model_menu"])
+        self.content.show_all()
+
+    def _on_version_selected(self, widget, version):
         if not hasattr(self, "model_config") or self.model_config is None:
             self.model_config = ModelConfig()
-        self.labels["model_menu"] = self._gtk.ScrolledWindow()
-        self.labels["model"] = Gtk.Grid()
-        self.labels["model_menu"].add(self.labels["model"])
-        klipperscreendir = pathlib.Path(__file__).parent.resolve().parent
-        self.model_list_path = os.path.join(klipperscreendir, "config", "model_menu.conf")
-        self.model_list = pathlib.Path(self.model_list_path).read_text()
-        with open(self.model_list_path) as file:
-            self.models = {}
-            for line in file:
-                model_name = line.strip()
-                self.models[model_name] = {
-                    "name": model_name,
-                    "type": "button",
-                    "callback": self.change_model,
-                }
-                self.add_option("model", self.models, model_name, self.models[model_name])
+            self.model_config.generate_config(self.model, version)
 
-    def change_model(self, widget, event):
-        self.model_config.generate_config(event)
+    def hide_select_model_version(self):
+        for child in self.content.get_children():
+            self.content.remove(child)
+        self.show_select_model()
+        self.select_model_version = False
 
     def hide_select_model(self):
         for child in self.content.get_children():
@@ -148,7 +171,7 @@ class Panel(ScreenPanel):
             {"name": _("Accept"), "response": Gtk.ResponseType.OK, "style": "dialog-error"},
             {"name": _("Cancel"), "response": Gtk.ResponseType.CANCEL, "style": "dialog-info"},
         ]
-        
+
         text = _("Are you sure?\n") + "\n\n" + _("The system will reboot!")
         label = Gtk.Label(wrap=True, vexpand=True)
         label.set_markup(text)
@@ -157,7 +180,6 @@ class Panel(ScreenPanel):
         checkbox = Gtk.CheckButton(label=" " + _("Enable Registration Code"))
         checkbox.set_halign(Gtk.Align.CENTER)
         checkbox.set_valign(Gtk.Align.CENTER)
-
 
         grid = Gtk.Grid(row_homogeneous=True, column_homogeneous=True)
         grid.set_row_spacing(20)
@@ -173,7 +195,6 @@ class Panel(ScreenPanel):
             self.confirm_factory_reset_production,
             checkbox,
         )
-        
 
     def confirm_factory_reset_production(self, dialog, response_id, checkbox):
         self._gtk.remove_dialog(dialog)

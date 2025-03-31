@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-26 11:12+0800\n"
+"POT-Creation-Date: 2025-03-29 17:34+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -74,6 +74,9 @@ msgid "Activate"
 msgstr ""
 
 msgid "Adaptive Bed Leveling"
+msgstr ""
+
+msgid "Add"
 msgstr ""
 
 msgid "Add profile"
@@ -292,6 +295,9 @@ msgstr ""
 msgid "Disable for 12hs with am / pm"
 msgstr ""
 
+msgid "Disabled"
+msgstr ""
+
 msgid "Disconnect"
 msgstr ""
 
@@ -304,6 +310,9 @@ msgstr ""
 
 #, python-format
 msgid "Do you want to recover %s?"
+msgstr ""
+
+msgid "Door Open Protection Mode"
 msgstr ""
 
 msgid "Elapsed trial time:"
@@ -319,9 +328,6 @@ msgid "Enable Registration Code"
 msgstr ""
 
 msgid "Enable screen power management"
-msgstr ""
-
-msgid "Enabled successfully"
 msgstr ""
 
 msgid "Error"
@@ -643,6 +649,9 @@ msgstr ""
 msgid "Minimum:"
 msgstr ""
 
+msgid "Minus"
+msgstr ""
+
 msgid "Modified"
 msgstr ""
 
@@ -763,6 +772,9 @@ msgstr ""
 msgid "Pause"
 msgstr ""
 
+msgid "Pause Print"
+msgstr ""
+
 msgid "Paused"
 msgstr ""
 
@@ -773,6 +785,9 @@ msgid "Permanent Activation"
 msgstr ""
 
 msgid "Pins"
+msgstr ""
+
+msgid "Please close the door and click Resume to proceed."
 msgstr ""
 
 msgid "Please ensure that the Probe Calibrate has been performed"
@@ -821,6 +836,12 @@ msgid "Printer"
 msgstr ""
 
 msgid "Printer Select"
+msgstr ""
+
+msgid "Printer door is opened. Please close the door and then start printing."
+msgstr ""
+
+msgid "Printer door is opening!"
 msgstr ""
 
 msgid "Printing"
@@ -875,12 +896,6 @@ msgid "Rename/Move:"
 msgstr ""
 
 msgid "Reprint"
-msgstr ""
-
-msgid "Reset"
-msgstr ""
-
-msgid "Reset successfully"
 msgstr ""
 
 msgid "Restart"
@@ -1052,6 +1067,9 @@ msgstr ""
 msgid "Temperature"
 msgstr ""
 
+msgid "Test Mode"
+msgstr ""
+
 msgid "The last print job was not completed continue printing?"
 msgstr ""
 
@@ -1065,6 +1083,11 @@ msgid "The system will reboot!"
 msgstr ""
 
 msgid "This device is not activated and is available for trial use only"
+msgstr ""
+
+msgid ""
+"This feature allows you to customize the printer's response when door "
+"opening is detected"
 msgstr ""
 
 msgid "This operation is about to print the model"

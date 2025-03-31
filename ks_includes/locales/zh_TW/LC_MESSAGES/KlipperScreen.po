@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KlipperScreen\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-26 11:12+0800\n"
+"POT-Creation-Date: 2025-03-29 17:34+0800\n"
 "PO-Revision-Date: 2024-06-01 12:09+0000\n"
 "Last-Translator: 峻瑜哥 <a728728728@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <https://hosted.weblate.org/projects/"
@@ -76,6 +76,9 @@ msgstr "激活"
 
 msgid "Adaptive Bed Leveling"
 msgstr "自適應床調平"
+
+msgid "Add"
+msgstr "加"
 
 msgid "Add profile"
 msgstr "新增設定檔案"
@@ -293,6 +296,9 @@ msgstr "關閉電機"
 msgid "Disable for 12hs with am / pm"
 msgstr "在十二小時顯示模式中不顯示AM/PM"
 
+msgid "Disabled"
+msgstr "禁用"
+
 msgid "Disconnect"
 msgstr "断开"
 
@@ -306,6 +312,9 @@ msgstr "您要忘記或斷開%s的連接嗎?"
 #, python-format
 msgid "Do you want to recover %s?"
 msgstr "你想恢復 %s 嗎？"
+
+msgid "Door Open Protection Mode"
+msgstr "開門保護模式"
 
 msgid "Elapsed trial time:"
 msgstr "已用時間"
@@ -321,9 +330,6 @@ msgstr "啟用註冊碼"
 
 msgid "Enable screen power management"
 msgstr "開啟螢幕功率管理功能"
-
-msgid "Enabled successfully"
-msgstr "啟用成功"
 
 msgid "Error"
 msgstr "錯誤"
@@ -644,6 +650,9 @@ msgstr "最小勻速運動比例"
 msgid "Minimum:"
 msgstr "最小值"
 
+msgid "Minus"
+msgstr "減"
+
 msgid "Modified"
 msgstr "已修改"
 
@@ -763,6 +772,9 @@ msgstr "密碼"
 msgid "Pause"
 msgstr "暫停"
 
+msgid "Pause Print"
+msgstr "暫停打印"
+
 msgid "Paused"
 msgstr "已暫停"
 
@@ -774,6 +786,9 @@ msgstr "永久激活"
 
 msgid "Pins"
 msgstr "引腳"
+
+msgid "Please close the door and click Resume to proceed."
+msgstr "請關閉門，然後點擊恢復以繼續操作。"
 
 msgid "Please ensure that the Probe Calibrate has been performed"
 msgstr "請確保已完成探針偏移校準"
@@ -822,6 +837,12 @@ msgstr "列印機"
 
 msgid "Printer Select"
 msgstr "列印機選擇"
+
+msgid "Printer door is opened. Please close the door and then start printing."
+msgstr "打印機門已打開。請關閉打印機門，然後開始打印。"
+
+msgid "Printer door is opening!"
+msgstr "打印機門被打開！"
 
 msgid "Printing"
 msgstr "列印中"
@@ -876,12 +897,6 @@ msgstr "重新命名/移動："
 
 msgid "Reprint"
 msgstr "再次打印"
-
-msgid "Reset"
-msgstr "重置"
-
-msgid "Reset successfully"
-msgstr "重置成功"
 
 msgid "Restart"
 msgstr "重啟"
@@ -1052,6 +1067,9 @@ msgstr "系統"
 msgid "Temperature"
 msgstr "溫度"
 
+msgid "Test Mode"
+msgstr "測試模式"
+
 msgid "The last print job was not completed continue printing?"
 msgstr "上一個打印任務未完成，是否繼續打印？"
 
@@ -1066,6 +1084,11 @@ msgstr "系統將重新啟動！"
 
 msgid "This device is not activated and is available for trial use only"
 msgstr "此設備尚未激活，僅供試用"
+
+msgid ""
+"This feature allows you to customize the printer's response when door "
+"opening is detected"
+msgstr "該功能允許您自定義打印機在檢測到門打開時的響應方式"
 
 msgid "This operation is about to print the model"
 msgstr "此操作即將開始打印模型"
@@ -1228,6 +1251,15 @@ msgid "second"
 msgid_plural "seconds"
 msgstr[0] "秒"
 
+#~ msgid "Enabled successfully"
+#~ msgstr "啟用成功"
+
+#~ msgid "Reset"
+#~ msgstr "重置"
+
+#~ msgid "Reset successfully"
+#~ msgstr "重置成功"
+
 #~ msgid "Connected"
 #~ msgstr "已連線"
 
@@ -1313,9 +1345,6 @@ msgstr[0] "秒"
 
 #~ msgid "Homing"
 #~ msgstr "归零"
-
-#~ msgid "Disable XY"
-#~ msgstr "关闭 XY 轴电机"
 
 #~ msgid "Slicer Time correction (%)"
 #~ msgstr "切片软件时间校正(%)"

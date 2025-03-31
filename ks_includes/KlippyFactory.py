@@ -49,6 +49,7 @@ class KlippyFactory:
             "adaptive_meshing": False,
             "power_loss_recovery": True,
             "auto_change_nozzle": False,
+            "door_detect": "Disabled",
         }
         for key, val in option_list.items():
             script = KlippyGcodes.set_save_variables(key, val)
