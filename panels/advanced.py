@@ -199,5 +199,5 @@ class Panel(ScreenPanel):
                 if "door_detect" in variables:
                     model = self.menu_list["door_open_detection"].get_model()
                     for i, row in enumerate(model):
-                        if row[0] == variables["door_detect"]:
+                        if row[0] == _(variables["door_detect"]):
                             self.menu_list["door_open_detection"].set_active(i)
