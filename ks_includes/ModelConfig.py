@@ -100,9 +100,17 @@ class ModelConfig:
                     f"Configuration file {self.klipperscreen_config_path} not found."
                 )
 
-    def wirte_printer_config(self, device_name):
+    def wirte_printer_config(self, device_name, version):
+        config_dict = {
+            "CreatBot_F430NX": "CreatBot_F430NX",
+            "CreatBot_D600Pro2HS": "CreatBot_D600Pro2",
+            "CreatBot_D600Pro2HS_KIT": "CreatBot_D600Pro2_V0",
+            "CreatBot_D1000HS": "CreatBot_D1000",
+            "CreatBot_D1000HS_KIT": "CreatBot_D1000_V0",
+            "CreatBot_P800": "CreatBot_P800",
+        }
         if device_name:
-            source_path = f"{os.path.expanduser('~')}/klipper/config/{device_name}/"
+            source_path = f"{os.path.expanduser('~')}/klipper/config/{config_dict.get(device_name)}/"
             target_path = f"{os.path.expanduser('~')}/printer_data/config/"
             if not os.path.exists(target_path):
                 os.makedirs(target_path)
@@ -119,6 +127,21 @@ class ModelConfig:
                 logging.error(f"No permission to create symlink for {device_name}.")
             except Exception as e:
                 logging.error(f"Error creating symlink for{device_name}:{e}")
+
+            source_module_path = os.path.join(source_path, os.path.basename(version))
+            target_module_path = os.path.join(target_path, os.path.basename("module"))
+            try:
+                if os.path.islink(target_module_path) or os.path.exists(target_module_path):
+                    os.remove(target_module_path)
+                if version != "1.0":
+                    os.symlink(source_module_path, target_module_path)
+                    logging.info(f"Created config version for {device_name}-{version}.")
+            except FileExistsError:
+                logging.error(f"Failed to create version symlink for {device_name}.")
+            except PermissionError:
+                logging.error(f"No permission to create version symlink for {device_name}.")
+            except Exception as e:
+                logging.error(f"Error creating version symlink for{device_name}:{e}")
 
             source_printer_path = os.path.join(source_path, os.path.basename("printer.cfg"))
             target_printer_path = os.path.join(target_path, os.path.basename("printer.cfg"))
@@ -143,13 +166,13 @@ class ModelConfig:
         except Exception as e:
             logging.error(f"An unexpected error occurred: {e}")
 
-    def generate_config(self, model):
+    def generate_config(self, model, version):
         model_name = model
         model_name = model_name.split("_")[1]
         device_name = self.generate_machine_name(model_name)
         self.write_mdns_config(device_name)
         self.write_device_name_config(device_name)
-        self.wirte_printer_config(model)
+        self.wirte_printer_config(model, version)
         self.wirte_hostname(device_name)
         os.system("systemctl restart klipper.service")
         os.system("systemctl restart moonraker.service")

@@ -13,4 +13,10 @@ prompts_text = [
     _("Left extruder detects no filament, please load filament and continue."),
     _("Right extruder detects no filament, please load filament and continue."),
     _("Ok"),
+    _("Disabled"),
+    _("Pause Print"),
+    _("Printer door is opening!"),
+    _("Printer door is opened. Please close the door and then start printing."),
+    _("Please close the door and click Resume to proceed.")
+    
 ]
