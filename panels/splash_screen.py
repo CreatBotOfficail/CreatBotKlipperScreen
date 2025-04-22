@@ -24,22 +24,10 @@ class Panel(ScreenPanel):
 
         self.labels["menu"] = self._gtk.Button("more-settings", _("Menu"), "color4")
         self.labels["menu"].connect("clicked", self._screen._go_to_submenu, "")
-        self.labels["restart"] = self._gtk.Button(
-            "refresh", _("Klipper Restart"), "color1"
-        )
-        self.labels["restart"].connect("clicked", self.restart_klipper)
         self.labels["firmware_restart"] = self._gtk.Button(
             "refresh", _("Firmware Restart"), "color2"
         )
         self.labels["firmware_restart"].connect("clicked", self.firmware_restart)
-        self.labels["restart_system"] = self._gtk.Button(
-            "refresh", _("System Restart"), "color1"
-        )
-        self.labels["restart_system"].connect("clicked", self.reboot_poweroff, "reboot")
-        self.labels["shutdown"] = self._gtk.Button(
-            "shutdown", _("System Shutdown"), "color2"
-        )
-        self.labels["shutdown"].connect("clicked", self.reboot_poweroff, "shutdown")
         self.labels["retry"] = self._gtk.Button("load", _("Retry"), "color3")
         self.labels["retry"].connect("clicked", self.retry)
 
@@ -79,16 +67,12 @@ class Panel(ScreenPanel):
                 self.add_power_button(power_devices)
 
         if self._screen.initialized:
-            self.labels["actions"].add(self.labels["restart"])
             self.labels["actions"].add(self.labels["firmware_restart"])
-        else:
-            self.labels["actions"].add(self.labels["restart_system"])
-            self.labels["actions"].add(self.labels["shutdown"])
         self.labels["actions"].add(self.labels["menu"])
         if (
             self._screen._ws
-            and not self._screen._ws.connecting
-            or self._screen.reinit_count > self._screen.max_retries
+            and self._screen._ws.connecting
+            or self._screen.reinit_count > self._screen.max_retries or not self._screen.initialized
         ):
             self.labels["actions"].add(self.labels["retry"])
         self.labels["actions"].show_all()
