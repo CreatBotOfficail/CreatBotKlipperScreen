@@ -196,7 +196,7 @@ class ScreenPanel:
         # if dev not in self.devices:
         #     new_label_text += "°"
 
-        if self._show_heater_power:
+        if self._show_heater_power and power:
             if target != 0:
                 power_label_text = "0%"
             if power != 0:
