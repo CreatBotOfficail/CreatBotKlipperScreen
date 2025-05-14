@@ -117,7 +117,19 @@ class Panel(ScreenPanel):
             return
         if "gcode_move" in data:
             if "homing_origin" in data["gcode_move"]:
-                self.labels['zoffset'].set_label(f'  {data["gcode_move"]["homing_origin"][2]:.3f}mm')
+                active_extruder = self._printer.get_stat("toolhead", "extruder")
+                if active_extruder == "extruder1":
+                    variables = self._printer.get_stat("save_variables", "variables") or {}
+                    nozzle2_offset = variables.get("nozzle_z_offset_val")
+                    try:
+                        nozzle2_offset = float(nozzle2_offset)
+                        z_offset_val = round(data["gcode_move"]["homing_origin"][2] - nozzle2_offset, 3)
+                    except (TypeError, ValueError):
+                        z_offset_val = 0
+                    z_offset_val = data["gcode_move"]["homing_origin"][2] - nozzle2_offset
+                    self.labels['zoffset'].set_label(f'  {z_offset_val:.3f}mm')
+                else:
+                    self.labels['zoffset'].set_label(f'  {data["gcode_move"]["homing_origin"][2]:.3f}mm')
                 self.z_offset = float(data["gcode_move"]["homing_origin"][2])
             if "extrude_factor" in data["gcode_move"]:
                 self.extrusion = round(float(data["gcode_move"]["extrude_factor"]) * 100)
@@ -129,13 +141,19 @@ class Panel(ScreenPanel):
     def change_babystepping(self, widget, direction):
         if direction == "reset":
             self.labels['zoffset'].set_label('  0.00mm')
-            self._screen._send_action(widget, "printer.gcode.script", {"script": "SET_GCODE_OFFSET Z=0 MOVE=1"})
+            active_extruder = self._printer.get_stat("toolhead", "extruder")
+            if active_extruder == "extruder1":
+                variables = self._printer.get_stat("save_variables", "variables") or {}
+                nozzle2_offset = variables.get("nozzle_z_offset_val")
+                self._screen._send_action(widget, "printer.gcode.script", {"script": f"SET_GCODE_OFFSET Z={nozzle2_offset} MOVE=1"})
+            else:
+                self._screen._send_action(widget, "printer.gcode.script", {"script": "SET_GCODE_OFFSET Z=0 MOVE=1"})
             return
         elif direction == "+":
             self.z_offset += float(self.z_delta)
         elif direction == "-":
             self.z_offset -= float(self.z_delta)
-        self.labels['zoffset'].set_label(f'  {self.z_offset:.3f}mm')
+        # self.labels['zoffset'].set_label(f'  {self.z_offset:.3f}mm')
         self._screen._send_action(widget, "printer.gcode.script",
                                   {"script": f"SET_GCODE_OFFSET Z_ADJUST={direction}{self.z_delta} MOVE=1"})
 
