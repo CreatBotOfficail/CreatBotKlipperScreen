@@ -231,6 +231,7 @@ class Printer:
         if self.sensors is None:
             self.sensors = list(self.get_config_section_list("filament_switch_sensor "))
             self.sensors.extend(iter(self.get_config_section_list("filament_motion_sensor ")))
+            self.sensors.extend(iter(self.get_config_section_list("filament_airpump_sensor ")))
         return self.sensors
 
     def get_probe(self):
