@@ -156,7 +156,14 @@ class Panel(MenuPanel):
         }
 
         devices = sorted(self.devices)
-        pos = devices.index(device) + 1
+        if devname.startswith("pre"):
+            pos = 1
+        elif devname.startswith("mid"):
+            pos = 2
+        elif devname.startswith("cha"):
+            pos = 5
+        else:
+            pos = devices.index(device) + 1  
 
         self.labels['devices'].insert_row(pos)
         self.labels['devices'].attach(name, 0, pos, 1, 1)
