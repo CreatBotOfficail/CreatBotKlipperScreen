@@ -47,3 +47,9 @@ class KlippyGcodes:
             f'RED={color[0]} GREEN={color[1]} BLUE={color[2]} WHITE={color[3]} '
             f'SYNC=0 TRANSMIT=1'
         )
+
+    @staticmethod
+    def set_save_variables(name, value):
+        if isinstance(value, str):
+            value = f"'{value}'"
+        return f'SAVE_VARIABLE VARIABLE={name} VALUE=\"{value}\"'
