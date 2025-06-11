@@ -217,7 +217,11 @@ class ColorPreviewArea(Gtk.DrawingArea):
         self.queue_draw()
 
     def on_draw(self, da, ctx):
-        ctx.set_source_rgb(*self.color)
+        use_yellow_instead_of_blue = True
+        r, g, b = self.color
+        if use_yellow_instead_of_blue and r < 0.1 and g < 0.1 and b > 0.9:
+            r, g, b = 1.0, 1.0, 0.0
+        ctx.set_source_rgb(r, g, b)
         # Set the size of the rectangle
         width = da.get_allocated_width() * .9
         height = da.get_allocated_height() * .9
