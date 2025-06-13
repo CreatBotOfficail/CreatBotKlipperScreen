@@ -1,9 +1,8 @@
 # This is the backend of the UI panel that communicates to sdbus-networkmanager
 # TODO device selection/swtichability
 # Alfredo Monclus (alfrix) 2024
-import logging
 import subprocess
-from uuid import uuid4
+import logging
 
 import sdbus
 from sdbus_block.networkmanager import (
@@ -19,6 +18,8 @@ from sdbus_block.networkmanager import (
     enums,
     exceptions,
 )
+from gi.repository import GLib
+from uuid import uuid4
 
 NONE = 0  # The access point has no special security requirements.
 PAIR_WEP40 = 1  # 40/64-bit WEP is supported for pairwise/unicast encryption.
@@ -172,26 +173,29 @@ class SdbusNm:
 
     def get_networks(self):
         networks = []
-        if self.wlan_device:
-            all_aps = [AccessPoint(result) for result in self.wlan_device.access_points]
-            networks.extend(
-                {
-                    "SSID": ap.ssid.decode("utf-8"),
-                    "known": self.is_known(ap.ssid.decode("utf-8")),
-                    "security": get_encryption(
-                        ap.rsn_flags or ap.wpa_flags or ap.flags
-                    ),
-                    "frequency": WifiChannels(ap.frequency)[0],
-                    "channel": WifiChannels(ap.frequency)[1],
-                    "signal_level": ap.strength,
-                    "max_bitrate": ap.max_bitrate,
-                    "BSSID": ap.hw_address,
-                }
-                for ap in all_aps
-                if ap.ssid
-            )
-            return sorted(networks, key=lambda i: i["signal_level"], reverse=True)
-        return networks
+        try:
+            if self.wlan_device:
+                all_aps = [AccessPoint(result) for result in self.wlan_device.access_points]
+                networks.extend(
+                    {
+                        "SSID": ap.ssid.decode("utf-8"),
+                        "known": self.is_known(ap.ssid.decode("utf-8")),
+                        "security": get_encryption(
+                            ap.rsn_flags or ap.wpa_flags or ap.flags
+                        ),
+                        "frequency": WifiChannels(ap.frequency)[0],
+                        "channel": WifiChannels(ap.frequency)[1],
+                        "signal_level": ap.strength,
+                        "max_bitrate": ap.max_bitrate,
+                        "BSSID": ap.hw_address,
+                    }
+                    for ap in all_aps
+                    if ap.ssid
+                )
+                return sorted(networks, key=lambda i: i["signal_level"], reverse=True)
+            return networks
+        except Exception as e:
+            return networks
 
     def get_bssid_from_ssid(self, ssid):
         return next(net["BSSID"] for net in self.get_networks() if ssid == net["SSID"])
@@ -271,13 +275,10 @@ class SdbusNm:
                 "key-mgmt": ("s", "wpa-eap"),
                 "eap": ("as", [eap_method]),
                 "identity": ("s", identity),
-                "password": ("s", psk.encode("utf-8")),
+                "password": ("s", psk),
             }
             if phase2:
-                if eap_method == "ttls":
-                    properties["802-11-wireless-security"]["phase2_autheap"] = ("s", phase2)
-                else:
-                    properties["802-11-wireless-security"]["phase2_auth"] = ("s", phase2)
+                properties["802-11-wireless-security"]["phase2_auth"] = ("s", phase2)
         elif "WEP" in security_type:
             properties["802-11-wireless-security"] = {
                 "key-mgmt": ("s", "none"),
@@ -349,7 +350,8 @@ class SdbusNm:
 
     def connect(self, ssid):
         if target_connection := self.get_connection_path_by_ssid(ssid):
-            self.popup(f"{ssid}\n{_('Starting WiFi Association')}", 1)
+            message = ssid + "\n" + _("Starting WiFi Association")
+            self.popup(message, 1)
             try:
                 active_connection = self.nm.activate_connection(target_connection)
                 return target_connection

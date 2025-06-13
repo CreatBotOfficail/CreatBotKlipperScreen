@@ -1,13 +1,12 @@
+import subprocess
 import logging
 import os
-
 import gi
 
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk, GLib, Pango
 from ks_includes.screen_panel import ScreenPanel
 from ks_includes.sdbus_nm import SdbusNm
-from datetime import datetime
 
 
 class Panel(ScreenPanel):
@@ -15,7 +14,6 @@ class Panel(ScreenPanel):
     def __init__(self, screen, title):
         title = title or _("Network")
         super().__init__(screen, title)
-        self.last_drop_time = datetime.now()
         self.show_add = False
         try:
             self.sdbus_nm = SdbusNm(self.popup_callback)
@@ -45,6 +43,10 @@ class Panel(ScreenPanel):
             self._screen.panels_reinit.append(self._screen._cur_panels[-1])
             return
         self.update_timeout = None
+        self.conn_status = None
+        self.init_status = False
+        self.reload = False
+        self.last_ap_bssid = ''
         self.network_list = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, hexpand=True, vexpand=True)
         self.network_rows = {}
         self.networks = {}
@@ -70,7 +72,7 @@ class Panel(ScreenPanel):
             self.labels['interface'].set_text(_("Interface") + f': {self.interface}')
             self.labels['ip'].set_text(f"IP: {self.sdbus_nm.get_ip_address()}")
 
-        self.reload_button = self._gtk.Button("refresh", None, "color1", self.bts)
+        self.reload_button = self._gtk.Button("refresh", None, "custom-icon-button", self.bts)
         self.reload_button.set_no_show_all(True)
         self.reload_button.show()
         self.reload_button.connect("clicked", self.reload_networks)
@@ -111,8 +113,6 @@ class Panel(ScreenPanel):
         self._screen.show_popup_message(msg, level)
 
     def load_networks(self):
-        for net in self.sdbus_nm.get_networks():
-            self.add_network(net['BSSID'])
         GLib.timeout_add_seconds(10, self._gtk.Button_busy, self.reload_button, False)
         self.content.show_all()
         return False
@@ -121,7 +121,13 @@ class Panel(ScreenPanel):
         if bssid in self.network_rows:
             return
 
-        net = next(net for net in self.sdbus_nm.get_networks() if bssid == net['BSSID'])
+        networks = self.sdbus_nm.get_networks()
+        if networks:
+            net = next((net for net in networks if bssid == net['BSSID']), None)
+        if net is None:
+            self.remove_network_from_list(bssid)
+            return
+
         ssid = net['SSID']
 
         connect = self._gtk.Button("load", None, "color3", self.bts)
@@ -146,11 +152,9 @@ class Panel(ScreenPanel):
             buttons.add(delete)
         buttons.add(connect)
 
-        info = Gtk.Label(halign=Gtk.Align.START)
         labels = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, vexpand=True,
                          halign=Gtk.Align.START, valign=Gtk.Align.CENTER)
         labels.add(name)
-        labels.add(info)
         icon = self._gtk.Image()
 
         self.network_rows[bssid] = Gtk.Box(spacing=5, hexpand=True, vexpand=False)
@@ -163,7 +167,6 @@ class Panel(ScreenPanel):
             "connect": connect,
             "delete": delete,
             "icon": icon,
-            "info": info,
             "name": name,
             "row": self.network_rows[bssid],
         }
@@ -255,6 +258,9 @@ class Panel(ScreenPanel):
             self.remove_network_from_list(bssid)
         self.sdbus_nm.connect(ssid)
         self.reload_networks()
+        if self.conn_status is None:
+            self.sdbus_nm.enable_monitoring(True)
+            self.conn_status = GLib.timeout_add(500, self.sdbus_nm.monitor_connection_status)
 
     def remove_network_from_list(self, bssid):
         if bssid not in self.network_rows:
@@ -264,18 +270,6 @@ class Panel(ScreenPanel):
         del self.network_rows[bssid]
         del self.networks[bssid]
         return
-
-    def on_popup_shown(self, combo_box, params):
-        if combo_box.get_property("popup-shown"):
-            logging.debug("Dropdown popup show")
-            self.last_drop_time = datetime.now()
-        else:
-            elapsed = (datetime.now() - self.last_drop_time).total_seconds()
-            if elapsed < 0.2:
-                logging.debug(f"Dropdown closed too fast ({elapsed}s)")
-                GLib.timeout_add(50, combo_box.popup)
-                return
-            logging.debug("Dropdown popup close")
 
     def show_add_network(self, widget, ssid):
         if self.show_add:
@@ -288,14 +282,12 @@ class Panel(ScreenPanel):
             del self.labels['add_network']
 
         eap_method = Gtk.ComboBoxText(hexpand=True)
-        eap_method.connect("notify::popup-shown", self.on_popup_shown)
         for method in ("peap", "ttls", "pwd", "leap", "md5"):
             eap_method.append(method, method.upper())
         self.labels['network_eap_method'] = eap_method
         eap_method.set_active(0)
 
         phase2 = Gtk.ComboBoxText(hexpand=True)
-        phase2.connect("notify::popup-shown", self.on_popup_shown)
         for method in ("mschapv2", "gtc", "pap", "chap", "mschap", "disabled"):
             phase2.append(method, method.upper())
         self.labels['network_phase2'] = phase2
@@ -346,6 +338,17 @@ class Panel(ScreenPanel):
         self.show_add = True
 
     def update_all_networks(self):
+        self.ap_bssid = self.sdbus_nm.get_connected_bssid()
+        if self.last_ap_bssid != self.ap_bssid:
+            self.remove_network_from_list(self.last_ap_bssid)
+            self.remove_network_from_list(self.ap_bssid)
+            self.last_ap_bssid = self.ap_bssid
+
+        if self.reload:
+            for child in self.network_list.get_children():
+                self.network_list.remove(child)
+            self.reload = False
+
         self.interface = self.sdbus_nm.get_primary_interface()
         self.labels['interface'].set_text(_("Interface") + f': {self.interface}')
         self.labels['ip'].set_text(f"IP: {self.sdbus_nm.get_ip_address()}")
@@ -359,8 +362,9 @@ class Panel(ScreenPanel):
             self.update_network_info(net)
         for i, net in enumerate(nets):
             for child in self.network_list.get_children():
-                if child == self.network_rows[net['BSSID']]:
-                    self.network_list.reorder_child(child, i)
+                if 'BSSID' in net and net['BSSID'] in self.network_rows:
+                    if child == self.network_rows[net['BSSID']]:
+                        self.network_list.reorder_child(child, i)
         self.network_list.show_all()
         return True
 
@@ -368,19 +372,7 @@ class Panel(ScreenPanel):
         if net['BSSID'] not in self.network_rows.keys() or net['BSSID'] not in self.networks:
             logging.info(f"Unknown SSID {net['SSID']}")
             return
-        info = _("Password saved") + '\n' if net['known'] else ""
-        chan = _("Channel") + f' {net["channel"]}'
-        max_bitrate = _("Max:") + f"{self.format_speed(net['max_bitrate'])}"
         self.networks[net['BSSID']]['icon'].set_from_pixbuf(self.get_signal_strength_icon(net["signal_level"]))
-        self.networks[net['BSSID']]['info'].set_markup(
-            "<small>"
-            f"{info}"
-            f"{net['security']}\n"
-            f"{max_bitrate}\n"
-            f"{net['frequency']} Ghz  {chan}  {net['signal_level']} %\n"
-            f"{net['BSSID']}"
-            "</small>"
-        )
 
     def get_signal_strength_icon(self, signal_level):
         # networkmanager uses percentage not dbm
@@ -406,25 +398,27 @@ class Panel(ScreenPanel):
         self.deactivate()
         del self.network_rows
         self.network_rows = {}
-        for child in self.network_list.get_children():
-            self.network_list.remove(child)
         if self.sdbus_nm is not None and self.sdbus_nm.wifi:
             if widget:
                 self._gtk.Button_busy(widget, True)
-            self.sdbus_nm.rescan()
+            if not self.init_status:
+                self.sdbus_nm.rescan()
+            else:
+                self.init_status = False
             self.load_networks()
         self.activate()
+        self.reload = True
 
     def activate(self):
         if self.sdbus_nm is None:
             return
         if self.update_timeout is None:
             if self.sdbus_nm.wifi:
-                if self.reload_button.get_sensitive():
-                    self._gtk.Button_busy(self.reload_button, True)
-                    self.sdbus_nm.rescan()
-                    self.load_networks()
-                self.update_all_networks()
+                if self.sdbus_nm.is_wifi_enabled():
+                    if self.reload_button.get_sensitive():
+                        self._gtk.Button_busy(self.reload_button, True)
+                        self.sdbus_nm.rescan()
+                        self.load_networks()
                 self.update_timeout = GLib.timeout_add_seconds(5, self.update_all_networks)
             else:
                 self.update_single_network_info()
@@ -438,6 +432,9 @@ class Panel(ScreenPanel):
             self.update_timeout = None
         if self.sdbus_nm.wifi:
             self.sdbus_nm.enable_monitoring(False)
+        if self.conn_status is not None:
+            GLib.source_remove(self.conn_status)
+            self.conn_status = None
 
     def toggle_wifi(self, switch, gparams):
         enable = switch.get_active()
@@ -445,6 +442,9 @@ class Panel(ScreenPanel):
         self.sdbus_nm.toggle_wifi(enable)
         if enable:
             self.reload_button.show()
-            self.reload_networks()
+            self.network_list.show()
+            self.init_status = True
+            self.reload_networks(self.reload_button)
         else:
             self.reload_button.hide()
+            self.network_list.hide()
