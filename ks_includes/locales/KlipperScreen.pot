@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-29 17:34+0800\n"
+"POT-Creation-Date: 2025-06-19 14:30+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -73,9 +73,6 @@ msgstr ""
 msgid "Activate"
 msgstr ""
 
-msgid "Adaptive Bed Leveling"
-msgstr ""
-
 msgid "Add"
 msgstr ""
 
@@ -138,7 +135,7 @@ msgstr ""
 msgid "Auto"
 msgstr ""
 
-msgid "Auto Calibration"
+msgid "Auto Bed Leveling"
 msgstr ""
 
 msgid "Auto Change Nozzle"
@@ -157,6 +154,9 @@ msgid "Auto-open Extrude On Pause"
 msgstr ""
 
 msgid "Auto-scroll"
+msgstr ""
+
+msgid "Automatic compensation based on the data of the bed mesh"
 msgstr ""
 
 msgid "Bed Level"
@@ -531,9 +531,6 @@ msgstr ""
 msgid "Key:"
 msgstr ""
 
-msgid "Klipper Restart"
-msgstr ""
-
 msgid "Klipper has disconnected"
 msgstr ""
 
@@ -578,9 +575,6 @@ msgid "Left extruder not hot enough, will reheat and continue."
 msgstr ""
 
 msgid "Left:"
-msgstr ""
-
-msgid "Leveling only in the actual print area"
 msgstr ""
 
 msgid "License key"
@@ -1053,12 +1047,6 @@ msgid "State:"
 msgstr ""
 
 msgid "System"
-msgstr ""
-
-msgid "System Restart"
-msgstr ""
-
-msgid "System Shutdown"
 msgstr ""
 
 msgid "System:"

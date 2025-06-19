@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KlipperScreen\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-29 17:34+0800\n"
+"POT-Creation-Date: 2025-06-19 14:30+0800\n"
 "PO-Revision-Date: 2024-06-01 12:09+0000\n"
 "Last-Translator: 峻瑜哥 <a728728728@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <https://hosted.weblate.org/projects/"
@@ -74,9 +74,6 @@ msgstr "接受"
 msgid "Activate"
 msgstr "激活"
 
-msgid "Adaptive Bed Leveling"
-msgstr "自適應床調平"
-
 msgid "Add"
 msgstr "加"
 
@@ -139,8 +136,8 @@ msgstr "停止前要求確認"
 msgid "Auto"
 msgstr "自動"
 
-msgid "Auto Calibration"
-msgstr "自動校準"
+msgid "Auto Bed Leveling"
+msgstr "自動調平"
 
 msgid "Auto Change Nozzle"
 msgstr "斷料自動切頭"
@@ -159,6 +156,9 @@ msgstr "暫停時自動打開擠出"
 
 msgid "Auto-scroll"
 msgstr "自動滾屏"
+
+msgid "Automatic compensation based on the data of the bed mesh"
+msgstr "基於牀面網格數據的自動補償"
 
 msgid "Bed Level"
 msgstr "熱床調平"
@@ -532,9 +532,6 @@ msgstr "密鑰有效"
 msgid "Key:"
 msgstr "密鑰："
 
-msgid "Klipper Restart"
-msgstr "重啟Klipper"
-
 msgid "Klipper has disconnected"
 msgstr "Klipper已斷開連線"
 
@@ -580,9 +577,6 @@ msgstr "左擠出機溫度不足，將重新加熱後繼續"
 
 msgid "Left:"
 msgstr "剩餘時間："
-
-msgid "Leveling only in the actual print area"
-msgstr "僅在實際打印區域進行床調平"
 
 msgid "License key"
 msgstr "許可證密鑰"
@@ -1055,12 +1049,6 @@ msgstr "狀態："
 msgid "System"
 msgstr "系統"
 
-msgid "System Restart"
-msgstr "重啟系統"
-
-msgid "System Shutdown"
-msgstr "關閉系統"
-
 msgid "System:"
 msgstr "系統"
 
@@ -1250,6 +1238,21 @@ msgstr "s"
 msgid "second"
 msgid_plural "seconds"
 msgstr[0] "秒"
+
+#~ msgid "Auto Calibration"
+#~ msgstr "自動校準"
+
+#~ msgid "Klipper Restart"
+#~ msgstr "重啟Klipper"
+
+#~ msgid "Leveling only in the actual print area"
+#~ msgstr "僅在實際打印區域進行床調平"
+
+#~ msgid "System Restart"
+#~ msgstr "重啟系統"
+
+#~ msgid "System Shutdown"
+#~ msgstr "關閉系統"
 
 #~ msgid "Enabled successfully"
 #~ msgstr "啟用成功"

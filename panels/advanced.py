@@ -22,9 +22,9 @@ class Panel(ScreenPanel):
             {
                 "adaptive_leveling": {
                     "section": "main",
-                    "name": _("Adaptive Bed Leveling"),
+                    "name": _("Auto Bed Leveling"),
                     "type": "binary",
-                    "tooltip": _("Leveling only in the actual print area"),
+                    "tooltip": _("Automatic compensation based on the data of the bed mesh"),
                     "value": "False",
                     "callback": self.set_adaptive_leveling,
                 }
