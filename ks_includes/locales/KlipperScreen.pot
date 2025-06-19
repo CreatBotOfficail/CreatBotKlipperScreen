@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-19 14:30+0800\n"
+"POT-Creation-Date: 2025-06-19 16:45+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -74,9 +74,6 @@ msgid "Activate"
 msgstr ""
 
 msgid "Add"
-msgstr ""
-
-msgid "Add profile"
 msgstr ""
 
 msgid "Advanced"
@@ -387,6 +384,9 @@ msgstr ""
 msgid "Fan"
 msgstr ""
 
+msgid "Fast Calibration"
+msgstr ""
+
 msgid "Filament"
 msgstr ""
 
@@ -412,6 +412,9 @@ msgid "Filter"
 msgstr ""
 
 msgid "Finding ADXL"
+msgstr ""
+
+msgid "Fine Calibration"
 msgstr ""
 
 msgid "Fine Tuning"
@@ -845,9 +848,6 @@ msgid "Probe Calibrate"
 msgstr ""
 
 msgid "Probe Offset"
-msgstr ""
-
-msgid "Profile Name:"
 msgstr ""
 
 msgid "Provide KlipperScreen.log when asking for help.\n"

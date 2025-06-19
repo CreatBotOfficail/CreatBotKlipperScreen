@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KlipperScreen\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-19 14:30+0800\n"
+"POT-Creation-Date: 2025-06-19 16:45+0800\n"
 "PO-Revision-Date: 2024-06-01 12:09+0000\n"
 "Last-Translator: 峻瑜哥 <a728728728@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <https://hosted.weblate.org/projects/"
@@ -76,9 +76,6 @@ msgstr "激活"
 
 msgid "Add"
 msgstr "加"
-
-msgid "Add profile"
-msgstr "新增設定檔案"
 
 msgid "Advanced"
 msgstr "高級"
@@ -388,6 +385,9 @@ msgstr "失敗，請先調整位置"
 msgid "Fan"
 msgstr "風扇"
 
+msgid "Fast Calibration"
+msgstr "快速校準"
+
 msgid "Filament"
 msgstr "耗材"
 
@@ -414,6 +414,9 @@ msgstr "過濾器"
 
 msgid "Finding ADXL"
 msgstr "查詢ADXL"
+
+msgid "Fine Calibration"
+msgstr "精細校準"
 
 msgid "Fine Tuning"
 msgstr "微調"
@@ -847,9 +850,6 @@ msgstr "探針偏移校準"
 msgid "Probe Offset"
 msgstr "探針偏移"
 
-msgid "Profile Name:"
-msgstr "設定檔名稱："
-
 msgid "Provide KlipperScreen.log when asking for help.\n"
 msgstr "尋求幫助的時候請提供KlipperScreen.log。\n"
 
@@ -1239,8 +1239,11 @@ msgid "second"
 msgid_plural "seconds"
 msgstr[0] "秒"
 
-#~ msgid "Auto Calibration"
-#~ msgstr "自動校準"
+#~ msgid "Add profile"
+#~ msgstr "新增設定檔案"
+
+#~ msgid "Profile Name:"
+#~ msgstr "設定檔名稱："
 
 #~ msgid "Klipper Restart"
 #~ msgstr "重啟Klipper"

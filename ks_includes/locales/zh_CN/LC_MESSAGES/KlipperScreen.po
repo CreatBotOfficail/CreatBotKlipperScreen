@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KlipperScreen\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-19 14:30+0800\n"
+"POT-Creation-Date: 2025-06-19 16:45+0800\n"
 "PO-Revision-Date: 2024-06-03 19:09+0000\n"
 "Last-Translator: wsj20050623 <2129426599@qq.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
@@ -76,9 +76,6 @@ msgstr "激活"
 
 msgid "Add"
 msgstr "加"
-
-msgid "Add profile"
-msgstr "添加配置文件"
 
 msgid "Advanced"
 msgstr "高级"
@@ -388,6 +385,9 @@ msgstr "失败，请先调整位置"
 msgid "Fan"
 msgstr "风扇"
 
+msgid "Fast Calibration"
+msgstr "快速校准"
+
 msgid "Filament"
 msgstr "耗材"
 
@@ -414,6 +414,9 @@ msgstr "筛选"
 
 msgid "Finding ADXL"
 msgstr "查找加速度计中"
+
+msgid "Fine Calibration"
+msgstr "精细校准"
 
 msgid "Fine Tuning"
 msgstr "微调"
@@ -847,9 +850,6 @@ msgstr "探针偏移校准"
 msgid "Probe Offset"
 msgstr "探针偏移"
 
-msgid "Profile Name:"
-msgstr "配置文件名称："
-
 msgid "Provide KlipperScreen.log when asking for help.\n"
 msgstr "寻求帮助的时候请提供KlipperScreen.log。\n"
 
@@ -1239,8 +1239,11 @@ msgid "second"
 msgid_plural "seconds"
 msgstr[0] "秒"
 
-#~ msgid "Auto Calibration"
-#~ msgstr "自动校准"
+#~ msgid "Add profile"
+#~ msgstr "添加配置文件"
+
+#~ msgid "Profile Name:"
+#~ msgstr "配置文件名称："
 
 #~ msgid "Klipper Restart"
 #~ msgstr "重启Klipper"
@@ -1274,9 +1277,6 @@ msgstr[0] "秒"
 
 #~ msgid "Restoring Left extruder temperature, this may take some time"
 #~ msgstr "恢复左挤出机温度，这可能需要一些时间"
-
-#~ msgid "Manual Calibration"
-#~ msgstr "手动校准"
 
 #~ msgid "NOTE: Edit your printer.cfg to save manual calibration changes."
 #~ msgstr "请编辑您的 printer.cfg 文件以保存手动校准的更改"
