@@ -39,16 +39,6 @@ class Panel(ScreenPanel):
                     "callback": self.reset_factory_settings,
                 }
             },
-            {
-                "factory_settings": {
-                    "section": "main",
-                    "name": _("Restore factory settings"),
-                    "type": "button",
-                    "tooltip": _("This operation will clear the user data"),
-                    "value": "True",
-                    "callback": self.reset_factory_settings,
-                }
-            },
         ]
         if self._printer.get_macro("_door_detection"):
             self.advanced_options.append(
@@ -125,6 +115,9 @@ class Panel(ScreenPanel):
 
     def set_adaptive_leveling(self, *args):
         self.set_configuration_feature("adaptive_meshing", *args)
+
+    def door_open_detection(self, str):
+        self.set_configuration_string("door_detect", str)
 
     def set_power_loss_recovery(self, *args):
         self.set_configuration_feature("power_loss_recovery", *args)

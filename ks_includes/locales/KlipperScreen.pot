@@ -330,6 +330,9 @@ msgstr ""
 msgid "Enable screen power management"
 msgstr ""
 
+msgid "Enabled successfully"
+msgstr ""
+
 msgid "Error"
 msgstr ""
 
@@ -896,6 +899,12 @@ msgid "Rename/Move:"
 msgstr ""
 
 msgid "Reprint"
+msgstr ""
+
+msgid "Reset"
+msgstr ""
+
+msgid "Reset successfully"
 msgstr ""
 
 msgid "Restart"

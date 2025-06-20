@@ -32,6 +32,7 @@ from ks_includes.widgets.prompts import Prompt
 from ks_includes.widgets.lockscreen import LockScreen
 from ks_includes.widgets.screensaver import ScreenSaver
 from ks_includes.config import KlipperScreenConfig
+from ks_includes.sdbus_reg import LicenseManager
 from panels.base_panel import BasePanel
 
 
@@ -95,6 +96,8 @@ class KlipperScreen(Gtk.Window):
         self.confirm = None
         self.panels_reinit = []
         self.last_popup_time = datetime.now()
+        self.license = LicenseManager()
+        logging.info(f"license interface:{self.license}")
 
         configfile = os.path.normpath(os.path.expanduser(args.configfile))
 

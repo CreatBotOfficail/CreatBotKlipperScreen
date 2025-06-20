@@ -331,6 +331,9 @@ msgstr "启用注册码"
 msgid "Enable screen power management"
 msgstr "开启屏幕功率管理功能"
 
+msgid "Enabled successfully"
+msgstr "启用成功"
+
 msgid "Error"
 msgstr "错误"
 
@@ -898,10 +901,16 @@ msgstr "重命名/移动："
 msgid "Reprint"
 msgstr "再次打印"
 
+msgid "Reset"
+msgstr "重置"
+
+msgid "Reset successfully"
+msgstr "重置成功"
+
 msgid "Restart"
 msgstr "重启"
 
-msgid "Restore Factory Settings"
+msgid "Restore factory Settings"
 msgstr "恢复出厂设置"
 
 msgid "Restores your print job after a power outage"
