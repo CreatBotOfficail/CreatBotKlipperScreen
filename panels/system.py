@@ -1,14 +1,10 @@
 import logging
 import gi
 import time
-import os.path
-import pathlib
 
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 from ks_includes.screen_panel import ScreenPanel
-from ks_includes.ModelConfig import ModelConfig
-
 
 class Panel(ScreenPanel):
     def __init__(self, screen, title):
@@ -17,19 +13,30 @@ class Panel(ScreenPanel):
         self.current_row = 0
         self.mem_multiplier = None
         self.model_config = None
+        self.info_panel = None
         self.scales = {}
         self.labels = {}
-        self.models = {}
         self.click_count = 0
         self.last_click_time = 0
-        self.click_threshold = 0.2
-        self.target_clicks = 10
+        self.click_threshold = 2.0
+        self.target_clicks = 5
         self.grid = Gtk.Grid(column_spacing=10, row_spacing=5)
 
-        sysinfo = screen.printer.system_info
-        logging.info(sysinfo)
+        self.sysinfo = screen.printer.system_info
+        if not self.sysinfo:
+            logging.debug("Asking for info")
+            self.sysinfo = screen.apiclient.send_request("machine/system_info")
+            if 'system_info' in self.sysinfo:
+                screen.printer.system_info = self.sysinfo['system_info']
+                self.sysinfo = self.sysinfo['system_info']
+        logging.debug(self.sysinfo)
 
-        self.cpu_count = int(sysinfo["cpu_info"]["cpu_count"])
+        if self.sysinfo:
+            self.info_panel = self.create_layout()
+        else:
+            self.content.add(Gtk.Label(label=_("No info available"), vexpand=True))
+
+    def create_layout(self):
         self.labels["cpu_usage"] = Gtk.Label(label="", xalign=0)
         self.grid.attach(self.labels["cpu_usage"], 0, self.current_row, 1, 1)
         self.scales["cpu_usage"] = Gtk.ProgressBar(
@@ -37,7 +44,6 @@ class Panel(ScreenPanel):
         )
         self.grid.attach(self.scales["cpu_usage"], 1, self.current_row, 1, 1)
         self.current_row += 1
-
 
         self.labels["memory_usage"] = Gtk.Label(label="", xalign=0)
         self.grid.attach(self.labels["memory_usage"], 0, self.current_row, 1, 1)
@@ -49,36 +55,15 @@ class Panel(ScreenPanel):
 
         self.grid.attach(Gtk.Separator(), 0, self.current_row, 2, 1)
         self.current_row += 1
-        self.machine_info(sysinfo)
+        self.machine_info()
         self.current_row += 1
-        self.populate_info(sysinfo)
+        self.populate_info()
 
         scroll = self._gtk.ScrolledWindow()
         scroll.add(self.grid)
         self.content.add(scroll)
-        if self.model_config is None:
-            self.model_config = ModelConfig()
-        self.labels["model_menu"] = self._gtk.ScrolledWindow()
-        self.labels["model"] = Gtk.Grid()
-        self.labels["model_menu"].add(self.labels["model"])
-        klipperscreendir = pathlib.Path(__file__).parent.resolve().parent
-        self.model_list_path = os.path.join(
-            klipperscreendir, "config", "model_menu.conf"
-        )
-        self.model_list = pathlib.Path(self.model_list_path).read_text()
-        with open(self.model_list_path) as file:
-            for line in file:
-                model_name = line.strip()
-                self.models[model_name] = {
-                    "name": model_name,
-                    "type": "button",
-                    "callback": self.change_model,
-                }
-                self.add_option(
-                    "model", self.models, model_name, self.models[model_name]
-                )
-    def change_model(self, widget, event):
-        self.model_config.generate_config(event)
+        return scroll
+
     def on_model_click(self, widget, event):
         current_time = time.time()
         if (current_time - self.last_click_time) <= self.click_threshold:
@@ -86,9 +71,9 @@ class Panel(ScreenPanel):
         else:
             self.click_count = 0
         self.last_click_time = current_time
-        if self.click_count == self.target_clicks:
+        if self.click_count >= self.target_clicks:
             self.click_count = 0
-            self.load_menu("system", _("model"))
+            self._screen.show_panel("factory_settings", remove_all=False)
 
     def set_mem_multiplier(self, data):
         memory_units = data.get("memory_units", "kB").lower()
@@ -107,12 +92,13 @@ class Panel(ScreenPanel):
         label = Gtk.Label(label=text, use_markup=True, xalign=0, wrap=True)
         self.grid.attach(label, column, self.current_row, 1, 1)
         self.current_row += 1
-    def machine_info(self, sysinfo):
+
+    def machine_info(self):
         self.add_label_to_grid(self.prettify("device"), 0, bold=True)
         self.current_row -= 1
-        self.add_label_to_grid("Maker: CreatBot", 1)
+        self.add_label_to_grid("Manufacturer: CreatBot", 1)
         event_box = Gtk.EventBox()
-        event_box.connect("button-press-event", self.on_model_click)
+        event_box.connect("button-release-event", self.on_model_click)
         mode = self._screen.connecting_to_printer.split("-")[0]
         label = Gtk.Label(label=f"Model: {mode}", use_markup=True, xalign=0, wrap=True)
         self.grid.attach(event_box, 1, self.current_row, 1, 1)
@@ -120,8 +106,8 @@ class Panel(ScreenPanel):
         event_box.add(label)
         self.add_label_to_grid(f"Name: {self._screen.connecting_to_printer}", 1)
 
-    def populate_info(self, sysinfo):
-        for category, data in sysinfo.items():
+    def populate_info(self):
+        for category, data in self.sysinfo.items():
             if category == "python":
                 self.add_label_to_grid(self.prettify(category), 0, bold=True)
                 self.current_row -= 1
@@ -139,7 +125,7 @@ class Panel(ScreenPanel):
                     "service_state",
                     "instance_ids",
                 )
-                or not sysinfo[category]
+                or not self.sysinfo[category]
             ):
                 continue
 
@@ -175,6 +161,8 @@ class Panel(ScreenPanel):
                         self.add_label_to_grid(f"{self.prettify(key)}: {value}", 1)
 
     def process_update(self, action, data):
+        if not self.sysinfo:
+            return
         if action == "notify_proc_stat_update":
             self.labels["cpu_usage"].set_label(
                 f'CPU: {data["system_cpu_usage"]["cpu"]:.0f}%'
