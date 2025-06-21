@@ -19,7 +19,7 @@ class Panel(ScreenPanel):
         title = title or _("Input Shaper")
         super().__init__(screen, title)
         self.freq_xy_adj = {}
-        self.freq_xy_combo = {}
+        self.shaper_buttons = {}
         self.calibrate_btn = self._gtk.Button("move", _('Finding ADXL'), "color1", lines=1)
         self.calibrate_btn.connect("clicked", self.on_popover_clicked)
         self.calibrate_btn.set_sensitive(False)
@@ -48,14 +48,23 @@ class Panel(ScreenPanel):
             scale.connect("button-release-event", self.set_opt_value, dim_freq['config'])
 
             shaper_slug = dim_freq['config'].replace('_freq_', '_type_')
-            self.freq_xy_combo[shaper_slug] = Gtk.ComboBoxText()
-            for shaper in SHAPERS:
-                self.freq_xy_combo[shaper_slug].append(shaper, shaper)
-                self.freq_xy_combo[shaper_slug].set_active(0)
+            menu_btn = Gtk.Button(label=SHAPERS[0])
+            menu_btn.set_name("compact-combo")
+            menu_btn.get_style_context().add_class("combo-button")
+            menu_btn.connect("clicked", self.on_shaper_menu_clicked, shaper_slug)
+            menu_btn.set_halign(Gtk.Align.CENTER)
+            menu_btn.set_valign(Gtk.Align.CENTER)
+            menu_btn.set_margin_end(5)
+            self.shaper_buttons[shaper_slug] = menu_btn
+
+            combo_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=0)
+            combo_box.pack_start(menu_btn, True, True, 0)
+            arrow = Gtk.Arrow(arrow_type=Gtk.ArrowType.DOWN, shadow_type=Gtk.ShadowType.NONE)
+            combo_box.pack_start(arrow, False, False, 0)
 
             input_grid.attach(axis_lbl, 0, i + 2, 1, 1)
             input_grid.attach(scale, 1, i + 2, 1, 1)
-            input_grid.attach(self.freq_xy_combo[shaper_slug], 2, i + 2, 1, 1)
+            input_grid.attach(combo_box, 2, i + 2, 1, 1)
 
         box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
         box.add(auto_grid)
@@ -65,7 +74,6 @@ class Panel(ScreenPanel):
         self.content.add(box)
 
         pobox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
-        pobox.get_style_context().add_class("measure_button")
         test_x = self._gtk.Button(label=_("Measure X"))
         test_x.connect("clicked", self.start_calibration, "x")
         pobox.pack_start(test_x, True, True, 5)
@@ -78,6 +86,50 @@ class Panel(ScreenPanel):
         self.labels['popover'] = Gtk.Popover()
         self.labels['popover'].add(pobox)
         self.labels['popover'].set_position(Gtk.PositionType.LEFT)
+
+        self.shaper_popovers = {}
+        for dim_freq in XY_FREQ:
+            shaper_slug = dim_freq['config'].replace('_freq_', '_type_')
+            popover = Gtk.Popover()
+
+            grid = Gtk.Grid(column_homogeneous=True, row_spacing=2, column_spacing=2)
+            columns = 2
+            for idx, shaper in enumerate(SHAPERS):
+                btn = Gtk.Button(label=shaper)
+                btn.set_name("compact-menu-item")
+                btn.get_style_context().add_class("menu-item")
+                btn.connect("clicked", self.on_shaper_selected, shaper_slug, shaper)
+
+                row = idx // columns
+                col = idx % columns
+                grid.attach(btn, col, row, 1, 1)
+
+            popover.add(grid)
+            self.shaper_popovers[shaper_slug] = popover
+
+    def on_shaper_menu_clicked(self, widget, shaper_slug):
+        popover = self.shaper_popovers[shaper_slug]
+        popover.set_relative_to(widget)
+        popover.show_all()
+
+    def on_shaper_selected(self, widget, shaper_slug, shaper):
+        self.shaper_buttons[shaper_slug].set_label(shaper)
+        self.shaper_popovers[shaper_slug].popdown()
+        self.set_input_shaper()
+
+    def set_input_shaper(self):
+        shaper_freq_x = self.freq_xy_adj['shaper_freq_x'].get_value()
+        shaper_freq_y = self.freq_xy_adj['shaper_freq_y'].get_value()
+        shaper_type_x = self.shaper_buttons['shaper_type_x'].get_label()
+        shaper_type_y = self.shaper_buttons['shaper_type_y'].get_label()
+
+        self._screen._ws.klippy.gcode_script(
+            f'SET_INPUT_SHAPER '
+            f'SHAPER_FREQ_X={shaper_freq_x} '
+            f'SHAPER_TYPE_X={shaper_type_x} '
+            f'SHAPER_FREQ_Y={shaper_freq_y} '
+            f'SHAPER_TYPE_Y={shaper_type_y}'
+        )
 
     def on_popover_clicked(self, widget):
         self.labels['popover'].set_relative_to(widget)
@@ -97,18 +149,7 @@ class Panel(ScreenPanel):
         self.calibrate_btn.set_label(_('Calibrating') + '...')
 
     def set_opt_value(self, widget, opt, *args):
-        shaper_freq_x = self.freq_xy_adj['shaper_freq_x'].get_value()
-        shaper_freq_y = self.freq_xy_adj['shaper_freq_y'].get_value()
-        shaper_type_x = self.freq_xy_combo['shaper_type_x'].get_active_text()
-        shaper_type_y = self.freq_xy_combo['shaper_type_y'].get_active_text()
-
-        self._screen._ws.klippy.gcode_script(
-            f'SET_INPUT_SHAPER '
-            f'SHAPER_FREQ_X={shaper_freq_x} '
-            f'SHAPER_TYPE_X={shaper_type_x} '
-            f'SHAPER_FREQ_Y={shaper_freq_y} '
-            f'SHAPER_TYPE_Y={shaper_type_y}'
-        )
+        self.set_input_shaper()
 
     def save_config(self):
 
@@ -149,7 +190,7 @@ class Panel(ScreenPanel):
             if results:
                 results.groupdict()
             self.freq_xy_adj['shaper_freq_' + results['axis']].set_value(float(results['shaper_freq']))
-            self.freq_xy_combo['shaper_type_' + results['axis']].set_active(SHAPERS.index(results['shaper_type']))
+            self.shaper_buttons['shaper_type_' + results['axis']].set_label(results['shaper_type'])
             if self.calibrating_axis == results['axis'] or (self.calibrating_axis == "both" and results['axis'] == 'y'):
                 self.calibrate_btn.set_sensitive(True)
                 self.calibrate_btn.set_label(_('Calibrated'))
@@ -163,4 +204,4 @@ class Panel(ScreenPanel):
             ):
                 results = results.groupdict()
                 self.freq_xy_adj['shaper_freq_' + results['axis']].set_value(float(results['shaper_freq']))
-                self.freq_xy_combo['shaper_type_' + results['axis']].set_active(SHAPERS.index(results['shaper_type']))
+                self.shaper_buttons['shaper_type_' + results['axis']].set_label(results['shaper_type'])

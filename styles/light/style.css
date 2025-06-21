@@ -418,3 +418,9 @@ textview .time {
     background-color: @color1;
     border-bottom-color: @color1;
 }
+
+popover,
+popover button {
+    background-color: @color4;
+    border-color: @solarized-base03;
+}

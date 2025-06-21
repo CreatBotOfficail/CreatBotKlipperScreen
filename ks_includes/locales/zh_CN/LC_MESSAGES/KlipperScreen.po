@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KlipperScreen\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-29 17:34+0800\n"
+"POT-Creation-Date: 2025-06-19 16:45+0800\n"
 "PO-Revision-Date: 2024-06-03 19:09+0000\n"
 "Last-Translator: wsj20050623 <2129426599@qq.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
@@ -74,14 +74,8 @@ msgstr "确定"
 msgid "Activate"
 msgstr "激活"
 
-msgid "Adaptive Bed Leveling"
-msgstr "自适应床调平"
-
 msgid "Add"
 msgstr "加"
-
-msgid "Add profile"
-msgstr "添加配置文件"
 
 msgid "Advanced"
 msgstr "高级"
@@ -139,8 +133,8 @@ msgstr "停止打印前需要额外确认"
 msgid "Auto"
 msgstr "自动"
 
-msgid "Auto Calibration"
-msgstr "自动校准"
+msgid "Auto Bed Leveling"
+msgstr "自动调平"
 
 msgid "Auto Change Nozzle"
 msgstr "断料自动切头"
@@ -159,6 +153,9 @@ msgstr "暂停打印时自动打开挤出控制界面"
 
 msgid "Auto-scroll"
 msgstr "自动滚屏"
+
+msgid "Automatic compensation based on the data of the bed mesh"
+msgstr "基于床面网格数据的自动补偿"
 
 msgid "Bed Level"
 msgstr "热床调平"
@@ -388,6 +385,9 @@ msgstr "失败，请先调整位置"
 msgid "Fan"
 msgstr "风扇"
 
+msgid "Fast Calibration"
+msgstr "快速校准"
+
 msgid "Filament"
 msgstr "耗材"
 
@@ -414,6 +414,9 @@ msgstr "筛选"
 
 msgid "Finding ADXL"
 msgstr "查找加速度计中"
+
+msgid "Fine Calibration"
+msgstr "精细校准"
 
 msgid "Fine Tuning"
 msgstr "微调"
@@ -532,9 +535,6 @@ msgstr "密钥有效"
 msgid "Key:"
 msgstr "密钥："
 
-msgid "Klipper Restart"
-msgstr "重启Klipper"
-
 msgid "Klipper has disconnected"
 msgstr "Klipper已断开连接"
 
@@ -580,9 +580,6 @@ msgstr "左挤出机温度不足，将重新加热后继续"
 
 msgid "Left:"
 msgstr "剩余时间："
-
-msgid "Leveling only in the actual print area"
-msgstr "仅在实际打印区域进行床调平"
 
 msgid "License key"
 msgstr "许可证密钥"
@@ -853,9 +850,6 @@ msgstr "探针偏移校准"
 msgid "Probe Offset"
 msgstr "探针偏移"
 
-msgid "Profile Name:"
-msgstr "配置文件名称："
-
 msgid "Provide KlipperScreen.log when asking for help.\n"
 msgstr "寻求帮助的时候请提供KlipperScreen.log。\n"
 
@@ -1055,12 +1049,6 @@ msgstr "状态："
 msgid "System"
 msgstr "系统"
 
-msgid "System Restart"
-msgstr "重启系统"
-
-msgid "System Shutdown"
-msgstr "关闭系统"
-
 msgid "System:"
 msgstr "系统"
 
@@ -1251,6 +1239,24 @@ msgid "second"
 msgid_plural "seconds"
 msgstr[0] "秒"
 
+#~ msgid "Add profile"
+#~ msgstr "添加配置文件"
+
+#~ msgid "Profile Name:"
+#~ msgstr "配置文件名称："
+
+#~ msgid "Klipper Restart"
+#~ msgstr "重启Klipper"
+
+#~ msgid "Leveling only in the actual print area"
+#~ msgstr "仅在实际打印区域进行床调平"
+
+#~ msgid "System Restart"
+#~ msgstr "重启系统"
+
+#~ msgid "System Shutdown"
+#~ msgstr "关闭系统"
+
 #~ msgid "Enabled successfully"
 #~ msgstr "启用成功"
 
@@ -1271,9 +1277,6 @@ msgstr[0] "秒"
 
 #~ msgid "Restoring Left extruder temperature, this may take some time"
 #~ msgstr "恢复左挤出机温度，这可能需要一些时间"
-
-#~ msgid "Manual Calibration"
-#~ msgstr "手动校准"
 
 #~ msgid "NOTE: Edit your printer.cfg to save manual calibration changes."
 #~ msgstr "请编辑您的 printer.cfg 文件以保存手动校准的更改"

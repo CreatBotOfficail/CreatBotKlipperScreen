@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KlipperScreen\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-31 14:57+0800\n"
+"POT-Creation-Date: 2025-06-19 14:30+0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -65,7 +65,10 @@ msgstr ""
 msgid "Accept"
 msgstr ""
 
-msgid "Adaptive Bed Leveling"
+msgid "Activate"
+msgstr ""
+
+msgid "Add"
 msgstr ""
 
 msgid "Add profile"
@@ -127,7 +130,7 @@ msgstr ""
 msgid "Auto"
 msgstr ""
 
-msgid "Auto Calibration"
+msgid "Auto Bed Leveling"
 msgstr ""
 
 msgid "Auto Change Nozzle"
@@ -146,6 +149,9 @@ msgid "Auto-open Extrude On Pause"
 msgstr ""
 
 msgid "Auto-scroll"
+msgstr ""
+
+msgid "Automatic compensation based on the data of the bed mesh"
 msgstr ""
 
 msgid "Bed Level"
@@ -229,9 +235,6 @@ msgstr ""
 msgid "Confirm factory reset?\n"
 msgstr ""
 
-msgid "Connected"
-msgstr ""
-
 msgid "Connecting"
 msgstr ""
 
@@ -287,6 +290,9 @@ msgstr ""
 msgid "Disable for 12hs with am / pm"
 msgstr ""
 
+msgid "Disabled"
+msgstr ""
+
 msgid "Disconnect"
 msgstr ""
 
@@ -301,10 +307,19 @@ msgstr ""
 msgid "Do you want to recover %s?"
 msgstr ""
 
+msgid "Door Open Protection Mode"
+msgstr ""
+
+msgid "Elapsed trial time:"
+msgstr ""
+
 msgid "Elapsed:"
 msgstr ""
 
 msgid "Emergency Stop"
+msgstr ""
+
+msgid "Enable Registration Code"
 msgstr ""
 
 msgid "Enable screen power management"
@@ -457,9 +472,6 @@ msgstr ""
 msgid "Host"
 msgstr ""
 
-msgid "Hostname"
-msgstr ""
-
 msgid "ID"
 msgstr ""
 
@@ -502,7 +514,16 @@ msgstr ""
 msgid "Job Status"
 msgstr ""
 
-msgid "Klipper Restart"
+msgid "Key is empty"
+msgstr ""
+
+msgid "Key is invalid"
+msgstr ""
+
+msgid "Key is valid"
+msgstr ""
+
+msgid "Key:"
 msgstr ""
 
 msgid "Klipper has disconnected"
@@ -551,7 +572,7 @@ msgstr ""
 msgid "Left:"
 msgstr ""
 
-msgid "Leveling only in the actual print area"
+msgid "License key"
 msgstr ""
 
 msgid "Limits"
@@ -617,6 +638,9 @@ msgstr ""
 msgid "Minimum:"
 msgstr ""
 
+msgid "Minus"
+msgstr ""
+
 msgid "Modified"
 msgstr ""
 
@@ -677,6 +701,9 @@ msgstr ""
 msgid "Not Inserted"
 msgstr ""
 
+msgid "Not activated"
+msgstr ""
+
 msgid "Not all screens support this"
 msgstr ""
 
@@ -734,16 +761,28 @@ msgstr ""
 msgid "Pause"
 msgstr ""
 
+msgid "Pause Print"
+msgstr ""
+
 msgid "Paused"
 msgstr ""
 
 msgid "Perform a full upgrade?"
 msgstr ""
 
+msgid "Permanent Activation"
+msgstr ""
+
 msgid "Pins"
 msgstr ""
 
+msgid "Please close the door and click Resume to proceed."
+msgstr ""
+
 msgid "Please ensure that the Probe Calibrate has been performed"
+msgstr ""
+
+msgid "Please enter a key to activate"
 msgstr ""
 
 msgid "Please enter a valid number"
@@ -788,6 +827,12 @@ msgstr ""
 msgid "Printer Select"
 msgstr ""
 
+msgid "Printer door is opened. Please close the door and then start printing."
+msgstr ""
+
+msgid "Printer door is opening!"
+msgstr ""
+
 msgid "Printing"
 msgstr ""
 
@@ -830,6 +875,9 @@ msgstr ""
 msgid "Refresh"
 msgstr ""
 
+msgid "Remaining Time:"
+msgstr ""
+
 msgid "Remove network"
 msgstr ""
 
@@ -848,10 +896,7 @@ msgstr ""
 msgid "Restores your print job after a power outage"
 msgstr ""
 
-msgid "Restoring Left extruder temperature, this may take some time"
-msgstr ""
-
-msgid "Restoring Right extruder temperature, this may take some time"
+msgid "Restoring activated extruder temperature, this may take some time."
 msgstr ""
 
 msgid "Resume"
@@ -921,6 +966,9 @@ msgstr ""
 msgid "Send"
 msgstr ""
 
+msgid "Serial Number:"
+msgstr ""
+
 msgid "Settings"
 msgstr ""
 
@@ -940,6 +988,9 @@ msgid "Sink fan"
 msgstr ""
 
 msgid "Size"
+msgstr ""
+
+msgid "Skip"
 msgstr ""
 
 msgid "Slicer"
@@ -981,22 +1032,16 @@ msgstr ""
 msgid "Start testing the Z offset value of the second nozzle?\n"
 msgstr ""
 
-msgid "Starting WiFi Association"
-msgstr ""
-
 msgid "Starting recovery for"
 msgstr ""
 
 msgid "Starting update for"
 msgstr ""
 
+msgid "State:"
+msgstr ""
+
 msgid "System"
-msgstr ""
-
-msgid "System Restart"
-msgstr ""
-
-msgid "System Shutdown"
 msgstr ""
 
 msgid "System:"
@@ -1005,13 +1050,27 @@ msgstr ""
 msgid "Temperature"
 msgstr ""
 
+msgid "Test Mode"
+msgstr ""
+
 msgid "The last print job was not completed continue printing?"
+msgstr ""
+
+msgid "The new value is not within the valid range."
 msgstr ""
 
 msgid "The system doesn't meet the minimum requirement"
 msgstr ""
 
 msgid "The system will reboot!"
+msgstr ""
+
+msgid "This device is not activated and is available for trial use only"
+msgstr ""
+
+msgid ""
+"This feature allows you to customize the printer's response when door "
+"opening is detected"
 msgstr ""
 
 msgid "This operation is about to print the model"
@@ -1030,6 +1089,15 @@ msgid "Timeout for screen black-out or power-off during printing"
 msgstr ""
 
 msgid "Total:"
+msgstr ""
+
+msgid "Trial"
+msgstr ""
+
+msgid "Trial Time:"
+msgstr ""
+
+msgid "Unknown"
 msgstr ""
 
 msgid "Unknown Heater"
@@ -1133,6 +1201,9 @@ msgid "hour"
 msgid_plural "hours"
 msgstr[0] ""
 msgstr[1] ""
+
+msgid "license"
+msgstr ""
 
 msgid "macros that use 'rename_existing' are hidden"
 msgstr ""
