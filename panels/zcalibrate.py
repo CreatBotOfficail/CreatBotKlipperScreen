@@ -19,6 +19,7 @@ class Panel(ScreenPanel):
         self.mesh_radius = None
         self.mesh_origin = [0, 0]
         self.zero_ref = []
+        self.probe_z_offset = None
         self.z_hop_speed = 15.0
         self.z_hop = 5.0
         self.probe = self._printer.get_probe()
@@ -249,6 +250,8 @@ class Panel(ScreenPanel):
     def activate(self):
         if self._printer.get_stat("manual_probe", "is_active"):
             self.buttons_calibrating()
+            self.probe_z_offset = None
+            self.widgets['zoffset'].set_text("?")
         else:
             self.buttons_not_calibrating()
 
@@ -261,7 +264,10 @@ class Panel(ScreenPanel):
             if "manual_probe" in data:
                 if data["manual_probe"]["is_active"]:
                     self.buttons_calibrating()
+                    if self._printer.get_stat('manual_probe', 'z_position_upper') is None:
+                        self.probe_z_offset = self._printer.data['gcode_move']['gcode_position'][2] - 5
                 else:
+                    self.probe_z_offset = None
                     self.buttons_not_calibrating()
         elif action == "notify_gcode_response":
             if "out of range" in data.lower():
@@ -274,7 +280,10 @@ class Panel(ScreenPanel):
 
     def update_position(self, position):
         self.widgets['zposition'].set_text(f"Z: {position[2]:.3f}")
-        self.widgets['zoffset'].set_text(f"{abs(position[2] - self.z_offset):.3f}")
+        if self.probe_z_offset is not None:
+            self.widgets['zoffset'].set_text(f"{(self.probe_z_offset - position[2]):.3f}")
+        else:
+            self.widgets['zoffset'].set_text("?")
 
     def change_distance(self, widget, distance):
         logging.info(f"### Distance {distance}")

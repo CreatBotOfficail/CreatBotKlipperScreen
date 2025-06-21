@@ -1,6 +1,7 @@
 import contextlib
 import logging
 import gi
+import math
 
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk, Pango
@@ -14,24 +15,23 @@ class Panel(ScreenPanel):
     def __init__(self, screen, title):
         title = title or _("Bed Mesh")
         super().__init__(screen, title)
-        self.show_create = False
         self.active_mesh = None
         section = self._printer.get_config_section("bed_mesh")
         self.mesh_radius = section['mesh_radius'] if 'mesh_radius' in section else None
         self.profiles = {}
         self.buttons = {
-            'add': self._gtk.Button("increase", " " + _("Add profile"), "color1", self.bts, Gtk.PositionType.LEFT, 1),
-            'calib': self._gtk.Button("refresh", " " + _("Calibrate"), "color3", self.bts, Gtk.PositionType.LEFT, 1),
+            'fine_calib': self._gtk.Button("refresh", " " + _("Fine Calibration"), "color1", self.bts, Gtk.PositionType.LEFT, 1),
+            'fast_calib': self._gtk.Button("refresh", " " + _("Fast Calibration"), "color3", self.bts, Gtk.PositionType.LEFT, 1),
             'clear': self._gtk.Button("cancel", " " + _("Clear"), "color2", self.bts, Gtk.PositionType.LEFT, 1),
         }
-        self.buttons['add'].connect("clicked", self.show_create_profile)
+        self.buttons['fine_calib'].connect("clicked", self.fine_calibrate_mesh)
         self.buttons['clear'].connect("clicked", self.send_clear_mesh)
-        self.buttons['calib'].connect("clicked", self.calibrate_mesh)
+        self.buttons['fast_calib'].connect("clicked", self.calibrate_mesh)
 
         topbar = Gtk.Box(spacing=5, hexpand=True, vexpand=False)
-        topbar.add(self.buttons['add'])
         topbar.add(self.buttons['clear'])
-        topbar.add(self.buttons['calib'])
+        topbar.add(self.buttons['fine_calib'])
+        topbar.add(self.buttons['fast_calib'])
 
         # Create a grid for all profiles
         self.labels['profiles'] = Gtk.Grid(valign=Gtk.Align.CENTER)
@@ -146,9 +146,6 @@ class Panel(ScreenPanel):
         self.labels['profiles'].show_all()
 
     def back(self):
-        if self.show_create is True:
-            self.remove_create()
-            return True
         return False
 
     def load_meshes(self):
@@ -165,18 +162,6 @@ class Panel(ScreenPanel):
             return
         if 'bed_mesh' in data and 'profile_name' in data['bed_mesh']:
             self.activate_mesh(data['bed_mesh']['profile_name'])
-
-    def remove_create(self):
-        if self.show_create is False:
-            return
-
-        self._screen.remove_keyboard()
-        for child in self.content.get_children():
-            self.content.remove(child)
-
-        self.show_create = False
-        self.content.add(self.labels['main_grid'])
-        self.content.show()
 
     def remove_profile(self, profile):
         if profile not in self.profiles:
@@ -200,41 +185,65 @@ class Panel(ScreenPanel):
         profiles = sorted(pl)
         return profiles.index(profile) + 1 if profile != "default" else 0
 
-    def show_create_profile(self, widget):
+    def get_optimal_probe_count(self, mesh_min, mesh_max, original_probe_count="3,3", target_spacing=40):
 
-        for child in self.content.get_children():
-            self.content.remove(child)
+        try:
+            min_x, min_y = map(float, mesh_min.split(','))
+            max_x, max_y = map(float, mesh_max.split(','))
+            x_range = max_x - min_x
+            y_range = max_y - min_y
+            x_count = max(3, math.ceil(x_range / target_spacing) + 1)
+            y_count = max(3, math.ceil(y_range / target_spacing) + 1)
+            x_count = min(x_count, 25)
+            y_count = min(y_count, 25)
 
-        if "create_profile" not in self.labels:
-            pl = Gtk.Label(label=_("Profile Name:"), hexpand=False)
-            self.labels['profile_name'] = Gtk.Entry(hexpand=True, text='')
-            self.labels['profile_name'].connect("activate", self.create_profile)
-            self.labels['profile_name'].connect("focus-in-event", self._screen.show_keyboard)
+            return x_count, y_count
 
-            save = self._gtk.Button("complete", _("Save"), "color3")
-            save.set_hexpand(False)
-            save.connect("clicked", self.create_profile)
+        except Exception as e:
+            try:
+                original_x, original_y = map(int, original_probe_count.split(','))
+                return original_x, original_y
+            except:
+                return None
 
-            box = Gtk.Box()
-            box.pack_start(self.labels['profile_name'], True, True, 5)
-            box.pack_start(save, False, False, 5)
+    def generate_bed_mesh_command(self, config_dict, profile="default", target_spacing=40):
+        if not isinstance(config_dict, dict):
+            logging.warning(f"Error: config_dict is not a dict, but is {type(config_dict)}")
+            return None
 
-            self.labels['create_profile'] = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=5,
-                                                    valign=Gtk.Align.CENTER, hexpand=True, vexpand=True)
-            self.labels['create_profile'].pack_start(pl, True, True, 5)
-            self.labels['create_profile'].pack_start(box, True, True, 5)
+        if "mesh_min" not in config_dict or "mesh_max" not in config_dict:
+            logging.info("Missing required key: mesh_min or mesh_max")
+            return None
 
-        self.content.add(self.labels['create_profile'])
-        self.labels['profile_name'].grab_focus_without_selecting()
-        self.show_create = True
+        mesh_min = config_dict.get("mesh_min", "0,0")
+        mesh_max = config_dict.get("mesh_max", "200,200")
+        original_probe_count = config_dict.get("probe_count", "3,3")
 
-    def create_profile(self, widget):
-        name = self.labels['profile_name'].get_text()
-        if self.active_mesh is None:
-            self.calibrate_mesh(widget)
+        x_count, y_count = self.get_optimal_probe_count(mesh_min, mesh_max, original_probe_count, target_spacing)
+        auto_probe_count = f"{x_count},{y_count}"
 
-        self._screen._send_action(widget, "printer.gcode.script", {"script": f"BED_MESH_PROFILE SAVE={name}"})
-        self.remove_create()
+        command = f"BED_MESH_CALIBRATE PROFILE={profile} PROBE_COUNT={auto_probe_count}"
+
+        return command
+
+    def fine_calibrate_mesh(self, widget):
+
+        widget.set_sensitive(False)
+        self._screen.show_popup_message(_("Calibrating"), level=1)
+        if self._printer.get_stat("toolhead", "homed_axes") != "xyz":
+            self._screen._ws.klippy.gcode_script("G28")
+
+        res = self._printer.get_config_section("bed_mesh")
+        cmd = self.generate_bed_mesh_command(res)
+        if cmd is None:
+            return
+        logging.info(f"Sending bed mesh calibration command: {cmd}")
+        self._screen._send_action(widget, "printer.gcode.script", {"script": cmd})
+
+        # Load zcalibrate to do a manual mesh
+        if not self._printer.get_probe():
+            self.menu_item_clicked(widget, {"name": _("Mesh calibrate"), "panel": "zcalibrate"})
+
 
     def calibrate_mesh(self, widget):
         widget.set_sensitive(False)

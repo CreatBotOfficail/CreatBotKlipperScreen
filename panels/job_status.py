@@ -493,8 +493,16 @@ class Panel(ScreenPanel):
         for x in self._printer.get_temp_devices():
             if x in data:
                 temp = round(self._printer.get_stat(x, "temperature"))
-                temp_target = round(self._printer.get_stat(x, "target"))
-                power = round(self._printer.get_stat(x, "power") * 100)                
+                if (target := self._printer.get_stat(x, "target")):
+                    temp_target = round(target)
+                else:
+                    temp_target = 0
+
+                if (target := self._printer.get_stat(x, "power")):
+                    power = round(target * 100)
+                else:
+                    power = 0
+
                 temp_state = f"{temp}°/{temp_target}° {'{:3.0f}%'.format(power) if self._show_heater_power else ''}".strip()
                 if x in self.buttons['extruder']:
                     self.buttons['extruder'][x].set_label(temp_state)

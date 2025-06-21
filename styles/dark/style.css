@@ -368,3 +368,10 @@ textview .time {
 .dialog-primary {
     border-bottom-color: @orange-opa-100;
 }
+
+popover,
+popover button {
+    background-color: @pale-cyan-opa-100;
+    border-color: @white-opa-20;
+    opacity: 1;
+}
