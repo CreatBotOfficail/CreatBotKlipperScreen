@@ -26,7 +26,7 @@ ExecStart="KS_DIR/scripts/KlipperScreen-start.sh"
 UtmpIdentifier=tty7
 UtmpMode=user
 # Create a PAM session to run pam-systemd, which creates /var/run/$UID
-PAMName=%u
+# PAMName=%u
 # A virtual terminal is needed.
 TTYPath=/dev/tty7
 TTYReset=yes
