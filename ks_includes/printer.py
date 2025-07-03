@@ -236,6 +236,16 @@ class Printer:
         return None
 
     def get_printer_status_data(self):
+        wifi_available = False
+        try:
+            from ks_includes.sdbus_nm import SdbusNm
+
+            sdbus_nm = SdbusNm(lambda x: None)
+            wifi_available = sdbus_nm.wifi if sdbus_nm else False
+        except Exception as e:
+            logging.debug(f"Failed to detect WiFi module: {e}")
+            wifi_available = False
+
         return {
             "moonraker": {
                 "power_devices": {"count": len(self.get_power_devices())},
@@ -252,7 +262,10 @@ class Printer:
                 "gcode_macros": {"count": len(self.get_gcode_macros()), "list": self.get_gcode_macros()},
                 "leds": {"count": self.ledcount},
                 "config_sections": list(self.config.keys()),
-            }
+            },
+            "network": {
+                "wifi_available": wifi_available,
+            },
         }
 
     def get_leds(self):
