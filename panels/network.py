@@ -111,7 +111,6 @@ class Panel(ScreenPanel):
             self._screen.show_popup_message(_("No wireless interface has been found"), level=2)
             self.labels["networkinfo"] = Gtk.Label()
             scroll.add(self.labels["networkinfo"])
-            self.update_single_network_info()
 
         self.labels["main_box"].pack_start(scroll, True, True, 0)
         self.content.add(self.labels["main_box"])
