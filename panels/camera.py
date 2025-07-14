@@ -51,7 +51,24 @@ class Panel(ScreenPanel):
             logging.info("camera URL is relative")
             endpoint = self._screen.apiclient.endpoint.split(':')
             url = f"{endpoint[0]}:{endpoint[1]}{url}"
-        if '/webrtc' in url:
+        # Check if service is go2rtc and modify URL for RTSP streaming
+        if cam.get('service') == 'webrtc-go2rtc':
+            camera_name = 'Camera'
+            if '?src=' in url:
+                camera_name = url.split('?src=')[-1].split('&')[0]
+
+            if url.startswith('http://') or url.startswith('https://'):
+                url_parts = url.split('/')
+                host_port = url_parts[2]
+                if ':' in host_port:
+                    host = host_port.split(':')[0]
+                else:
+                    host = host_port
+
+                url = f"rtsp://{host}:8554/{camera_name}"
+
+            logging.info(f"go2rtc service detected, converted to RTSP stream: {url}")
+        elif '/webrtc' in url:
             self._screen.show_popup_message(_('WebRTC is not supported by the backend trying Stream'))
             url = url.replace('/webrtc', '/stream')
         vf = ""
@@ -64,7 +81,28 @@ class Panel(ScreenPanel):
 
         if self.mpv:
             self.mpv.terminate()
-        self.mpv = mpv.MPV(fullscreen=True, log_handler=self.log, vo='gpu,wlshm,xv,x11')
+
+        self.mpv = mpv.MPV(
+            fullscreen=True,
+            log_handler=self.log,
+            vo='x11',
+            hwdec='no',
+            video_sync='display-desync',
+            framedrop='decoder+vo',
+            profile='low-latency',
+            cache=False,
+            demuxer_max_bytes='8K',
+            demuxer_max_back_bytes='16K',
+            demuxer_readahead_secs=0,
+            stream_buffer_size='8K',
+            correct_pts=False,
+            demuxer_thread=False,
+            network_timeout=0.5,
+            stream_lavf_o='flags=low_delay',
+            ytdl=False,
+            save_position_on_quit=False,
+            keep_open=False
+        )
 
         self.mpv.vf = vf
 
