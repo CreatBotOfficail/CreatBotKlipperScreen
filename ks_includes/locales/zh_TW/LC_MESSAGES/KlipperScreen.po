@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KlipperScreen\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-19 16:45+0800\n"
+"POT-Creation-Date: 2025-07-25 16:29+0800\n"
 "PO-Revision-Date: 2024-06-01 12:09+0000\n"
 "Last-Translator: 峻瑜哥 <a728728728@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <https://hosted.weblate.org/projects/"
@@ -229,6 +229,9 @@ msgstr "關閉"
 msgid "Close messages after a timeout"
 msgstr "逾時後關閉訊息"
 
+msgid "Cloud"
+msgstr "Cloud"
+
 msgid "Complete"
 msgstr "完成"
 
@@ -237,6 +240,9 @@ msgstr "緊急停止需確認"
 
 msgid "Confirm factory reset?\n"
 msgstr "確定恢復出廠設置？\n"
+
+msgid "Connect device to network"
+msgstr "網絡未連接，請給設備添加網絡後再連接APP"
 
 msgid "Connecting"
 msgstr "連接中"
@@ -481,8 +487,14 @@ msgstr "Z軸歸零"
 msgid "Host"
 msgstr "主機"
 
+msgid "Hostname:"
+msgstr "主機名："
+
 msgid "ID"
 msgstr "ID"
+
+msgid "IP Address:"
+msgstr "IP地址："
 
 msgid "Icon Theme"
 msgstr "主題"
@@ -549,6 +561,9 @@ msgstr "Klipper正在啟動"
 
 msgid "Klipper will reboot"
 msgstr "Klipper將重新啟動"
+
+msgid "LAN Only"
+msgstr "僅局域網"
 
 msgid ""
 "LOAD_FILAMENT/UNLOAD_FILAMENT are hidden and should be used from extrude"
@@ -953,6 +968,9 @@ msgstr "已儲存"
 msgid "Saved offset: %s"
 msgstr "儲存偏移：%s"
 
+msgid "Scan left QR to install CreatCloud"
+msgstr "掃描左側二維碼安裝CreatCloud應用"
+
 msgid "Screen DPMS"
 msgstr "螢幕省電管理系統"
 
@@ -1189,6 +1207,12 @@ msgstr "Z 偏移值校準"
 msgid "Z offset:"
 msgstr "Z軸偏移："
 
+msgid ""
+"[After turning on LAN only] Connect phone and printer to the same Wi-Fi, "
+"then use the APP to connect the device."
+msgstr ""
+"[僅局域網按鈕開啟後]請確保:手機與打印機在同一局域網下，再使用APP連接設備"
+
 msgid "commit"
 msgid_plural "commits"
 msgstr[0] "更改"
@@ -1218,7 +1242,7 @@ msgid_plural "minutes"
 msgstr[0] "分"
 
 msgid "mm"
-msgstr "秒"
+msgstr "mm"
 
 msgid "mm/s"
 msgstr "mm/s"
@@ -1238,6 +1262,15 @@ msgstr "s"
 msgid "second"
 msgid_plural "seconds"
 msgstr[0] "秒"
+
+msgid "○ Follow the prompts to complete the setup"
+msgstr "○ 按提示完成設置"
+
+msgid "○ Open the app - click \"+\" to add a printer"
+msgstr "○ 打開應用--點擊「+」添加打印機"
+
+msgid "○ Rescan left QR to add printe"
+msgstr "○ 使用APP再次掃描左側二維碼，添加打印機"
 
 #~ msgid "Add profile"
 #~ msgstr "新增設定檔案"
@@ -1268,9 +1301,6 @@ msgstr[0] "秒"
 
 #~ msgid "Connected"
 #~ msgstr "已連線"
-
-#~ msgid "Hostname"
-#~ msgstr "主機名"
 
 #~ msgid "Starting WiFi Association"
 #~ msgstr "開始WiFi連線"
