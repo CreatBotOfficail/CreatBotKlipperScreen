@@ -13,6 +13,7 @@ class Printer:
         self.state_cb = state_cb
         self.state_callbacks = state_callbacks
         self.power_devices = {}
+        self.creatcloud = {}
         self.tools = []
         self.extrudercount = 0
         self.tempdevcount = 0
@@ -141,6 +142,11 @@ class Printer:
     def process_power_update(self, data):
         if data['device'] in self.power_devices:
             self.power_devices[data['device']]['status'] = data['status']
+
+    def process_creatcloud_update(self, data):
+        self.creatcloud.update(data)
+        logging.debug(f"Creatcloud: {data}")
+
 
     def change_state(self, state):
         if state not in list(self.state_callbacks):

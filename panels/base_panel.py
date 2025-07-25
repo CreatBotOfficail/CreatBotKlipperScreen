@@ -25,7 +25,7 @@ class BasePanel(ScreenPanel):
         self.current_extruder = None
         self.last_usage_report = datetime.now()
         self.usage_report = 0
-        self.load_network_icons()
+        self.load_titlebar_icons()
         try:
             self.sdbus_nm = SdbusNm(self.network_interface_refresh)
         except Exception as e:
@@ -128,6 +128,18 @@ class BasePanel(ScreenPanel):
             self.control["network_ico"].set_no_show_all(True)
             self.control["network_ico"].set_visible(False)
 
+
+        img_size = self._gtk.img_scale * self.bts
+        self.control["cloud_ico"] = self._gtk.Image("cloud", img_size, img_size)
+        cloud_eventbox = Gtk.EventBox()
+        cloud_eventbox.add(self.control["cloud_ico"])
+        cloud_eventbox.connect("button_press-event", self.show_creatcloud_page)
+        self.control['cloud_box'] = Gtk.Box(halign=Gtk.Align.END)
+        self.control["cloud_box"].pack_end(cloud_eventbox, True, True, 5)
+        self.control["cloud_ico"].set_no_show_all(True)
+        self.control["cloud_ico"].set_visible(False)
+        self.control["cloud_ico"].set_sensitive(False)
+
         self.control['time'] = Gtk.Label(label="00:00 AM")
         self.control['time_box'] = Gtk.Box(halign=Gtk.Align.END)
         self.control['time_box'].pack_end(self.control['time'], True, True, 10)
@@ -140,6 +152,7 @@ class BasePanel(ScreenPanel):
             self.titlebar.add(self.control["license_box"])
         if self.sdbus_nm:
             self.titlebar.add(self.control["network_box"])
+        self.titlebar.add(self.control["cloud_box"])
         self.titlebar.add(self.control['time_box'])
         self.set_title(title)
 
@@ -167,6 +180,10 @@ class BasePanel(ScreenPanel):
         if "network" not in self._screen._cur_panels:
             self._screen.show_panel("network", remove_all=False)
 
+    def show_creatcloud_page(self, widget, event):
+        if "creatcloud" not in self._screen._cur_panels:
+            self._screen.show_panel("creatcloud", remove_all=False)
+
     def reload_icons(self):
         button: Gtk.Button
         for button in self.action_bar.get_children():
@@ -176,7 +193,7 @@ class BasePanel(ScreenPanel):
             width = pixbuf.get_width()
             height = pixbuf.get_height()
             button.set_image(self._gtk.Image(name, width, height))
-        self.load_network_icons()
+        self.load_titlebar_icons()
 
     def show_heaters(self, show=True):
         try:
@@ -339,6 +356,10 @@ class BasePanel(ScreenPanel):
                             self._gtk.remove_dialog(dialog)
             return
 
+        if action == "notify_creatcloud_info_update":
+            self.refresh_creatcloud(data)
+            return
+
         if action != "notify_status_update" or self._screen.printer is None:
             return
         for device in self._printer.get_temp_devices():
@@ -412,6 +433,13 @@ class BasePanel(ScreenPanel):
         title_text = f"{self._screen.connecting_to_printer} | {title}" if self._screen.connecting_to_printer is not None else title
         self.titlelbl.set_label(title_text)
 
+    def refresh_creatcloud(self, data):
+        if "actived" in data:
+            self.control["cloud_ico"].set_visible(data["actived"])
+            self.control["cloud_ico"].set_sensitive(False)
+        if "online" in data:
+            self.control["cloud_ico"].set_sensitive(data["online"])
+
     def update_time(self):
         now = datetime.now()
         confopt = self._config.get_main_config().getboolean("24htime", True)
@@ -453,7 +481,7 @@ class BasePanel(ScreenPanel):
         else:
             return self.network_icons["weak"]
 
-    def load_network_icons(self):
+    def load_titlebar_icons(self):
         icon_size_width = self._gtk.content_width * 0.05
         icon_size_height = self._gtk.content_height * 0.05
         network_icons_map = {
@@ -467,6 +495,10 @@ class BasePanel(ScreenPanel):
             key: self._gtk.PixbufFromIcon(value, width=icon_size_width, height=icon_size_height)
             for key, value in network_icons_map.items()
         }
+        if self.control:
+            img_size = self._gtk.img_scale * self.bts
+            cloud_buf = self._gtk.PixbufFromIcon("cloud", img_size, img_size)
+            self.control["cloud_ico"].set_from_pixbuf(cloud_buf)
 
     def set_ks_printer_cfg(self, printer):
         ScreenPanel.ks_printer_cfg = self._config.get_printer_config(printer)

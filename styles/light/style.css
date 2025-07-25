@@ -205,6 +205,14 @@ label {
     color: @text;
 }
 
+label#usage-item {
+    color: @text;
+}
+
+label#title-bold {
+    color: #2d2c61;
+}
+
 menu {
     background-color: @bg;
     border-color: @border;
@@ -241,15 +249,24 @@ scale-mark {
     color: @bg;
 }
 
-checkbutton,
-checkbutton check{
+
+
+checkbutton check {
+    border: 1px solid @border;
+    border-radius: 2px;
     min-height: 1.1em;
     min-width: 1.1em;
-    padding: 5px;
 }
 
-checkbutton:checked check{
+checkbutton:checked check {
     background: @active;
+}
+
+checkbutton 
+checkbutton:focus {
+    border: none;
+    outline: none;
+    box-shadow: none;
 }
 
 scrollbar,
@@ -417,6 +434,15 @@ textview .time {
 .dialog-primary {
     background-color: @color1;
     border-bottom-color: @color1;
+}
+
+.elevated {
+    background-color: @color1;
+    border: 1px solid @bg;
+    border-radius: 0.6em;
+    box-shadow: none;
+    margin: 0;
+    padding: 0;
 }
 
 popover,
