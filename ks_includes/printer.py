@@ -257,6 +257,7 @@ class Printer:
                 "power_devices": {"count": len(self.get_power_devices())},
                 "cameras": {"count": len(self.cameras)},
                 "spoolman": self.spoolman,
+                "creatcloud": bool(self.creatcloud),
             },
             "printer": {
                 "pause_resume": {"is_paused": self.state == "paused"},
