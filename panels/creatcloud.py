@@ -32,6 +32,8 @@ class Panel(ScreenPanel):
             logging.warning("Failed to get creatcloud data, using empty dict")
 
         self._ensure_required_keys()
+        self._lan_only_timer = None
+        self._pending_lan_only = None
         self.qr_url = "https://www.creatbot.com/creatcloud"
         self.create_ui()
 
@@ -323,7 +325,6 @@ class Panel(ScreenPanel):
             logging.warning("network_tip_label not found, skipping tip display")
 
     def _hide_network_tip(self):
-        """隐藏网络提示文字"""
         if hasattr(self, 'network_tip_label'):
             self.network_tip_label.hide()
 
@@ -333,11 +334,31 @@ class Panel(ScreenPanel):
         self.generate_qr_code()
 
     def on_lan_only_toggled(self, switch, gparam):
-        lan_only_mode = switch.get_active()
-        self._screen.apiclient.post_request(
-            "/server/creatcloud/enable", json={"active": f"{lan_only_mode}"}
-        )
-        logging.info("LAN Only toggled: %s", not lan_only_mode)
+        self._pending_lan_only = switch.get_active()
+
+        if self._lan_only_timer is not None:
+            GLib.source_remove(self._lan_only_timer)
+            self._lan_only_timer = None
+
+        self._lan_only_timer = GLib.timeout_add(3000, self._on_lan_only_debounced)
+
+    def _on_lan_only_debounced(self):
+
+        lan_only = self._pending_lan_only
+        self._pending_lan_only = None
+        self._lan_only_timer = None
+
+        def _do_post():
+            try:
+                self._screen.apiclient.post_request(
+                    "/server/creatcloud/enable", json={"active": lan_only}
+                )
+                logging.info("LAN Only toggled (debounced): %s", not lan_only)
+            except Exception as e:
+                logging.error("Failed to update LAN Only: %s", e)
+
+        GLib.idle_add(_do_post)
+        return GLib.SOURCE_REMOVE
 
     def auto_refresh_qr_code(self):
         try:
