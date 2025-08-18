@@ -120,7 +120,7 @@ class Panel(ScreenPanel):
                 active_extruder = self._printer.get_stat("toolhead", "extruder")
                 if active_extruder == "extruder1":
                     variables = self._printer.get_stat("save_variables", "variables") or {}
-                    nozzle2_offset = variables.get("nozzle_z_offset_val")
+                    nozzle2_offset = variables.get("nozzle_z_offset_val", 0.0)
                     try:
                         nozzle2_offset = float(nozzle2_offset)
                         z_offset_val = round(data["gcode_move"]["homing_origin"][2] - nozzle2_offset, 3)
@@ -144,7 +144,7 @@ class Panel(ScreenPanel):
             active_extruder = self._printer.get_stat("toolhead", "extruder")
             if active_extruder == "extruder1":
                 variables = self._printer.get_stat("save_variables", "variables") or {}
-                nozzle2_offset = variables.get("nozzle_z_offset_val")
+                nozzle2_offset = variables.get("nozzle_z_offset_val", 0.0)
                 self._screen._send_action(widget, "printer.gcode.script", {"script": f"SET_GCODE_OFFSET Z={nozzle2_offset} MOVE=1"})
             else:
                 self._screen._send_action(widget, "printer.gcode.script", {"script": "SET_GCODE_OFFSET Z=0 MOVE=1"})
