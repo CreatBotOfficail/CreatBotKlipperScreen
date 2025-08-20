@@ -110,9 +110,10 @@ class KlippyFactory:
             "mainsail.cfg",
             "moonraker.conf",
         ]
+        exclude_dirs = ["module"]
         homedir = os.path.expanduser("~")
         configdir = os.path.join(homedir, "printer_data", "config")
-        KlippyFactory.clear_directory(configdir, exclude_files)
+        KlippyFactory.clear_directory(configdir, exclude_files, exclude_dirs)
         logging.info("clean config backup file")
 
     @staticmethod
@@ -123,9 +124,9 @@ class KlippyFactory:
         if os.path.exists(directory):
             for filename in os.listdir(directory):
                 file_path = os.path.join(directory, filename)
-                if filename in exclude_files:
+                if os.path.isdir(file_path) and filename in exclude_dirs:
                     continue
-                if filename in exclude_dirs and os.path.isdir(file_path):
+                if os.path.isfile(file_path) and filename in exclude_files:
                     continue
 
                 try:
