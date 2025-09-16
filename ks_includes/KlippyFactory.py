@@ -100,6 +100,16 @@ class KlippyFactory:
         logging.info("clean log directory")
 
     @staticmethod
+    def reset_user_password(connect):
+        reset_data = {
+            "jsonrpc": "2.0",
+            "method": "access.super_reset",
+            "id": 1323
+        }
+        connect.send_request(reset_data)
+        logging.info("Reset user password")
+
+    @staticmethod
     def clean_config_backup_file():
         exclude_files = [
             "base.cfg",
@@ -160,6 +170,7 @@ class KlippyFactory:
         KlippyFactory.clean_update_manager(connect)
         KlippyFactory.clean_job_history(connect)
         KlippyFactory.reset_advanced_setting_factory(connect)
+        KlippyFactory.reset_user_password(connect)
         KlippyFactory.clean_wlan()
         KlippyFactory.clean_log_file()
         if clean_gcode:
@@ -176,6 +187,7 @@ class KlippyFactory:
         KlippyFactory.clean_update_manager(connect)
         KlippyFactory.clean_job_history(connect)
         KlippyFactory.reset_advanced_setting_factory(connect)
+        KlippyFactory.reset_user_password(connect)
         KlippyFactory.clean_wlan()
         KlippyFactory.clean_gocde_file()
         KlippyFactory.clean_log_file()
