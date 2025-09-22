@@ -254,7 +254,7 @@ class BasePanel(ScreenPanel):
             return self._gtk.Image("extruder", img_size, img_size)
         elif device.startswith("heater_bed"):
             return self._gtk.Image("bed", img_size, img_size)
-        elif device.startswith("heater_generic chamber"):
+        elif device.startswith("heater_generic chamber") or device.startswith("heater_chamber"):
             return self._gtk.Image("chamber", img_size, img_size)
         # Extra items
         elif self.titlebar_name_type is not None:

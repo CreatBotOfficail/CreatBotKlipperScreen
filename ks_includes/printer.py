@@ -219,6 +219,8 @@ class Printer:
         heaters = self.get_config_section_list("heater_generic ")
         if "heater_bed" in self.config:
             heaters.insert(0, "heater_bed")
+        if "heater_chamber" in self.config:
+            heaters.insert(1, "heater_chamber")
         return heaters
 
     def get_temp_fans(self):

@@ -114,7 +114,7 @@ class Panel(MenuPanel):
             devname = "Heater Bed"
             class_name = "graph_label_heater_bed"
             dev_type = "bed"
-        elif device == "heater_generic chamber":
+        elif device == "heater_generic chamber" or device == "heater_chamber":
             self.h += 1
             image = "chamber"
             devname = "Heater Chamber"
