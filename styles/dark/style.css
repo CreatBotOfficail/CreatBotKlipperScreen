@@ -182,6 +182,14 @@ label {
     color: @yellow-opa-100;
 }
 
+label#usage-item {
+    color: @white-opa-50;
+}
+
+label#title-bold {
+    color: @blue-opa-100;
+}
+
 trough {
     background-color: #000000;
     color: @yellow-opa-100;
@@ -367,6 +375,15 @@ textview .time {
 
 .dialog-primary {
     border-bottom-color: @orange-opa-100;
+}
+
+.elevated {
+    background-color: @white-opa-10;
+    border: 1px solid @white-opa-20;
+    border-radius: 0.1em;
+    box-shadow: none;
+    margin: 0;
+    padding: 0;
 }
 
 popover,

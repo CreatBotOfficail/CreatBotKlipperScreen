@@ -886,6 +886,8 @@ class KlipperScreen(Gtk.Window):
             logging.debug("Power status changed: %s", data)
             self.printer.process_power_update(data)
             self.panels['splash_screen'].check_power_status()
+        elif action == "notify_creatcloud_info_update":
+            self.printer.process_creatcloud_update(data)
         elif action == "notify_gcode_response" and self.printer.state not in ["error", "shutdown"]:
             if not (data.startswith("B:") or data.startswith("T:")):
                 if data.startswith("// action:"):
@@ -1050,6 +1052,10 @@ class KlipperScreen(Gtk.Window):
                 self.printer.configure_cameras(cameras['webcams'])
         if "spoolman" in self.server_info["components"]:
             self.printer.enable_spoolman()
+        if "creatcloud" in self.server_info["components"]:
+            data = self.apiclient.send_request("/server/creatcloud/info")
+            self.printer.process_creatcloud_update(data)
+            self.base_panel.process_update("notify_creatcloud_info_update", data)
 
     def init_klipper(self):
         if self.reinit_count > self.max_retries or 'printer_select' in self._cur_panels:
