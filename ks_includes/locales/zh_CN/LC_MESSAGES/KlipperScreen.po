@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KlipperScreen\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-19 16:45+0800\n"
+"POT-Creation-Date: 2025-07-25 16:29+0800\n"
 "PO-Revision-Date: 2024-06-03 19:09+0000\n"
 "Last-Translator: wsj20050623 <2129426599@qq.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
@@ -229,6 +229,9 @@ msgstr "关闭"
 msgid "Close messages after a timeout"
 msgstr "超过时间自动关闭信息"
 
+msgid "Cloud"
+msgstr "Cloud"
+
 msgid "Complete"
 msgstr "完成"
 
@@ -237,6 +240,9 @@ msgstr "紧急停止需要二次确认"
 
 msgid "Confirm factory reset?\n"
 msgstr "确定恢复出厂设置？\n"
+
+msgid "Connect device to network"
+msgstr "网络未连接，请给设备添加网络后再连接APP"
 
 msgid "Connecting"
 msgstr "连接中"
@@ -481,8 +487,14 @@ msgstr "Z轴归零"
 msgid "Host"
 msgstr "主机"
 
+msgid "Hostname:"
+msgstr "主机名："
+
 msgid "ID"
 msgstr "ID"
+
+msgid "IP Address:"
+msgstr "IP地址："
 
 msgid "Icon Theme"
 msgstr "主题"
@@ -549,6 +561,9 @@ msgstr "Klipper正在启动"
 
 msgid "Klipper will reboot"
 msgstr "Klipper将重新启动"
+
+msgid "LAN Only"
+msgstr "仅局域网"
 
 msgid ""
 "LOAD_FILAMENT/UNLOAD_FILAMENT are hidden and should be used from extrude"
@@ -953,6 +968,9 @@ msgstr "已保存"
 msgid "Saved offset: %s"
 msgstr "保存偏移：%s"
 
+msgid "Scan left QR to install CreatCloud"
+msgstr "扫描左侧二维码安装CreatCloud应用"
+
 msgid "Screen DPMS"
 msgstr "屏幕省电管理系统"
 
@@ -1189,6 +1207,12 @@ msgstr "Z 偏移值校准"
 msgid "Z offset:"
 msgstr "Z轴偏移："
 
+msgid ""
+"[After turning on LAN only] Connect phone and printer to the same Wi-Fi, "
+"then use the APP to connect the device."
+msgstr ""
+"[仅局域网按钮开启后]请确保:手机与打印机在同一局域网下，再使用APP连接设备"
+
 msgid "commit"
 msgid_plural "commits"
 msgstr[0] "更改"
@@ -1239,6 +1263,15 @@ msgid "second"
 msgid_plural "seconds"
 msgstr[0] "秒"
 
+msgid "○ Follow the prompts to complete the setup"
+msgstr "○ 按提示完成设置"
+
+msgid "○ Open the app - click \"+\" to add a printer"
+msgstr "○ 打开应用--点击“+”添加打印机"
+
+msgid "○ Rescan left QR to add printe"
+msgstr "○ 使用APP再次扫描左侧二维码，添加打印机"
+
 #~ msgid "Add profile"
 #~ msgstr "添加配置文件"
 
@@ -1268,9 +1301,6 @@ msgstr[0] "秒"
 
 #~ msgid "Connected"
 #~ msgstr "已连接"
-
-#~ msgid "Hostname"
-#~ msgstr "主机名"
 
 #~ msgid "Starting WiFi Association"
 #~ msgstr "开始WiFi连接"

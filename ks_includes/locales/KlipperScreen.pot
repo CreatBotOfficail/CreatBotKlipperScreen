@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-19 16:45+0800\n"
+"POT-Creation-Date: 2025-07-25 16:29+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -228,6 +228,9 @@ msgstr ""
 msgid "Close messages after a timeout"
 msgstr ""
 
+msgid "Cloud"
+msgstr ""
+
 msgid "Complete"
 msgstr ""
 
@@ -235,6 +238,9 @@ msgid "Confirm Emergency Stop"
 msgstr ""
 
 msgid "Confirm factory reset?\n"
+msgstr ""
+
+msgid "Connect device to network"
 msgstr ""
 
 msgid "Connecting"
@@ -480,7 +486,13 @@ msgstr ""
 msgid "Host"
 msgstr ""
 
+msgid "Hostname:"
+msgstr ""
+
 msgid "ID"
+msgstr ""
+
+msgid "IP Address:"
 msgstr ""
 
 msgid "Icon Theme"
@@ -547,6 +559,9 @@ msgid "Klipper is attempting to start"
 msgstr ""
 
 msgid "Klipper will reboot"
+msgstr ""
+
+msgid "LAN Only"
 msgstr ""
 
 msgid ""
@@ -953,6 +968,9 @@ msgstr ""
 msgid "Saved offset: %s"
 msgstr ""
 
+msgid "Scan left QR to install CreatCloud"
+msgstr ""
+
 msgid "Screen DPMS"
 msgstr ""
 
@@ -1189,6 +1207,11 @@ msgstr ""
 msgid "Z offset:"
 msgstr ""
 
+msgid ""
+"[After turning on LAN only] Connect phone and printer to the same Wi-Fi, "
+"then use the APP to connect the device."
+msgstr ""
+
 msgid "commit"
 msgid_plural "commits"
 msgstr[0] ""
@@ -1243,3 +1266,12 @@ msgid "second"
 msgid_plural "seconds"
 msgstr[0] ""
 msgstr[1] ""
+
+msgid "○ Follow the prompts to complete the setup"
+msgstr ""
+
+msgid "○ Open the app - click \"+\" to add a printer"
+msgstr ""
+
+msgid "○ Rescan left QR to add printe"
+msgstr ""
