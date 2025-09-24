@@ -383,6 +383,12 @@ class MoonrakerApi:
             "printer.firmware_restart"
         )
 
+    def reset_user_password(self):
+        logging.debug("Sending reset user password")
+        return self._ws.send_method(
+            "access.super_reset"   
+        )
+
     def identify_client(self, version, api_key):
         logging.debug("Sending server.connection.identify")
         return self._ws.send_method(
