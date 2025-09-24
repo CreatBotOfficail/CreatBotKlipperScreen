@@ -101,12 +101,7 @@ class KlippyFactory:
 
     @staticmethod
     def reset_user_password(connect):
-        reset_data = {
-            "jsonrpc": "2.0",
-            "method": "access.super_reset",
-            "id": 1323
-        }
-        connect.send_request(reset_data)
+        connect.reset_user_password()
         logging.info("Reset user password")
 
     @staticmethod
