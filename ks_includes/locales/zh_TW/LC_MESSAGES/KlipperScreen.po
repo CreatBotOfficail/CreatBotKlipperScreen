@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KlipperScreen\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-25 16:29+0800\n"
+"POT-Creation-Date: 2025-10-09 15:53+0800\n"
 "PO-Revision-Date: 2024-06-01 12:09+0000\n"
 "Last-Translator: 峻瑜哥 <a728728728@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <https://hosted.weblate.org/projects/"
@@ -39,6 +39,12 @@ msgid ""
 "components of the X, Y, and Z axes."
 msgstr "1、首次使用時，請參閱隨附的快速指南，拆除 X Y 和Z軸上的固定件"
 
+msgid "1. Keep filament dry to prevent print failures and nozzle clogs."
+msgstr "1. 保持耗材幹燥可有效避免打印失敗和噴嘴堵塞。"
+
+msgid "2. Dry filament periodically when humidity exceeds 50%."
+msgstr "2. 建議在濕度高於50%的環境中對耗材進行定期幹燥。"
+
 msgid ""
 "2. Once the disassembly is complete, click the 'Next' button to proceed."
 msgstr "2、拆卸完成後，點擊 '下一步' 按鈕繼續操作"
@@ -50,6 +56,9 @@ msgstr "2、按下 '升高平臺' 按鈕以提升平臺，並取出下面的物�
 
 msgid "24 Hour Time"
 msgstr "使用24小時制"
+
+msgid "3. Always set the proper temperature for your filament!"
+msgstr "3. 需根據耗材特性設置合適的溫度!"
 
 msgid ""
 "3. Once the operation is complete, click the 'Finish' button to conclude the "
@@ -85,6 +94,9 @@ msgstr "過濾風扇"
 
 msgid "All"
 msgstr "全部"
+
+msgid "Always On"
+msgstr "常開"
 
 msgid "Apply"
 msgstr "應用"
@@ -141,6 +153,9 @@ msgstr "斷料自動切頭"
 
 msgid "Auto change nozzle when filament runout"
 msgstr "當耗材用盡時自動切換噴頭"
+
+msgid "Auto-Off After Print"
+msgstr "打印結束自動關閉"
 
 msgid "Auto-calibrate"
 msgstr "自動校準"
@@ -396,6 +411,9 @@ msgstr "快速校準"
 
 msgid "Filament"
 msgstr "耗材"
+
+msgid "Filament Chamber Settings"
+msgstr "耗材倉設置"
 
 msgid "Filament Used"
 msgstr "已消耗耗材"
@@ -992,6 +1010,12 @@ msgstr "發送"
 msgid "Serial Number:"
 msgstr "序列號"
 
+msgid "Set Countdown (Hours)"
+msgstr "設置倒計時 (小時)"
+
+msgid "Set Target Temp(°C)"
+msgstr "設置目標溫度 (°C)"
+
 msgid "Settings"
 msgstr "設定"
 
@@ -1343,9 +1367,6 @@ msgstr "○ 使用APP再次掃描左側二維碼，添加打印機"
 
 #~ msgid "Show"
 #~ msgstr "顯示"
-
-#~ msgid "Temp (°C)"
-#~ msgstr "溫度 (°C)"
 
 #~ msgid "Ended official support in June 2023"
 #~ msgstr "2023年6月結束官方支持"

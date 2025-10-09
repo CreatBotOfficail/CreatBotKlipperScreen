@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KlipperScreen\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-25 16:29+0800\n"
+"POT-Creation-Date: 2025-10-09 18:05+0800\n"
 "PO-Revision-Date: 2024-06-03 19:09+0000\n"
 "Last-Translator: wsj20050623 <2129426599@qq.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
@@ -39,6 +39,12 @@ msgid ""
 "components of the X, Y, and Z axes."
 msgstr "1、首次使用时，请参阅随附的快速指南，拆除 X Y 和Z轴上的固定件"
 
+msgid "1. Keep filament dry to prevent print failures and nozzle clogs."
+msgstr "1. 保持耗材干燥可有效避免打印失败和喷嘴堵塞。"
+
+msgid "2. Dry filament periodically when humidity exceeds 50%."
+msgstr "2. 建议在湿度高于50%的环境中对耗材进行定期干燥。"
+
 msgid ""
 "2. Once the disassembly is complete, click the 'Next' button to proceed."
 msgstr "2、拆卸完成后，点击 '下一步' 按钮继续操作"
@@ -50,6 +56,9 @@ msgstr "2、按下 '升高平台' 按钮以提升平台，并取出下面的物�
 
 msgid "24 Hour Time"
 msgstr "24小时制"
+
+msgid "3. Always set the proper temperature for your filament!"
+msgstr "3. 需根据耗材特性设置合适的温度!"
 
 msgid ""
 "3. Once the operation is complete, click the 'Finish' button to conclude the "
@@ -85,6 +94,9 @@ msgstr "过滤风扇"
 
 msgid "All"
 msgstr "全部"
+
+msgid "Always On"
+msgstr "常开"
 
 msgid "Apply"
 msgstr "应用"
@@ -141,6 +153,9 @@ msgstr "断料自动切头"
 
 msgid "Auto change nozzle when filament runout"
 msgstr "当耗材用尽时自动切换喷头"
+
+msgid "Auto-Off After Print"
+msgstr "打印结束自动关闭"
 
 msgid "Auto-calibrate"
 msgstr "自动校准"
@@ -396,6 +411,9 @@ msgstr "快速校准"
 
 msgid "Filament"
 msgstr "耗材"
+
+msgid "Filament Chamber Settings"
+msgstr "耗材仓设置"
 
 msgid "Filament Used"
 msgstr "已用耗材"
@@ -992,6 +1010,12 @@ msgstr "发送"
 msgid "Serial Number:"
 msgstr "序列号："
 
+msgid "Set Countdown (Hours)"
+msgstr "设置倒计时 (小时)"
+
+msgid "Set Target Temp(°C)"
+msgstr "设置目标温度 (°C)"
+
 msgid "Settings"
 msgstr "设置"
 
@@ -1149,6 +1173,9 @@ msgstr "正在更新"
 
 msgid "Uploaded"
 msgstr "上传于"
+
+msgid "Usage Tips"
+msgstr "使用提示"
 
 msgid "Useful for un-responsive touchscreens"
 msgstr "可以改善反应慢的触屏"
@@ -1364,9 +1391,6 @@ msgstr "○ 使用APP再次扫描左侧二维码，添加打印机"
 
 #~ msgid "Show"
 #~ msgstr "显示"
-
-#~ msgid "Temp (°C)"
-#~ msgstr "温度 （°C）"
 
 #~ msgid "Ended official support in June 2023"
 #~ msgstr "2023年6月结束官方支持"

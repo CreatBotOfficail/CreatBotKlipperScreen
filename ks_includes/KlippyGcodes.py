@@ -17,6 +17,10 @@ class KlippyGcodes:
         return f'SET_HEATER_TEMPERATURE heater="{heater}" target={temp}'
 
     @staticmethod
+    def set_heater_temp_time(heater, temp, time):
+        return f'SET_HEATER_TEMPERATURE heater="{heater}" target={temp} time={time}'
+
+    @staticmethod
     def set_temp_fan_temp(temp_fan, temp):
         return f'SET_TEMPERATURE_FAN_TARGET temperature_fan="{temp_fan}" target={temp}'
 

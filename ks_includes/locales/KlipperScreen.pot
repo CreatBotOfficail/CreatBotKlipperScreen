@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-25 16:29+0800\n"
+"POT-Creation-Date: 2025-10-09 18:05+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -38,6 +38,12 @@ msgid ""
 "components of the X, Y, and Z axes."
 msgstr ""
 
+msgid "1. Keep filament dry to prevent print failures and nozzle clogs."
+msgstr ""
+
+msgid "2. Dry filament periodically when humidity exceeds 50%."
+msgstr ""
+
 msgid ""
 "2. Once the disassembly is complete, click the 'Next' button to proceed."
 msgstr ""
@@ -48,6 +54,9 @@ msgid ""
 msgstr ""
 
 msgid "24 Hour Time"
+msgstr ""
+
+msgid "3. Always set the proper temperature for your filament!"
 msgstr ""
 
 msgid ""
@@ -83,6 +92,9 @@ msgid "Air filter fan"
 msgstr ""
 
 msgid "All"
+msgstr ""
+
+msgid "Always On"
 msgstr ""
 
 msgid "Apply"
@@ -139,6 +151,9 @@ msgid "Auto Change Nozzle"
 msgstr ""
 
 msgid "Auto change nozzle when filament runout"
+msgstr ""
+
+msgid "Auto-Off After Print"
 msgstr ""
 
 msgid "Auto-calibrate"
@@ -394,6 +409,9 @@ msgid "Fast Calibration"
 msgstr ""
 
 msgid "Filament"
+msgstr ""
+
+msgid "Filament Chamber Settings"
 msgstr ""
 
 msgid "Filament Used"
@@ -992,6 +1010,12 @@ msgstr ""
 msgid "Serial Number:"
 msgstr ""
 
+msgid "Set Countdown (Hours)"
+msgstr ""
+
+msgid "Set Target Temp(°C)"
+msgstr ""
+
 msgid "Settings"
 msgstr ""
 
@@ -1148,6 +1172,9 @@ msgid "Updating"
 msgstr ""
 
 msgid "Uploaded"
+msgstr ""
+
+msgid "Usage Tips"
 msgstr ""
 
 msgid "Useful for un-responsive touchscreens"
