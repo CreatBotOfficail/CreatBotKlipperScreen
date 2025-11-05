@@ -291,6 +291,8 @@ class KlipperScreen(Gtk.Window):
                 requested_updates['objects']['heater_filament_chamber'] = ["target", "temperature", "power", "auto_turnoff"]
             else:
                 requested_updates['objects'][h] = ["target", "temperature", "power"]
+        for f in self.printer.get_eddy_sensors():
+            requested_updates['objects'][f] = ["accuracy_stddev"]
         for t in self.printer.get_temp_sensors():
             requested_updates['objects'][t] = ["temperature"]
         for f in self.printer.get_temp_fans():
@@ -868,7 +870,7 @@ class KlipperScreen(Gtk.Window):
             return
         elif action == "notify_status_update" and self.printer.state != "shutdown":
             self.printer.process_update(data)
-            if 'manual_probe' in data and data['manual_probe']['is_active'] and 'zcalibrate' not in self._cur_panels:
+            if 'manual_probe' in data and data['manual_probe']['is_active'] and 'zcalibrate' not in self._cur_panels and 'eddy_calibrate' not in self._cur_panels:
                 self.show_panel("zcalibrate")
             if "screws_tilt_adjust" in data and 'bed_level' not in self._cur_panels:
                 self.show_panel("bed_level")
@@ -910,13 +912,16 @@ class KlipperScreen(Gtk.Window):
                         not ("TESTZ" in data or "MEASURE_AXES_NOISE" in data or "ACCELEROMETER_QUERY" in data):
                     self.show_popup_message(data, from_ws=True)
                 elif "SAVE_CONFIG" in data and self.printer.state == "ready":
-                    script = {"script": "SAVE_CONFIG"}
-                    self._confirm_send_action(
-                        None,
-                        _("Save configuration?") + "\n\n" + _("Klipper will reboot"),
-                        "printer.gcode.script",
-                        script
-                    )
+                    if 'eddy_calibrate' in self._cur_panels:
+                        self.panels['eddy_calibrate'].verify_calibration()
+                    else:
+                        script = {"script": "SAVE_CONFIG"}
+                        self._confirm_send_action(
+                            None,
+                            _("Save configuration?") + "\n\n" + _("Klipper will reboot"),
+                            "printer.gcode.script",
+                            script
+                        )
         self.process_update(action, data)
 
     def process_update(self, *args):
@@ -1107,9 +1112,11 @@ class KlipperScreen(Gtk.Window):
             'firmware_retraction',
             'exclude_object',
             'manual_probe',
+            'probe_eddy_ng',
             'save_variables',
             *self.printer.get_tools(),
             *self.printer.get_heaters(),
+            *self.printer.get_eddy_sensors(),
             *self.printer.get_temp_sensors(),
             *self.printer.get_fans(),
             *self.printer.get_temp_fans(),

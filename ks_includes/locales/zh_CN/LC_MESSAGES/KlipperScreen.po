@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KlipperScreen\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-09 18:05+0800\n"
+"POT-Creation-Date: 2025-11-05 15:14+0800\n"
 "PO-Revision-Date: 2024-06-03 19:09+0000\n"
 "Last-Translator: wsj20050623 <2129426599@qq.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
@@ -64,6 +64,23 @@ msgid ""
 "3. Once the operation is complete, click the 'Finish' button to conclude the "
 "process."
 msgstr "3、操作完成后，点击 '结束' 按钮以结束整个过程。"
+
+msgid "<b>Start the eddy sensor calibrate?</b>\n"
+msgstr "开始涡流传感器校准？\n"
+
+msgid ""
+"<b>The calibration process is in progress. Are you sure you want to exit?</"
+"b>\n"
+msgstr "校准流程正在进行，确定要退出吗？\n"
+
+msgid ""
+"<span color='#0066CC' font-size='x-large'>Calibration result: Excellent</"
+"span>"
+msgstr "<span color='#0066CC' font-size='x-large'>校准结果：优秀</span>"
+
+msgid ""
+"<span color='#FF0000' font-size='x-large'>Calibration result: Poor</span>"
+msgstr "<span color='#FF0000' font-size='x-large'>校准结果：较差</span>"
 
 msgid "A FIRMWARE_RESTART may fix the issue."
 msgstr "重启Klipper固件可能会解决这个问题。"
@@ -169,6 +186,12 @@ msgstr "暂停打印时自动打开挤出控制界面"
 msgid "Auto-scroll"
 msgstr "自动滚屏"
 
+msgid "Auto-tuning completed"
+msgstr "自整定完成"
+
+msgid "Auto-tuning in progress ..."
+msgstr "自整定进行中..."
+
 msgid "Automatic compensation based on the data of the bed mesh"
 msgstr "基于床面网格数据的自动补偿"
 
@@ -187,6 +210,9 @@ msgstr "两个"
 msgid "Calibrate"
 msgstr "校准"
 
+msgid "Calibrate Eddy"
+msgstr "涡流传感器校准"
+
 msgid "Calibrate Nozzle XY Offset"
 msgstr "校准喷嘴XY偏移值"
 
@@ -198,6 +224,9 @@ msgstr "已校准"
 
 msgid "Calibrating"
 msgstr "正在校准"
+
+msgid "Calibration test in progress ..."
+msgstr "校准测试中..."
 
 msgid "Camera"
 msgstr "摄像头"
@@ -237,6 +266,9 @@ msgstr "清除"
 
 msgid "Clear Internal G-code Files"
 msgstr "清空内部G-Code文件"
+
+msgid "Click Start to begin the calibration process!"
+msgstr "点击[开始]启动校准流程！"
 
 msgid "Close"
 msgstr "关闭"
@@ -317,6 +349,9 @@ msgstr "在十二小时显示模式中不现实AM/PM"
 msgid "Disabled"
 msgstr "禁用"
 
+msgid "Discard results"
+msgstr "放弃结果"
+
 msgid "Disconnect"
 msgstr "断开"
 
@@ -334,6 +369,12 @@ msgstr "你想恢复 %s 吗？"
 msgid "Door Open Protection Mode"
 msgstr "开门保护模式"
 
+msgid "Eddy Calibrate"
+msgstr "涡流校准"
+
+msgid "Eddy calibration"
+msgstr "涡流校准"
+
 msgid "Elapsed trial time:"
 msgstr "已用时间："
 
@@ -348,6 +389,11 @@ msgstr "启用注册码"
 
 msgid "Enable screen power management"
 msgstr "开启屏幕功率管理功能"
+
+msgid ""
+"Ensure your eddy sensor maintains measurement accuracy at any printing "
+"temperature."
+msgstr "确保您的涡流传感器在任何打印温度下的测量精度。"
 
 msgid "Error"
 msgstr "错误"
@@ -373,11 +419,17 @@ msgstr "预估时间"
 msgid "Estimated Time Method"
 msgstr "估算剩余时间方式"
 
+msgid "Everything is ready! Click 'Save and Restart' to start your printing."
+msgstr "一切就绪!点击[保存并重启]按钮,开始您的打印吧。"
+
 msgid "Example"
 msgstr "例子"
 
 msgid "Exclude Object"
 msgstr "排除对象"
+
+msgid "Exit"
+msgstr "退出"
 
 msgid "Extra Large"
 msgstr "特大"
@@ -543,6 +595,11 @@ msgstr "密码无效"
 
 msgid "Inversely affects the icon size"
 msgstr "和预览图大小成反比"
+
+msgid ""
+"It is recommended to check if the sensor is securely installed and "
+"recalibrate."
+msgstr "建议检查传感器安装是否牢固并重新校准。"
 
 msgid "It may take more than 5 minutes depending on the heater power."
 msgstr "这可能需要5分钟以上的时间，这取决于加热器的功率。"
@@ -820,6 +877,9 @@ msgstr "引脚"
 msgid "Please close the door and click Resume to proceed."
 msgstr "请关闭门，然后点击恢复以继续操作。"
 
+msgid "Please ensure that the <b>Probe Calibrate</b> has been performed!"
+msgstr "请确认探测校准已经完成！"
+
 msgid "Please ensure that the Probe Calibrate has been performed"
 msgstr "请确保已完成探针偏移校准"
 
@@ -894,6 +954,9 @@ msgstr "恢复中断！"
 
 msgid "Raise Platform"
 msgstr "升高平台"
+
+msgid "Recalibrate"
+msgstr "重新校准"
 
 msgid "Recover"
 msgstr "恢复"
@@ -976,6 +1039,9 @@ msgstr "保存配置"
 msgid "Save Z"
 msgstr "保存Z轴"
 
+msgid "Save and Reboot"
+msgstr "保存并重启"
+
 msgid "Save configuration?"
 msgstr "是否保存设置？"
 
@@ -1006,6 +1072,11 @@ msgstr "选择型号"
 
 msgid "Send"
 msgstr "发送"
+
+msgid ""
+"Sensor is calibrating to collect data and ensure accurate and reliable "
+"sensor readings."
+msgstr "传感器正在校准，以采集数据确保传感器读数精准可靠。"
 
 msgid "Serial Number:"
 msgstr "序列号："
@@ -1183,6 +1254,9 @@ msgstr "可以改善反应慢的触屏"
 msgid "User"
 msgstr "用户"
 
+msgid "Verifying sensor accuracy, testing will be automatically completed."
+msgstr "正在验证传感器精度，测试将自动完成。"
+
 msgid "Version Selection"
 msgstr "版本选择"
 
@@ -1239,6 +1313,9 @@ msgid ""
 "then use the APP to connect the device."
 msgstr ""
 "[仅局域网按钮开启后]请确保:手机与打印机在同一局域网下，再使用APP连接设备"
+
+msgid "bed is warming up..."
+msgstr "热床升温中..."
 
 msgid "commit"
 msgid_plural "commits"
@@ -1451,9 +1528,6 @@ msgstr "○ 使用APP再次扫描左侧二维码，添加打印机"
 
 #~ msgid "Sort:"
 #~ msgstr "排序:"
-
-#~ msgid "Calibrating..."
-#~ msgstr "校准中..."
 
 #, python-format
 #~ msgid "Retry #%s"

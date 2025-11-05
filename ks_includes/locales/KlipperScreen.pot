@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-09 18:05+0800\n"
+"POT-Creation-Date: 2025-11-05 15:14+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -62,6 +62,23 @@ msgstr ""
 msgid ""
 "3. Once the operation is complete, click the 'Finish' button to conclude the "
 "process."
+msgstr ""
+
+msgid "<b>Start the eddy sensor calibrate?</b>\n"
+msgstr ""
+
+msgid ""
+"<b>The calibration process is in progress. Are you sure you want to exit?</"
+"b>\n"
+msgstr ""
+
+msgid ""
+"<span color='#0066CC' font-size='x-large'>Calibration result: Excellent</"
+"span>"
+msgstr ""
+
+msgid ""
+"<span color='#FF0000' font-size='x-large'>Calibration result: Poor</span>"
 msgstr ""
 
 msgid "A FIRMWARE_RESTART may fix the issue."
@@ -168,6 +185,12 @@ msgstr ""
 msgid "Auto-scroll"
 msgstr ""
 
+msgid "Auto-tuning completed"
+msgstr ""
+
+msgid "Auto-tuning in progress ..."
+msgstr ""
+
 msgid "Automatic compensation based on the data of the bed mesh"
 msgstr ""
 
@@ -186,6 +209,9 @@ msgstr ""
 msgid "Calibrate"
 msgstr ""
 
+msgid "Calibrate Eddy"
+msgstr ""
+
 msgid "Calibrate Nozzle XY Offset"
 msgstr ""
 
@@ -196,6 +222,9 @@ msgid "Calibrated"
 msgstr ""
 
 msgid "Calibrating"
+msgstr ""
+
+msgid "Calibration test in progress ..."
 msgstr ""
 
 msgid "Camera"
@@ -235,6 +264,9 @@ msgid "Clear"
 msgstr ""
 
 msgid "Clear Internal G-code Files"
+msgstr ""
+
+msgid "Click Start to begin the calibration process!"
 msgstr ""
 
 msgid "Close"
@@ -316,6 +348,9 @@ msgstr ""
 msgid "Disabled"
 msgstr ""
 
+msgid "Discard results"
+msgstr ""
+
 msgid "Disconnect"
 msgstr ""
 
@@ -333,6 +368,12 @@ msgstr ""
 msgid "Door Open Protection Mode"
 msgstr ""
 
+msgid "Eddy Calibrate"
+msgstr ""
+
+msgid "Eddy calibration"
+msgstr ""
+
 msgid "Elapsed trial time:"
 msgstr ""
 
@@ -346,6 +387,11 @@ msgid "Enable Registration Code"
 msgstr ""
 
 msgid "Enable screen power management"
+msgstr ""
+
+msgid ""
+"Ensure your eddy sensor maintains measurement accuracy at any printing "
+"temperature."
 msgstr ""
 
 msgid "Error"
@@ -372,10 +418,16 @@ msgstr ""
 msgid "Estimated Time Method"
 msgstr ""
 
+msgid "Everything is ready! Click 'Save and Restart' to start your printing."
+msgstr ""
+
 msgid "Example"
 msgstr ""
 
 msgid "Exclude Object"
+msgstr ""
+
+msgid "Exit"
 msgstr ""
 
 msgid "Extra Large"
@@ -541,6 +593,11 @@ msgid "Invalid password"
 msgstr ""
 
 msgid "Inversely affects the icon size"
+msgstr ""
+
+msgid ""
+"It is recommended to check if the sensor is securely installed and "
+"recalibrate."
 msgstr ""
 
 msgid "It may take more than 5 minutes depending on the heater power."
@@ -820,6 +877,9 @@ msgstr ""
 msgid "Please close the door and click Resume to proceed."
 msgstr ""
 
+msgid "Please ensure that the <b>Probe Calibrate</b> has been performed!"
+msgstr ""
+
 msgid "Please ensure that the Probe Calibrate has been performed"
 msgstr ""
 
@@ -893,6 +953,9 @@ msgid "RESUME ABORTED !"
 msgstr ""
 
 msgid "Raise Platform"
+msgstr ""
+
+msgid "Recalibrate"
 msgstr ""
 
 msgid "Recover"
@@ -976,6 +1039,9 @@ msgstr ""
 msgid "Save Z"
 msgstr ""
 
+msgid "Save and Reboot"
+msgstr ""
+
 msgid "Save configuration?"
 msgstr ""
 
@@ -1005,6 +1071,11 @@ msgid "Select Model"
 msgstr ""
 
 msgid "Send"
+msgstr ""
+
+msgid ""
+"Sensor is calibrating to collect data and ensure accurate and reliable "
+"sensor readings."
 msgstr ""
 
 msgid "Serial Number:"
@@ -1183,6 +1254,9 @@ msgstr ""
 msgid "User"
 msgstr ""
 
+msgid "Verifying sensor accuracy, testing will be automatically completed."
+msgstr ""
+
 msgid "Version Selection"
 msgstr ""
 
@@ -1237,6 +1311,9 @@ msgstr ""
 msgid ""
 "[After turning on LAN only] Connect phone and printer to the same Wi-Fi, "
 "then use the APP to connect the device."
+msgstr ""
+
+msgid "bed is warming up..."
 msgstr ""
 
 msgid "commit"

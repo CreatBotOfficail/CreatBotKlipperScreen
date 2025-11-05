@@ -22,6 +22,7 @@ class Printer:
         self.pwm_tools_count = 0
         self.output_pin_count = 0
         self.store_timeout = None
+        self.eddy_count = 0
         self.tempstore = {}
         self.tempstore_size = 1200
         self.cameras = []
@@ -40,9 +41,10 @@ class Printer:
         self.ledcount = 0
         self.output_pin_count = 0
         self.pwm_tools_count = 0
+        self.eddy_count = 0
         self.tempstore.clear()
         self.tempstore_size = 1200
-        self.available_commands.clear()
+        self.available_commands = {}
         self.temp_devices = self.sensors = None
         self.stop_tempstore_updates()
         self.system_info.clear()
@@ -88,6 +90,8 @@ class Printer:
                 "pca9632"
             ):
                 self.ledcount += 1
+            elif section.startswith("probe_eddy_ng"):
+                self.eddy_count += 1
 
         self.tools = sorted(self.tools)
         self.log_counts(printer_info)
@@ -228,6 +232,9 @@ class Printer:
     def get_temp_fans(self):
         return self.get_config_section_list("temperature_fan")
 
+    def get_eddy_sensors(self):
+        return self.get_config_section_list("probe_eddy_ng")
+
     def get_temp_sensors(self):
         return self.get_config_section_list("temperature_sensor")
 
@@ -268,6 +275,7 @@ class Printer:
                 "extruders": {"count": self.extrudercount},
                 "temperature_devices": {"count": self.tempdevcount},
                 "fans": {"count": self.fancount},
+                "eddy": {"count": self.eddy_count},
                 "output_pins": {"count": self.output_pin_count},
                 "pwm_tools": {"count": self.pwm_tools_count},
                 "gcode_macros": {"count": len(self.get_gcode_macros()), "list": self.get_gcode_macros()},
