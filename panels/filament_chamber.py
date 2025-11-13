@@ -477,5 +477,3 @@ class Panel(ScreenPanel):
                     if "filament_chamber_auto_cool" in variables:
                         self.auto_close_switch.set_active(
                             variables["filament_chamber_auto_cool"])
-                    else:
-                        self.menu_list["adaptive_leveling"].set_active(True)
