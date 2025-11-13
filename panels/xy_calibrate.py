@@ -1,0 +1,597 @@
+import mpv
+import logging
+import gi
+import re
+gi.require_version("Gtk", "3.0")
+from gi.repository import Gtk, Gdk, Pango, GLib
+from contextlib import suppress
+from ks_includes.KlippyGcodes import KlippyGcodes
+from ks_includes.screen_panel import ScreenPanel
+
+class Panel(ScreenPanel):
+    """Camera XY offset calibration panel."""
+    def __init__(self, screen, title):
+        title = title or _("XY Calibrate")
+        super().__init__(screen, title)
+        self.widgets = {}
+        self.mpv = None
+        self.calibrate_cam = None
+        self.cam_loading_triggered = False
+        self.load_timeout_id = None
+        self.x_offset = self.y_offset = 0.0
+        self.new_x_offset = self.new_y_offset = 0.0
+
+        self._init_widgets()
+        self._init_containers()
+        self._build_layout()
+
+        self.find_calibrate_camera()
+        GLib.timeout_add_seconds(1, self._delayed_load_camera)
+
+    def _delayed_load_camera(self):
+        if self.cam_box.get_window():
+            self.load_calibrate_camera(self.cam_box)
+        return False
+
+    def _scaled(self, w_rate: float, h_rate=None):
+        h_rate = h_rate or w_rate
+        try:
+            return (int(self._gtk.content_width * w_rate),
+                    int(self._gtk.content_height * h_rate))
+        except Exception:
+            return (100, 100)
+
+    def _create_label(self, text, markup=False, **kwargs):
+        label = Gtk.Label()
+        if markup:
+            label.set_markup(text)
+        else:
+            label.set_text(text)
+        for key, val in kwargs.items():
+            if hasattr(label, f"set_{key}"):
+                getattr(label, f"set_{key}")(val)
+        return label
+
+    def _create_button(self, label, callback,** kwargs):
+        btn = self._gtk.Button(label=label)
+        btn.set_size_request(*self._scaled(0.2, 0.1))
+        btn.connect("clicked", callback)
+        for key, val in kwargs.items():
+            if hasattr(btn, f"set_{key}"):
+                getattr(btn, f"set_{key}")(val)
+        return btn
+
+    def _create_stack(self, panels_config):
+        stack = Gtk.Stack()
+        for name, create_func in panels_config:
+            stack.add_named(create_func(), name)
+        stack.set_visible_child_name(panels_config[0][0])
+        return stack
+
+    def _init_containers(self):
+        left_panels = [
+            ("default", self._left_default_panel),
+            ("tip", self._left_tip_panel)
+        ]
+        self.left_container = self._create_stack(left_panels)
+
+        right_panels = [
+            ("default", self._right_default_panel),
+            ("tip", self._right_tip_panel),
+            ("progress", self._right_progress_panel)
+        ]
+        self.right_container = self._create_stack(right_panels)
+
+        bottom_panels = [
+            ("start", self._bottom_start_panel),
+            ("next", self._bottom_next_panel),
+            ("finish", self._bottom_save_panel),
+            ("empty", self._bottom_empty_panel),
+            ("fail", self._bottom_fail_panel)
+        ]
+        self.bottom_container = self._create_stack(bottom_panels)
+
+    def _init_widgets(self):
+        self.title_label = self._create_label(
+            _("XY Offset Calibration"),
+            markup=True,
+            halign=Gtk.Align.CENTER,
+            margin_top=10
+        )
+        self.cam_box = self._create_cam_display_area()
+
+    def _build_layout(self):
+        self.top_container = Gtk.Box(
+            orientation=Gtk.Orientation.HORIZONTAL,
+            spacing=5
+        )
+        self.top_container.pack_start(self.left_container, False, False, 0)
+        self.top_container.pack_start(self.right_container, False, False, 0)
+
+        main_box = Gtk.Box(
+            orientation=Gtk.Orientation.VERTICAL,
+            spacing=0,
+            margin_left=10,
+            margin_right=10
+        )
+        main_box.pack_start(self.title_label, False, False, 0)
+        main_box.pack_start(self.top_container, True, True, 0)
+        main_box.pack_start(self.bottom_container, False, False, 0)
+
+        self.content.add(main_box)
+
+    def _left_default_panel(self):
+        container = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=0)
+        container.set_valign(Gtk.Align.CENTER)
+        container.set_halign(Gtk.Align.CENTER)
+
+        title = self._create_label(
+           _("<span font-size='x-large'>Calibration Camera View</span>"),
+            markup=True,
+            halign=Gtk.Align.CENTER,
+        )
+        container.pack_start(title, False, False, 0)
+        container.pack_start(self.cam_box, False, False, 0)
+        return container
+
+    def _create_cam_display_area(self):
+        event_box = Gtk.EventBox(
+            halign=Gtk.Align.CENTER,
+            valign=Gtk.Align.CENTER,
+        )
+        event_box.set_size_request(*self._scaled(0.4, 0.5))
+        event_box.override_background_color(
+            Gtk.StateFlags.NORMAL,
+            Gdk.RGBA(0, 0, 0, 1)
+        )
+
+        self.init_cam_label = self._create_label(
+            _("Loading calibration camera..."),
+            halign=Gtk.Align.CENTER,
+            valign=Gtk.Align.CENTER,
+            line_wrap=True
+        )
+        self.init_cam_label.override_color(
+            Gtk.StateFlags.NORMAL,
+            Gdk.RGBA(1, 1, 1, 1)
+        )
+        event_box.add(self.init_cam_label)
+        return event_box
+
+    def _left_tip_panel(self):
+        img = self._gtk.Image("camera-calibrate", *self._scaled(0.4, 0.5))
+        img.set_valign(Gtk.Align.CENTER)
+        img.set_halign(Gtk.Align.END)
+        return img
+
+    def _right_default_panel(self):
+        box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=0, valign=Gtk.Align.CENTER, halign=Gtk.Align.CENTER)
+        box.set_margin_left(30)
+        box.pack_start(self._create_tip_title(), False, False, 0)
+        box.pack_start(self._create_tip_text1(), False, False, 10)
+        box.pack_start(self._create_offset_box("current"), False, False, 10)
+        box.pack_start(self._create_tip_text2(), False, False, 10)
+        return box
+
+    def _right_tip_panel(self):
+        box = Gtk.Box(
+            orientation=Gtk.Orientation.VERTICAL,
+            spacing=10,
+            valign=Gtk.Align.CENTER
+        )
+        box.pack_start(self._create_label(
+            _("Place the camera in the indicated position"),
+            markup=True,
+            max_width_chars=20,
+            halign=Gtk.Align.CENTER
+        ), False, False, 0)
+        return box
+
+    def _right_progress_panel(self):
+        self.widgets["progress_stack"] = Gtk.Stack()
+        self.widgets["progress_stack"].set_transition_type(Gtk.StackTransitionType.CROSSFADE)
+
+        def _create_state_panel(icon_name, title_text, stack_name):
+            vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=8)
+            vbox.set_halign(Gtk.Align.CENTER)
+            vbox.set_margin_start(20)
+
+            hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=8)
+            icon = self._gtk.Image(icon_name, *self._scaled(0.03, 0.04))
+            title = self._create_label(title_text, markup=True, halign=Gtk.Align.START)
+            hbox.pack_start(icon, False, False, 5)
+            hbox.pack_start(title, False, False, 0)
+            vbox.pack_start(hbox, False, False, 0)
+
+            data_label = self._create_label(
+                "", halign=Gtk.Align.START, line_wrap=True, max_width_chars=40
+            )
+            self.widgets[f"progress_data_{stack_name}"] = data_label
+            self.widgets[f"progress_data_{stack_name}"].set_margin_top(20)
+            vbox.pack_start(data_label, False, False, 0)
+
+            self.widgets["progress_stack"].add_named(vbox, stack_name)
+            return vbox
+
+        _create_state_panel(
+            "run-waiting",
+            _("<span font-size='large'>Calibration in progress...</span>"),
+            "in_progress"
+        )
+        _create_state_panel(
+            "result-good",
+            _("<span color='green' font-size='x-large'>Calibration Succeeded!</span>"),
+            "success"
+        )
+        _create_state_panel(
+            "result-bed",
+            _("<span color='red' font-size='x-large'>Calibration Failed!</span>"),
+            "fail"
+        )
+
+        panel = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)
+        panel.pack_start(Gtk.Box(vexpand=True), True, True, 0)
+        panel.pack_start(self.widgets["progress_stack"], False, False, 0)
+        panel.set_halign(Gtk.Align.CENTER)
+        panel.set_valign(Gtk.Align.CENTER)
+        panel.set_margin_left(10)
+
+        self.widgets["progress_stack"].set_visible_child_name("in_progress")
+        return panel
+
+    def _create_offset_box(self, prefix):
+        result_text = self._create_label(
+            _('Current tool offset'),
+            markup=True,
+        )
+        x_label = self._create_label(
+            f"<span>X:{self.x_offset}</span>",
+            markup=True,
+        )
+        y_label = self._create_label(
+            f"<span>Y:{self.y_offset}</span>",
+            markup=True
+        )
+        setattr(self, f"{prefix}_x_offset_label", x_label)
+        setattr(self, f"{prefix}_y_offset_label", y_label)
+
+        box = Gtk.Box(
+            orientation=Gtk.Orientation.HORIZONTAL,
+            spacing=8,
+            halign=Gtk.Align.CENTER
+        )
+        box.pack_start(result_text, False, False, 0)
+        box.pack_start(x_label, False, False, 0)
+        box.pack_start(y_label, False, False, 0)
+        return box
+
+    def _create_tip_title(self):
+        box = Gtk.Box(
+            orientation=Gtk.Orientation.HORIZONTAL,
+            spacing=8,
+            halign=Gtk.Align.START
+        )
+        icon = self._gtk.Image("light_hint", *self._scaled(0.03, 0.04))
+        icon.set_valign(Gtk.Align.START)
+        box.pack_start(icon, False, False, 0)
+        box.pack_start(self._create_label(
+            _("<span font-size='x-large'>Calibration Tips</span>"),
+            markup=True,
+            halign=Gtk.Align.START
+        ), False, False, 0)
+        return box
+
+    def _create_tip_text1(self):
+        return self._create_label(
+            _("It is recommended to perform calibration of the dual nozzle offset after replacing "
+              "or adjusting the nozzle to ensure printing accuracy and reliability."),
+            halign=Gtk.Align.START,
+            line_wrap=True,
+            max_width_chars=35,
+            line_wrap_mode=Pango.WrapMode.WORD
+        )
+
+    def _create_tip_text2(self):
+        return self._create_label(
+            _("To ensure calibration accuracy, please perform the following steps first:\n"
+              "1. Unload the filament out of the nozzles\n"
+              "2. Thoroughly clean the nozzles"),
+            halign=Gtk.Align.START,
+            line_wrap=True,
+            max_width_chars=35,
+            line_wrap_mode=Pango.WrapMode.WORD
+        )
+
+    def _bottom_start_panel(self):
+        box = Gtk.Box(
+            orientation=Gtk.Orientation.HORIZONTAL,
+            spacing=10,
+            halign=Gtk.Align.END,
+            margin_right=30,
+        )
+        self.widgets["btn_start_single"] = self._create_button(
+            _("Start"), self.on_start_calibrate
+        )
+        box.pack_start(self.widgets["btn_start_single"], False, False, 0)
+        return box
+
+    def _bottom_next_panel(self):
+        box = Gtk.Box(
+            orientation=Gtk.Orientation.HORIZONTAL,
+            spacing=15,
+            halign=Gtk.Align.END,
+            margin_top=10,
+        )
+        self.widgets["btn_return"] = self._create_button(
+            _("Return"), self.on_return_start
+        )
+        self.widgets["btn_next"] = self._create_button(
+            _("Next"), self.on_next_calibrate
+        )
+        box.pack_start(self.widgets["btn_return"], False, False, 0)
+        box.pack_start(self.widgets["btn_next"], False, False, 0)
+        return box
+
+    def _bottom_save_panel(self):
+        box = Gtk.Box(
+            orientation=Gtk.Orientation.HORIZONTAL,
+            spacing=15,
+            halign=Gtk.Align.END,
+            margin_top=10,
+            margin_right=20
+        )
+        self.widgets["btn_print"] = self._create_button(
+            _("Save"), self.on_save_calibrate
+        )
+        self.widgets["btn_finish"] = self._create_button(
+            _("Print verification"), self.on_to_print
+        )
+        box.pack_start(self.widgets["btn_print"], False, False, 0)
+        box.pack_start(self.widgets["btn_finish"], False, False, 0)
+        return box
+
+    def _bottom_empty_panel(self):
+        return Gtk.Box(height_request=20)
+
+    def _bottom_fail_panel(self):
+        box = Gtk.Box(
+            orientation=Gtk.Orientation.HORIZONTAL,
+            spacing=15,
+            halign=Gtk.Align.END,
+            margin_top=10,
+        )
+        self.widgets["btn_fail_return"] = self._create_button(
+            _("Return"), self.on_return_start
+        )
+        self.widgets["btn_fail"] = self._create_button(
+            _("Recalibrate"), self.on_next_calibrate
+        )
+        box.pack_start(self.widgets["btn_fail_return"], False, False, 0)
+        box.pack_start(self.widgets["btn_fail"], False, False, 0)
+        return box
+
+    def on_start_calibrate(self, widget):
+        mode = self._screen.connecting_to_printer.split("-")[0]
+        if mode == "F430NX":
+            self.left_container.set_visible_child_name("tip")
+            self.right_container.set_visible_child_name("tip")
+            self.bottom_container.set_visible_child_name("next")
+        else:
+            self.right_container.set_visible_child_name("progress")
+            self.widgets["progress_data_in_progress"].set_text("")
+            self.widgets["progress_stack"].set_visible_child_name("in_progress")
+            self.bottom_container.set_visible_child_name("empty")
+            self._screen._ws.klippy.gcode_script("tool_align_macro")
+
+    def on_next_calibrate(self, widget):
+        self.left_container.set_visible_child_name("default")
+        self.widgets["progress_data_in_progress"].set_text("")
+        self.widgets["progress_stack"].set_visible_child_name("in_progress")
+        self.right_container.set_visible_child_name("progress")
+        self.bottom_container.set_visible_child_name("empty")
+        self._screen._ws.klippy.gcode_script("tool_align_macro")
+
+    def on_save_calibrate(self, widget):
+        for axis, val in [("x", self.new_x_offset), ("y", self.new_y_offset)]:
+            script = KlippyGcodes.set_save_variables(f"nozzle_{axis}_offset_val", float(val))
+            self._screen._send_action(None, "printer.gcode.script", {"script": script})
+        self.left_container.set_visible_child_name("default")
+        self.right_container.set_visible_child_name("default")
+        self.bottom_container.set_visible_child_name("start")
+
+    def on_return_calibrate(self, widget):
+        self._screen._menu_go_back()
+
+    def on_return_start(self, widget):
+        self.left_container.set_visible_child_name("default")
+        self.right_container.set_visible_child_name("default")
+        self.bottom_container.set_visible_child_name("start")
+
+    def on_to_print(self, widget):
+        text = (
+            _("This operation is about to print the model")
+            + "\n\n"
+            + _("Please load two different colored PLA filaments!")
+        )
+        label = self._create_label(text, wrap=True, vexpand=True)
+        buttons = [
+            {"name": _("Accept"), "response": Gtk.ResponseType.OK, "style": "dialog-info"},
+            {"name": _("Cancel"), "response": Gtk.ResponseType.CANCEL, "style": "dialog-error"},
+        ]
+        self._gtk.Dialog(_("Camera Calibrate"), buttons, label, self.confirm_nozzle_xy_offset)
+
+    def confirm_nozzle_xy_offset(self, dialog, response_id):
+        self._gtk.remove_dialog(dialog)
+        if response_id == Gtk.ResponseType.OK:
+            self._screen._send_action(
+                self.widgets["btn_print"],
+                "printer.gcode.script",
+                {"script": "_NOZZLE_XY_OFFSET_CALIBRATE"}
+            )
+
+    def find_calibrate_camera(self):
+        logging.info("=== Finding calibrate camera ===")
+        if hasattr(self._printer, 'cameras'):
+            logging.info(f"All cameras configured: {[cam.get('name') for cam in self._printer.cameras]}")
+            for cam in self._printer.cameras:
+                if cam.get("enabled", False) and cam.get("name") == "Calibrate_Camera":
+                    self.calibrate_cam = cam
+                    self.init_cam_label.set_text(_("Loading calibration camera..."))
+                    self.init_cam_label.set_halign(Gtk.Align.START)
+                    logging.info(f"Found: name='{cam['name']}', stream_url='{cam['stream_url']}'")
+                    return
+        error_text = _("Error: Camera not found!")
+        self.init_cam_label.set_markup(f"<span color='red'>{error_text}</span>")
+        logging.error("Camera not found in config")
+
+    def load_calibrate_camera(self, widget):
+        try:
+            url = self.calibrate_cam['stream_url']
+            if url.startswith('/'):
+                endpoint = self._screen.apiclient.endpoint.split(':')
+                url = f"{endpoint[0]}:{endpoint[1]}{url}"
+            if self.calibrate_cam.get('service') == 'webrtc-go2rtc':
+                camera_name = url.split('?src=')[-1].split('&')[0] if '?src=' in url else 'Calibrate_Camera'
+                host = url.split('/')[2].split(':')[0] if url.startswith(('http://', 'https://')) else url
+                url = f"rtsp://{host}:8554/{camera_name}"
+                logging.info(f"go2rtc converted to RTSP: {url}")
+            elif '/webrtc' in url:
+                self._screen.show_popup_message('WebRTC not supported, trying Stream')
+                url = url.replace('/webrtc', '/stream')
+
+            vf = []
+            if self.calibrate_cam["flip_horizontal"]:
+                vf.append("hflip")
+            if self.calibrate_cam["flip_vertical"]:
+                vf.append("vflip")
+            vf.append(f"rotate:{self.calibrate_cam['rotation'] * 3.14159 / 180}")
+            vf = ",".join(vf)
+            logging.info(f"video filters: {vf}")
+
+            if self.mpv:
+                self.mpv.terminate()
+            self.mpv = mpv.MPV(
+                fullscreen=True,
+                log_handler=self.mpv_log,
+                vo='x11',
+                hwdec='no',
+                video_sync='display-desync',
+                framedrop='decoder+vo',
+                profile='low-latency',
+                cache=False,
+                demuxer_max_bytes='8K',
+                demuxer_max_back_bytes='16K',
+                demuxer_readahead_secs=0,
+                stream_buffer_size='8K',
+                correct_pts=False,
+                demuxer_thread=False,
+                network_timeout=0.5,
+                stream_lavf_o='flags=low_delay',
+                ytdl=False,
+                save_position_on_quit=False,
+                keep_open=False
+            )
+            self.mpv.vf = vf
+            self.mpv.wid = str(int(widget.get_window().get_xid()))
+            self.mpv.play(url)
+
+            self.cam_box.remove(self.init_cam_label)
+            if self.load_timeout_id:
+                GLib.source_remove(self.load_timeout_id)
+                self.load_timeout_id = None
+
+        except Exception as e:
+            error_msg = str(e)[:80]
+            logging.error(f"Load failed: {error_msg}", exc_info=True)
+            for child in widget.get_children():
+                widget.remove(child)
+            widget.add(self.init_cam_label)
+            self.init_cam_label.set_markup(f"<span color='red'>{_('Load failed: {error}').format(error=error_msg)}</span>")
+
+    def mpv_log(self, loglevel, component, message):
+        log_msg = f"[MPV-{loglevel}] {component}: {message}"
+        if 'overread' in message and 'mjpeg' in message:
+            logging.debug(f"Ignored MJPG overread: {message}")
+            return
+        if loglevel == 'debug' and any(kw in message for kw in ['geometry', 'window', 'size', 'xid']):
+            logging.debug(log_msg)
+        elif loglevel == 'error':
+            logging.error(log_msg)
+
+    def check_load_timeout(self):
+        if not self.cam_loading_triggered or not self.calibrate_cam:
+            return True
+        if not self.mpv:
+            self.init_cam_label.set_markup(_("<span color='red'>Load timeout!</span>"))
+            return False
+        return True
+
+    def _update_progress_icon(self, icon_name):
+        hbox = self.widgets.get("progress_hbox")
+        if not hbox:
+            return
+        if hbox.get_children():
+            old_icon = hbox.get_children()[0]
+            hbox.remove(old_icon)
+        new_icon = self._gtk.Image(icon_name, *self._scaled(0.03, 0.04))
+        self.widgets["progress_icon"] = new_icon
+        hbox.pack_start(new_icon, False, False, 5)
+        hbox.show_all()
+
+    def process_update(self, action, data):
+        if action == "notify_status_update":
+            if "save_variables" in data:
+                variables = data["save_variables"].get("variables", {})
+                if "nozzle_x_offset_val" in variables:
+                    self.x_offset = variables["nozzle_x_offset_val"]
+                    self.current_x_offset_label.set_markup(f"<span>X:{self.x_offset}</span>")
+                if "nozzle_y_offset_val" in variables:
+                    self.y_offset = variables["nozzle_y_offset_val"]
+                    self.current_y_offset_label.set_markup(f"<span>Y:{self.y_offset}</span>")
+        elif action == "notify_gcode_response":
+            cleaned_data = "\n".join([
+                line.strip()[2:].strip() if line.strip().startswith(("//", "!!")) else line.strip()
+                for line in data.splitlines()
+                if line.strip()
+            ])
+            if any(keyword in data.lower() for keyword in ["fail", "timed out", "404"]):
+                self.widgets["progress_stack"].set_visible_child_name("fail")
+                self.widgets["progress_data_fail"].set_text(cleaned_data)
+                self.bottom_container.set_visible_child_name("fail")
+            elif "save offset" in data.lower():
+                self.widgets["progress_stack"].set_visible_child_name("success")
+                pattern = r"X:([\d.+-]+)\s+Y:([\d.+-]+)"
+                match = re.search(pattern, data)
+                if match:
+                    x_offset = match.group(1)
+                    y_offset = match.group(2)
+                    self.widgets["progress_data_success"].set_text(
+                        f"X: {x_offset}  Y: {y_offset}\n{cleaned_data}"
+                    )
+                    self.new_x_offset, self.new_y_offset = x_offset, y_offset
+                    self.bottom_container.set_visible_child_name("finish")
+            elif any(keyword in data.lower() for keyword in ["pixel", "***"]):
+                self.widgets["progress_stack"].set_visible_child_name("in_progress")
+                self.widgets["progress_data_in_progress"].set_text(cleaned_data)
+
+    def activate(self):
+        self.find_calibrate_camera()
+        if self.cam_box.get_window():
+            self.load_calibrate_camera(self.cam_box)
+
+    def deactivate(self):
+        if self.mpv:
+            with suppress(Exception):
+                self.mpv.terminate()
+            self.mpv = None
+        self.cam_loading_triggered = False
+        self.load_retry_count = 0
+        self.layout_retry_count = 0
+
+        for child in self.cam_box.get_children():
+            self.cam_box.remove(child)
+        self.cam_box.add(self.init_cam_label)
+        self.init_cam_label.set_text(_("Loading calibration camera..."))
+        if self.load_timeout_id:
+            GLib.source_remove(self.load_timeout_id)
+        self.load_timeout_id = GLib.timeout_add_seconds(5, self.check_load_timeout)

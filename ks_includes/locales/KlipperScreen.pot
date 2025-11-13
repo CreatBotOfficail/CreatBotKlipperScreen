@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-05 15:14+0800\n"
+"POT-Creation-Date: 2025-11-11 17:15+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -41,6 +41,11 @@ msgstr ""
 msgid "1. Keep filament dry to prevent print failures and nozzle clogs."
 msgstr ""
 
+msgid ""
+"1.Please ensure that the <b>Probe Calibrate</b> has been performed!\n"
+"\n"
+msgstr ""
+
 msgid "2. Dry filament periodically when humidity exceeds 50%."
 msgstr ""
 
@@ -53,6 +58,9 @@ msgid ""
 "items underneath."
 msgstr ""
 
+msgid "2.Please ensure that the <b>XY Calibrate</b> has been performed!"
+msgstr ""
+
 msgid "24 Hour Time"
 msgstr ""
 
@@ -62,6 +70,11 @@ msgstr ""
 msgid ""
 "3. Once the operation is complete, click the 'Finish' button to conclude the "
 "process."
+msgstr ""
+
+msgid ""
+"<b>Start the Dual Z offset calibrate?</b>\n"
+"\n"
 msgstr ""
 
 msgid "<b>Start the eddy sensor calibrate?</b>\n"
@@ -78,7 +91,32 @@ msgid ""
 msgstr ""
 
 msgid ""
+"<span color='#0066CC' font-size='x-large'>Probe result: Excellent</span>"
+msgstr ""
+
+msgid ""
 "<span color='#FF0000' font-size='x-large'>Calibration result: Poor</span>"
+msgstr ""
+
+msgid "<span color='#FF0000' font-size='x-large'>Probe result: Poor</span>"
+msgstr ""
+
+msgid "<span color='green' font-size='x-large'>Calibration Succeeded!</span>"
+msgstr ""
+
+msgid "<span color='red' font-size='x-large'>Calibration Failed!</span>"
+msgstr ""
+
+msgid "<span color='red'>Load timeout!</span>"
+msgstr ""
+
+msgid "<span font-size='large'>Calibration in progress...</span>"
+msgstr ""
+
+msgid "<span font-size='x-large'>Calibration Camera View</span>"
+msgstr ""
+
+msgid "<span font-size='x-large'>Calibration Tips</span>"
 msgstr ""
 
 msgid "A FIRMWARE_RESTART may fix the issue."
@@ -230,6 +268,9 @@ msgstr ""
 msgid "Camera"
 msgstr ""
 
+msgid "Camera Calibrate"
+msgstr ""
+
 msgid "Can't set above the maximum:"
 msgstr ""
 
@@ -318,7 +359,13 @@ msgstr ""
 msgid "Current"
 msgstr ""
 
+msgid "Current Z Offset"
+msgstr ""
+
 msgid "Current percentage and graph line"
+msgstr ""
+
+msgid "Current tool offset"
 msgstr ""
 
 msgid "Current value:"
@@ -409,6 +456,9 @@ msgstr ""
 msgid "Error trying to fetch spools"
 msgstr ""
 
+msgid "Error: Camera not found!"
+msgstr ""
+
 msgid "Error: Couldn't get a position to probe"
 msgstr ""
 
@@ -419,6 +469,11 @@ msgid "Estimated Time Method"
 msgstr ""
 
 msgid "Everything is ready! Click 'Save and Restart' to start your printing."
+msgstr ""
+
+msgid ""
+"Everything is ready! Click [Save] to apply nozzle offset.\n"
+"\n"
 msgstr ""
 
 msgid "Example"
@@ -600,6 +655,12 @@ msgid ""
 "recalibrate."
 msgstr ""
 
+msgid ""
+"It is recommended to perform calibration of the dual nozzle offset after "
+"replacing or adjusting the nozzle to ensure printing accuracy and "
+"reliability."
+msgstr ""
+
 msgid "It may take more than 5 minutes depending on the heater power."
 msgstr ""
 
@@ -677,6 +738,9 @@ msgid "Limits"
 msgstr ""
 
 msgid "Load"
+msgstr ""
+
+msgid "Loading calibration camera..."
 msgstr ""
 
 msgid "Loading..."
@@ -832,7 +896,14 @@ msgstr ""
 msgid "Numpad"
 msgstr ""
 
+msgid ""
+"Obtain the nozzle accurate height through multiple precision detections."
+msgstr ""
+
 msgid "Offset"
+msgstr ""
+
+msgid "Offset Compensation"
 msgstr ""
 
 msgid "Ok"
@@ -872,6 +943,9 @@ msgid "Permanent Activation"
 msgstr ""
 
 msgid "Pins"
+msgstr ""
+
+msgid "Place the camera in the indicated position"
 msgstr ""
 
 msgid "Please close the door and click Resume to proceed."
@@ -920,6 +994,9 @@ msgid "Print"
 msgstr ""
 
 msgid "Print Control"
+msgstr ""
+
+msgid "Print verification"
 msgstr ""
 
 msgid "Printer"
@@ -1019,6 +1096,9 @@ msgid "Retry"
 msgstr ""
 
 msgid "Retrying"
+msgstr ""
+
+msgid "Return"
 msgstr ""
 
 msgid "Right extruder detects no filament, please load filament and continue."
@@ -1206,6 +1286,12 @@ msgstr ""
 msgid "Timeout for screen black-out or power-off during printing"
 msgstr ""
 
+msgid ""
+"To ensure calibration accuracy, please perform the following steps first:\n"
+"1. Unload the filament out of the nozzles\n"
+"2. Thoroughly clean the nozzles"
+msgstr ""
+
 msgid "Total:"
 msgstr ""
 
@@ -1272,7 +1358,13 @@ msgstr ""
 msgid "X Offset"
 msgstr ""
 
+msgid "XY Calibrate"
+msgstr ""
+
 msgid "XY Move Speed (mm/s)"
+msgstr ""
+
+msgid "XY Offset Calibration"
 msgstr ""
 
 msgid "XY Speed (mm/s)"
@@ -1300,6 +1392,9 @@ msgid "Z Tilt"
 msgstr ""
 
 msgid "Z axis cannot move to negative values"
+msgstr ""
+
+msgid "Z calibration"
 msgstr ""
 
 msgid "Z offset Calibrate"
@@ -1334,6 +1429,12 @@ msgid_plural "hours"
 msgstr[0] ""
 msgstr[1] ""
 
+msgid "left nozzle probe completed"
+msgstr ""
+
+msgid "left nozzle probing ..."
+msgstr ""
+
 msgid "license"
 msgstr ""
 
@@ -1361,6 +1462,9 @@ msgid "mm³/s"
 msgstr ""
 
 msgid "offset fine tune"
+msgstr ""
+
+msgid "right nozzle probing ..."
 msgstr ""
 
 msgid "s"
