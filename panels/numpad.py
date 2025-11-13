@@ -76,7 +76,7 @@ class Panel(ScreenPanel):
             )
         elif self.active_heater == "heater_bed":
             self._screen._ws.klippy.set_bed_temp(temp)
-        elif self.active_heater == "heater_chamber":
+        elif self.active_heater == "heater_chamber" or self.active_heater == "heater_filament_chamber":
             self._screen._ws.klippy.set_heater_temp(name, temp)
         elif self.active_heater.startswith("heater_generic "):
             self._screen._ws.klippy.set_heater_temp(name, temp)

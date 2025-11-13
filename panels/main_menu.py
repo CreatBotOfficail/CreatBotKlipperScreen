@@ -120,6 +120,12 @@ class Panel(MenuPanel):
             devname = "Heater Chamber"
             class_name = f"graph_label_sensor_{self.h}"
             dev_type = "sensor"
+        elif device == "heater_filament_chamber":
+            self.h += 1
+            image = "filament"
+            devname = "Heater Filament Chamber"
+            class_name = f"graph_label_sensor_{self.h}"
+            dev_type = "sensor"
         elif device.startswith("heater_generic"):
             self.h += 1
             image = "heater"
@@ -169,7 +175,10 @@ class Panel(MenuPanel):
 
         find_widget(temp, Gtk.Label).set_ellipsize(False)
         if can_target:
-            name.connect("clicked", self.menu_item_clicked, {"panel": "numpad", 'extra': device})
+            if device == "heater_filament_chamber":
+                name.connect("clicked", self.menu_item_clicked, {"panel": "filament_chamber"})
+            else:
+                name.connect("clicked", self.menu_item_clicked, {"panel": "numpad", 'extra': device})
 
         self.devices[device] = {
             "class": class_name,
@@ -182,7 +191,7 @@ class Panel(MenuPanel):
         }
 
         devices = sorted(self.devices)
-        pos = devices.index(device) + 1
+        pos = len(self.devices)
 
         self.labels['devices'].insert_row(pos)
         self.labels['devices'].attach(name, pos, 0, 1, 1)

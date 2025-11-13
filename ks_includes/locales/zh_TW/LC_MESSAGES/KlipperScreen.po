@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KlipperScreen\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-25 16:29+0800\n"
+"POT-Creation-Date: 2025-11-11 17:15+0800\n"
 "PO-Revision-Date: 2024-06-01 12:09+0000\n"
 "Last-Translator: 峻瑜哥 <a728728728@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <https://hosted.weblate.org/projects/"
@@ -39,6 +39,19 @@ msgid ""
 "components of the X, Y, and Z axes."
 msgstr "1、首次使用時，請參閱隨附的快速指南，拆除 X Y 和Z軸上的固定件"
 
+msgid "1. Keep filament dry to prevent print failures and nozzle clogs."
+msgstr "1. 保持耗材幹燥可有效避免打印失敗和噴嘴堵塞。"
+
+msgid ""
+"1.Please ensure that the <b>Probe Calibrate</b> has been performed!\n"
+"\n"
+msgstr ""
+"1.請確保<b>探針校準</b>已經完成！\n"
+"\n"
+
+msgid "2. Dry filament periodically when humidity exceeds 50%."
+msgstr "2. 建議在濕度高於50%的環境中對耗材進行定期幹燥。"
+
 msgid ""
 "2. Once the disassembly is complete, click the 'Next' button to proceed."
 msgstr "2、拆卸完成後，點擊 '下一步' 按鈕繼續操作"
@@ -48,13 +61,68 @@ msgid ""
 "items underneath."
 msgstr "2、按下 '升高平臺' 按鈕以提升平臺，並取出下面的物品。"
 
+msgid "2.Please ensure that the <b>XY Calibrate</b> has been performed!"
+msgstr "2.請確保<b>XY偏移校準</b>已經完成！"
+
 msgid "24 Hour Time"
 msgstr "使用24小時制"
+
+msgid "3. Always set the proper temperature for your filament!"
+msgstr "3. 需根據耗材特性設置合適的溫度!"
 
 msgid ""
 "3. Once the operation is complete, click the 'Finish' button to conclude the "
 "process."
 msgstr "3、操作完成後，點擊 '結束' 按鈕以結束整個過程。"
+
+msgid ""
+"<b>Start the Dual Z offset calibrate?</b>\n"
+"\n"
+msgstr ""
+"<b>開始雙Z軸偏移校準？ </b>\n"
+"\n"
+
+msgid "<b>Start the eddy sensor calibrate?</b>\n"
+msgstr "開始渦流傳感器校準？\n"
+
+msgid ""
+"<b>The calibration process is in progress. Are you sure you want to exit?</"
+"b>\n"
+msgstr "校準流程正在進行，確定要退出嗎？\n"
+
+msgid ""
+"<span color='#0066CC' font-size='x-large'>Calibration result: Excellent</"
+"span>"
+msgstr "<span color='#0066CC' font-size='x-large'>校準結果：優秀</span>"
+
+msgid ""
+"<span color='#0066CC' font-size='x-large'>Probe result: Excellent</span>"
+msgstr "<span color='#0066CC' font-size='x-large'>探測結果：優秀</span>"
+
+msgid ""
+"<span color='#FF0000' font-size='x-large'>Calibration result: Poor</span>"
+msgstr "<span color='#FF0000' font-size='x-large'>校準結果：較差</span>"
+
+msgid "<span color='#FF0000' font-size='x-large'>Probe result: Poor</span>"
+msgstr "<span color='#FF0000' font-size='x-large'>探測結果：較差</span>"
+
+msgid "<span color='green' font-size='x-large'>Calibration Succeeded!</span>"
+msgstr "<span color='green' font-size='x-large'>校準成功！</span>"
+
+msgid "<span color='red' font-size='x-large'>Calibration Failed!</span>"
+msgstr "<span color='red' font-size='x-large'>校準失敗！</span>"
+
+msgid "<span color='red'>Load timeout!</span>"
+msgstr "<span color='red'>加載超時！</span>"
+
+msgid "<span font-size='large'>Calibration in progress...</span>"
+msgstr "<span font-size='large'>校準進行中...</span>"
+
+msgid "<span font-size='x-large'>Calibration Camera View</span>"
+msgstr "<span font-size='x-large'>校準監視器畫面</span>"
+
+msgid "<span font-size='x-large'>Calibration Tips</span>"
+msgstr "<span font-size='x-large'>校準提示</span>"
 
 msgid "A FIRMWARE_RESTART may fix the issue."
 msgstr "重啟Klipper韌體可能會解決這個問題。"
@@ -85,6 +153,9 @@ msgstr "過濾風扇"
 
 msgid "All"
 msgstr "全部"
+
+msgid "Always On"
+msgstr "常開"
 
 msgid "Apply"
 msgstr "應用"
@@ -142,6 +213,9 @@ msgstr "斷料自動切頭"
 msgid "Auto change nozzle when filament runout"
 msgstr "當耗材用盡時自動切換噴頭"
 
+msgid "Auto-Off After Print"
+msgstr "打印結束自動關閉"
+
 msgid "Auto-calibrate"
 msgstr "自動校準"
 
@@ -153,6 +227,12 @@ msgstr "暫停時自動打開擠出"
 
 msgid "Auto-scroll"
 msgstr "自動滾屏"
+
+msgid "Auto-tuning completed"
+msgstr "自整定完成"
+
+msgid "Auto-tuning in progress ..."
+msgstr "自整定進行中. .."
 
 msgid "Automatic compensation based on the data of the bed mesh"
 msgstr "基於牀面網格數據的自動補償"
@@ -172,6 +252,9 @@ msgstr "雙向"
 msgid "Calibrate"
 msgstr "校準"
 
+msgid "Calibrate Eddy"
+msgstr "渦流感測器校準"
+
 msgid "Calibrate Nozzle XY Offset"
 msgstr "校準噴嘴XY偏移值"
 
@@ -184,8 +267,14 @@ msgstr "已校準"
 msgid "Calibrating"
 msgstr "正在校準"
 
+msgid "Calibration test in progress ..."
+msgstr "校準測試進行中. .."
+
 msgid "Camera"
 msgstr "相機"
+
+msgid "Camera Calibrate"
+msgstr "監視器校準"
 
 msgid "Can't set above the maximum:"
 msgstr "設定值超出最大值："
@@ -222,6 +311,9 @@ msgstr "清除"
 
 msgid "Clear Internal G-code Files"
 msgstr "清空內部G-Code文件"
+
+msgid "Click Start to begin the calibration process!"
+msgstr "點擊[開始]啟動校準流程！"
 
 msgid "Close"
 msgstr "關閉"
@@ -272,8 +364,14 @@ msgstr "無法添加網絡"
 msgid "Current"
 msgstr "當前"
 
+msgid "Current Z Offset"
+msgstr "當前Z偏移"
+
 msgid "Current percentage and graph line"
 msgstr "當前百分比和折線圖"
+
+msgid "Current tool offset"
+msgstr "當前工具偏移"
 
 msgid "Current value:"
 msgstr "當前值："
@@ -302,6 +400,9 @@ msgstr "在十二小時顯示模式中不顯示AM/PM"
 msgid "Disabled"
 msgstr "禁用"
 
+msgid "Discard results"
+msgstr "放弃結果"
+
 msgid "Disconnect"
 msgstr "断开"
 
@@ -319,6 +420,12 @@ msgstr "你想恢復 %s 嗎？"
 msgid "Door Open Protection Mode"
 msgstr "開門保護模式"
 
+msgid "Eddy Calibrate"
+msgstr "渦流校準"
+
+msgid "Eddy calibration"
+msgstr "渦流校準"
+
 msgid "Elapsed trial time:"
 msgstr "已用時間"
 
@@ -333,6 +440,11 @@ msgstr "啟用註冊碼"
 
 msgid "Enable screen power management"
 msgstr "開啟螢幕功率管理功能"
+
+msgid ""
+"Ensure your eddy sensor maintains measurement accuracy at any printing "
+"temperature."
+msgstr "確保您的渦流感測器在任何列印溫度下的測量精度。"
 
 msgid "Error"
 msgstr "錯誤"
@@ -349,6 +461,9 @@ msgstr "設置當前耗材時出錯"
 msgid "Error trying to fetch spools"
 msgstr "嘗試獲取耗材時出錯"
 
+msgid "Error: Camera not found!"
+msgstr "未發現監視器！"
+
 msgid "Error: Couldn't get a position to probe"
 msgstr "錯誤：無法取得要探測的位置"
 
@@ -358,11 +473,24 @@ msgstr "預估時間"
 msgid "Estimated Time Method"
 msgstr "估算剩餘時間方式"
 
+msgid "Everything is ready! Click 'Save and Restart' to start your printing."
+msgstr "一切就緒！ 點擊[保存並重啓]按鈕，開始您的列印吧。"
+
+msgid ""
+"Everything is ready! Click [Save] to apply nozzle offset.\n"
+"\n"
+msgstr ""
+"一切就緒！ 點擊[保存]按鈕應用噴嘴偏移。\n"
+"\n"
+
 msgid "Example"
 msgstr "例子"
 
 msgid "Exclude Object"
 msgstr "排除目標"
+
+msgid "Exit"
+msgstr "退出"
 
 msgid "Extra Large"
 msgstr "特大"
@@ -396,6 +524,9 @@ msgstr "快速校準"
 
 msgid "Filament"
 msgstr "耗材"
+
+msgid "Filament Chamber Settings"
+msgstr "耗材倉設置"
 
 msgid "Filament Used"
 msgstr "已消耗耗材"
@@ -526,6 +657,18 @@ msgstr "密碼無效"
 msgid "Inversely affects the icon size"
 msgstr "和預覽圖大小成反比"
 
+msgid ""
+"It is recommended to check if the sensor is securely installed and "
+"recalibrate."
+msgstr "建議檢查感測器安裝是否牢固並重新校準。"
+
+msgid ""
+"It is recommended to perform calibration of the dual nozzle offset after "
+"replacing or adjusting the nozzle to ensure printing accuracy and "
+"reliability."
+msgstr ""
+"建議在更換或調整工具後執行校準，以解决噴頭偏移問題，確保列印精變與可靠性。"
+
 msgid "It may take more than 5 minutes depending on the heater power."
 msgstr "這可能需要5分鐘以上的時間，這取決於加熱器的功率。"
 
@@ -604,6 +747,9 @@ msgstr "列印機限制"
 
 msgid "Load"
 msgstr "載入耗材"
+
+msgid "Loading calibration camera..."
+msgstr "加載校準監視器. .."
 
 msgid "Loading..."
 msgstr "載入中..."
@@ -758,8 +904,15 @@ msgstr "噴頭偏移"
 msgid "Numpad"
 msgstr "數字鍵盤"
 
+msgid ""
+"Obtain the nozzle accurate height through multiple precision detections."
+msgstr "通過多次精准探測獲取噴嘴的準確高度。"
+
 msgid "Offset"
 msgstr "偏移值"
+
+msgid "Offset Compensation"
+msgstr "偏移補償"
 
 msgid "Ok"
 msgstr "確定"
@@ -799,8 +952,14 @@ msgstr "永久激活"
 msgid "Pins"
 msgstr "引腳"
 
+msgid "Place the camera in the indicated position"
+msgstr "將監視器放置於訓示位置"
+
 msgid "Please close the door and click Resume to proceed."
 msgstr "請關閉門，然後點擊恢復以繼續操作。"
+
+msgid "Please ensure that the <b>Probe Calibrate</b> has been performed!"
+msgstr "請確認探測校準已經完成！"
 
 msgid "Please ensure that the Probe Calibrate has been performed"
 msgstr "請確保已完成探針偏移校準"
@@ -844,6 +1003,9 @@ msgstr "列印"
 msgid "Print Control"
 msgstr "列印控制"
 
+msgid "Print verification"
+msgstr "列印驗證"
+
 msgid "Printer"
 msgstr "列印機"
 
@@ -876,6 +1038,9 @@ msgstr "恢復中斷！"
 
 msgid "Raise Platform"
 msgstr "升高平臺"
+
+msgid "Recalibrate"
+msgstr "重新校準"
 
 msgid "Recover"
 msgstr "恢復"
@@ -940,6 +1105,9 @@ msgstr "重試"
 msgid "Retrying"
 msgstr "正在重試"
 
+msgid "Return"
+msgstr "返回"
+
 msgid "Right extruder detects no filament, please load filament and continue."
 msgstr "右擠出機未檢測到耗材，請加載耗材後繼續"
 
@@ -957,6 +1125,9 @@ msgstr "儲存設定"
 
 msgid "Save Z"
 msgstr "儲存Z軸"
+
+msgid "Save and Reboot"
+msgstr "保存並重啓"
 
 msgid "Save configuration?"
 msgstr "是否儲存設定？"
@@ -989,8 +1160,19 @@ msgstr "選擇型號"
 msgid "Send"
 msgstr "發送"
 
+msgid ""
+"Sensor is calibrating to collect data and ensure accurate and reliable "
+"sensor readings."
+msgstr "感測器正在校準，以採集數據確保感測器讀數精准可靠。"
+
 msgid "Serial Number:"
 msgstr "序列號"
+
+msgid "Set Countdown (Hours)"
+msgstr "設置倒計時 (小時)"
+
+msgid "Set Target Temp(°C)"
+msgstr "設置目標溫度 (°C)"
 
 msgid "Settings"
 msgstr "設定"
@@ -1111,6 +1293,15 @@ msgstr "超過倒計時後關閉屏幕"
 msgid "Timeout for screen black-out or power-off during printing"
 msgstr "打印過程中超過倒計時後關閉屏幕"
 
+msgid ""
+"To ensure calibration accuracy, please perform the following steps first:\n"
+"1. Unload the filament out of the nozzles\n"
+"2. Thoroughly clean the nozzles"
+msgstr ""
+"為確保校準精度，請先執行以下步驟：\n"
+"1.卸載噴嘴中的耗材\n"
+"2.徹底清潔噴嘴"
+
 msgid "Total:"
 msgstr "合計："
 
@@ -1150,11 +1341,17 @@ msgstr "正在更新"
 msgid "Uploaded"
 msgstr "上傳於"
 
+msgid "Usage Tips"
+msgstr "使用提示"
+
 msgid "Useful for un-responsive touchscreens"
 msgstr "可以改善反應慢的觸屏"
 
 msgid "User"
 msgstr "用戶"
+
+msgid "Verifying sensor accuracy, testing will be automatically completed."
+msgstr "正在驗證感測器精度，測試將自動完成。"
 
 msgid "Version Selection"
 msgstr "版本選擇"
@@ -1171,8 +1368,14 @@ msgstr "工作中"
 msgid "X Offset"
 msgstr "X 偏移值"
 
+msgid "XY Calibrate"
+msgstr "XY偏移校準"
+
 msgid "XY Move Speed (mm/s)"
 msgstr "XY軸移動速度(mm/s)"
+
+msgid "XY Offset Calibration"
+msgstr "XY偏移值校準"
 
 msgid "XY Speed (mm/s)"
 msgstr "XY軸速度(mm/s)"
@@ -1201,6 +1404,9 @@ msgstr "Z軸傾斜校準"
 msgid "Z axis cannot move to negative values"
 msgstr "Z 軸無法移動到負值"
 
+msgid "Z calibration"
+msgstr "Z偏移校準"
+
 msgid "Z offset Calibrate"
 msgstr "Z 偏移值校準"
 
@@ -1212,6 +1418,9 @@ msgid ""
 "then use the APP to connect the device."
 msgstr ""
 "[僅局域網按鈕開啟後]請確保:手機與打印機在同一局域網下，再使用APP連接設備"
+
+msgid "bed is warming up..."
+msgstr "熱床升溫中. .."
 
 msgid "commit"
 msgid_plural "commits"
@@ -1227,6 +1436,12 @@ msgstr "工廠設置"
 msgid "hour"
 msgid_plural "hours"
 msgstr[0] "小時"
+
+msgid "left nozzle probe completed"
+msgstr "左噴嘴探測完成"
+
+msgid "left nozzle probing ..."
+msgstr "左噴嘴探測中 ..."
 
 msgid "license"
 msgstr "許可證"
@@ -1256,6 +1471,9 @@ msgstr "mm³/s"
 msgid "offset fine tune"
 msgstr "偏移值微調"
 
+msgid "right nozzle probing ..."
+msgstr "右噴嘴探測中. .."
+
 msgid "s"
 msgstr "s"
 
@@ -1271,6 +1489,9 @@ msgstr "○ 打開應用--點擊「+」添加打印機"
 
 msgid "○ Rescan left QR to add printe"
 msgstr "○ 使用APP再次掃描左側二維碼，添加打印機"
+
+#~ msgid "Everything is ready! Click [Save] to apply nozzle offset."
+#~ msgstr "一切就緒！ 點擊[保存]按鈕應用噴嘴偏移。"
 
 #~ msgid "Add profile"
 #~ msgstr "新增設定檔案"
@@ -1344,9 +1565,6 @@ msgstr "○ 使用APP再次掃描左側二維碼，添加打印機"
 #~ msgid "Show"
 #~ msgstr "顯示"
 
-#~ msgid "Temp (°C)"
-#~ msgstr "溫度 (°C)"
-
 #~ msgid "Ended official support in June 2023"
 #~ msgstr "2023年6月結束官方支持"
 
@@ -1400,9 +1618,6 @@ msgstr "○ 使用APP再次掃描左側二維碼，添加打印機"
 
 #~ msgid "Sort:"
 #~ msgstr "排序:"
-
-#~ msgid "Calibrating..."
-#~ msgstr "校准中..."
 
 #, python-format
 #~ msgid "Retry #%s"

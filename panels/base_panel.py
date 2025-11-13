@@ -256,6 +256,8 @@ class BasePanel(ScreenPanel):
             return self._gtk.Image("bed", img_size, img_size)
         elif device.startswith("heater_generic chamber") or device.startswith("heater_chamber"):
             return self._gtk.Image("chamber", img_size, img_size)
+        elif device.startswith("heater_filament_chamber"):
+            return self._gtk.Image("filament", img_size, img_size)
         # Extra items
         elif self.titlebar_name_type is not None:
             # The item has a name, do not use an icon
@@ -286,7 +288,7 @@ class BasePanel(ScreenPanel):
         self.show_heaters(connected)
         for control in ('back', 'home'):
             self.set_control_sensitive(len(self._screen._cur_panels) > 1, control=control)
-        panels_has_back = ['gcodes', 'temperature']
+        panels_has_back = ['gcodes', 'temperature', 'filament_chamber']
         cur_panel_count = len(self._screen._cur_panels)
         is_last_panel_in_back_list = self._screen._cur_panels[-1] in panels_has_back
 

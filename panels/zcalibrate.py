@@ -303,9 +303,9 @@ class Panel(ScreenPanel):
         return True
 
     def accept(self, widget):
-        if self.is_z_within_range():
-            logging.info("Accepting Z position")
-            self._screen._ws.klippy.gcode_script("ACCEPT")
+        # if self.is_z_within_range():
+        logging.info("Accepting Z position")
+        self._screen._ws.klippy.gcode_script("ACCEPT")
 
     def buttons_calibrating(self):
         self.buttons['start'].get_style_context().remove_class('color3')
