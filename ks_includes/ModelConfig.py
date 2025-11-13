@@ -136,6 +136,7 @@ class ModelConfig:
             "CreatBot_D600Pro2HS_KIT": "CreatBot_D600Pro2_V0",
             "CreatBot_D1000HS": "CreatBot_D1000",
             "CreatBot_D1000HS_KIT": "CreatBot_D1000_V0",
+            "CreatBot_D1000ProHS": "CreatBot_D1000Pro",
             "CreatBot_P800": "CreatBot_P800",
         }
         if device_name:
