@@ -221,8 +221,8 @@ class Panel(ScreenPanel):
 
         x_count, y_count = self.get_optimal_probe_count(mesh_min, mesh_max, original_probe_count, target_spacing)
         auto_probe_count = f"{x_count},{y_count}"
-
-        command = f"BED_MESH_CALIBRATE PROFILE={profile} PROBE_COUNT={auto_probe_count}"
+        method= "rapid_scan" if self._printer.get_eddy_sensors() else "automatic"
+        command = f"BED_MESH_CALIBRATE PROFILE={profile} PROBE_COUNT={auto_probe_count} METHOD={method} "
 
         return command
 
@@ -250,8 +250,9 @@ class Panel(ScreenPanel):
         self._screen.show_popup_message(_("Calibrating"), level=1)
         if self._printer.get_stat("toolhead", "homed_axes") != "xyz":
             self._screen._ws.klippy.gcode_script("G28")
-
-        self._screen._send_action(widget, "printer.gcode.script", {"script": "BED_MESH_CALIBRATE"})
+        method= "rapid_scan" if self._printer.get_eddy_sensors() else "automatic"
+        command = f"BED_MESH_CALIBRATE  METHOD={method} "
+        self._screen._send_action(widget, "printer.gcode.script", {"script": command})
 
         # Load zcalibrate to do a manual mesh
         if not self._printer.get_probe():

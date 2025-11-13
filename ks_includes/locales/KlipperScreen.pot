@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-25 16:29+0800\n"
+"POT-Creation-Date: 2025-11-11 17:15+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -38,6 +38,17 @@ msgid ""
 "components of the X, Y, and Z axes."
 msgstr ""
 
+msgid "1. Keep filament dry to prevent print failures and nozzle clogs."
+msgstr ""
+
+msgid ""
+"1.Please ensure that the <b>Probe Calibrate</b> has been performed!\n"
+"\n"
+msgstr ""
+
+msgid "2. Dry filament periodically when humidity exceeds 50%."
+msgstr ""
+
 msgid ""
 "2. Once the disassembly is complete, click the 'Next' button to proceed."
 msgstr ""
@@ -47,12 +58,65 @@ msgid ""
 "items underneath."
 msgstr ""
 
+msgid "2.Please ensure that the <b>XY Calibrate</b> has been performed!"
+msgstr ""
+
 msgid "24 Hour Time"
+msgstr ""
+
+msgid "3. Always set the proper temperature for your filament!"
 msgstr ""
 
 msgid ""
 "3. Once the operation is complete, click the 'Finish' button to conclude the "
 "process."
+msgstr ""
+
+msgid ""
+"<b>Start the Dual Z offset calibrate?</b>\n"
+"\n"
+msgstr ""
+
+msgid "<b>Start the eddy sensor calibrate?</b>\n"
+msgstr ""
+
+msgid ""
+"<b>The calibration process is in progress. Are you sure you want to exit?</"
+"b>\n"
+msgstr ""
+
+msgid ""
+"<span color='#0066CC' font-size='x-large'>Calibration result: Excellent</"
+"span>"
+msgstr ""
+
+msgid ""
+"<span color='#0066CC' font-size='x-large'>Probe result: Excellent</span>"
+msgstr ""
+
+msgid ""
+"<span color='#FF0000' font-size='x-large'>Calibration result: Poor</span>"
+msgstr ""
+
+msgid "<span color='#FF0000' font-size='x-large'>Probe result: Poor</span>"
+msgstr ""
+
+msgid "<span color='green' font-size='x-large'>Calibration Succeeded!</span>"
+msgstr ""
+
+msgid "<span color='red' font-size='x-large'>Calibration Failed!</span>"
+msgstr ""
+
+msgid "<span color='red'>Load timeout!</span>"
+msgstr ""
+
+msgid "<span font-size='large'>Calibration in progress...</span>"
+msgstr ""
+
+msgid "<span font-size='x-large'>Calibration Camera View</span>"
+msgstr ""
+
+msgid "<span font-size='x-large'>Calibration Tips</span>"
 msgstr ""
 
 msgid "A FIRMWARE_RESTART may fix the issue."
@@ -83,6 +147,9 @@ msgid "Air filter fan"
 msgstr ""
 
 msgid "All"
+msgstr ""
+
+msgid "Always On"
 msgstr ""
 
 msgid "Apply"
@@ -141,6 +208,9 @@ msgstr ""
 msgid "Auto change nozzle when filament runout"
 msgstr ""
 
+msgid "Auto-Off After Print"
+msgstr ""
+
 msgid "Auto-calibrate"
 msgstr ""
 
@@ -151,6 +221,12 @@ msgid "Auto-open Extrude On Pause"
 msgstr ""
 
 msgid "Auto-scroll"
+msgstr ""
+
+msgid "Auto-tuning completed"
+msgstr ""
+
+msgid "Auto-tuning in progress ..."
 msgstr ""
 
 msgid "Automatic compensation based on the data of the bed mesh"
@@ -171,6 +247,9 @@ msgstr ""
 msgid "Calibrate"
 msgstr ""
 
+msgid "Calibrate Eddy"
+msgstr ""
+
 msgid "Calibrate Nozzle XY Offset"
 msgstr ""
 
@@ -183,7 +262,13 @@ msgstr ""
 msgid "Calibrating"
 msgstr ""
 
+msgid "Calibration test in progress ..."
+msgstr ""
+
 msgid "Camera"
+msgstr ""
+
+msgid "Camera Calibrate"
 msgstr ""
 
 msgid "Can't set above the maximum:"
@@ -220,6 +305,9 @@ msgid "Clear"
 msgstr ""
 
 msgid "Clear Internal G-code Files"
+msgstr ""
+
+msgid "Click Start to begin the calibration process!"
 msgstr ""
 
 msgid "Close"
@@ -271,7 +359,13 @@ msgstr ""
 msgid "Current"
 msgstr ""
 
+msgid "Current Z Offset"
+msgstr ""
+
 msgid "Current percentage and graph line"
+msgstr ""
+
+msgid "Current tool offset"
 msgstr ""
 
 msgid "Current value:"
@@ -301,6 +395,9 @@ msgstr ""
 msgid "Disabled"
 msgstr ""
 
+msgid "Discard results"
+msgstr ""
+
 msgid "Disconnect"
 msgstr ""
 
@@ -318,6 +415,12 @@ msgstr ""
 msgid "Door Open Protection Mode"
 msgstr ""
 
+msgid "Eddy Calibrate"
+msgstr ""
+
+msgid "Eddy calibration"
+msgstr ""
+
 msgid "Elapsed trial time:"
 msgstr ""
 
@@ -331,6 +434,11 @@ msgid "Enable Registration Code"
 msgstr ""
 
 msgid "Enable screen power management"
+msgstr ""
+
+msgid ""
+"Ensure your eddy sensor maintains measurement accuracy at any printing "
+"temperature."
 msgstr ""
 
 msgid "Error"
@@ -348,6 +456,9 @@ msgstr ""
 msgid "Error trying to fetch spools"
 msgstr ""
 
+msgid "Error: Camera not found!"
+msgstr ""
+
 msgid "Error: Couldn't get a position to probe"
 msgstr ""
 
@@ -357,10 +468,21 @@ msgstr ""
 msgid "Estimated Time Method"
 msgstr ""
 
+msgid "Everything is ready! Click 'Save and Restart' to start your printing."
+msgstr ""
+
+msgid ""
+"Everything is ready! Click [Save] to apply nozzle offset.\n"
+"\n"
+msgstr ""
+
 msgid "Example"
 msgstr ""
 
 msgid "Exclude Object"
+msgstr ""
+
+msgid "Exit"
 msgstr ""
 
 msgid "Extra Large"
@@ -394,6 +516,9 @@ msgid "Fast Calibration"
 msgstr ""
 
 msgid "Filament"
+msgstr ""
+
+msgid "Filament Chamber Settings"
 msgstr ""
 
 msgid "Filament Used"
@@ -525,6 +650,17 @@ msgstr ""
 msgid "Inversely affects the icon size"
 msgstr ""
 
+msgid ""
+"It is recommended to check if the sensor is securely installed and "
+"recalibrate."
+msgstr ""
+
+msgid ""
+"It is recommended to perform calibration of the dual nozzle offset after "
+"replacing or adjusting the nozzle to ensure printing accuracy and "
+"reliability."
+msgstr ""
+
 msgid "It may take more than 5 minutes depending on the heater power."
 msgstr ""
 
@@ -602,6 +738,9 @@ msgid "Limits"
 msgstr ""
 
 msgid "Load"
+msgstr ""
+
+msgid "Loading calibration camera..."
 msgstr ""
 
 msgid "Loading..."
@@ -757,7 +896,14 @@ msgstr ""
 msgid "Numpad"
 msgstr ""
 
+msgid ""
+"Obtain the nozzle accurate height through multiple precision detections."
+msgstr ""
+
 msgid "Offset"
+msgstr ""
+
+msgid "Offset Compensation"
 msgstr ""
 
 msgid "Ok"
@@ -799,7 +945,13 @@ msgstr ""
 msgid "Pins"
 msgstr ""
 
+msgid "Place the camera in the indicated position"
+msgstr ""
+
 msgid "Please close the door and click Resume to proceed."
+msgstr ""
+
+msgid "Please ensure that the <b>Probe Calibrate</b> has been performed!"
 msgstr ""
 
 msgid "Please ensure that the Probe Calibrate has been performed"
@@ -844,6 +996,9 @@ msgstr ""
 msgid "Print Control"
 msgstr ""
 
+msgid "Print verification"
+msgstr ""
+
 msgid "Printer"
 msgstr ""
 
@@ -875,6 +1030,9 @@ msgid "RESUME ABORTED !"
 msgstr ""
 
 msgid "Raise Platform"
+msgstr ""
+
+msgid "Recalibrate"
 msgstr ""
 
 msgid "Recover"
@@ -940,6 +1098,9 @@ msgstr ""
 msgid "Retrying"
 msgstr ""
 
+msgid "Return"
+msgstr ""
+
 msgid "Right extruder detects no filament, please load filament and continue."
 msgstr ""
 
@@ -956,6 +1117,9 @@ msgid "Save Config"
 msgstr ""
 
 msgid "Save Z"
+msgstr ""
+
+msgid "Save and Reboot"
 msgstr ""
 
 msgid "Save configuration?"
@@ -989,7 +1153,18 @@ msgstr ""
 msgid "Send"
 msgstr ""
 
+msgid ""
+"Sensor is calibrating to collect data and ensure accurate and reliable "
+"sensor readings."
+msgstr ""
+
 msgid "Serial Number:"
+msgstr ""
+
+msgid "Set Countdown (Hours)"
+msgstr ""
+
+msgid "Set Target Temp(°C)"
 msgstr ""
 
 msgid "Settings"
@@ -1111,6 +1286,12 @@ msgstr ""
 msgid "Timeout for screen black-out or power-off during printing"
 msgstr ""
 
+msgid ""
+"To ensure calibration accuracy, please perform the following steps first:\n"
+"1. Unload the filament out of the nozzles\n"
+"2. Thoroughly clean the nozzles"
+msgstr ""
+
 msgid "Total:"
 msgstr ""
 
@@ -1150,10 +1331,16 @@ msgstr ""
 msgid "Uploaded"
 msgstr ""
 
+msgid "Usage Tips"
+msgstr ""
+
 msgid "Useful for un-responsive touchscreens"
 msgstr ""
 
 msgid "User"
+msgstr ""
+
+msgid "Verifying sensor accuracy, testing will be automatically completed."
 msgstr ""
 
 msgid "Version Selection"
@@ -1171,7 +1358,13 @@ msgstr ""
 msgid "X Offset"
 msgstr ""
 
+msgid "XY Calibrate"
+msgstr ""
+
 msgid "XY Move Speed (mm/s)"
+msgstr ""
+
+msgid "XY Offset Calibration"
 msgstr ""
 
 msgid "XY Speed (mm/s)"
@@ -1201,6 +1394,9 @@ msgstr ""
 msgid "Z axis cannot move to negative values"
 msgstr ""
 
+msgid "Z calibration"
+msgstr ""
+
 msgid "Z offset Calibrate"
 msgstr ""
 
@@ -1210,6 +1406,9 @@ msgstr ""
 msgid ""
 "[After turning on LAN only] Connect phone and printer to the same Wi-Fi, "
 "then use the APP to connect the device."
+msgstr ""
+
+msgid "bed is warming up..."
 msgstr ""
 
 msgid "commit"
@@ -1229,6 +1428,12 @@ msgid "hour"
 msgid_plural "hours"
 msgstr[0] ""
 msgstr[1] ""
+
+msgid "left nozzle probe completed"
+msgstr ""
+
+msgid "left nozzle probing ..."
+msgstr ""
 
 msgid "license"
 msgstr ""
@@ -1257,6 +1462,9 @@ msgid "mm³/s"
 msgstr ""
 
 msgid "offset fine tune"
+msgstr ""
+
+msgid "right nozzle probing ..."
 msgstr ""
 
 msgid "s"

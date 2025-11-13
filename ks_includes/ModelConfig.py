@@ -100,6 +100,35 @@ class ModelConfig:
                     f"Configuration file {self.klipperscreen_config_path} not found."
                 )
 
+    def _create_module_symlinks(self, source_module_path, target_module_path, exclude_files, device_name, version):
+        if not exclude_files:
+            exclude_files = []
+        exclude_set = set(exclude_files)
+        import shutil
+        if os.path.exists(target_module_path):
+            shutil.rmtree(target_module_path)
+        os.makedirs(target_module_path)
+        try:
+            if not os.path.isdir(source_module_path):
+                logging.error(f"Source module directory not found: {source_module_path}")
+                return
+            for item in os.listdir(source_module_path):
+                if item in exclude_set:
+                    logging.debug(f"Skipped excluded file: {item}")
+                    continue
+                source_item = os.path.join(source_module_path, item)
+                target_item = os.path.join(target_module_path, item)
+                if os.path.exists(target_item) or os.path.islink(target_item):
+                    os.remove(target_item)
+                os.symlink(source_item, target_item)
+                logging.debug(f"Created symlink: {target_item} -> {source_item}")
+            logging.info(
+                f"Created module symlinks for {device_name}-{version} "
+                f"(excluded files: {', '.join(exclude_files) or 'none'})"
+            )
+        except Exception as e:
+            logging.error(f"Error creating module symlinks for {device_name}-{version}: {str(e)}")
+
     def wirte_printer_config(self, device_name, version):
         config_dict = {
             "CreatBot_F430NX": "CreatBot_F430NX",
@@ -107,6 +136,7 @@ class ModelConfig:
             "CreatBot_D600Pro2HS_KIT": "CreatBot_D600Pro2_V0",
             "CreatBot_D1000HS": "CreatBot_D1000",
             "CreatBot_D1000HS_KIT": "CreatBot_D1000_V0",
+            "CreatBot_D1000ProHS": "CreatBot_D1000Pro",
             "CreatBot_P800": "CreatBot_P800",
         }
         if device_name:
@@ -115,7 +145,11 @@ class ModelConfig:
             if not os.path.exists(target_path):
                 os.makedirs(target_path)
             source_base_path = os.path.join(source_path, os.path.basename("base.cfg"))
+            source_module_path = os.path.join(source_path, os.path.basename(version))
             target_base_path = os.path.join(target_path, os.path.basename("base.cfg"))
+            module_base_path = os.path.join(source_module_path, os.path.basename("base.cfg"))
+            if os.path.exists(module_base_path) and os.path.isfile(module_base_path):
+                source_base_path = module_base_path
             try:
                 if os.path.islink(target_base_path) or os.path.exists(target_base_path):
                     os.remove(target_base_path)
@@ -128,13 +162,16 @@ class ModelConfig:
             except Exception as e:
                 logging.error(f"Error creating symlink for{device_name}:{e}")
 
-            source_module_path = os.path.join(source_path, os.path.basename(version))
             target_module_path = os.path.join(target_path, os.path.basename("module"))
             try:
-                if os.path.islink(target_module_path) or os.path.exists(target_module_path):
-                    os.remove(target_module_path)
                 if version != "1.0":
-                    os.symlink(source_module_path, target_module_path)
+                    self._create_module_symlinks(
+                        source_module_path=source_module_path,
+                        target_module_path=target_module_path,
+                        exclude_files=["base.cfg"],
+                        device_name=device_name,
+                        version=version
+                    )
                     logging.info(f"Created config version for {device_name}-{version}.")
             except FileExistsError:
                 logging.error(f"Failed to create version symlink for {device_name}.")
