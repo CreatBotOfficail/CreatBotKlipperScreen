@@ -554,7 +554,7 @@ class Panel(ScreenPanel):
                 for line in data.splitlines()
                 if line.strip()
             ])
-            if any(keyword in data.lower() for keyword in ["fail", "timed out", "404"]):
+            if any(keyword in data.lower() for keyword in ["fail", "error", "out", "404"]):
                 self.widgets["progress_stack"].set_visible_child_name("fail")
                 self.widgets["progress_data_fail"].set_text(cleaned_data)
                 self.bottom_container.set_visible_child_name("fail")
