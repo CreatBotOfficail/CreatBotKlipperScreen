@@ -164,15 +164,14 @@ class ModelConfig:
 
             target_module_path = os.path.join(target_path, os.path.basename("module"))
             try:
-                if version != "1.0":
-                    self._create_module_symlinks(
-                        source_module_path=source_module_path,
-                        target_module_path=target_module_path,
-                        exclude_files=["base.cfg"],
-                        device_name=device_name,
-                        version=version
-                    )
-                    logging.info(f"Created config version for {device_name}-{version}.")
+                self._create_module_symlinks(
+                    source_module_path=source_module_path,
+                    target_module_path=target_module_path,
+                    exclude_files=["base.cfg"],
+                    device_name=device_name,
+                    version=version
+                )
+                logging.info(f"Created config version for {device_name}-{version}.")
             except FileExistsError:
                 logging.error(f"Failed to create version symlink for {device_name}.")
             except PermissionError:
