@@ -15,7 +15,10 @@ class Panel(ScreenPanel):
         super().__init__(screen, title)
         self.widgets = {}
         self.mpv = None
-        self.calibrate_cam = None
+        self.calibrate_cam = {
+            "stream_url": "/webrtc/stream.html?src=Alignment_RAW&mode=mjpeg",
+            "service": "webrtc-go2rtc"
+        }
         self.cam_loading_triggered = False
         self.load_timeout_id = None
         self.x_offset = self.y_offset = 0.0
@@ -25,7 +28,7 @@ class Panel(ScreenPanel):
         self._init_containers()
         self._build_layout()
 
-        self.find_calibrate_camera()
+        self.init_cam_tip()
         GLib.timeout_add_seconds(1, self._delayed_load_camera)
 
     def _delayed_load_camera(self):
@@ -429,20 +432,9 @@ class Panel(ScreenPanel):
                 {"script": "_NOZZLE_XY_OFFSET_CALIBRATE"}
             )
 
-    def find_calibrate_camera(self):
-        logging.info("=== Finding calibrate camera ===")
-        if hasattr(self._printer, 'cameras'):
-            logging.info(f"All cameras configured: {[cam.get('name') for cam in self._printer.cameras]}")
-            for cam in self._printer.cameras:
-                if cam.get("enabled", False) and cam.get("name") == "Calibrate_Camera":
-                    self.calibrate_cam = cam
-                    self.init_cam_label.set_text(_("Loading calibration camera..."))
-                    self.init_cam_label.set_halign(Gtk.Align.START)
-                    logging.info(f"Found: name='{cam['name']}', stream_url='{cam['stream_url']}'")
-                    return
-        error_text = _("Error: Camera not found!")
-        self.init_cam_label.set_markup(f"<span color='red'>{error_text}</span>")
-        logging.error("Camera not found in config")
+    def init_cam_tip(self):
+        self.init_cam_label.set_text(_("Loading calibration camera..."))
+        self.init_cam_label.set_halign(Gtk.Align.START)
 
     def load_calibrate_camera(self, widget):
         try:
@@ -451,22 +443,13 @@ class Panel(ScreenPanel):
                 endpoint = self._screen.apiclient.endpoint.split(':')
                 url = f"{endpoint[0]}:{endpoint[1]}{url}"
             if self.calibrate_cam.get('service') == 'webrtc-go2rtc':
-                camera_name = url.split('?src=')[-1].split('&')[0] if '?src=' in url else 'Calibrate_Camera'
+                camera_name = url.split('?src=')[-1].split('&')[0] if '?src=' in url else 'Alignment_RAW'
                 host = url.split('/')[2].split(':')[0] if url.startswith(('http://', 'https://')) else url
                 url = f"rtsp://{host}:8554/{camera_name}"
                 logging.info(f"go2rtc converted to RTSP: {url}")
             elif '/webrtc' in url:
                 self._screen.show_popup_message('WebRTC not supported, trying Stream')
                 url = url.replace('/webrtc', '/stream')
-
-            vf = []
-            if self.calibrate_cam["flip_horizontal"]:
-                vf.append("hflip")
-            if self.calibrate_cam["flip_vertical"]:
-                vf.append("vflip")
-            vf.append(f"rotate:{self.calibrate_cam['rotation'] * 3.14159 / 180}")
-            vf = ",".join(vf)
-            logging.info(f"video filters: {vf}")
 
             if self.mpv:
                 self.mpv.terminate()
@@ -491,11 +474,9 @@ class Panel(ScreenPanel):
                 save_position_on_quit=False,
                 keep_open=False
             )
-            self.mpv.vf = vf
             self.mpv.wid = str(int(widget.get_window().get_xid()))
             self.mpv.play(url)
 
-            self.cam_box.remove(self.init_cam_label)
             if self.load_timeout_id:
                 GLib.source_remove(self.load_timeout_id)
                 self.load_timeout_id = None
@@ -516,6 +497,9 @@ class Panel(ScreenPanel):
         if loglevel == 'debug' and any(kw in message for kw in ['geometry', 'window', 'size', 'xid']):
             logging.debug(log_msg)
         elif loglevel == 'error':
+            if "failed to recognize" in log_msg.lower():
+                log_msg = _("Error: Camera not found!")
+            self.init_cam_label.set_markup(f"<span color='red'>{log_msg}</span>")
             logging.error(log_msg)
 
     def check_load_timeout(self):
@@ -575,7 +559,7 @@ class Panel(ScreenPanel):
                 self.widgets["progress_data_in_progress"].set_text(cleaned_data)
 
     def activate(self):
-        self.find_calibrate_camera()
+        self.init_cam_tip()
         if self.cam_box.get_window():
             self.load_calibrate_camera(self.cam_box)
 
