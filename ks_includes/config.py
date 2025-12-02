@@ -93,7 +93,8 @@ class KlipperScreenConfig:
 
         printers = [i for i in self.config.sections() if i.startswith("printer ")]
         if not printers:
-            printers.append("Printer Printer")
+            hostname = os.uname().nodename
+            printers.append(f"Printer {hostname}")
         self.printers = [
             {printer[8:]: {
                 "moonraker_host": self.config.get(printer, "moonraker_host", fallback="127.0.0.1"),
