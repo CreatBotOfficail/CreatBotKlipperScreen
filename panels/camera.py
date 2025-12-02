@@ -85,7 +85,6 @@ class Panel(ScreenPanel):
         self.mpv = mpv.MPV(
             fullscreen=True,
             log_handler=self.log,
-            vo='x11',
             hwdec='no',
             video_sync='display-desync',
             framedrop='decoder+vo',
@@ -99,7 +98,6 @@ class Panel(ScreenPanel):
             demuxer_thread=False,
             network_timeout=0.5,
             stream_lavf_o='flags=low_delay',
-            ytdl=False,
             save_position_on_quit=False,
             keep_open=False
         )
