@@ -247,7 +247,7 @@ textview .time {
     background-color: rgba(25, 24, 39, 1);
 }
 .dialog {
-    background-color: @white-opa-10;
+    background-color: #0D0C1B;
 }
 
 .dialog button {
