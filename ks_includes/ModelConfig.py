@@ -202,9 +202,46 @@ class ModelConfig:
         except Exception as e:
             logging.error(f"An unexpected error occurred: {e}")
 
+    def machinf_config(self, model, version):
+        try:
+            from machine_config import MachineConfig
+        except ImportError:
+            return False
+
+        config_list = [
+            ("F430NX", "CreatBot_F430NX"),
+            ("D600Pro2HS", "CreatBot_D600Pro2"),
+            ("D600Pro2HS_KIT", "CreatBot_D600Pro2_V0"),
+            ("D1000HS", "CreatBot_D1000"),
+            ("D1000HS_KIT", "CreatBot_D1000_V0"),
+            ("D1000ProHS", "CreatBot_D1000Pro"),
+            ("P800", "CreatBot_P800"),
+        ]
+
+        cfg = MachineConfig()
+        for m, folder in config_list:
+            if model == m:
+                print(f"Model: {m}, Config Folder: {folder}")
+                cfg.set("model", m)
+                cfg.set("config_dir", folder)
+                cfg.set("version", version)
+
+                break
+
+        os.system(f"rm -f /opt/printer_data/config/printer.cfg")
+        os.system(f"rm -rf /opt/printer_data/config/config.d")
+        os.system("systemctl restart auto-hostname")
+        os.system("systemctl restart klipper.service")
+        os.system("systemctl restart moonraker.service")
+        os.system("systemctl restart KlipperScreen.service")
+        return True
+
     def generate_config(self, model, version):
         model_name = model
         model_name = model_name.split("_")[1]
+
+        if self.machinf_config(model_name, version):
+            return
         device_name = self.generate_machine_name(model_name)
         self.write_mdns_config(device_name)
         self.write_device_name_config(device_name)
