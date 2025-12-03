@@ -1,12 +1,12 @@
+from ks_includes.screen_panel import ScreenPanel
+from gi.repository import Gdk, GdkPixbuf, GLib, Gtk, Pango
 import json
 import logging
 
 import gi
 
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gdk, GdkPixbuf, GLib, Gtk, Pango
 
-from ks_includes.screen_panel import ScreenPanel
 
 try:
     import qrcode
@@ -89,7 +89,8 @@ class Panel(ScreenPanel):
         vbox.pack_start(self.qr_image, True, True, 0)
 
         self.network_tip_label = Gtk.Label()
-        self.network_tip_label.set_markup('<span size="small" weight="bold">' + _("Connect device to network") + '</span>')
+        self.network_tip_label.set_markup(
+            '<span size="small" weight="bold">' + _("Connect device to network") + '</span>')
         self.network_tip_label.set_halign(Gtk.Align.CENTER)
         self.network_tip_label.set_no_show_all(True)
         vbox.pack_start(self.network_tip_label, False, False, 0)
@@ -116,7 +117,8 @@ class Panel(ScreenPanel):
 
         root.pack_start(self._build_toggle_card(scale, pad), False, False, 0)
 
-        root.pack_start(self._build_info_card(scale, pad), True, True, int(2 * scale))
+        root.pack_start(self._build_info_card(
+            scale, pad), True, True, int(2 * scale))
 
         root.pack_end(self._build_usage_card(scale, pad), True, True, 0)
 
@@ -129,7 +131,8 @@ class Panel(ScreenPanel):
         frame.set_hexpand(True)
         frame.set_vexpand(False)
 
-        vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=int(3 * scale))
+        vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL,
+                       spacing=int(3 * scale))
         vbox.set_margin_top(pad)
         vbox.set_margin_bottom(pad)
         vbox.set_margin_start(pad)
@@ -145,11 +148,13 @@ class Panel(ScreenPanel):
 
         for idx, txt in enumerate(texts):
             if idx == 0 or idx == 4:
-                hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=8)
+                hbox = Gtk.Box(
+                    orientation=Gtk.Orientation.HORIZONTAL, spacing=8)
                 hbox.set_halign(Gtk.Align.START)
 
                 icon_name = "hint" if idx == 0 else "light_hint"
-                icon = self._gtk.Image(icon_name, self._gtk.content_width * .03, self._gtk.content_height * .03)
+                icon = self._gtk.Image(
+                    icon_name, self._gtk.content_width * .03, self._gtk.content_height * .03)
                 icon.set_valign(Gtk.Align.START)
                 hbox.pack_start(icon, False, False, 0)
 
@@ -201,12 +206,14 @@ class Panel(ScreenPanel):
         def add_row(row, label, value_label):
             lab = Gtk.Label()
             lab.set_name("title-bold")
-            lab.set_markup('<span weight="bold" size="small">' + _(label) + "</span>")
+            lab.set_markup('<span weight="bold" size="small">' +
+                           _(label) + "</span>")
             lab.set_halign(Gtk.Align.START)
             grid.attach(lab, 0, row, 1, 1)
             value_label.set_halign(Gtk.Align.START)
             value_label.set_selectable(True)
-            value_label.override_font(Pango.FontDescription.from_string("small"))
+            value_label.override_font(
+                Pango.FontDescription.from_string("small"))
             grid.attach(value_label, 1, row, 1, 1)
 
         self.hostname_value = Gtk.Label(
@@ -215,7 +222,8 @@ class Panel(ScreenPanel):
         self.serial_value = Gtk.Label(
             str(self.cloud_status.get("machine_id", "Unknown"))
         )
-        self.ip_value = Gtk.Label(str(self.cloud_status.get("local_ip", "0.0.0.0")))
+        self.ip_value = Gtk.Label(
+            str(self.cloud_status.get("local_ip", "0.0.0.0")))
         self.update_local_ip()
 
         add_row(0, _("Hostname:"), self.hostname_value)
@@ -229,13 +237,15 @@ class Panel(ScreenPanel):
         frame = Gtk.Frame()
         frame.get_style_context().add_class("elevated")
 
-        hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=int(8 * scale))
+        hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL,
+                       spacing=int(8 * scale))
         hbox.set_margin_top(pad)
         hbox.set_margin_bottom(pad)
         hbox.set_margin_left(2 * pad)
         hbox.set_margin_right(pad)
 
-        switch_hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=10)
+        switch_hbox = Gtk.Box(
+            orientation=Gtk.Orientation.HORIZONTAL, spacing=10)
 
         switch_label = Gtk.Label()
         switch_label.set_name("title-bold")
@@ -249,7 +259,8 @@ class Panel(ScreenPanel):
         actived = self.cloud_status.get("actived", False)
         self.lan_only_switch.set_active(not actived)
 
-        self.lan_only_switch.connect("button-release-event", self.on_lan_only_toggled)
+        self.lan_only_switch.connect(
+            "button-release-event", self.on_lan_only_toggled)
         self.lan_only_switch.set_halign(Gtk.Align.END)
         switch_hbox.pack_end(self.lan_only_switch, False, False, 0)
 
@@ -258,53 +269,54 @@ class Panel(ScreenPanel):
         return frame
 
     def generate_qr_code(self):
-        local_ip = self.cloud_status.get("local_ip", "")
-        has_network = local_ip and local_ip != "0.0.0.0"
+        qr_payload = f"{self.qr_url}?{json.dumps(self.cloud_status)}"
 
-        if not has_network:
-            self._show_no_network_state()
+        if getattr(self, "_last_qr_payload", None) == qr_payload:
             return
-
-        self._hide_network_tip()
+        self._last_qr_payload = qr_payload
 
         if not QR_AVAILABLE:
-            self.qr_image.set_from_icon_name("dialog-error", Gtk.IconSize.DIALOG)
+            self.qr_image.set_from_icon_name(
+                "dialog-error", Gtk.IconSize.DIALOG)
             return
 
-        try:
-            if not self.cloud_status:
-                logging.warning("No cloud status data for QR code")
-                self.qr_image.set_from_icon_name("dialog-warning", Gtk.IconSize.DIALOG)
-                return
+        import io
+        import PIL.Image
+        import PIL.ImageDraw
 
-            qr_data = self.cloud_status
-            qr_payload = f"{self.qr_url}?{json.dumps(qr_data)}"
-            screen = Gdk.Screen.get_default()
-            min_dim = min(screen.get_width(), screen.get_height())
-            qr_size = max(150, min(400, int(min_dim * 0.45)))
+        qr = qrcode.QRCode(
+            version=3,
+            error_correction=qrcode.constants.ERROR_CORRECT_M,
+            box_size=10,
+            border=2,
+        )
+        qr.add_data(qr_payload)
+        qr.make(fit=True)
+        img = qr.make_image(fill_color="black",
+                            back_color="white").convert("RGB")
 
-            qr = qrcode.QRCode(
-                version=3,
-                error_correction=qrcode.constants.ERROR_CORRECT_M,
-                box_size=10,
-                border=2,
-            )
-            qr.add_data(qr_payload)
-            qr.make(fit=True)
+        screen = Gdk.Screen.get_default()
+        screen_width = screen.get_width()
+        screen_height = screen.get_height()
+        max_qr_size = min(int(screen_width * 0.35), int(screen_height * 0.40))
+        qr_size = max(150, min(400, max_qr_size))
 
-            factory = qrcode.image.svg.SvgFillImage
-            qr_img = qr.make_image(
-                image_factory=factory, fill_color="black", back_color="white"
-            )
-            svg_path = "/tmp/creatcloud_qr.svg"
-            qr_img.save(svg_path)
+        width, height = img.size
+        data = img.tobytes()
+        pixbuf_original = GdkPixbuf.Pixbuf.new_from_data(
+            data,
+            GdkPixbuf.Colorspace.RGB,
+            False,
+            8,
+            width,
+            height,
+            width * 3
+        )
 
-            pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_size(svg_path, qr_size, qr_size)
-            self.qr_image.set_from_pixbuf(pixbuf)
-
-        except Exception as e:
-            logging.error(f"QR error: {e}")
-            self.qr_image.set_from_icon_name("dialog-error", Gtk.IconSize.DIALOG)
+        pixbuf_scaled = pixbuf_original.scale_simple(
+            qr_size, qr_size, GdkPixbuf.InterpType.BILINEAR
+        )
+        self.qr_image.set_from_pixbuf(pixbuf_scaled)
 
     def _show_no_network_state(self):
         try:
@@ -317,12 +329,14 @@ class Panel(ScreenPanel):
 
         except Exception as e:
             logging.error(f"Error loading without_network icon: {e}")
-            self.qr_image.set_from_icon_name("network-offline", Gtk.IconSize.DIALOG)
+            self.qr_image.set_from_icon_name(
+                "network-offline", Gtk.IconSize.DIALOG)
 
         if hasattr(self, 'network_tip_label'):
             self.network_tip_label.show()
         else:
-            logging.warning("network_tip_label not found, skipping tip display")
+            logging.warning(
+                "network_tip_label not found, skipping tip display")
 
     def _hide_network_tip(self):
         if hasattr(self, 'network_tip_label'):
@@ -340,7 +354,8 @@ class Panel(ScreenPanel):
             GLib.source_remove(self._lan_only_timer)
             self._lan_only_timer = None
 
-        self._lan_only_timer = GLib.timeout_add(3000, self._on_lan_only_debounced)
+        self._lan_only_timer = GLib.timeout_add(
+            500, self._on_lan_only_debounced)
 
     def _on_lan_only_debounced(self):
 
@@ -369,7 +384,7 @@ class Panel(ScreenPanel):
         return True
 
     def activate(self):
-        GLib.timeout_add(500, self._delayed_refresh)
+        GLib.timeout_add(100, self._delayed_refresh)
 
     def _delayed_refresh(self):
         self.auto_refresh_qr_code()
@@ -380,4 +395,4 @@ class Panel(ScreenPanel):
             return
         if "actived" in data:
             self.lan_only_switch.set_active(not data["actived"])
-        GLib.timeout_add(300, self._delayed_refresh)
+        GLib.timeout_add(100, self._delayed_refresh)
