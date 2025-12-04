@@ -30,7 +30,8 @@ class Panel(ScreenPanel):
 
         topbar = Gtk.Box(spacing=5, hexpand=True, vexpand=False)
         topbar.add(self.buttons['clear'])
-        topbar.add(self.buttons['fine_calib'])
+        if not self._printer.get_eddy_sensors():
+            topbar.add(self.buttons['fine_calib'])
         topbar.add(self.buttons['fast_calib'])
 
         # Create a grid for all profiles
