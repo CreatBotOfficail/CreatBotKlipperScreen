@@ -232,11 +232,14 @@ class Printer:
     def get_temp_fans(self):
         return self.get_config_section_list("temperature_fan")
 
-    def get_eddy_sensors(self):
-        return self.get_config_section_list("probe_eddy_ng")
+    def get_temp_eddy(self):
+        return self.get_config_section_list("temperature_probe")
 
     def get_temp_sensors(self):
         return self.get_config_section_list("temperature_sensor")
+
+    def get_eddy_sensors(self):
+        return self.get_config_section_list("probe_eddy_ng")
 
     def get_filament_sensors(self):
         if self.sensors is None:
@@ -391,7 +394,7 @@ class Printer:
                 for device in self.tools
                 if not device.startswith('extruder_stepper')
             ]
-            self.temp_devices = devices + self.get_heaters() + self.get_temp_sensors() + self.get_temp_fans()
+            self.temp_devices = devices + self.get_heaters() + self.get_temp_sensors() + self.get_temp_fans() + self.get_temp_eddy()
         return self.temp_devices
 
     def get_tools(self):
