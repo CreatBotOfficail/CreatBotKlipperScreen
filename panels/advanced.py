@@ -10,6 +10,14 @@ from ks_includes.KlippyGcodes import KlippyGcodes
 from ks_includes.screen_panel import ScreenPanel
 from datetime import datetime
 
+update_engine_available = False
+try:
+    from update_engine import UpdateEngine
+    update_engine_available = True
+    logging.info("UpdateEngine imported successfully")
+except ImportError:
+    logging.info("UpdateEngine not available")
+
 
 class Panel(ScreenPanel):
     def __init__(self, screen, title):
@@ -50,7 +58,9 @@ class Panel(ScreenPanel):
                     "callback": self.set_auto_change_nozzle,
                 }
             },
-            {
+        ]
+        if not update_engine_available:
+            self.advanced_options.append({
                 "factory_settings": {
                     "section": "main",
                     "name": _("Restore Factory Settings"),
@@ -59,8 +69,7 @@ class Panel(ScreenPanel):
                     "value": "True",
                     "callback": self.reset_factory_settings,
                 }
-            },
-        ]
+            })
         if self._printer.get_macro("_door_detection"):
             self.advanced_options.append(
                 {
