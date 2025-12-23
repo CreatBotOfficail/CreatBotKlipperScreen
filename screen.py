@@ -280,6 +280,7 @@ class KlipperScreen(Gtk.Window):
                 "exclude_object": ["current_object", "objects", "excluded_objects"],
                 "manual_probe": ['is_active'],
                 "screws_tilt_adjust": ['results', 'error'],
+                "stepper_enable": ['steppers'],
                 "save_variables": ['variables'],
             }
         }
@@ -1114,6 +1115,7 @@ class KlipperScreen(Gtk.Window):
             'manual_probe',
             'probe_eddy_ng',
             'save_variables',
+            'stepper_enable',
             *self.printer.get_tools(),
             *self.printer.get_heaters(),
             *self.printer.get_eddy_sensors(),
