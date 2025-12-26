@@ -290,7 +290,7 @@ class Panel(ScreenPanel):
     def execute_local_update(self):
         try:
             upgrade_result = self.update_engine.run_upgrade(
-                self.upload_file, reboot=False)
+                self.upload_file, reboot=True)
 
             if hasattr(self, 'upgrade_dialog'):
                 self._gtk.remove_dialog(self.upgrade_dialog)
