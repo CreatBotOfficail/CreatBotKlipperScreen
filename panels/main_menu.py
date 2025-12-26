@@ -158,7 +158,7 @@ class Panel(MenuPanel):
         vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=0)
         name.add(vbox)
         target = Gtk.Label()
-        icon = self._gtk.Image(image)
+        icon = self._gtk.Image(image, self._gtk.font_size * 2.6, self._gtk.font_size * 2.6)
         temp = Gtk.Label()
         power = Gtk.Label()
         vbox.pack_start(target, True, False, 5)
