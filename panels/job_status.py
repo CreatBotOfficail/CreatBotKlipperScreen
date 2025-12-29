@@ -24,6 +24,7 @@ class Panel(ScreenPanel):
         self.speed = 100
         self.req_speed = 0
         self.oheight = 0.0
+        self.auto_door_lock = False
         self.current_extruder = None
         self.fila_section = pi * ((1.75 / 2) ** 2)
         self.filename_label = None
@@ -358,6 +359,69 @@ class Panel(ScreenPanel):
         if self.animation_timeout is not None:
             GLib.source_remove(self.animation_timeout)
             self.animation_timeout = None
+    
+    def unlock_doors(self, widget):
+        vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=20)
+        vbox.set_halign(Gtk.Align.CENTER)
+        vbox.set_valign(Gtk.Align.CENTER)
+        vbox.set_hexpand(True)
+        vbox.set_vexpand(True)
+
+        warning_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=20)
+        warning_box.set_halign(Gtk.Align.CENTER)
+        warning_box.set_valign(Gtk.Align.CENTER)
+
+        warning1 = Gtk.Label()
+        warning1.set_markup(_("<span font-size='large'>1. When performing internal operations, "
+                            "please avoid the print platform and print head carefully to prevent high-temperature burns.</span>"))
+        warning1.set_halign(Gtk.Align.CENTER)
+        warning1.set_valign(Gtk.Align.CENTER)
+        warning1.set_line_wrap(True)
+        warning1.set_max_width_chars(50)
+        warning_box.pack_start(warning1, True, True, 0)
+
+        warning2 = Gtk.Label()
+        warning2.set_markup(_("<span font-size='large'>2. Pay attention to mechanical moving parts during "
+                            "operation to avoid collisions that may damage the equipment or model.</span>"))
+        warning2.set_halign(Gtk.Align.CENTER)
+        warning2.set_valign(Gtk.Align.CENTER)
+        warning2.set_line_wrap(True)
+        warning2.set_max_width_chars(50)
+        warning_box.pack_start(warning2, True, True, 0)
+
+        warning3 = Gtk.Label()
+        warning3.set_markup(_("<span font-size='large'>3. Do not keep the chamber door open for a long time. "
+                            "If material replacement or maintenance is needed, it is recommended to close it immediately after "
+                            "operation to maintain a stable printing environment and ensure model quality.</span>"))
+        warning3.set_halign(Gtk.Align.CENTER)
+        warning3.set_valign(Gtk.Align.CENTER)
+        warning3.set_line_wrap(True)
+        warning3.set_max_width_chars(50)
+        warning_box.pack_start(warning3, True, True, 0)
+        
+        vbox.pack_start(warning_box, True, True, 0)
+        
+        buttons = [
+            {"name": _("Confirm Unlock"), "response": Gtk.ResponseType.YES, "style": "dialog-error"},
+            {"name": _("Cancel"), "response": Gtk.ResponseType.CANCEL, "style": "dialog-default"}
+        ]
+
+        self._gtk.Dialog(_("Confirm Unlock"), buttons, vbox, self._confirm_unlock_doors)
+    
+    def _confirm_unlock_doors(self, dialog, response_id):
+        self._gtk.remove_dialog(dialog)
+        
+        if response_id == Gtk.ResponseType.YES:
+            doors = self._printer.get_locks() if hasattr(self._printer, 'get_doors') else []
+            if not doors:
+                logging.debug("No doors found")
+                return
+            
+            for door in doors:
+                logging.debug(f"Unlocking door: {door}")
+                self._screen._ws.klippy.set_door_lock(door, "unlock")
+        else:
+            logging.info("User canceled unlocking all doors")
 
     def create_buttons(self):
 
@@ -371,6 +435,7 @@ class Panel(ScreenPanel):
             'resume': self._gtk.Button("resume", _("Resume"), "color1"),
             'save_offset_probe': self._gtk.Button("home-z", _("Save Z") + "\n" + "Probe", "color1"),
             'save_offset_endstop': self._gtk.Button("home-z", _("Save Z") + "\n" + "Endstop", "color2"),
+            'unlock_all': self._gtk.Button("lock", _("Unlock"), "color4"),
         }
         self.buttons['cancel'].connect("clicked", self.cancel)
         self.buttons['control'].connect("clicked", self._screen._go_to_submenu, "")
@@ -382,6 +447,7 @@ class Panel(ScreenPanel):
         self.buttons['resume'].connect("clicked", self.resume)
         self.buttons['save_offset_probe'].connect("clicked", self.save_offset, "probe")
         self.buttons['save_offset_endstop'].connect("clicked", self.save_offset, "endstop")
+        self.buttons['unlock_all'].connect("clicked", self.unlock_doors)
 
     def save_offset(self, widget, device):
         sign = "+" if self.zoffset > 0 else "-"
@@ -494,6 +560,11 @@ class Panel(ScreenPanel):
             self.get_file_metadata(response=True)
         elif action != "notify_status_update":
             return
+
+        if "save_variables" in data and "variables" in data["save_variables"]:
+            variables = data["save_variables"]["variables"]
+            if "auto_door_lock" in variables:
+                self.auto_door_lock = variables["auto_door_lock"]
 
         for x in self._printer.get_temp_devices():
             if x in data:
@@ -737,19 +808,42 @@ class Panel(ScreenPanel):
     def show_buttons_for_state(self):
         self.buttons['button_grid'].remove_row(0)
         self.buttons['button_grid'].insert_row(0)
+
+        has_locks = False
+        try:
+            locks = self._printer.get_locks() if hasattr(self._printer, 'get_locks') else []
+            has_locks = len(locks) > 0
+        except Exception:
+            has_locks = False
+        show_unlock_button = has_locks and self.auto_door_lock
+        
         if self.state == "printing":
             self.buttons['button_grid'].attach(self.buttons['pause'], 0, 0, 1, 1)
             self.buttons['button_grid'].attach(self.buttons['cancel'], 1, 0, 1, 1)
-            self.buttons['button_grid'].attach(self.buttons['fine_tune'], 2, 0, 1, 1)
-            self.buttons['button_grid'].attach(self.buttons['control'], 3, 0, 1, 1)
-            self.enable_button("pause", "cancel")
+            
+            if show_unlock_button:   
+                self.buttons['button_grid'].attach(self.buttons['fine_tune'], 2, 0, 1, 1)
+                self.buttons['button_grid'].attach(self.buttons['control'], 3, 0, 1, 1)
+                self.buttons['button_grid'].attach(self.buttons['unlock_all'], 4, 0, 1, 1)
+                self.enable_button("pause", "cancel", "unlock_all")
+            else:
+                self.buttons['button_grid'].attach(self.buttons['fine_tune'], 2, 0, 1, 1)
+                self.buttons['button_grid'].attach(self.buttons['control'], 3, 0, 1, 1)
+                self.enable_button("pause", "cancel")
             self.can_close = False
         elif self.state == "paused":
             self.buttons['button_grid'].attach(self.buttons['resume'], 0, 0, 1, 1)
             self.buttons['button_grid'].attach(self.buttons['cancel'], 1, 0, 1, 1)
-            self.buttons['button_grid'].attach(self.buttons['fine_tune'], 2, 0, 1, 1)
-            self.buttons['button_grid'].attach(self.buttons['control'], 3, 0, 1, 1)
-            self.enable_button("resume", "cancel")
+            
+            if show_unlock_button:
+                self.buttons['button_grid'].attach(self.buttons['fine_tune'], 2, 0, 1, 1)
+                self.buttons['button_grid'].attach(self.buttons['control'], 3, 0, 1, 1)
+                self.buttons['button_grid'].attach(self.buttons['unlock_all'], 4, 0, 1, 1)
+                self.enable_button("resume", "cancel", "unlock_all")
+            else:
+                self.buttons['button_grid'].attach(self.buttons['fine_tune'], 2, 0, 1, 1)
+                self.buttons['button_grid'].attach(self.buttons['control'], 3, 0, 1, 1)
+                self.enable_button("resume", "cancel")
             self.can_close = False
         else:
             active_extruder = self._printer.get_stat("toolhead", "extruder")
