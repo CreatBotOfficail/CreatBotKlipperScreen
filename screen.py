@@ -280,6 +280,7 @@ class KlipperScreen(Gtk.Window):
                 "exclude_object": ["current_object", "objects", "excluded_objects"],
                 "manual_probe": ['is_active'],
                 "screws_tilt_adjust": ['results', 'error'],
+                "ktamv": [],
                 "stepper_enable": ['steppers'],
                 "save_variables": ['variables'],
             }
