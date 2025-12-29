@@ -290,6 +290,16 @@ class Printer:
             },
         }
 
+    def get_locks(self):
+        locks = []
+        door_devices = self.get_config_section_list("door")
+        for door_device in door_devices:
+            door_name = door_device.split(" ")[-1]
+            door_config = self.get_config_section(door_device)
+            if door_config and 'lock_pin' in door_config:
+                locks.append(door_name)
+        return locks
+
     def get_leds(self):
         return [
             led
