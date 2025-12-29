@@ -1,12 +1,11 @@
-import mpv
 import logging
 import gi
 import re
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk, Gdk, Pango, GLib
-from contextlib import suppress
 from ks_includes.KlippyGcodes import KlippyGcodes
 from ks_includes.screen_panel import ScreenPanel
+from ks_includes.align_camera import CameraController
 
 class Panel(ScreenPanel):
     """Camera XY offset calibration panel."""
@@ -14,27 +13,19 @@ class Panel(ScreenPanel):
         title = title or _("XY Calibrate")
         super().__init__(screen, title)
         self.widgets = {}
-        self.mpv = None
-        self.calibrate_cam = {
-            "stream_url": "/webrtc/stream.html?src=Alignment_RAW&mode=mjpeg",
-            "service": "webrtc-go2rtc"
-        }
-        self.cam_loading_triggered = False
-        self.load_timeout_id = None
         self.x_offset = self.y_offset = 0.0
-        self.new_x_offset = self.new_y_offset = 0.0
+
+        self.cam_controller = CameraController(self)
+        self.current_progress = 0.0
+        self.progress_update_count = 0
+        self.progress_timer_id = None
 
         self._init_widgets()
         self._init_containers()
         self._build_layout()
 
-        self.init_cam_tip()
-        GLib.timeout_add_seconds(1, self._delayed_load_camera)
-
-    def _delayed_load_camera(self):
-        if self.cam_box.get_window():
-            self.load_calibrate_camera(self.cam_box)
-        return False
+        self.cam_controller.init_cam_tip()
+        GLib.timeout_add_seconds(1, self.cam_controller.delayed_load_camera)
 
     def _scaled(self, w_rate: float, h_rate=None):
         h_rate = h_rate or w_rate
@@ -50,6 +41,7 @@ class Panel(ScreenPanel):
             label.set_markup(text)
         else:
             label.set_text(text)
+
         for key, val in kwargs.items():
             if hasattr(label, f"set_{key}"):
                 getattr(label, f"set_{key}")(val)
@@ -127,39 +119,11 @@ class Panel(ScreenPanel):
         container = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=0)
         container.set_valign(Gtk.Align.CENTER)
         container.set_halign(Gtk.Align.CENTER)
-
-        title = self._create_label(
-           _("<span font-size='x-large'>Calibration Camera View</span>"),
-            markup=True,
-            halign=Gtk.Align.CENTER,
-        )
-        container.pack_start(title, False, False, 0)
         container.pack_start(self.cam_box, False, False, 0)
         return container
 
     def _create_cam_display_area(self):
-        event_box = Gtk.EventBox(
-            halign=Gtk.Align.CENTER,
-            valign=Gtk.Align.CENTER,
-        )
-        event_box.set_size_request(*self._scaled(0.4, 0.5))
-        event_box.override_background_color(
-            Gtk.StateFlags.NORMAL,
-            Gdk.RGBA(0, 0, 0, 1)
-        )
-
-        self.init_cam_label = self._create_label(
-            _("Loading calibration camera..."),
-            halign=Gtk.Align.CENTER,
-            valign=Gtk.Align.CENTER,
-            line_wrap=True
-        )
-        self.init_cam_label.override_color(
-            Gtk.StateFlags.NORMAL,
-            Gdk.RGBA(1, 1, 1, 1)
-        )
-        event_box.add(self.init_cam_label)
-        return event_box
+        return self.cam_controller.create_camera_display_area()
 
     def _left_tip_panel(self):
         img = self._gtk.Image("camera-calibrate", *self._scaled(0.4, 0.5))
@@ -205,6 +169,19 @@ class Panel(ScreenPanel):
             hbox.pack_start(icon, False, False, 5)
             hbox.pack_start(title, False, False, 0)
             vbox.pack_start(hbox, False, False, 0)
+
+            if stack_name == "in_progress":
+                progress_hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=8)
+                progress_hbox.hide()
+                progress_hbox.set_halign(Gtk.Align.CENTER)
+                self.widgets["progress_hbox"] = progress_hbox
+
+                progress_bar = Gtk.ProgressBar()
+                progress_bar.set_size_request(*self._scaled(0.45, 0.015))
+                progress_bar.set_show_text(False)
+                self.widgets["progress_bar"] = progress_bar
+                progress_hbox.pack_start(progress_bar, False, False, 0)
+                vbox.pack_start(progress_hbox, False, False, 10)
 
             data_label = self._create_label(
                 "", halign=Gtk.Align.START, line_wrap=True, max_width_chars=40
@@ -278,14 +255,14 @@ class Panel(ScreenPanel):
         icon.set_valign(Gtk.Align.START)
         box.pack_start(icon, False, False, 0)
         box.pack_start(self._create_label(
-            _("<span font-size='x-large'>Calibration Tips</span>"),
+            _("<span>Calibration Tips</span>"),
             markup=True,
             halign=Gtk.Align.START
         ), False, False, 0)
         return box
 
     def _create_tip_text1(self):
-        return self._create_label(
+        label = self._create_label(
             _("It is recommended to perform calibration of the dual nozzle offset after replacing "
               "or adjusting the nozzle to ensure printing accuracy and reliability."),
             halign=Gtk.Align.START,
@@ -293,9 +270,12 @@ class Panel(ScreenPanel):
             max_width_chars=35,
             line_wrap_mode=Pango.WrapMode.WORD
         )
+        box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=5)
+        box.pack_start(label, False, False, 10)
+        return box
 
     def _create_tip_text2(self):
-        return self._create_label(
+        label = self._create_label(
             _("To ensure calibration accuracy, please perform the following steps first:\n"
               "1. Unload the filament out of the nozzles\n"
               "2. Thoroughly clean the nozzles"),
@@ -304,6 +284,9 @@ class Panel(ScreenPanel):
             max_width_chars=35,
             line_wrap_mode=Pango.WrapMode.WORD
         )
+        box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=5)
+        box.pack_start(label, False, False, 20)
+        return box
 
     def _bottom_start_panel(self):
         box = Gtk.Box(
@@ -343,12 +326,16 @@ class Panel(ScreenPanel):
             margin_top=10,
             margin_right=20
         )
+        self.widgets["btn_return"] = self._create_button(
+            _("Return"), self.on_return_start
+        )
         self.widgets["btn_print"] = self._create_button(
             _("Save"), self.on_save_calibrate
         )
         self.widgets["btn_finish"] = self._create_button(
             _("Print verification"), self.on_to_print
         )
+        box.pack_start(self.widgets["btn_return"], False, False, 0)
         box.pack_start(self.widgets["btn_print"], False, False, 0)
         box.pack_start(self.widgets["btn_finish"], False, False, 0)
         return box
@@ -383,32 +370,32 @@ class Panel(ScreenPanel):
             self.right_container.set_visible_child_name("progress")
             self.widgets["progress_data_in_progress"].set_text("")
             self.widgets["progress_stack"].set_visible_child_name("in_progress")
+            self.current_progress = 0.0
+            self.progress_update_count = 0
             self.bottom_container.set_visible_child_name("empty")
-            self._screen._ws.klippy.gcode_script("tool_align_macro")
+            self._screen._ws.klippy.gcode_script("KTAMV_CALIB_NOZZLE")
 
     def on_next_calibrate(self, widget):
         self.left_container.set_visible_child_name("default")
         self.widgets["progress_data_in_progress"].set_text("")
         self.widgets["progress_stack"].set_visible_child_name("in_progress")
+        self.current_progress = 0.0
+        self.progress_update_count = 0
         self.right_container.set_visible_child_name("progress")
         self.bottom_container.set_visible_child_name("empty")
-        self._screen._ws.klippy.gcode_script("tool_align_macro")
+        self._screen._ws.klippy.gcode_script("KTAMV_CALIB_NOZZLE")
 
     def on_save_calibrate(self, widget):
-        for axis, val in [("x", self.new_x_offset), ("y", self.new_y_offset)]:
-            script = KlippyGcodes.set_save_variables(f"nozzle_{axis}_offset_val", float(val))
-            self._screen._send_action(None, "printer.gcode.script", {"script": script})
+        self._screen._ws.klippy.gcode_script("KTAMV_SAVE_OFFSET")
         self.left_container.set_visible_child_name("default")
         self.right_container.set_visible_child_name("default")
         self.bottom_container.set_visible_child_name("start")
-
-    def on_return_calibrate(self, widget):
-        self._screen._menu_go_back()
 
     def on_return_start(self, widget):
         self.left_container.set_visible_child_name("default")
         self.right_container.set_visible_child_name("default")
         self.bottom_container.set_visible_child_name("start")
+        self._screen._ws.klippy.gcode_script("KTAMV_CLEAR_STATUS")
 
     def on_to_print(self, widget):
         text = (
@@ -433,94 +420,16 @@ class Panel(ScreenPanel):
             )
 
     def init_cam_tip(self):
-        self.init_cam_label.set_text(_("Loading calibration camera..."))
-        self.init_cam_label.set_halign(Gtk.Align.START)
+        self.cam_controller.init_cam_tip()
 
     def load_calibrate_camera(self, widget):
-        try:
-            url = self.calibrate_cam['stream_url']
-            if url.startswith('/'):
-                endpoint = self._screen.apiclient.endpoint.split(':')
-                url = f"{endpoint[0]}:{endpoint[1]}{url}"
-            if self.calibrate_cam.get('service') == 'webrtc-go2rtc':
-                camera_name = url.split('?src=')[-1].split('&')[0] if '?src=' in url else 'Alignment_RAW'
-                host = url.split('/')[2].split(':')[0] if url.startswith(('http://', 'https://')) else url
-                url = f"rtsp://{host}:8554/{camera_name}"
-                logging.info(f"go2rtc converted to RTSP: {url}")
-            elif '/webrtc' in url:
-                self._screen.show_popup_message('WebRTC not supported, trying Stream')
-                url = url.replace('/webrtc', '/stream')
-
-            if self.mpv:
-                self.mpv.terminate()
-            self.mpv = mpv.MPV(
-                fullscreen=True,
-                log_handler=self.mpv_log,
-                vo='x11',
-                hwdec='no',
-                video_sync='display-desync',
-                framedrop='decoder+vo',
-                profile='low-latency',
-                cache=False,
-                demuxer_max_bytes='8K',
-                demuxer_max_back_bytes='16K',
-                demuxer_readahead_secs=0,
-                stream_buffer_size='8K',
-                correct_pts=False,
-                demuxer_thread=False,
-                network_timeout=0.5,
-                stream_lavf_o='flags=low_delay',
-                ytdl=False,
-                save_position_on_quit=False,
-                keep_open=False
-            )
-            self.mpv.wid = str(int(widget.get_window().get_xid()))
-            self.mpv.play(url)
-
-            if self.load_timeout_id:
-                GLib.source_remove(self.load_timeout_id)
-                self.load_timeout_id = None
-
-        except Exception as e:
-            error_msg = str(e)[:80]
-            logging.error(f"Load failed: {error_msg}", exc_info=True)
-            for child in widget.get_children():
-                widget.remove(child)
-            widget.add(self.init_cam_label)
-            self.init_cam_label.set_markup(f"<span color='red'>{_('Load failed: {error}').format(error=error_msg)}</span>")
+        self.cam_controller.load_camera(widget)
 
     def mpv_log(self, loglevel, component, message):
-        log_msg = f"[MPV-{loglevel}] {component}: {message}"
-        if 'overread' in message and 'mjpeg' in message:
-            logging.debug(f"Ignored MJPG overread: {message}")
-            return
-        if loglevel == 'debug' and any(kw in message for kw in ['geometry', 'window', 'size', 'xid']):
-            logging.debug(log_msg)
-        elif loglevel == 'error':
-            if "failed to recognize" in log_msg.lower():
-                log_msg = _("Error: Camera not found!")
-            self.init_cam_label.set_markup(f"<span color='red'>{log_msg}</span>")
-            logging.error(log_msg)
+        self.cam_controller.mpv_log(loglevel, component, message)
 
     def check_load_timeout(self):
-        if not self.cam_loading_triggered or not self.calibrate_cam:
-            return True
-        if not self.mpv:
-            self.init_cam_label.set_markup(_("<span color='red'>Load timeout!</span>"))
-            return False
-        return True
-
-    def _update_progress_icon(self, icon_name):
-        hbox = self.widgets.get("progress_hbox")
-        if not hbox:
-            return
-        if hbox.get_children():
-            old_icon = hbox.get_children()[0]
-            hbox.remove(old_icon)
-        new_icon = self._gtk.Image(icon_name, *self._scaled(0.03, 0.04))
-        self.widgets["progress_icon"] = new_icon
-        hbox.pack_start(new_icon, False, False, 5)
-        hbox.show_all()
+        return self.cam_controller.check_load_timeout()
 
     def process_update(self, action, data):
         if action == "notify_status_update":
@@ -532,17 +441,17 @@ class Panel(ScreenPanel):
                 if "nozzle_y_offset_val" in variables:
                     self.y_offset = variables["nozzle_y_offset_val"]
                     self.current_y_offset_label.set_markup(f"<span>Y:{self.y_offset}</span>")
+
+            if "ktamv" in data:
+                self._update_calibration_status(data["ktamv"])
+
         elif action == "notify_gcode_response":
             cleaned_data = "\n".join([
                 line.strip()[2:].strip() if line.strip().startswith(("//", "!!")) else line.strip()
                 for line in data.splitlines()
                 if line.strip()
             ])
-            if any(keyword in data.lower() for keyword in ["fail", "error", "out", "404"]):
-                self.widgets["progress_stack"].set_visible_child_name("fail")
-                self.widgets["progress_data_fail"].set_text(cleaned_data)
-                self.bottom_container.set_visible_child_name("fail")
-            elif "save offset" in data.lower():
+            if "offset from center" in data.lower():
                 self.widgets["progress_stack"].set_visible_child_name("success")
                 pattern = r"X:([\d.+-]+)\s+Y:([\d.+-]+)"
                 match = re.search(pattern, data)
@@ -552,9 +461,8 @@ class Panel(ScreenPanel):
                     self.widgets["progress_data_success"].set_text(
                         f"X: {x_offset}  Y: {y_offset}\n{cleaned_data}"
                     )
-                    self.new_x_offset, self.new_y_offset = x_offset, y_offset
                     self.bottom_container.set_visible_child_name("finish")
-            elif any(keyword in data.lower() for keyword in ["pixel", "***"]):
+            elif any(keyword in data.lower() for keyword in ["pixel", "uv:"]):
                 self.widgets["progress_stack"].set_visible_child_name("in_progress")
                 self.widgets["progress_data_in_progress"].set_text(cleaned_data)
 
@@ -562,20 +470,80 @@ class Panel(ScreenPanel):
         self.init_cam_tip()
         if self.cam_box.get_window():
             self.load_calibrate_camera(self.cam_box)
+        res = self._screen.apiclient.send_request("printer/objects/query?ktamv")
+        data = res.get('status', {})
+
+        if "ktamv" in data:
+            ktamv_status = data["ktamv"]
+            calibration_status = ktamv_status.get("calibration_status", {})
+            current_state = ktamv_status.get("current_state", "idle")
+            if current_state != "idle" or calibration_status.get("status") == "running":
+                self.right_container.set_visible_child_name("progress")
+            self._update_calibration_status(ktamv_status)
+
+    def _smooth_progress_update(self, target_progress):
+        if target_progress > self.current_progress:
+            progress_diff = target_progress - self.current_progress
+            if progress_diff > 20:
+                step = 0.18
+            elif progress_diff > 5:
+                step = 0.15
+            else:
+                step = 0.1
+            if progress_diff <= step:
+                self.current_progress = target_progress
+            else:
+                self.current_progress += step
+        elif target_progress < self.current_progress:
+            return False
+
+        if "progress_bar" in self.widgets:
+            self.widgets["progress_bar"].set_fraction(self.current_progress / 100.0)
+
+        if abs(self.current_progress - target_progress) > 0.1:
+            if self.progress_timer_id is not None:
+                GLib.source_remove(self.progress_timer_id)
+            self.progress_timer_id = GLib.timeout_add(100, self._smooth_progress_update, target_progress)
+        else:
+            self.progress_timer_id = None
+        return False
+
+    def _update_calibration_status(self, ktamv_status, set_right_container=False):
+        calibration_status = ktamv_status.get("calibration_status", {})
+        polling_state = ktamv_status.get("polling_state", {})
+
+        if set_right_container:
+            current_state = ktamv_status.get("current_state", "idle")
+            if current_state != "idle" or calibration_status.get("status") == "running":
+                self.right_container.set_visible_child_name("progress")
+
+        if "error" in polling_state and polling_state["error"] is not None:
+            self.widgets["progress_stack"].set_visible_child_name("fail")
+            self.widgets["progress_data_fail"].set_text(polling_state["error"])
+            if self.right_container.get_visible_child_name() == "progress":
+                self.bottom_container.set_visible_child_name("fail")
+        else:
+            if self.right_container.get_visible_child_name() == "progress":
+                if calibration_status.get("status") == "error":
+                    self.widgets["progress_stack"].set_visible_child_name("fail")
+                    self.widgets["progress_data_fail"].set_text(calibration_status.get("step_description", "Calibration error"))
+                    self.bottom_container.set_visible_child_name("fail")
+                elif calibration_status.get("current_step") == "COMPLETE":
+                    self.widgets["progress_stack"].set_visible_child_name("success")
+                    self.bottom_container.set_visible_child_name("finish")
+                else:
+                    step_description = calibration_status.get("step_description", "Calibration in progress...")
+                    self.widgets["progress_data_in_progress"].set_text(step_description)
+                    if "progress_hbox" in self.widgets:
+                        if "Homing and cleaning the nozzle" in step_description:
+                            self.widgets["progress_hbox"].hide()
+                            logging.info("Hiding progress bar during homing and cleaning the nozzle")
+                        else:
+                            self.widgets["progress_hbox"].show()
+                            target_progress = calibration_status.get("progress", 0)
+                            if "progress_bar" in self.widgets:
+                                if self.current_progress < target_progress:
+                                    self._smooth_progress_update(target_progress)
 
     def deactivate(self):
-        if self.mpv:
-            with suppress(Exception):
-                self.mpv.terminate()
-            self.mpv = None
-        self.cam_loading_triggered = False
-        self.load_retry_count = 0
-        self.layout_retry_count = 0
-
-        for child in self.cam_box.get_children():
-            self.cam_box.remove(child)
-        self.cam_box.add(self.init_cam_label)
-        self.init_cam_label.set_text(_("Loading calibration camera..."))
-        if self.load_timeout_id:
-            GLib.source_remove(self.load_timeout_id)
-        self.load_timeout_id = GLib.timeout_add_seconds(5, self.check_load_timeout)
+        self.cam_controller.deactivate()
