@@ -212,6 +212,7 @@ class ModelConfig:
             ("F430NX", "CreatBot_F430NX"),
             ("D600Pro2HS", "CreatBot_D600Pro2"),
             ("D600Pro2HS_KIT", "CreatBot_D600Pro2_V0"),
+            ("D600Pro3HS", "CreatBot_D600Pro3"),
             ("D1000HS", "CreatBot_D1000"),
             ("D1000HS_KIT", "CreatBot_D1000_V0"),
             ("D1000ProHS", "CreatBot_D1000Pro"),
