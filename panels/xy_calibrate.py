@@ -16,9 +16,6 @@ class Panel(ScreenPanel):
         self.x_offset = self.y_offset = 0.0
 
         self.cam_controller = CameraController(self)
-        self.current_progress = 0.0
-        self.progress_update_count = 0
-        self.progress_timer_id = None
 
         self._init_widgets()
         self._init_containers()
@@ -169,19 +166,6 @@ class Panel(ScreenPanel):
             hbox.pack_start(icon, False, False, 5)
             hbox.pack_start(title, False, False, 0)
             vbox.pack_start(hbox, False, False, 0)
-
-            if stack_name == "in_progress":
-                progress_hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=8)
-                progress_hbox.hide()
-                progress_hbox.set_halign(Gtk.Align.CENTER)
-                self.widgets["progress_hbox"] = progress_hbox
-
-                progress_bar = Gtk.ProgressBar()
-                progress_bar.set_size_request(*self._scaled(0.45, 0.015))
-                progress_bar.set_show_text(False)
-                self.widgets["progress_bar"] = progress_bar
-                progress_hbox.pack_start(progress_bar, False, False, 0)
-                vbox.pack_start(progress_hbox, False, False, 10)
 
             data_label = self._create_label(
                 "", halign=Gtk.Align.START, line_wrap=True, max_width_chars=40
@@ -379,8 +363,6 @@ class Panel(ScreenPanel):
         self.left_container.set_visible_child_name("default")
         self.widgets["progress_data_in_progress"].set_text("")
         self.widgets["progress_stack"].set_visible_child_name("in_progress")
-        self.current_progress = 0.0
-        self.progress_update_count = 0
         self.right_container.set_visible_child_name("progress")
         self.bottom_container.set_visible_child_name("empty")
         self._screen._ws.klippy.gcode_script("KTAMV_CALIB_NOZZLE")
@@ -481,33 +463,6 @@ class Panel(ScreenPanel):
                 self.right_container.set_visible_child_name("progress")
             self._update_calibration_status(ktamv_status)
 
-    def _smooth_progress_update(self, target_progress):
-        if target_progress > self.current_progress:
-            progress_diff = target_progress - self.current_progress
-            if progress_diff > 20:
-                step = 0.18
-            elif progress_diff > 5:
-                step = 0.15
-            else:
-                step = 0.1
-            if progress_diff <= step:
-                self.current_progress = target_progress
-            else:
-                self.current_progress += step
-        elif target_progress < self.current_progress:
-            return False
-
-        if "progress_bar" in self.widgets:
-            self.widgets["progress_bar"].set_fraction(self.current_progress / 100.0)
-
-        if abs(self.current_progress - target_progress) > 0.1:
-            if self.progress_timer_id is not None:
-                GLib.source_remove(self.progress_timer_id)
-            self.progress_timer_id = GLib.timeout_add(100, self._smooth_progress_update, target_progress)
-        else:
-            self.progress_timer_id = None
-        return False
-
     def _update_calibration_status(self, ktamv_status, set_right_container=False):
         calibration_status = ktamv_status.get("calibration_status", {})
         polling_state = ktamv_status.get("polling_state", {})
@@ -534,16 +489,6 @@ class Panel(ScreenPanel):
                 else:
                     step_description = calibration_status.get("step_description", "Calibration in progress...")
                     self.widgets["progress_data_in_progress"].set_text(step_description)
-                    if "progress_hbox" in self.widgets:
-                        if "Homing and cleaning the nozzle" in step_description:
-                            self.widgets["progress_hbox"].hide()
-                            logging.info("Hiding progress bar during homing and cleaning the nozzle")
-                        else:
-                            self.widgets["progress_hbox"].show()
-                            target_progress = calibration_status.get("progress", 0)
-                            if "progress_bar" in self.widgets:
-                                if self.current_progress < target_progress:
-                                    self._smooth_progress_update(target_progress)
 
     def deactivate(self):
         self.cam_controller.deactivate()
