@@ -240,6 +240,9 @@ class Printer:
 
     def get_eddy_sensors(self):
         return self.get_config_section_list("probe_eddy_ng")
+    
+    def get_doors(self):
+        return self.get_config_section_list("door")
 
     def get_filament_sensors(self):
         if self.sensors is None:
