@@ -268,9 +268,9 @@ class Panel(ScreenPanel):
             clean_led_name = led_name.split()[1] if len(led_name.split()) > 1 else led_name
             
             if enable_led:
-                script_parts.append(f"SET_LED LED={clean_led_name} RED=1 GREEN=1 BLUE=1 WHITE=1")
+                script_parts.append(f"SET_LED LED={clean_led_name} RED=1 GREEN=1 BLUE=1 WHITE=1 TRANSMIT=1")
             else:
-                script_parts.append(f"SET_LED LED={clean_led_name} RED=0 GREEN=0 BLUE=0 WHITE=0")
+                script_parts.append(f"SET_LED LED={clean_led_name} RED=0 GREEN=0 BLUE=0 WHITE=0 TRANSMIT=1")
         script = "\n".join(script_parts)
         self._screen._send_action(None, "printer.gcode.script", {"script": script})
         logging.info(f"Set LED Control: {'On' if enable_led else 'Off'}")
@@ -317,6 +317,11 @@ class Panel(ScreenPanel):
                         self.menu_list["auto_door_lock"].set_active(False)
                         self._config.set("main", "auto_door_lock", "False")
                         self._config.save_user_config_options()
+
+            if "interior_lighting" in variables:
+                self.menu_list["led_control"].set_active(variables["interior_lighting"])
+            else:
+                self.menu_list["led_control"].set_active(False)
 
             if self._printer.get_macro("_door_detection") or self._printer.get_config_section_list("door"):
                 if "door_detect" in variables:
