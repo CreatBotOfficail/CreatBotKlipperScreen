@@ -412,14 +412,11 @@ class Panel(ScreenPanel):
         self._gtk.remove_dialog(dialog)
         
         if response_id == Gtk.ResponseType.YES:
-            doors = self._printer.get_locks() if hasattr(self._printer, 'get_doors') else []
+            doors = self._printer.get_locks() if hasattr(self._printer, 'get_locks') else []
             if not doors:
                 logging.debug("No doors found")
                 return
-            
-            for door in doors:
-                logging.debug(f"Unlocking door: {door}")
-                self._screen._ws.klippy.set_door_lock(door, "unlock")
+            self._screen._ws.klippy.set_door_lock("all", "unlock")
         else:
             logging.info("User canceled unlocking all doors")
 

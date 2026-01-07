@@ -307,6 +307,8 @@ class KlipperScreen(Gtk.Window):
             requested_updates['objects'][p] = ["value"]
         for led in self.printer.get_leds():
             requested_updates['objects'][led] = ["color_data"]
+        for d in self.printer.get_doors():
+            requested_updates['objects'][d] = ["doors"]
 
         self._ws.klippy.object_subscription(requested_updates)
 
@@ -1126,6 +1128,7 @@ class KlipperScreen(Gtk.Window):
             *self.printer.get_filament_sensors(),
             *self.printer.get_output_pins(),
             *self.printer.get_leds(),
+            *self.printer.get_doors(),
         )
 
         data = self.apiclient.send_request("printer/objects/query?" + "&".join(items))

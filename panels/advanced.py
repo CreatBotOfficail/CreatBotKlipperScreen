@@ -242,6 +242,7 @@ class Panel(ScreenPanel):
         auto_door_lock_switch = self.menu_list.get("auto_door_lock")
         if response_id == Gtk.ResponseType.YES:
             self.set_configuration_feature("auto_door_lock", False)
+            self._screen._ws.klippy.set_door_lock("all", "unlock")
             if auto_door_lock_switch:
                 auto_door_lock_switch.set_active(False)
         else:
