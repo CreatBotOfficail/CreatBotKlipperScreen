@@ -166,7 +166,7 @@ class Panel(ScreenPanel):
         self.license_box["key_input"] = Gtk.Entry(hexpand=False, vexpand=False)
         self.license_box["key_input"].set_max_length(self.key_len)
         self.license_box["key_input"].set_text(key)
-        self.license_box["key_input"].connect("button-press-event", self.on_show_keyboard)
+        self.license_box["key_input"].connect("button-release-event", self.on_show_keyboard)
         self.grid.attach(self.license_box["key_input"], 1, 5, 1, 1)
 
         image = self._gtk.Image("license", self._gtk.content_width * 0.4, self._gtk.content_height * 0.4)
