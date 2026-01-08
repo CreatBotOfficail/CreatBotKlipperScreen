@@ -16,7 +16,7 @@ class Panel(ScreenPanel):
         super().__init__(screen, title)
         self.widgets = {}
         self.distance = "1"
-        self.distances = ["0.5", "1", "5"]
+        self.distances = ["0.1", "0.5", "1"]
         self.mode = "check"
         
         # Initialize camera controller
@@ -27,7 +27,7 @@ class Panel(ScreenPanel):
         self._build_layout()
 
         self.cam_controller.init_cam_tip()
-        GLib.timeout_add_seconds(1, self.cam_controller.delayed_load_camera)
+        GLib.timeout_add_seconds(1, self.cam_controller.load_camera)
 
     def _scaled(self, w_rate: float, h_rate=None):
         h_rate = h_rate or w_rate
@@ -61,7 +61,7 @@ class Panel(ScreenPanel):
     def _init_widgets(self):
         # Title label
         self.title_label = self._create_label(
-            _("基准点检查"),
+            _("datum point alignment"),
             markup=True,
             halign=Gtk.Align.CENTER,
             margin_top=10
@@ -159,14 +159,13 @@ class Panel(ScreenPanel):
             spacing=15,
             halign=Gtk.Align.CENTER,
             valign=Gtk.Align.CENTER,
-            margin_top=20,
-            margin_bottom=20
+            margin_bottom=10
         )
         
         # Create check mode buttons
-        self.check_btn = self._create_button(_("位置检查"), None, f"color1", self.on_position_check)
-        self.start_btn = self._create_button(_("开始校准"), None, f"color3", self.on_start_calibrate)
-        self.cancel_btn = self._create_button(_("返回"), None, f"color2", self.on_cancel)
+        self.check_btn = self._create_button(_("Position check"), None, f"color1", self.on_position_check)
+        self.start_btn = self._create_button(_("Start calibration"), None, f"color3", self.on_start_calibrate)
+        self.cancel_btn = self._create_button(_("Cancel"), None, f"color2", self.on_cancel)
         
         # Add buttons to check bottom box
         self.check_bottom_box.pack_start(self.check_btn, False, False, 0)
@@ -179,8 +178,7 @@ class Panel(ScreenPanel):
             spacing=10,
             halign=Gtk.Align.FILL,
             valign=Gtk.Align.CENTER,
-            margin_top=20,
-            margin_bottom=20
+            margin_bottom=10
         )
         
         # Left section - distance buttons (aligned to bottom)
@@ -225,8 +223,8 @@ class Panel(ScreenPanel):
             valign=Gtk.Align.END
         )
         # Create calibrate mode buttons
-        self.save_btn = self._create_button(_("保存设置"), None, f"color3", self.on_save_settings)
-        self.cancel_cal_btn = self._create_button(_("取消"), None, f"color2", self.on_cancel_calibrate)
+        self.save_btn = self._create_button(_("Save settings"), None, f"color3", self.on_save_settings)
+        self.cancel_cal_btn = self._create_button(_("Cancel"), None, f"color2", self.on_cancel_calibrate)
         # Add buttons to right box
         calibrate_right_box.pack_start(self.save_btn, False, False, 0)
         calibrate_right_box.pack_start(self.cancel_cal_btn, False, False, 0)
@@ -255,7 +253,7 @@ class Panel(ScreenPanel):
         example_grid = Gtk.Grid(
             column_homogeneous=True,
             row_homogeneous=True,
-            column_spacing=10
+            column_spacing=5
         )
         
         def _create_image_box(icon_name, label_text, status_text):
@@ -276,21 +274,21 @@ class Panel(ScreenPanel):
             
             # Add to vbox
             vbox.pack_start(event_box, False, False, 0)
-            vbox.pack_start(self._create_label(label_text, halign=Gtk.Align.CENTER), False, False, 0)
+            vbox.pack_start(self._create_label(label_text, markup=True, halign=Gtk.Align.CENTER), False, False, 0)
             vbox.pack_start(self._create_label(status_text, markup=True, halign=Gtk.Align.CENTER), False, False, 0)
             
             return vbox
         
         # Correct example
-        correct_box = _create_image_box("result-good", _("正确示范"), "✓")
+        correct_box = _create_image_box("nozzle-photo1", _("<span color='green' font-size='small'>Correct</span>"), "✓")
         example_grid.attach(correct_box, 0, 0, 1, 1)
         
-        # Wrong example 1
-        wrong1_box = _create_image_box("result-bed", _("错误示范"), "✗")
+        # Wrong example 1 
+        wrong1_box = _create_image_box("nozzle-photo2", _("<span color='red' font-size='small'>Nozzle not clean</span>"), "✗")
         example_grid.attach(wrong1_box, 1, 0, 1, 1)
         
         # Wrong example 2
-        wrong2_box = _create_image_box("result-bed", _("错误示范"), "✗")
+        wrong2_box = _create_image_box("nozzle-photo3", _("<span color='red' font-size='small'>Position offset</span>"), "✗")
         example_grid.attach(wrong2_box, 2, 0, 1, 1)
         
         # Instructions text in multiple labels
@@ -299,7 +297,7 @@ class Panel(ScreenPanel):
         
         # Header label
         header_label = self._create_label(
-            _("注意事项："),
+            _("Notes:"),
             markup=True,
             halign=Gtk.Align.START
         )
@@ -307,32 +305,45 @@ class Panel(ScreenPanel):
         
         # Item 1
         item1_label = self._create_label(
-            _("1. 该设置为高级设置如非必要请勿校准，常见需要校准场景为更换喷头，更换热端，撞机或者调整机械零位后等场景下"),
+            _("1. Advanced setting: Use only when necessary " \
+              "(e.g., nozzle/hotend replacement, post-collision, " \
+              "or mechanical zero adjustment)."),
             halign=Gtk.Align.START,
+            xalign=0.0,
             line_wrap=True,
             max_width_chars=40,
             line_wrap_mode=Pango.WrapMode.WORD
         )
+        item1_label.override_font(Pango.FontDescription("small"))
+        item1_label.set_margin_start(0)
         instructions_box.pack_start(item1_label, False, False, 0)
         
         # Item 2
         item2_label = self._create_label(
-            _("2. 如需校准请严格按照上图示例操作，否则将会造成视觉模组损坏或者打印异常等问题"),
+            _("2. Follow the image guide strictly during calibration " \
+              "to avoid damaging the vision module or " \
+              "causing print errors."),
             halign=Gtk.Align.START,
+            xalign=0.0,
             line_wrap=True,
             max_width_chars=40,
             line_wrap_mode=Pango.WrapMode.WORD
         )
+        item2_label.override_font(Pango.FontDescription("small"))
+        item2_label.set_margin_start(0)
         instructions_box.pack_start(item2_label, False, False, 0)
         
         # Item 3
         item3_label = self._create_label(
-            _("3. 如有疑惑请联系售后支持"),
+            _("3. If you have any questions, please contact customer service."),
             halign=Gtk.Align.START,
+            xalign=0.0,
             line_wrap=True,
             max_width_chars=40,
             line_wrap_mode=Pango.WrapMode.WORD
         )
+        item3_label.override_font(Pango.FontDescription("small"))
+        item3_label.set_margin_start(0)
         instructions_box.pack_start(item3_label, False, False, 0)
         
         # Add all to right vbox
@@ -410,7 +421,7 @@ class Panel(ScreenPanel):
     def on_start_calibrate(self, widget):
         # Switch to calibration mode
         self.mode = "calibrate"
-        self.title_label.set_markup(_("基准点校准"))
+        self.title_label.set_markup(_("Datum Calibration"))
         
         # Switch right content to control grid
         self.right_stack.set_visible_child_name("calibrate")
@@ -425,7 +436,7 @@ class Panel(ScreenPanel):
     def on_cancel_calibrate(self, widget):
         # Switch back to check mode
         self.mode = "check"
-        self.title_label.set_markup(_("基准点检查"))
+        self.title_label.set_markup(_("Datum Align"))
         
         # Switch right content back to check content
         self.right_stack.set_visible_child_name("check")
@@ -546,7 +557,7 @@ class Panel(ScreenPanel):
         vbox.pack_start(event_box, True, True, 0)
         
         # Create dialog and show fullscreen
-        self.image_dialog = self._gtk.Dialog(_("示例图片"), None, vbox, self.close_image_dialog)
+        self.image_dialog = self._gtk.Dialog(_("Example Image"), None, vbox, self.close_image_dialog)
         self.image_dialog.fullscreen()
         
     def close_image_dialog(self, dialog, response_id=None):
