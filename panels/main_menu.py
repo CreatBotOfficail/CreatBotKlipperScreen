@@ -272,18 +272,18 @@ class Panel(MenuPanel):
                 )
         any_locked = False
         lock_device = self._printer.get_doors()
-        if lock_device[0] in data:
-            doors = self._printer.get_stat(lock_device[0], "doors")
-            for _, door_info in doors.items():
-                if door_info.get("locked", False):
-                    any_locked = True
-                    logging.info(f"Door {_} locked")
-                    break
-            if self.unlock_Button:
-                if any_locked:
-                    self.unlock_Button.set_image(self._gtk.Image("lock"))
-                else:
-                    self.unlock_Button.set_image(self._gtk.Image("unlock"))
+        if lock_device and lock_device[0] in data:
+                doors = self._printer.get_stat(lock_device[0], "doors")
+                for _, door_info in doors.items():
+                    if door_info.get("locked", False):
+                        any_locked = True
+                        logging.info(f"Door {_} locked")
+                        break
+                if self.unlock_Button:
+                    if any_locked:
+                        self.unlock_Button.set_image(self._gtk.Image("lock"))
+                    else:
+                        self.unlock_Button.set_image(self._gtk.Image("unlock"))
         if "save_variables" in data:
             variables = data["save_variables"].get("variables", {})
             if "auto_door_lock" in variables:
