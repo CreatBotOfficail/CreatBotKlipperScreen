@@ -120,6 +120,17 @@ class Panel(ScreenPanel):
         else:
             self.max_z_velocity = max_velocity
 
+    def _update_position_labels(self, data):
+        """Update X, Y, Z position labels based on homed state and current position"""
+        homed_axes = self._printer.get_stat("toolhead", "homed_axes")
+        for i, axis in enumerate(("x", "y", "z")):
+            if axis not in homed_axes:
+                self.labels[f"pos_{axis}"].set_text(f"{axis.upper()}: ?")
+            elif "gcode_move" in data and "gcode_position" in data["gcode_move"]:
+                self.labels[f"pos_{axis}"].set_text(
+                    f"{axis.upper()}: {data['gcode_move']['gcode_position'][i]:.2f}"
+                )
+    
     def process_update(self, action, data):
         if action != "notify_status_update":
             return
@@ -129,20 +140,17 @@ class Panel(ScreenPanel):
             or "toolhead" in data
             and "homed_axes" in data["toolhead"]
         ):
-            homed_axes = self._printer.get_stat("toolhead", "homed_axes")
-            for i, axis in enumerate(("x", "y", "z")):
-                if axis not in homed_axes:
-                    self.labels[f"pos_{axis}"].set_text(f"{axis.upper()}: ?")
-                elif "gcode_move" in data and "gcode_position" in data["gcode_move"]:
-                    self.labels[f"pos_{axis}"].set_text(
-                        f"{axis.upper()}: {data['gcode_move']['gcode_position'][i]:.2f}"
-                    )
+            self._update_position_labels(data)
         if "stepper_enable" in data:
             steppers = data["stepper_enable"]["steppers"]
             self.stepper_enable = steppers.get("stepper_x", True) and steppers.get("stepper_y", True)
             self.update_motor_button()
     
     def update_motor_button(self):
+        res = self._screen.apiclient.send_request("printer/objects/query?gcode_move")
+        data = res.get('status', {})
+        self._update_position_labels(data)
+
         if self.stepper_enable:
             self.buttons["motors_switch"].set_label(_("Disable Motors"))
             self.buttons["motors_switch"].set_image(self._gtk.Image("motor-off"))
