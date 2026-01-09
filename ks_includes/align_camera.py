@@ -59,7 +59,6 @@ class CameraController:
         self.init_cam_label = None
         self.cam_box = None
         self.camera_container = None
-        self.appsink = None
         self.pixsink = None
         self.is_playing = False
         self.connection_check_id = None
@@ -150,20 +149,12 @@ class CameraController:
                 "decodebin ! "  
                 "videoconvert ! video/x-raw,format=RGB ! "
                 f"videoscale ! video/x-raw,width={width},height={height} ! "
-                "tee name=t ! "
-                "queue ! "
-                "appsink name=sink emit-signals=true max-buffers=2 drop=true "
-                "t. ! "
-                "queue ! "
                 "gdkpixbufsink name=vsink"
             )
         else:
             logging.error(f"Unsupported URL scheme: {url}")
             return
         self.pipeline = Gst.parse_launch(pipeline_desc)
-        self.appsink = self.pipeline.get_by_name("sink")
-        self.appsink.connect("new-sample", self._on_new_sample)
-        
         self.pixsink = self.pipeline.get_by_name("vsink")
         self.pixsink.connect("notify::last-pixbuf", self._on_new_pixbuf)
         
@@ -172,43 +163,6 @@ class CameraController:
         bus.connect("message::error", self._on_error)
         bus.connect("message::warning", self._on_warning)
         bus.connect("message::eos", self._on_eos)
-    
-    def _on_new_sample(self, sink):
-        sample = sink.emit("pull-sample")
-        if sample is None:
-            return Gst.FlowReturn.ERROR
-        
-        buf = sample.get_buffer()
-        caps = sample.get_caps()
-        
-        if not caps:
-            return Gst.FlowReturn.ERROR
-        structure = caps.get_structure(0)
-        width = structure.get_value('width')
-        height = structure.get_value('height')
-        
-        if width is None or height is None:
-            return Gst.FlowReturn.ERROR
-        result, mapinfo = buf.map(Gst.MapFlags.READ)
-        if not result:
-            return Gst.FlowReturn.ERROR
-        try:
-            pixbuf = GdkPixbuf.Pixbuf.new_from_data(
-                mapinfo.data,
-                GdkPixbuf.Colorspace.RGB,
-                False,
-                8,
-                width,
-                height,
-                width*3
-            )
-            if self.video_widget:
-                GLib.idle_add(self.video_widget.set_pixbuf, pixbuf)
-        finally:
-            buf.unmap(mapinfo)
-        
-        return Gst.FlowReturn.OK
-    
     def _on_new_pixbuf(self, sink, pspec):
         pixbuf = sink.get_property(pspec.name)
         if pixbuf and self.video_widget:
@@ -238,7 +192,6 @@ class CameraController:
             try:
                 self.pipeline.set_state(Gst.State.NULL)
                 self.pipeline = None
-                self.appsink = None
                 self.pixsink = None
                 self.is_playing = False
             except Exception as e:
