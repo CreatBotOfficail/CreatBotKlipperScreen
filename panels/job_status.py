@@ -372,31 +372,37 @@ class Panel(ScreenPanel):
         warning_box.set_valign(Gtk.Align.CENTER)
 
         warning1 = Gtk.Label()
-        warning1.set_markup(_("<span font-size='large'>1. When performing internal operations, "
+        warning1.set_markup(_("<span>1. When performing internal operations, "
                             "please avoid the print platform and print head carefully to prevent high-temperature burns.</span>"))
-        warning1.set_halign(Gtk.Align.CENTER)
+        warning1.set_halign(Gtk.Align.START)
         warning1.set_valign(Gtk.Align.CENTER)
+        warning1.set_xalign(0.0)
         warning1.set_line_wrap(True)
-        warning1.set_max_width_chars(50)
+        warning1.set_max_width_chars(60)
+        warning1.set_line_wrap_mode(Pango.WrapMode.WORD)
         warning_box.pack_start(warning1, True, True, 0)
 
         warning2 = Gtk.Label()
-        warning2.set_markup(_("<span font-size='large'>2. Pay attention to mechanical moving parts during "
+        warning2.set_markup(_("<span>2. Pay attention to mechanical moving parts during "
                             "operation to avoid collisions that may damage the equipment or model.</span>"))
-        warning2.set_halign(Gtk.Align.CENTER)
+        warning2.set_halign(Gtk.Align.START)
         warning2.set_valign(Gtk.Align.CENTER)
+        warning2.set_xalign(0.0)
         warning2.set_line_wrap(True)
-        warning2.set_max_width_chars(50)
+        warning2.set_max_width_chars(60)
+        warning2.set_line_wrap_mode(Pango.WrapMode.WORD)
         warning_box.pack_start(warning2, True, True, 0)
 
         warning3 = Gtk.Label()
-        warning3.set_markup(_("<span font-size='large'>3. Do not keep the chamber door open for a long time. "
+        warning3.set_markup(_("<span>3. Do not keep the chamber door open for a long time. "
                             "If material replacement or maintenance is needed, it is recommended to close it immediately after "
                             "operation to maintain a stable printing environment and ensure model quality.</span>"))
-        warning3.set_halign(Gtk.Align.CENTER)
+        warning3.set_halign(Gtk.Align.START)
         warning3.set_valign(Gtk.Align.CENTER)
+        warning3.set_xalign(0.0)
         warning3.set_line_wrap(True)
-        warning3.set_max_width_chars(50)
+        warning3.set_max_width_chars(60)
+        warning3.set_line_wrap_mode(Pango.WrapMode.WORD)
         warning_box.pack_start(warning3, True, True, 0)
         
         vbox.pack_start(warning_box, True, True, 0)
@@ -557,6 +563,21 @@ class Panel(ScreenPanel):
             self.get_file_metadata(response=True)
         elif action != "notify_status_update":
             return
+
+        any_locked = False
+        lock_device = self._printer.get_doors()
+        if lock_device and lock_device[0] in data:
+                doors = self._printer.get_stat(lock_device[0], "doors")
+                for _, door_info in doors.items():
+                    if door_info.get("locked", False):
+                        any_locked = True
+                        logging.info(f"Door {_} locked")
+                        break
+                if 'unlock_all' in self.buttons:
+                    if any_locked:
+                        self.buttons['unlock_all'].set_image(self._gtk.Image("lock"))
+                    else:
+                        self.buttons['unlock_all'].set_image(self._gtk.Image("unlock"))
 
         if "save_variables" in data and "variables" in data["save_variables"]:
             variables = data["save_variables"]["variables"]
