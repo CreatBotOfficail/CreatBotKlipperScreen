@@ -285,7 +285,7 @@ class Panel(ScreenPanel):
                 callback=lambda d, r: None
             )
 
-            GLib.timeout_add_seconds(0.1, self.execute_local_update)
+            GLib.timeout_add(100, self.execute_local_update)
 
     def execute_local_update(self):
         try:
