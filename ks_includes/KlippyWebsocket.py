@@ -289,6 +289,15 @@ class MoonrakerApi:
             *args
         )
 
+    def set_door_lock(self, door, state, callback=None, *args):
+        logging.debug(f"Sending printer.door.set_lock: door={door}, state={state}")
+        return self._ws.send_method(
+            "printer.door.set_lock",
+            {"door": door, "state": state},
+            callback,
+            *args
+        )
+
     def print_cancel(self, callback=None, *args):
         logging.debug("Sending printer.print.cancel")
         return self._ws.send_method(
