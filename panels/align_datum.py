@@ -11,13 +11,14 @@ from ks_includes.align_camera import CameraController
 
 class Panel(ScreenPanel):
     """Alignment datum calibration panel."""
-    def __init__(self, screen, title):
+    def __init__(self, screen, title, **kwargs):
         title = title or _("Datum Align")
         super().__init__(screen, title)
         self.widgets = {}
         self.distance = "1"
         self.distances = ["0.1", "0.5", "1"]
         self.mode = "check"
+        self.start_btn_active = kwargs.get("start_btn_active", False)
         
         # Initialize camera controller
         self.cam_controller = CameraController(self)
@@ -25,6 +26,8 @@ class Panel(ScreenPanel):
         self._init_widgets()
         self._init_containers()
         self._build_layout()
+        logging.info(f"start_btn_active: {self.start_btn_active}")
+        self.start_btn.set_sensitive(self.start_btn_active)
 
         self.cam_controller.init_cam_tip()
         GLib.timeout_add_seconds(1, self.cam_controller.load_camera)
@@ -522,7 +525,7 @@ class Panel(ScreenPanel):
 
     def activate(self):
         # Re-initialize camera when panel is activated
-        self.start_btn.set_sensitive(False)
+        self.start_btn.set_sensitive(self.start_btn_active)
         self.cam_controller.init_cam_tip()
         if self.cam_box.get_window():
             self.cam_controller.load_camera(self.cam_box)

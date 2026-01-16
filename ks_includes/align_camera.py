@@ -68,7 +68,7 @@ class CameraController:
             orientation=Gtk.Orientation.HORIZONTAL,
             spacing=0,
             halign=Gtk.Align.START,
-            valign=Gtk.Align.CENTER,
+            valign=Gtk.Align.START,
         )
 
         camera_container = Gtk.EventBox()
@@ -78,9 +78,9 @@ class CameraController:
             Gdk.RGBA(0, 0, 0, 1)
         )
         camera_container.set_halign(Gtk.Align.CENTER)
-        camera_container.set_valign(Gtk.Align.CENTER)
+        camera_container.set_valign(Gtk.Align.START)
         camera_container.set_hexpand(True)
-        camera_container.set_vexpand(True)
+        camera_container.set_vexpand(False)
 
         self.init_cam_label = Gtk.Label()
         self.init_cam_label.set_text(_("Loading calibration camera..."))

@@ -9,13 +9,16 @@ from ks_includes.align_camera import CameraController
 
 class Panel(ScreenPanel):
     """Camera XY offset calibration panel."""
-    def __init__(self, screen, title):
+    def __init__(self, screen, title, **kwargs):
         title = title or _("XY Calibrate")
         super().__init__(screen, title)
         self.widgets = {}
         self.x_offset = self.y_offset = 0.0
-
+        self.finish_action = kwargs.get("finish_action", None)
         self.cam_controller = CameraController(self)
+
+        self.countdown_running = False
+        self.countdown_timer_id = None
 
         self._init_widgets()
         self._init_containers()
@@ -260,7 +263,7 @@ class Panel(ScreenPanel):
 
     def _create_tip_text2(self):
         label = self._create_label(
-            _("To ensure calibration accuracy, please perform the following steps first:\n"
+            _("To ensure calibration accuracy, please perform the following steps first:\n\n"
               "1. Unload the filament out of the nozzles\n"
               "2. Thoroughly clean the nozzles"),
             halign=Gtk.Align.START,
@@ -316,12 +319,8 @@ class Panel(ScreenPanel):
         self.widgets["btn_print"] = self._create_button(
             _("Save"), self.on_save_calibrate
         )
-        self.widgets["btn_finish"] = self._create_button(
-            _("Print verification"), self.on_to_print
-        )
         box.pack_start(self.widgets["btn_return"], False, False, 0)
         box.pack_start(self.widgets["btn_print"], False, False, 0)
-        box.pack_start(self.widgets["btn_finish"], False, False, 0)
         return box
 
     def _bottom_empty_panel(self):
@@ -372,34 +371,36 @@ class Panel(ScreenPanel):
         self.left_container.set_visible_child_name("default")
         self.right_container.set_visible_child_name("default")
         self.bottom_container.set_visible_child_name("start")
+    
+    def _countdown_timer(self):
+        self.countdown -= 1
+        if self.countdown > 0:
+            self.widgets["btn_print"].set_label(_("Next ({})").format(self.countdown))
+            return True
+        else:
+            self._countdown_finish()
+            return False
+    
+    def _countdown_finish(self):
+        self.countdown_running = False
+        if hasattr(self, 'countdown_timer_id') and self.countdown_timer_id:
+            GLib.source_remove(self.countdown_timer_id)
+            self.countdown_timer_id = None
+
+        self._return_default()
+        if self.finish_action == "continue_z":
+            self._screen.show_panel("dual_zcalibrate", auto_action="auto_start", remove_current=True)
+        else:
+            self._screen.show_panel("offset_manage", print_test=True, remove_current=True)
 
     def on_return_start(self, widget):
+        self._return_default()
+    
+    def _return_default(self):
         self.left_container.set_visible_child_name("default")
         self.right_container.set_visible_child_name("default")
         self.bottom_container.set_visible_child_name("start")
         self._screen._ws.klippy.gcode_script("KTAMV_CLEAR_STATUS")
-
-    def on_to_print(self, widget):
-        text = (
-            _("This operation is about to print the model")
-            + "\n\n"
-            + _("Please load two different colored PLA filaments!")
-        )
-        label = self._create_label(text, wrap=True, vexpand=True)
-        buttons = [
-            {"name": _("Accept"), "response": Gtk.ResponseType.OK, "style": "dialog-info"},
-            {"name": _("Cancel"), "response": Gtk.ResponseType.CANCEL, "style": "dialog-error"},
-        ]
-        self._gtk.Dialog(_("Camera Calibrate"), buttons, label, self.confirm_nozzle_xy_offset)
-
-    def confirm_nozzle_xy_offset(self, dialog, response_id):
-        self._gtk.remove_dialog(dialog)
-        if response_id == Gtk.ResponseType.OK:
-            self._screen._send_action(
-                self.widgets["btn_print"],
-                "printer.gcode.script",
-                {"script": "_NOZZLE_XY_OFFSET_CALIBRATE"}
-            )
 
     def init_cam_tip(self):
         self.cam_controller.init_cam_tip()
@@ -423,9 +424,8 @@ class Panel(ScreenPanel):
                 if "nozzle_y_offset_val" in variables:
                     self.y_offset = variables["nozzle_y_offset_val"]
                     self.current_y_offset_label.set_markup(f"<span>Y:{self.y_offset}</span>")
-
             if "ktamv" in data:
-                self._update_calibration_status(data["ktamv"])
+                self._update_calibration_status(data["ktamv"].get("calibration_status", {}))
 
         elif action == "notify_gcode_response":
             cleaned_data = "\n".join([
@@ -444,6 +444,14 @@ class Panel(ScreenPanel):
                         f"X: {x_offset}  Y: {y_offset}\n{cleaned_data}"
                     )
                     self.bottom_container.set_visible_child_name("finish")
+                    if self.finish_action:
+                        self._screen._ws.klippy.gcode_script("KTAMV_SAVE_OFFSET")
+                        self.countdown = 3
+                        self.countdown_running = True
+                        self.widgets["btn_print"].set_label(_("Next ({})").format(self.countdown))
+                        self.widgets["btn_return"].set_sensitive(False)
+                        self.widgets["btn_print"].set_sensitive(True)
+                        self.countdown_timer_id = GLib.timeout_add_seconds(1, self._countdown_timer)
             elif any(keyword in data.lower() for keyword in ["pixel", "uv:"]):
                 self.widgets["progress_stack"].set_visible_child_name("in_progress")
                 self.widgets["progress_data_in_progress"].set_text(cleaned_data)
@@ -461,34 +469,21 @@ class Panel(ScreenPanel):
             current_state = ktamv_status.get("current_state", "idle")
             if current_state != "idle" or calibration_status.get("status") == "running":
                 self.right_container.set_visible_child_name("progress")
-            self._update_calibration_status(ktamv_status)
+            self._update_calibration_status(calibration_status)
 
-    def _update_calibration_status(self, ktamv_status, set_right_container=False):
-        calibration_status = ktamv_status.get("calibration_status", {})
-        polling_state = ktamv_status.get("polling_state", {})
-
-        if set_right_container:
-            current_state = ktamv_status.get("current_state", "idle")
-            if current_state != "idle" or calibration_status.get("status") == "running":
-                self.right_container.set_visible_child_name("progress")
-
-        if "error" in polling_state and polling_state["error"] is not None:
-            self.widgets["progress_stack"].set_visible_child_name("fail")
-            self.widgets["progress_data_fail"].set_text(polling_state["error"])
-            if self.right_container.get_visible_child_name() == "progress":
+    def _update_calibration_status(self, calibration_status):
+        if self.right_container.get_visible_child_name() == "progress":
+            if calibration_status.get("status") == "error":
+                self.finish_action = None
+                self.widgets["progress_stack"].set_visible_child_name("fail")
+                self.widgets["progress_data_fail"].set_text(calibration_status.get("step_description", "Calibration error"))
                 self.bottom_container.set_visible_child_name("fail")
-        else:
-            if self.right_container.get_visible_child_name() == "progress":
-                if calibration_status.get("status") == "error":
-                    self.widgets["progress_stack"].set_visible_child_name("fail")
-                    self.widgets["progress_data_fail"].set_text(calibration_status.get("step_description", "Calibration error"))
-                    self.bottom_container.set_visible_child_name("fail")
-                elif calibration_status.get("current_step") == "COMPLETE":
-                    self.widgets["progress_stack"].set_visible_child_name("success")
-                    self.bottom_container.set_visible_child_name("finish")
-                else:
-                    step_description = calibration_status.get("step_description", "Calibration in progress...")
-                    self.widgets["progress_data_in_progress"].set_text(step_description)
+            elif calibration_status.get("current_step") == "COMPLETE":
+                self.widgets["progress_stack"].set_visible_child_name("success")
+                self.bottom_container.set_visible_child_name("finish")
+            else:
+                step_description = calibration_status.get("step_description", "Calibration in progress...")
+                self.widgets["progress_data_in_progress"].set_text(step_description)
 
     def deactivate(self):
         self.cam_controller.deactivate()
