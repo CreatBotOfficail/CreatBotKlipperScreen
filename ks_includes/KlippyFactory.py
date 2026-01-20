@@ -1,8 +1,17 @@
 import logging
 import os
+import configparser
 import subprocess
 
 from ks_includes.KlippyGcodes import KlippyGcodes
+
+update_engine_available = False
+try:
+    from update_engine import UpdateEngine
+    update_engine_available = True
+    logging.info("UpdateEngine imported successfully")
+except ImportError:
+    logging.info("UpdateEngine not available")
 
 
 class KlippyFactory:
@@ -174,7 +183,132 @@ class KlippyFactory:
         KlippyFactory.restart_application()
 
     @staticmethod
+    def backup_printer_config():
+        source_file = "/opt/printer_data/config/printer.cfg"
+        backup_dir = "/oem/config"
+        backup_file = os.path.join(backup_dir, "printer.cfg")
+
+        try:
+            if not os.path.exists(source_file):
+                logging.warning(f"Source file {source_file} does not exist")
+                return
+
+            with open(source_file, "r") as f:
+                lines = f.readlines()
+
+            in_save_config = False
+            backup_lines = []
+            current_section = None
+            has_content = False
+            sections_to_backup = {
+                "probe": ["z_offset"],
+                "stepper_z": ["position_endstop"]
+            }
+
+            for line in lines:
+                stripped_line = line.strip()
+
+                if "#*# <---------------------- SAVE_CONFIG ---------------------->" in stripped_line:
+                    in_save_config = True
+                    continue
+
+                if in_save_config:
+                    if stripped_line.startswith("#*# [") and stripped_line.endswith("]"):
+                        section_name = stripped_line[5:-1]
+                        current_section = section_name
+                        if section_name in sections_to_backup:
+                            if has_content:
+                                backup_lines.append("#*# \n")
+                            backup_lines.append(line)
+                    elif stripped_line.startswith("#*# ") and ("=" in stripped_line or ":" in stripped_line):
+                        if current_section and current_section in sections_to_backup:
+                            key = stripped_line[4:].split("=")[0].split(":")[0].strip()
+                            if key in sections_to_backup[current_section]:
+                                backup_lines.append(line)
+                                has_content = True
+
+            if backup_lines:
+                if not os.path.exists(backup_dir):
+                    os.makedirs(backup_dir, exist_ok=True)
+                    logging.info(f"Created backup directory {backup_dir}")
+
+                with open(backup_file, "w") as f:
+                    f.writelines(backup_lines)
+
+                logging.info(f"Printer config backed up to {backup_file}")
+            else:
+                logging.warning("No matching config items found in SAVE_CONFIG section")
+
+        except Exception as e:
+            logging.error(f"Error backing up printer config: {e}")
+
+    @staticmethod
+    def backup_nozzle_offset_variables():
+        source_file = "/opt/printer_data/config/config_variables.cfg"
+        backup_dir = "/oem/config"
+        backup_file = os.path.join(backup_dir, "config_variables.cfg")
+        variables_to_backup = ["nozzle_x_offset_val", "nozzle_y_offset_val", "nozzle_z_offset_val"]
+
+        try:
+            if not os.path.exists(source_file):
+                logging.warning(f"Source file {source_file} does not exist")
+                return
+
+            config = configparser.ConfigParser()
+            config.read(source_file)
+
+            if "Variables" not in config:
+                logging.warning("No [Variables] section found in config file")
+                return
+
+            backup_config = configparser.ConfigParser()
+            backup_config["Variables"] = {}
+
+            for var in variables_to_backup:
+                if var in config["Variables"]:
+                    backup_config["Variables"][var] = config["Variables"][var]
+                    logging.info(f"Backed up {var} = {config['Variables'][var]}")
+                else:
+                    logging.warning(f"Variable {var} not found in config file")
+
+            if not os.path.exists(backup_dir):
+                os.makedirs(backup_dir, exist_ok=True)
+                logging.info(f"Created backup directory {backup_dir}")
+
+            with open(backup_file, "w") as f:
+                backup_config.write(f)
+
+            logging.info(f"Nozzle offset variables backed up to {backup_file}")
+
+        except Exception as e:
+            logging.error(f"Error backing up nozzle offset variables: {e}")
+
+    @staticmethod
     def production_factory_reset(connect, config):
+        if update_engine_available:
+            logging.info("Executing production factory reset with update_engine format")
+            try:
+                try:
+                    from machine_config import MachineConfig
+                    cfg = MachineConfig()
+                    cfg.set("first_boot", True)
+                except Exception as e:
+                    logging.error(f"Error setting first_boot flag: {e}")
+                KlippyFactory.backup_printer_config()
+                KlippyFactory.backup_nozzle_offset_variables()
+                update_engine = UpdateEngine()
+                update_engine.misc_wipe_all()
+                logging.info("Production factory reset completed with format")
+            except Exception as e:
+                logging.error(f"Production factory reset with format failed: {e}")
+                # Fallback to legacy reset if update_engine fails
+                KlippyFactory._legacy_production_factory_reset(connect, config)
+        else:
+            logging.info("UpdateEngine not available, using legacy production factory reset")
+            KlippyFactory._legacy_production_factory_reset(connect, config)
+
+    @staticmethod
+    def _legacy_production_factory_reset(connect, config):
         KlippyFactory.clean_screen_config(config, True)
         KlippyFactory.clean_mainsail_web_config(connect)
         KlippyFactory.clean_maintenance(connect)

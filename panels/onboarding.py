@@ -65,8 +65,16 @@ class Panel(ScreenPanel):
             self._screen._ws.klippy.gcode_script("SET_KINEMATIC_POSITION Z=5\nG28")
         elif response_id == Gtk.ResponseType.APPLY:
             self._screen.show_panel("main_menu", remove_all=True, items=self._config.get_menu_items("__main"))
-            self._config.set("main", "onboarding", "False")
-            self._config.save_user_config_options()
+
+            try:
+                from machine_config import MachineConfig
+                cfg = MachineConfig()
+                cfg.delete("first_boot")
+            except Exception as e:
+                logging.info(f"Error deleting first_boot: {e}")
+                self._config.set("main", "onboarding", "False")
+                self._config.save_user_config_options()
+
             if self._screen.license.is_interface_valid() and not self._screen.license.is_active():
                 self._gtk.remove_dialog(dialog)
                 self._screen.show_panel("license", remove_all=False, onboarding=True)

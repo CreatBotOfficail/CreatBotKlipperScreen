@@ -814,6 +814,12 @@ class KlipperScreen(Gtk.Window):
             return
         self.files.refresh_files()
         guided = self._config.get_main_config().get("onboarding", False)
+        try:
+            from machine_config import MachineConfig
+            cfg = MachineConfig()
+            guided = cfg.get("first_boot", False)
+        except Exception as e:
+            logging.info(f"Error loading MachineConfig: {e}")
         if guided == 'True':
             self.show_onboarding()
         else:
