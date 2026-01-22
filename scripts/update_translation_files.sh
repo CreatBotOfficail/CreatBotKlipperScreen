@@ -9,7 +9,7 @@ xgettext --keyword=_ --keyword=ngettext:1,2 --language=Python --no-location --so
     panels/*.py \
     config/*.conf
 # Update po
-for FILE in ks_includes/locales/*; do
+for FILE in ks_includes/locales/zh_CN ks_includes/locales/zh_TW; do
     if [ -d $FILE ]; then
         echo Processing $FILE
         msgmerge -q $FILE/LC_MESSAGES/KlipperScreen.po \
