@@ -230,7 +230,7 @@ class ModelConfig:
                 break
 
         os.system(f"rm -f /opt/printer_data/config/printer.cfg")
-        os.system(f"rm -rf /opt/printer_data/config/config.d")
+        os.system(f"rm -rf /opt/printer_data/config/config_variables.cfg")
         os.system("systemctl restart auto-hostname")
         os.system("systemctl restart klipper.service")
         os.system("systemctl restart moonraker.service")
