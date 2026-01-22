@@ -166,8 +166,8 @@ class Panel(ScreenPanel):
         )
         
         # Create check mode buttons
-        self.check_btn = self._create_button(_("Position check"), None, f"color1", self.on_position_check)
-        self.start_btn = self._create_button(_("Start calibration"), None, f"color3", self.on_start_calibrate)
+        self.check_btn = self._create_button(_("Position Check"), None, f"color1", self.on_position_check)
+        self.start_btn = self._create_button(_("Start Calibration"), None, f"color3", self.on_start_calibrate)
         self.cancel_btn = self._create_button(_("Cancel"), None, f"color2", self.on_cancel)
         
         # Add buttons to check bottom box

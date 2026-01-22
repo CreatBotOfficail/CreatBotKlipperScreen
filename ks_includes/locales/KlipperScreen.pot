@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-23 17:39+0800\n"
+"POT-Creation-Date: 2026-01-21 00:19-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -26,6 +26,11 @@ msgid "(Disable during dual extrusion printing)"
 msgstr ""
 
 msgid "(default)"
+msgstr ""
+
+msgid ""
+"1. Advanced setting: Use only when necessary (e.g., nozzle/hotend "
+"replacement, post-collision, or mechanical zero adjustment)."
 msgstr ""
 
 msgid ""
@@ -50,6 +55,11 @@ msgid "2. Dry filament periodically when humidity exceeds 50%."
 msgstr ""
 
 msgid ""
+"2. Follow the image guide strictly during calibration to avoid damaging the "
+"vision module or causing print errors."
+msgstr ""
+
+msgid ""
 "2. Once the disassembly is complete, click the 'Next' button to proceed."
 msgstr ""
 
@@ -65,6 +75,9 @@ msgid "24 Hour Time"
 msgstr ""
 
 msgid "3. Always set the proper temperature for your filament!"
+msgstr ""
+
+msgid "3. If you have any questions, please contact customer service."
 msgstr ""
 
 msgid ""
@@ -101,7 +114,16 @@ msgstr ""
 msgid "<span color='#FF0000' font-size='x-large'>Probe result: Poor</span>"
 msgstr ""
 
+msgid "<span color='green' font-size='small'>Correct</span>"
+msgstr ""
+
 msgid "<span color='green' font-size='x-large'>Calibration Succeeded!</span>"
+msgstr ""
+
+msgid "<span color='red' font-size='small'>Nozzle not clean</span>"
+msgstr ""
+
+msgid "<span color='red' font-size='small'>Position offset</span>"
 msgstr ""
 
 msgid "<span color='red' font-size='x-large'>Calibration Failed!</span>"
@@ -113,10 +135,31 @@ msgstr ""
 msgid "<span font-size='large'>Calibration in progress...</span>"
 msgstr ""
 
-msgid "<span font-size='x-large'>Calibration Camera View</span>"
+#, python-brace-format
+msgid "<span font-size='small'>{label}</span>"
 msgstr ""
 
-msgid "<span font-size='x-large'>Calibration Tips</span>"
+msgid "<span font-size='x-large'><b>Warning:</b></span>"
+msgstr ""
+
+msgid ""
+"<span>1. When performing internal operations, please avoid the print "
+"platform and print head carefully to prevent high-temperature burns.</span>"
+msgstr ""
+
+msgid ""
+"<span>2. Pay attention to mechanical moving parts during operation to avoid "
+"collisions that may damage the equipment or model.</span>"
+msgstr ""
+
+msgid ""
+"<span>3. Do not keep the chamber door open for a long time. If material "
+"replacement or maintenance is needed, it is recommended to close it "
+"immediately after operation to maintain a stable printing environment and "
+"ensure model quality.</span>"
+msgstr ""
+
+msgid "<span>Calibration Tips</span>"
 msgstr ""
 
 msgid "A FIRMWARE_RESTART may fix the issue."
@@ -146,10 +189,21 @@ msgstr ""
 msgid "Air filter fan"
 msgstr ""
 
+msgid "Align datum"
+msgstr ""
+
 msgid "All"
 msgstr ""
 
+msgid "All user data will be cleared."
+msgstr ""
+
 msgid "Always On"
+msgstr ""
+
+msgid ""
+"An unexpected error occurred during the upgrade process.\n"
+"\n"
 msgstr ""
 
 msgid "Apply"
@@ -164,6 +218,12 @@ msgid "Apply %s%.3f offset to Probe?"
 msgstr ""
 
 msgid "Archived"
+msgstr ""
+
+msgid "Are you sure to restart: "
+msgstr ""
+
+msgid "Are you sure to update to version {} ?"
 msgstr ""
 
 msgid "Are you sure you want to exclude the object?"
@@ -193,6 +253,9 @@ msgstr ""
 msgid "Are you sure you wish to shutdown the system?"
 msgstr ""
 
+msgid "Are you sure?"
+msgstr ""
+
 msgid "Are you sure?\n"
 msgstr ""
 
@@ -205,7 +268,13 @@ msgstr ""
 msgid "Auto Bed Leveling"
 msgstr ""
 
+msgid "Auto Calibration"
+msgstr ""
+
 msgid "Auto Change Nozzle"
+msgstr ""
+
+msgid "Auto Door Lock"
 msgstr ""
 
 msgid "Auto change nozzle when filament runout"
@@ -235,6 +304,9 @@ msgstr ""
 msgid "Automatic compensation based on the data of the bed mesh"
 msgstr ""
 
+msgid "Automatically lock the door when printing starts"
+msgstr ""
+
 msgid "Bed Level"
 msgstr ""
 
@@ -242,6 +314,9 @@ msgid "Bed Mesh"
 msgstr ""
 
 msgid "Beta"
+msgstr ""
+
+msgid "Beta Version"
 msgstr ""
 
 msgid "Both"
@@ -265,13 +340,19 @@ msgstr ""
 msgid "Calibrating"
 msgstr ""
 
+msgid ""
+"Calibration is only required if dual-color printing malfunctions.\n"
+"Common scenarios: nozzle replacement, hotend replacement, printer collision, "
+"or mechanical zero adjustment."
+msgstr ""
+
 msgid "Calibration test in progress ..."
 msgstr ""
 
 msgid "Camera"
 msgstr ""
 
-msgid "Camera Calibrate"
+msgid "Camera connected"
 msgstr ""
 
 msgid "Can't set above the maximum:"
@@ -310,6 +391,9 @@ msgstr ""
 msgid "Clear Internal G-code Files"
 msgstr ""
 
+msgid "Clear internal storage files"
+msgstr ""
+
 msgid "Click Start to begin the calibration process!"
 msgstr ""
 
@@ -325,7 +409,16 @@ msgstr ""
 msgid "Complete"
 msgstr ""
 
+msgid "Confirm Disable"
+msgstr ""
+
+msgid "Confirm Disable Auto Door Lock"
+msgstr ""
+
 msgid "Confirm Emergency Stop"
+msgstr ""
+
+msgid "Confirm Unlock"
 msgstr ""
 
 msgid "Confirm factory reset?\n"
@@ -371,6 +464,9 @@ msgstr ""
 msgid "Current tool offset"
 msgstr ""
 
+msgid "Current tool offset X:{} Y:{} Z:{}"
+msgstr ""
+
 msgid "Current value:"
 msgstr ""
 
@@ -378,6 +474,15 @@ msgid "DPMS has failed to load and has been disabled"
 msgstr ""
 
 msgid "Date"
+msgstr ""
+
+msgid "Datum"
+msgstr ""
+
+msgid "Datum Align"
+msgstr ""
+
+msgid "Datum Calibration"
 msgstr ""
 
 msgid "Delete Directory?"
@@ -398,6 +503,9 @@ msgstr ""
 msgid "Disabled"
 msgstr ""
 
+msgid "Discard"
+msgstr ""
+
 msgid "Discard results"
 msgstr ""
 
@@ -405,6 +513,14 @@ msgid "Disconnect"
 msgstr ""
 
 msgid "Distance (mm)"
+msgstr ""
+
+msgid "Do not power off the device!"
+msgstr ""
+
+msgid ""
+"Do not power off the device!\n"
+"\n"
 msgstr ""
 
 #, python-format
@@ -416,6 +532,9 @@ msgid "Do you want to recover %s?"
 msgstr ""
 
 msgid "Door Open Protection Mode"
+msgstr ""
+
+msgid "Dual Color Calibration"
 msgstr ""
 
 msgid "Eddy Calibrate"
@@ -453,16 +572,19 @@ msgstr ""
 msgid "Error clearing active spool"
 msgstr ""
 
+msgid "Error code:"
+msgstr ""
+
 msgid "Error getting active spool"
+msgstr ""
+
+msgid "Error message:"
 msgstr ""
 
 msgid "Error setting active spool"
 msgstr ""
 
 msgid "Error trying to fetch spools"
-msgstr ""
-
-msgid "Error: Camera not found!"
 msgstr ""
 
 msgid "Error: Couldn't get a position to probe"
@@ -485,10 +607,25 @@ msgstr ""
 msgid "Example"
 msgstr ""
 
+msgid "Example Image"
+msgstr ""
+
 msgid "Exclude Object"
 msgstr ""
 
 msgid "Exit"
+msgstr ""
+
+msgid "Export"
+msgstr ""
+
+msgid "Export Logs"
+msgstr ""
+
+msgid ""
+"Exporting logs, please wait...\n"
+"\n"
+"This will take some time."
 msgstr ""
 
 msgid "Extra Large"
@@ -506,10 +643,27 @@ msgstr ""
 msgid "Extrusion -"
 msgstr ""
 
+msgid "Factory Reset"
+msgstr ""
+
+#, python-format
+msgid "Factory reset failed: %s"
+msgstr ""
+
 msgid "Failed to delete connection"
 msgstr ""
 
+msgid "Failed to export logs!"
+msgstr ""
+
 msgid "Failed to initialize"
+msgstr ""
+
+msgid "Failed to read image version!"
+msgstr ""
+
+#, python-format
+msgid "Failed to scan USB device: %s"
 msgstr ""
 
 msgid "Failed, adjust position first"
@@ -542,6 +696,9 @@ msgstr ""
 msgid "File"
 msgstr ""
 
+msgid "File saved to:"
+msgstr ""
+
 msgid "File:"
 msgstr ""
 
@@ -563,6 +720,9 @@ msgstr ""
 msgid "Firmware Restart"
 msgstr ""
 
+msgid "Firmware version:"
+msgstr ""
+
 msgid "Flow:"
 msgstr ""
 
@@ -575,6 +735,9 @@ msgstr ""
 msgid "Forget"
 msgstr ""
 
+msgid "Found update image: "
+msgstr ""
+
 msgid "Full Update"
 msgstr ""
 
@@ -585,6 +748,9 @@ msgid "Getting IP address"
 msgstr ""
 
 msgid "Go Back"
+msgstr ""
+
+msgid "Go to Filament Settings"
 msgstr ""
 
 msgid "Height:"
@@ -627,6 +793,12 @@ msgid "IP Address:"
 msgstr ""
 
 msgid "Icon Theme"
+msgstr ""
+
+msgid ""
+"If this option is disabled and the door action is set to Pause,changes in "
+"door status may cause the print job to pause. Please check the relevant "
+"settings to ensure smooth printing."
 msgstr ""
 
 msgid "Initializing printer..."
@@ -740,6 +912,9 @@ msgstr ""
 msgid "License key"
 msgstr ""
 
+msgid "Lighting Control"
+msgstr ""
+
 msgid "Limits"
 msgstr ""
 
@@ -752,6 +927,9 @@ msgstr ""
 msgid "Loading..."
 msgstr ""
 
+msgid "Logs exported successfully!"
+msgstr ""
+
 msgid "Lost Connection to Moonraker"
 msgstr ""
 
@@ -759,6 +937,9 @@ msgid "Macros"
 msgstr ""
 
 msgid "Main Menu"
+msgstr ""
+
+msgid "Maintenance"
 msgstr ""
 
 msgid "Material"
@@ -851,13 +1032,33 @@ msgstr ""
 msgid "Next"
 msgstr ""
 
+msgid "Next ({})"
+msgstr ""
+
+msgid "No USB device found!"
+msgstr ""
+
+msgid ""
+"No USB device found!\n"
+"Please insert a USB drive with upgrade image."
+msgstr ""
+
+msgid "No calibration options available"
+msgstr ""
+
 msgid "No elegible macros:"
 msgstr ""
 
 msgid "No info available"
 msgstr ""
 
+msgid "No log folders found!"
+msgstr ""
+
 msgid "No mesh has been loaded"
+msgstr ""
+
+msgid "No update image found in USB device!"
 msgstr ""
 
 msgid "No wireless interface has been found"
@@ -876,6 +1077,9 @@ msgid "Not all screens support this"
 msgstr ""
 
 msgid "Not working or not configured"
+msgstr ""
+
+msgid "Notes:"
 msgstr ""
 
 msgid "Nothing selected"
@@ -902,6 +1106,9 @@ msgstr ""
 msgid "Numpad"
 msgstr ""
 
+msgid "OK"
+msgstr ""
+
 msgid ""
 "Obtain the nozzle accurate height through multiple precision detections."
 msgstr ""
@@ -912,7 +1119,13 @@ msgstr ""
 msgid "Offset Compensation"
 msgstr ""
 
+msgid "Offset Manage"
+msgstr ""
+
 msgid "Ok"
+msgstr ""
+
+msgid "Online Update"
 msgstr ""
 
 msgid "Only for the move panel"
@@ -954,6 +1167,16 @@ msgstr ""
 msgid "Place the camera in the indicated position"
 msgstr ""
 
+msgid ""
+"Please adjust the temperature according to the filament printing parameters "
+"and ensure the filament in both nozzles is consistent"
+msgstr ""
+
+msgid ""
+"Please check the logs for more information.\n"
+"\n"
+msgstr ""
+
 msgid "Please close the door and click Resume to proceed."
 msgstr ""
 
@@ -969,6 +1192,13 @@ msgstr ""
 msgid "Please enter a valid number"
 msgstr ""
 
+msgid ""
+"Please insert a USB drive first!\n"
+"This will export logs to the USB device.\n"
+"\n"
+"Are you sure you want to continue?"
+msgstr ""
+
 msgid "Please load two different colored PLA filaments!"
 msgstr ""
 
@@ -978,6 +1208,9 @@ msgstr ""
 msgid "Please wait"
 msgstr ""
 
+msgid "Position Check"
+msgstr ""
+
 msgid "Power"
 msgstr ""
 
@@ -985,6 +1218,17 @@ msgid "Power Loss Recovery"
 msgstr ""
 
 msgid "Power On Printer"
+msgstr ""
+
+msgid "Preheat"
+msgstr ""
+
+msgid ""
+"Preparing for update, please wait...\n"
+"\n"
+"This may take some time.\n"
+"\n"
+"Do not power off the device!"
 msgstr ""
 
 msgid "Pressure Advance"
@@ -1071,7 +1315,13 @@ msgstr ""
 msgid "Reprint"
 msgstr ""
 
+msgid "Reset"
+msgstr ""
+
 msgid "Restart"
+msgstr ""
+
+msgid "Restart Service"
 msgstr ""
 
 msgid "Restore Factory Settings"
@@ -1107,6 +1357,12 @@ msgstr ""
 msgid "Return"
 msgstr ""
 
+msgid "Right Nozzle XY Offset Calibration"
+msgstr ""
+
+msgid "Right Nozzle Z Offset Calibration"
+msgstr ""
+
 msgid "Right extruder detects no filament, please load filament and continue."
 msgstr ""
 
@@ -1129,6 +1385,9 @@ msgid "Save and Reboot"
 msgstr ""
 
 msgid "Save configuration?"
+msgstr ""
+
+msgid "Save settings"
 msgstr ""
 
 msgid "Saved"
@@ -1233,6 +1492,12 @@ msgstr ""
 msgid "Start"
 msgstr ""
 
+msgid "Start Calibration"
+msgstr ""
+
+msgid "Start Printing"
+msgstr ""
+
 msgid "Start testing the Z offset value of the second nozzle?\n"
 msgstr ""
 
@@ -1260,13 +1525,24 @@ msgstr ""
 msgid "The last print job was not completed continue printing?"
 msgstr ""
 
+msgid "The machine will restart during update. Do not disconnect the power."
+msgstr ""
+
 msgid "The new value is not within the valid range."
 msgstr ""
 
 msgid "The system doesn't meet the minimum requirement"
 msgstr ""
 
+msgid "The system will reboot after reset."
+msgstr ""
+
 msgid "The system will reboot!"
+msgstr ""
+
+msgid ""
+"The upgrade process did not complete successfully.\n"
+"\n"
 msgstr ""
 
 msgid "This device is not activated and is available for trial use only"
@@ -1286,6 +1562,14 @@ msgstr ""
 msgid "This panel supports up-to 9 screws in a 3x3 Grid"
 msgstr ""
 
+msgid "This will restore factory settings!"
+msgstr ""
+
+msgid ""
+"This will update the system online.\n"
+"Are you sure?"
+msgstr ""
+
 msgid "Timeout for screen black-out or power-off"
 msgstr ""
 
@@ -1294,8 +1578,12 @@ msgstr ""
 
 msgid ""
 "To ensure calibration accuracy, please perform the following steps first:\n"
+"\n"
 "1. Unload the filament out of the nozzles\n"
 "2. Thoroughly clean the nozzles"
+msgstr ""
+
+msgid "Toggle chamber lighting on or off"
 msgstr ""
 
 msgid "Total:"
@@ -1307,16 +1595,31 @@ msgstr ""
 msgid "Trial Time:"
 msgstr ""
 
+msgid "USB Update"
+msgstr ""
+
+msgid "USB update failed!"
+msgstr ""
+
 msgid "Unknown"
 msgstr ""
 
 msgid "Unknown Heater"
 msgstr ""
 
+msgid "Unknown error occurred during USB scan!"
+msgstr ""
+
+msgid "Unknown error occurred during log export!"
+msgstr ""
+
 msgid "Unknown security type"
 msgstr ""
 
 msgid "Unload"
+msgstr ""
+
+msgid "Unlock"
 msgstr ""
 
 msgid "Unretract Extra Length"
@@ -1421,6 +1724,9 @@ msgid "commit"
 msgid_plural "commits"
 msgstr[0] ""
 msgstr[1] ""
+
+msgid "datum point alignment"
+msgstr ""
 
 msgid "day"
 msgid_plural "days"
