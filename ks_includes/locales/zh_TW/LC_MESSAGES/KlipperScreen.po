@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KlipperScreen\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-23 17:39+0800\n"
+"POT-Creation-Date: 2026-01-21 00:19-0800\n"
 "PO-Revision-Date: 2024-06-01 12:09+0000\n"
 "Last-Translator: 峻瑜哥 <a728728728@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <https://hosted.weblate.org/projects/"
@@ -28,6 +28,13 @@ msgstr "（雙頭打印時慎用）"
 
 msgid "(default)"
 msgstr "(預設)"
+
+msgid ""
+"1. Advanced setting: Use only when necessary (e.g., nozzle/hotend "
+"replacement, post-collision, or mechanical zero adjustment)."
+msgstr ""
+"1、該設定為高級設定如非必要請勿校準，常見需要校準場景為更換噴頭、更換熱端、撞"
+"機或者調整機械零位後等場景下"
 
 msgid ""
 "1. Ensure that all fixed components have been properly removed before "
@@ -53,6 +60,12 @@ msgid "2. Dry filament periodically when humidity exceeds 50%."
 msgstr "2. 建議在濕度高於50%的環境中對耗材進行定期幹燥。"
 
 msgid ""
+"2. Follow the image guide strictly during calibration to avoid damaging the "
+"vision module or causing print errors."
+msgstr ""
+"2、如需校準請嚴格按照上圖示例操作，否則將會造成視覺模組損壞或者列印异常等問題"
+
+msgid ""
 "2. Once the disassembly is complete, click the 'Next' button to proceed."
 msgstr "2、拆卸完成後，點擊 '下一步' 按鈕繼續操作"
 
@@ -69,6 +82,9 @@ msgstr "使用24小時制"
 
 msgid "3. Always set the proper temperature for your filament!"
 msgstr "3. 需根據耗材特性設置合適的溫度!"
+
+msgid "3. If you have any questions, please contact customer service."
+msgstr "3、如有疑惑請聯系售後支持"
 
 msgid ""
 "3. Once the operation is complete, click the 'Finish' button to conclude the "
@@ -106,8 +122,17 @@ msgstr "<span color='#FF0000' font-size='x-large'>校準結果：較差</span>"
 msgid "<span color='#FF0000' font-size='x-large'>Probe result: Poor</span>"
 msgstr "<span color='#FF0000' font-size='x-large'>探測結果：較差</span>"
 
+msgid "<span color='green' font-size='small'>Correct</span>"
+msgstr "<span color='green' font-size='small'>正確</span>"
+
 msgid "<span color='green' font-size='x-large'>Calibration Succeeded!</span>"
 msgstr "<span color='green' font-size='x-large'>校準成功！</span>"
+
+msgid "<span color='red' font-size='small'>Nozzle not clean</span>"
+msgstr "<span color='red' font-size='small'>噴嘴未清理</span>"
+
+msgid "<span color='red' font-size='small'>Position offset</span>"
+msgstr "<span color='red' font-size='small'>位置偏移</span>"
 
 msgid "<span color='red' font-size='x-large'>Calibration Failed!</span>"
 msgstr "<span color='red' font-size='x-large'>校準失敗！</span>"
@@ -118,11 +143,37 @@ msgstr "<span color='red'>加載超時！</span>"
 msgid "<span font-size='large'>Calibration in progress...</span>"
 msgstr "<span font-size='large'>校準進行中...</span>"
 
-msgid "<span font-size='x-large'>Calibration Camera View</span>"
-msgstr "<span font-size='x-large'>校準監視器畫面</span>"
+#, python-brace-format
+msgid "<span font-size='small'>{label}</span>"
+msgstr ""
 
-msgid "<span font-size='x-large'>Calibration Tips</span>"
-msgstr "<span font-size='x-large'>校準提示</span>"
+msgid "<span font-size='x-large'><b>Warning:</b></span>"
+msgstr "<span font-size='x-large'><b>警告：</b></span>"
+
+msgid ""
+"<span>1. When performing internal operations, please avoid the print "
+"platform and print head carefully to prevent high-temperature burns.</span>"
+msgstr ""
+"<span>1、執行內部操作時，請避免接觸列印平臺和打印頭，以防止高溫灼傷。</span>"
+
+msgid ""
+"<span>2. Pay attention to mechanical moving parts during operation to avoid "
+"collisions that may damage the equipment or model.</span>"
+msgstr ""
+"<span>2、在操作過程中，請注意機械運動部件，避免碰撞可能損壞設備或模型。</"
+"span>"
+
+msgid ""
+"<span>3. Do not keep the chamber door open for a long time. If material "
+"replacement or maintenance is needed, it is recommended to close it "
+"immediately after operation to maintain a stable printing environment and "
+"ensure model quality.</span>"
+msgstr ""
+"<span>3、請勿長時間開啟艙門。 如需換料或維護，建議操作完畢後立即關閉，以維持"
+"穩定的列印環境，保障模型成型質量。</span>"
+
+msgid "<span>Calibration Tips</span>"
+msgstr "<span>校準提示：</span>"
 
 msgid "A FIRMWARE_RESTART may fix the issue."
 msgstr "重啟Klipper韌體可能會解決這個問題。"
@@ -151,11 +202,24 @@ msgstr "高級"
 msgid "Air filter fan"
 msgstr "過濾風扇"
 
+msgid "Align datum"
+msgstr "對齊基準"
+
 msgid "All"
 msgstr "全部"
 
+msgid "All user data will be cleared."
+msgstr "所有用戶數據將被清除。"
+
 msgid "Always On"
 msgstr "常開"
+
+msgid ""
+"An unexpected error occurred during the upgrade process.\n"
+"\n"
+msgstr ""
+"陞級過程中發生意外錯誤。\n"
+"\n"
 
 msgid "Apply"
 msgstr "應用"
@@ -170,6 +234,12 @@ msgstr "將 %s%.3f 偏移量應用於探針？"
 
 msgid "Archived"
 msgstr "歸檔"
+
+msgid "Are you sure to restart: "
+msgstr "您確定要重啓嗎"
+
+msgid "Are you sure to update to version {} ?"
+msgstr "您確定要更新到版本{}嗎？"
 
 msgid "Are you sure you want to exclude the object?"
 msgstr "您確定要排除該對象嗎？"
@@ -198,6 +268,9 @@ msgstr "您確定要重啟系統嗎？"
 msgid "Are you sure you wish to shutdown the system?"
 msgstr "您確定要關閉系統嗎？"
 
+msgid "Are you sure?"
+msgstr "您確定嗎？"
+
 msgid "Are you sure?\n"
 msgstr "您確定嗎？\n"
 
@@ -210,8 +283,14 @@ msgstr "自動"
 msgid "Auto Bed Leveling"
 msgstr "自動調平"
 
+msgid "Auto Calibration"
+msgstr "自動校準"
+
 msgid "Auto Change Nozzle"
 msgstr "斷料自動切頭"
+
+msgid "Auto Door Lock"
+msgstr "自動門鎖"
 
 msgid "Auto change nozzle when filament runout"
 msgstr "當耗材用盡時自動切換噴頭"
@@ -240,6 +319,9 @@ msgstr "自整定進行中. .."
 msgid "Automatic compensation based on the data of the bed mesh"
 msgstr "基於牀面網格數據的自動補償"
 
+msgid "Automatically lock the door when printing starts"
+msgstr "列印狀態自動上鎖"
+
 msgid "Bed Level"
 msgstr "熱床調平"
 
@@ -248,6 +330,9 @@ msgstr "床網"
 
 msgid "Beta"
 msgstr "測試版"
+
+msgid "Beta Version"
+msgstr "測試版本"
 
 msgid "Both"
 msgstr "雙向"
@@ -270,14 +355,22 @@ msgstr "已校準"
 msgid "Calibrating"
 msgstr "正在校準"
 
+msgid ""
+"Calibration is only required if dual-color printing malfunctions.\n"
+"Common scenarios: nozzle replacement, hotend replacement, printer collision, "
+"or mechanical zero adjustment."
+msgstr ""
+"該校准僅需要在雙色列印出現問題時進行，常見需要校準場景為更換噴頭，更換熱端，"
+"撞機或者調整機械零位後等場景下。"
+
 msgid "Calibration test in progress ..."
 msgstr "校準測試進行中. .."
 
 msgid "Camera"
 msgstr "相機"
 
-msgid "Camera Calibrate"
-msgstr "監視器校準"
+msgid "Camera connected"
+msgstr "監視器已連接"
 
 msgid "Can't set above the maximum:"
 msgstr "設定值超出最大值："
@@ -315,6 +408,9 @@ msgstr "清除"
 msgid "Clear Internal G-code Files"
 msgstr "清空內部G-Code文件"
 
+msgid "Clear internal storage files"
+msgstr "清除內部存儲檔案"
+
 msgid "Click Start to begin the calibration process!"
 msgstr "點擊[開始]啟動校準流程！"
 
@@ -330,8 +426,17 @@ msgstr "Cloud"
 msgid "Complete"
 msgstr "完成"
 
+msgid "Confirm Disable"
+msgstr "確認禁用"
+
+msgid "Confirm Disable Auto Door Lock"
+msgstr "確認禁用自動門鎖功能"
+
 msgid "Confirm Emergency Stop"
 msgstr "緊急停止需確認"
+
+msgid "Confirm Unlock"
+msgstr "確認解鎖"
 
 msgid "Confirm factory reset?\n"
 msgstr "確定恢復出廠設置？\n"
@@ -376,6 +481,9 @@ msgstr "當前百分比和折線圖"
 msgid "Current tool offset"
 msgstr "當前工具偏移"
 
+msgid "Current tool offset X:{} Y:{} Z:{}"
+msgstr "當前右噴頭偏移 X:{} Y:{} Z:{}"
+
 msgid "Current value:"
 msgstr "當前值："
 
@@ -384,6 +492,15 @@ msgstr "DPMS 載入失敗並已停用"
 
 msgid "Date"
 msgstr "日期"
+
+msgid "Datum"
+msgstr "基準"
+
+msgid "Datum Align"
+msgstr "基準對齊"
+
+msgid "Datum Calibration"
+msgstr "基準校準"
 
 msgid "Delete Directory?"
 msgstr "刪除資料夾？"
@@ -403,6 +520,9 @@ msgstr "在十二小時顯示模式中不顯示AM/PM"
 msgid "Disabled"
 msgstr "禁用"
 
+msgid "Discard"
+msgstr "放弃"
+
 msgid "Discard results"
 msgstr "放弃結果"
 
@@ -411,6 +531,14 @@ msgstr "断开"
 
 msgid "Distance (mm)"
 msgstr "擠出長度（mm）"
+
+msgid "Do not power off the device!"
+msgstr "請勿關閉設備電源！"
+
+msgid ""
+"Do not power off the device!\n"
+"\n"
+msgstr "請勿關閉設備電源！\n"
 
 #, python-format
 msgid "Do you want to forget or disconnect %s?"
@@ -422,6 +550,9 @@ msgstr "你想恢復 %s 嗎？"
 
 msgid "Door Open Protection Mode"
 msgstr "開門保護模式"
+
+msgid "Dual Color Calibration"
+msgstr "雙色校準"
 
 msgid "Eddy Calibrate"
 msgstr "渦流校準"
@@ -458,17 +589,20 @@ msgstr "錯誤"
 msgid "Error clearing active spool"
 msgstr "退出當前耗材時出錯"
 
+msgid "Error code:"
+msgstr "錯誤碼："
+
 msgid "Error getting active spool"
 msgstr "獲取當前耗材時出錯"
+
+msgid "Error message:"
+msgstr "錯誤資訊："
 
 msgid "Error setting active spool"
 msgstr "設置當前耗材時出錯"
 
 msgid "Error trying to fetch spools"
 msgstr "嘗試獲取耗材時出錯"
-
-msgid "Error: Camera not found!"
-msgstr "未發現監視器！"
 
 msgid "Error: Couldn't get a position to probe"
 msgstr "錯誤：無法取得要探測的位置"
@@ -492,11 +626,29 @@ msgstr ""
 msgid "Example"
 msgstr "例子"
 
+msgid "Example Image"
+msgstr "影像示例"
+
 msgid "Exclude Object"
 msgstr "排除目標"
 
 msgid "Exit"
 msgstr "退出"
+
+msgid "Export"
+msgstr "匯出"
+
+msgid "Export Logs"
+msgstr "匯出日誌"
+
+msgid ""
+"Exporting logs, please wait...\n"
+"\n"
+"This will take some time."
+msgstr ""
+"正在匯出日誌，請稍候…\n"
+"\n"
+"這需要一些時間。"
 
 msgid "Extra Large"
 msgstr "特大"
@@ -513,11 +665,28 @@ msgstr "擠壓 +"
 msgid "Extrusion -"
 msgstr "擠壓 -"
 
+msgid "Factory Reset"
+msgstr "恢復出廠設定"
+
+#, python-format
+msgid "Factory reset failed: %s"
+msgstr "恢復出廠設定失敗：%s"
+
 msgid "Failed to delete connection"
 msgstr "刪除連接失敗"
 
+msgid "Failed to export logs!"
+msgstr "日誌匯出失敗！"
+
 msgid "Failed to initialize"
 msgstr "初始化失敗"
+
+msgid "Failed to read image version!"
+msgstr "讀取映射版本失敗！"
+
+#, python-format
+msgid "Failed to scan USB device: %s"
+msgstr "掃描USB設備失敗：%s"
 
 msgid "Failed, adjust position first"
 msgstr "失敗，請先調整位置"
@@ -549,6 +718,9 @@ msgstr "耗材："
 msgid "File"
 msgstr "檔案"
 
+msgid "File saved to:"
+msgstr "檔案保存到："
+
 msgid "File:"
 msgstr "檔案："
 
@@ -570,6 +742,9 @@ msgstr "完成"
 msgid "Firmware Restart"
 msgstr "重啟Klipper韌體"
 
+msgid "Firmware version:"
+msgstr "固件版本："
+
 msgid "Flow:"
 msgstr "流量："
 
@@ -582,6 +757,9 @@ msgstr "字型大小"
 msgid "Forget"
 msgstr "忘記"
 
+msgid "Found update image: "
+msgstr "發現更新映射："
+
 msgid "Full Update"
 msgstr "全部更新"
 
@@ -593,6 +771,9 @@ msgstr "獲取IP地址"
 
 msgid "Go Back"
 msgstr "返回"
+
+msgid "Go to Filament Settings"
+msgstr "耗材設定"
 
 msgid "Height:"
 msgstr "高度："
@@ -636,6 +817,14 @@ msgstr "IP地址："
 msgid "Icon Theme"
 msgstr "主題"
 
+msgid ""
+"If this option is disabled and the door action is set to Pause,changes in "
+"door status may cause the print job to pause. Please check the relevant "
+"settings to ensure smooth printing."
+msgstr ""
+"如果關閉此選項且開門動作選項設定為暫停的情况下，艙門狀態發生變動，可能會導致"
+"列印任務暫停，請務必檢查相關設定，以確保列印過程順利進行。"
+
 msgid "Initializing printer..."
 msgstr "正在初始化列印機..."
 
@@ -673,7 +862,7 @@ msgid ""
 "replacing or adjusting the nozzle to ensure printing accuracy and "
 "reliability."
 msgstr ""
-"建議在更換或調整工具後執行校準，以解决噴頭偏移問題，確保列印精變與可靠性。"
+"建議在更換或調整工具後執行校準，以解决噴頭偏移問題，確保列印精度與可靠性。"
 
 msgid "It may take more than 5 minutes depending on the heater power."
 msgstr "這可能需要5分鐘以上的時間，這取決於加熱器的功率。"
@@ -748,6 +937,9 @@ msgstr "剩餘時間："
 msgid "License key"
 msgstr "許可證密鑰"
 
+msgid "Lighting Control"
+msgstr "腔內照明"
+
 msgid "Limits"
 msgstr "列印機限制"
 
@@ -760,6 +952,9 @@ msgstr "加載校準監視器. .."
 msgid "Loading..."
 msgstr "載入中..."
 
+msgid "Logs exported successfully!"
+msgstr "日誌匯出成功！"
+
 msgid "Lost Connection to Moonraker"
 msgstr "與Moonraker失去連接"
 
@@ -768,6 +963,9 @@ msgstr "巨集"
 
 msgid "Main Menu"
 msgstr "主選單"
+
+msgid "Maintenance"
+msgstr "維護"
 
 msgid "Material"
 msgstr "材料"
@@ -859,14 +1057,36 @@ msgstr "新的值"
 msgid "Next"
 msgstr "下一步"
 
+msgid "Next ({})"
+msgstr "下一步({})"
+
+msgid "No USB device found!"
+msgstr "未找到USB設備！"
+
+msgid ""
+"No USB device found!\n"
+"Please insert a USB drive with upgrade image."
+msgstr ""
+"找不到USB設備！\n"
+"請插入帶有陞級映射的USB驅動器。"
+
+msgid "No calibration options available"
+msgstr ""
+
 msgid "No elegible macros:"
 msgstr "無可用巨集:"
 
 msgid "No info available"
 msgstr "無可用信息"
 
+msgid "No log folders found!"
+msgstr "未發現日誌資料夾！"
+
 msgid "No mesh has been loaded"
 msgstr "未載入網床"
+
+msgid "No update image found in USB device!"
+msgstr "USB設備中未找到更新映射！"
 
 msgid "No wireless interface has been found"
 msgstr "未找到wifi介面"
@@ -885,6 +1105,9 @@ msgstr "不一定所有屏幕都支持這項功能"
 
 msgid "Not working or not configured"
 msgstr "不工作或未配置"
+
+msgid "Notes:"
+msgstr "注意："
 
 msgid "Nothing selected"
 msgstr "未選擇任何內容"
@@ -910,6 +1133,9 @@ msgstr "噴頭偏移"
 msgid "Numpad"
 msgstr "數字鍵盤"
 
+msgid "OK"
+msgstr "好的"
+
 msgid ""
 "Obtain the nozzle accurate height through multiple precision detections."
 msgstr "通過多次精准探測獲取噴嘴的準確高度。"
@@ -920,8 +1146,14 @@ msgstr "偏移值"
 msgid "Offset Compensation"
 msgstr "偏移補償"
 
+msgid "Offset Manage"
+msgstr "偏移管理"
+
 msgid "Ok"
 msgstr "確定"
+
+msgid "Online Update"
+msgstr "線上更新"
 
 msgid "Only for the move panel"
 msgstr "僅移軸頁面有效"
@@ -961,6 +1193,18 @@ msgstr "引腳"
 msgid "Place the camera in the indicated position"
 msgstr "將監視器放置於訓示位置"
 
+msgid ""
+"Please adjust the temperature according to the filament printing parameters "
+"and ensure the filament in both nozzles is consistent"
+msgstr "請根據耗材列印參數對溫度進行調整，並保證兩個噴頭內耗材一致"
+
+msgid ""
+"Please check the logs for more information.\n"
+"\n"
+msgstr ""
+"請檢查日誌以獲取更多資訊。\n"
+"\n"
+
 msgid "Please close the door and click Resume to proceed."
 msgstr "請關閉門，然後點擊恢復以繼續操作。"
 
@@ -976,6 +1220,17 @@ msgstr "請輸入密鑰激活"
 msgid "Please enter a valid number"
 msgstr "請輸入有效的數字"
 
+msgid ""
+"Please insert a USB drive first!\n"
+"This will export logs to the USB device.\n"
+"\n"
+"Are you sure you want to continue?"
+msgstr ""
+"請先插入USB設備！\n"
+"日誌將會匯出到USB設備。\n"
+"\n"
+"您確定要繼續嗎？"
+
 msgid "Please load two different colored PLA filaments!"
 msgstr "請插入兩種不同顏色的 PLA 耗材！"
 
@@ -985,6 +1240,9 @@ msgstr "請重新編譯並燒錄微控制器。"
 msgid "Please wait"
 msgstr "請稍候"
 
+msgid "Position Check"
+msgstr "位置檢查"
+
 msgid "Power"
 msgstr "電源"
 
@@ -993,6 +1251,22 @@ msgstr "斷電續打"
 
 msgid "Power On Printer"
 msgstr "啟動列印機"
+
+msgid "Preheat"
+msgstr "预热"
+
+msgid ""
+"Preparing for update, please wait...\n"
+"\n"
+"This may take some time.\n"
+"\n"
+"Do not power off the device!"
+msgstr ""
+"正在準備更新，請稍候…\n"
+"\n"
+"這可能需要一些時間。\n"
+"\n"
+"不要關閉設備電源！"
 
 msgid "Pressure Advance"
 msgstr "壓力推進"
@@ -1078,8 +1352,14 @@ msgstr "重新命名/移動："
 msgid "Reprint"
 msgstr "再次打印"
 
+msgid "Reset"
+msgstr "重置"
+
 msgid "Restart"
 msgstr "重啟"
+
+msgid "Restart Service"
+msgstr "重啓服務"
 
 msgid "Restore Factory Settings"
 msgstr "恢復出廠設置"
@@ -1114,6 +1394,12 @@ msgstr "正在重試"
 msgid "Return"
 msgstr "返回"
 
+msgid "Right Nozzle XY Offset Calibration"
+msgstr "右噴嘴XY偏移校準"
+
+msgid "Right Nozzle Z Offset Calibration"
+msgstr "右噴嘴Z偏移校準"
+
 msgid "Right extruder detects no filament, please load filament and continue."
 msgstr "右擠出機未檢測到耗材，請加載耗材後繼續"
 
@@ -1137,6 +1423,9 @@ msgstr "保存並重啓"
 
 msgid "Save configuration?"
 msgstr "是否儲存設定？"
+
+msgid "Save settings"
+msgstr "保存設置"
 
 msgid "Saved"
 msgstr "已儲存"
@@ -1240,6 +1529,12 @@ msgstr "待機"
 msgid "Start"
 msgstr "開始"
 
+msgid "Start Calibration"
+msgstr "開始校準"
+
+msgid "Start Printing"
+msgstr "開始列印"
+
 msgid "Start testing the Z offset value of the second nozzle?\n"
 msgstr "開始測試第二個噴嘴的 Z 偏移值嗎？\n"
 
@@ -1267,14 +1562,25 @@ msgstr "測試模式"
 msgid "The last print job was not completed continue printing?"
 msgstr "上一個打印任務未完成，是否繼續打印？"
 
+msgid "The machine will restart during update. Do not disconnect the power."
+msgstr "更新期間，系統將會重啓。 不要斷開電源。"
+
 msgid "The new value is not within the valid range."
 msgstr "新值不在有效範圍內。"
 
 msgid "The system doesn't meet the minimum requirement"
-msgstr ""
+msgstr "系統不符合最低要求"
+
+msgid "The system will reboot after reset."
+msgstr "重置後系統將重新啟動。"
 
 msgid "The system will reboot!"
 msgstr "系統將重新啟動！"
+
+msgid ""
+"The upgrade process did not complete successfully.\n"
+"\n"
+msgstr "陞級流程未完成。\n"
 
 msgid "This device is not activated and is available for trial use only"
 msgstr "此設備尚未激活，僅供試用"
@@ -1293,6 +1599,16 @@ msgstr "此操作將清除用戶數據"
 msgid "This panel supports up-to 9 screws in a 3x3 Grid"
 msgstr "這個界面支持9個調平螺絲以3x3陣列顯示"
 
+msgid "This will restore factory settings!"
+msgstr "將會恢復出廠設定！"
+
+msgid ""
+"This will update the system online.\n"
+"Are you sure?"
+msgstr ""
+"將線上更新系統。\n"
+"確定嗎？"
+
 msgid "Timeout for screen black-out or power-off"
 msgstr "超過倒計時後關閉屏幕"
 
@@ -1301,12 +1617,17 @@ msgstr "打印過程中超過倒計時後關閉屏幕"
 
 msgid ""
 "To ensure calibration accuracy, please perform the following steps first:\n"
+"\n"
 "1. Unload the filament out of the nozzles\n"
 "2. Thoroughly clean the nozzles"
 msgstr ""
 "為確保校準精度，請先執行以下步驟：\n"
+"\n"
 "1.卸載噴嘴中的耗材\n"
 "2.徹底清潔噴嘴"
+
+msgid "Toggle chamber lighting on or off"
+msgstr "開啟或關閉腔內照明"
 
 msgid "Total:"
 msgstr "合計："
@@ -1317,17 +1638,32 @@ msgstr "試用"
 msgid "Trial Time:"
 msgstr "試用時間："
 
+msgid "USB Update"
+msgstr "USB更新"
+
+msgid "USB update failed!"
+msgstr "USB更新失敗！"
+
 msgid "Unknown"
 msgstr "未知"
 
 msgid "Unknown Heater"
 msgstr "未知加熱器"
 
+msgid "Unknown error occurred during USB scan!"
+msgstr "USB掃描過程中發生未知錯誤！"
+
+msgid "Unknown error occurred during log export!"
+msgstr "日誌匯出過程中發生未知錯誤！"
+
 msgid "Unknown security type"
 msgstr "未知安全類型"
 
 msgid "Unload"
 msgstr "解除安裝"
+
+msgid "Unlock"
+msgstr "解鎖"
 
 msgid "Unretract Extra Length"
 msgstr "回料長度"
@@ -1432,6 +1768,9 @@ msgid "commit"
 msgid_plural "commits"
 msgstr[0] "更改"
 
+msgid "datum point alignment"
+msgstr "基準點對齊"
+
 msgid "day"
 msgid_plural "days"
 msgstr[0] "天"
@@ -1496,6 +1835,15 @@ msgstr "○ 打開應用--點擊「+」添加打印機"
 msgid "○ Rescan left QR to add printe"
 msgstr "○ 使用APP再次掃描左側二維碼，添加打印機"
 
+#~ msgid "<span font-size='x-large'>Calibration Camera View</span>"
+#~ msgstr "<span font-size='x-large'>校準監視器畫面</span>"
+
+#~ msgid "Camera Calibrate"
+#~ msgstr "監視器校準"
+
+#~ msgid "Error: Camera not found!"
+#~ msgstr "未發現監視器！"
+
 #~ msgid "Everything is ready! Click [Save] to apply nozzle offset."
 #~ msgstr "一切就緒！ 點擊[保存]按鈕應用噴嘴偏移。"
 
@@ -1519,12 +1867,6 @@ msgstr "○ 使用APP再次掃描左側二維碼，添加打印機"
 
 #~ msgid "Enabled successfully"
 #~ msgstr "啟用成功"
-
-#~ msgid "Reset"
-#~ msgstr "重置"
-
-#~ msgid "Reset successfully"
-#~ msgstr "重置成功"
 
 #~ msgid "Connected"
 #~ msgstr "已連線"
@@ -1666,9 +2008,6 @@ msgstr "○ 使用APP再次掃描左側二維碼，添加打印機"
 #~ msgid "Displayed Macros"
 #~ msgstr "宏命令显示开关"
 
-#~ msgid "Z Position"
-#~ msgstr "Z 位置"
-
 #~ msgid "IPv4"
 #~ msgstr "IPv4 地址"
 
@@ -1677,9 +2016,6 @@ msgstr "○ 使用APP再次掃描左側二維碼，添加打印機"
 
 #~ msgid "Duration Only"
 #~ msgstr "持续时间"
-
-#~ msgid "Klipper Version"
-#~ msgstr "Klipper 版本"
 
 #~ msgid ""
 #~ "Klipper has encountered an error with the micro-controller.\n"
@@ -1706,9 +2042,6 @@ msgstr "○ 使用APP再次掃描左側二維碼，添加打印機"
 
 #~ msgid "Number Pad"
 #~ msgstr "数字键盘"
-
-#~ msgid "Preheat"
-#~ msgstr "预热"
 
 #~ msgid "Screen will show in less than one second"
 #~ msgstr "屏幕将在1秒内显示"

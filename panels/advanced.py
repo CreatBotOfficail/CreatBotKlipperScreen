@@ -228,7 +228,7 @@ class Panel(ScreenPanel):
                 
                 label2 = Gtk.Label()
                 label2.set_text(_("If this option is disabled and the door action is set to Pause,"
-                                "changes in door status may cause the print job to pause or cancel. "
+                                "changes in door status may cause the print job to pause. "
                                 "Please check the relevant settings to ensure smooth printing."))
                 label2.set_halign(Gtk.Align.START)
                 label2.set_valign(Gtk.Align.CENTER)
