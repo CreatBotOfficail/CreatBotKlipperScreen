@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-11 17:15+0800\n"
+"POT-Creation-Date: 2025-12-23 17:39+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -182,6 +182,9 @@ msgid "Are you sure you wish to cancel this test?"
 msgstr ""
 
 msgid "Are you sure you wish to disable motors?"
+msgstr ""
+
+msgid "Are you sure you wish to enable motors?"
 msgstr ""
 
 msgid "Are you sure you wish to reboot the system?"
@@ -428,6 +431,9 @@ msgid "Elapsed:"
 msgstr ""
 
 msgid "Emergency Stop"
+msgstr ""
+
+msgid "Enable Motors"
 msgstr ""
 
 msgid "Enable Registration Code"

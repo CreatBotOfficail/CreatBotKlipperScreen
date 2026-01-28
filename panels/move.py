@@ -15,7 +15,7 @@ class Panel(ScreenPanel):
     def __init__(self, screen, title):
         title = title or _("Move")
         super().__init__(screen, title)
-
+        self.stepper_enable = True
         if self.ks_printer_cfg is not None:
             dis = self.ks_printer_cfg.get("move_distances", "")
             if re.match(r"^[0-9,\.\s]+$", dis):
@@ -34,7 +34,7 @@ class Panel(ScreenPanel):
             "z+": self._gtk.Button("z-farther", "Z+", "color3"),
             "z-": self._gtk.Button("z-closer", "Z-", "color3"),
             "home": self._gtk.Button("home", _("Home"), "color4"),
-            "motors_off": self._gtk.Button("motor-off", _("Disable Motors"), "color4"),
+            "motors_switch": self._gtk.Button("motor-off", _("Disable Motors"), "color4"),
         }
         self.buttons["x+"].connect("clicked", self.move, "X", "+")
         self.buttons["x-"].connect("clicked", self.move, "X", "-")
@@ -43,14 +43,7 @@ class Panel(ScreenPanel):
         self.buttons["z+"].connect("clicked", self.move, "Z", "+")
         self.buttons["z-"].connect("clicked", self.move, "Z", "-")
         self.buttons["home"].connect("clicked", self.home)
-        script = {"script": "M18"}
-        self.buttons["motors_off"].connect(
-            "clicked",
-            self._screen._confirm_send_action,
-            _("Are you sure you wish to disable motors?"),
-            "printer.gcode.script",
-            script,
-        )
+        self.buttons["motors_switch"].connect("clicked", self.toggle_motors)
         adjust = self._gtk.Button(
             "settings", None, "color2", 1, Gtk.PositionType.LEFT, 1
         )
@@ -85,7 +78,7 @@ class Panel(ScreenPanel):
             grid.attach(self.buttons["z-"], 3, 0, 1, 1)
 
         grid.attach(self.buttons["home"], 0, 0, 1, 1)
-        grid.attach(self.buttons["motors_off"], 2, 0, 1, 1)
+        grid.attach(self.buttons["motors_switch"], 2, 0, 1, 1)
 
         distgrid = Gtk.Grid()
         for j, i in enumerate(self.distances):
@@ -127,6 +120,17 @@ class Panel(ScreenPanel):
         else:
             self.max_z_velocity = max_velocity
 
+    def _update_position_labels(self, data):
+        """Update X, Y, Z position labels based on homed state and current position"""
+        homed_axes = self._printer.get_stat("toolhead", "homed_axes")
+        for i, axis in enumerate(("x", "y", "z")):
+            if axis not in homed_axes:
+                self.labels[f"pos_{axis}"].set_text(f"{axis.upper()}: ?")
+            elif "gcode_move" in data and "gcode_position" in data["gcode_move"]:
+                self.labels[f"pos_{axis}"].set_text(
+                    f"{axis.upper()}: {data['gcode_move']['gcode_position'][i]:.2f}"
+                )
+    
     def process_update(self, action, data):
         if action != "notify_status_update":
             return
@@ -136,14 +140,41 @@ class Panel(ScreenPanel):
             or "toolhead" in data
             and "homed_axes" in data["toolhead"]
         ):
-            homed_axes = self._printer.get_stat("toolhead", "homed_axes")
-            for i, axis in enumerate(("x", "y", "z")):
-                if axis not in homed_axes:
-                    self.labels[f"pos_{axis}"].set_text(f"{axis.upper()}: ?")
-                elif "gcode_move" in data and "gcode_position" in data["gcode_move"]:
-                    self.labels[f"pos_{axis}"].set_text(
-                        f"{axis.upper()}: {data['gcode_move']['gcode_position'][i]:.2f}"
-                    )
+            self._update_position_labels(data)
+        if "stepper_enable" in data:
+            steppers = data["stepper_enable"]["steppers"]
+            self.stepper_enable = steppers.get("stepper_x", True) and steppers.get("stepper_y", True)
+            self.update_motor_button()
+    
+    def update_motor_button(self):
+        res = self._screen.apiclient.send_request("printer/objects/query?gcode_move")
+        data = res.get('status', {})
+        self._update_position_labels(data)
+
+        if self.stepper_enable:
+            self.buttons["motors_switch"].set_label(_("Disable Motors"))
+            self.buttons["motors_switch"].set_image(self._gtk.Image("motor-off"))
+        else:
+            self.buttons["motors_switch"].set_label(_("Enable Motors"))
+            self.buttons["motors_switch"].set_image(self._gtk.Image("motor-on"))
+    
+    def toggle_motors(self, widget):
+        if self.stepper_enable:
+            script = {"script": "M18"}
+            self._screen._confirm_send_action(
+                widget,
+                _("Are you sure you wish to disable motors?"),
+                "printer.gcode.script",
+                script,
+            )
+        else:
+            script = {"script": "ENABLE_MOTOR"}
+            self._screen._confirm_send_action(
+                widget,
+                _("Are you sure you wish to enable motors?"),
+                "printer.gcode.script",
+                script,
+            )
 
     def change_distance(self, widget, distance):
         logging.info(f"### Distance {distance}")

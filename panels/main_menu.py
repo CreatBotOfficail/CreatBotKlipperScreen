@@ -17,6 +17,8 @@ class Panel(MenuPanel):
         self.graph_update = None
         self.active_heater = None
         self.h = self.f = 0
+        self.auto_door_lock = False
+        self.unlock_Button = None
         self.main_menu = Gtk.Grid(row_homogeneous=True, column_homogeneous=True, hexpand=True, vexpand=True)
 
         if self._screen.vertical_mode:
@@ -26,13 +28,20 @@ class Panel(MenuPanel):
         logo_image = self._gtk.Image("klipper", self._gtk.content_width * 0.2, self._gtk.content_height * 0.5)
         self.labels['menu'].pack_start(logo_image, False, False, 80)
         # temp_Button = self.arrangeMenuItems(items, 1, True)
-        temp_Button = self._gtk.Button("heat-up", _("Temperature"))
+        button_container = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=20)
+        button_container.set_valign(Gtk.Align.CENTER)
+        button_container.set_halign(Gtk.Align.CENTER)
+        self.button_container = button_container
+
+        temp_Button = self._gtk.Button("heat-up", _("Preheat"))
         temp_Button.set_valign(Gtk.Align.CENTER)
         temp_Button.set_halign(Gtk.Align.CENTER)
         temp_Button.set_size_request(200, 100)
         temp_Button.get_style_context().add_class('custom-icon-button')
         temp_Button.connect('clicked', self.menu_item_clicked, {"panel": "temperature"})
-        self.labels['menu'].pack_start(temp_Button, True, True, 0)
+        button_container.pack_start(temp_Button, True, True, 0)
+        self.labels['menu'].pack_start(button_container, True, True, 0)
+        self._update_unlock_button_visibility()
         self.labels['da'] = HeaterGraph(self._screen, self._printer, self._gtk.font_size)
         self.labels['devices'] = self.create_top_panel(self.labels['da'])
 
@@ -243,7 +252,12 @@ class Panel(MenuPanel):
 
         return self.left_panel
 
-
+    def _unlock_doors(self, widget):
+        doors = self._printer.get_locks() if hasattr(self._printer, 'get_locks') else []
+        if not doors:
+            logging.debug("No doors found")
+            return
+        self._screen._ws.klippy.set_door_lock("all", "unlock")
 
     def process_update(self, action, data):
         if action != "notify_status_update":
@@ -256,11 +270,47 @@ class Panel(MenuPanel):
                     self._printer.get_stat(x, "target"),
                     self._printer.get_stat(x, "power"),
                 )
+        any_locked = False
+        lock_device = self._printer.get_doors()
+        if lock_device and lock_device[0] in data:
+                doors = self._printer.get_stat(lock_device[0], "doors")
+                for _, door_info in doors.items():
+                    if door_info.get("locked", False):
+                        any_locked = True
+                        logging.info(f"Door {_} locked")
+                        break
+                if self.unlock_Button:
+                    if any_locked:
+                        self.unlock_Button.set_image(self._gtk.Image("lock"))
+                    else:
+                        self.unlock_Button.set_image(self._gtk.Image("unlock"))
+        if "save_variables" in data:
+            variables = data["save_variables"].get("variables", {})
+            if "auto_door_lock" in variables:
+                old_auto_door_lock = self.auto_door_lock
+                self.auto_door_lock = variables.get("auto_door_lock", False)
+                if old_auto_door_lock != self.auto_door_lock:
+                    self._update_unlock_button_visibility()
 
-
-
-
-
+    def _update_unlock_button_visibility(self):
+        """Update unlock button visibility based on auto_door_lock status"""
+        if self.auto_door_lock:
+            if not self.unlock_Button:
+                self.unlock_Button = self._gtk.Button("lock", _("Unlock"))
+                self.unlock_Button.set_valign(Gtk.Align.CENTER)
+                self.unlock_Button.set_halign(Gtk.Align.CENTER)
+                self.unlock_Button.set_size_request(200, 100)
+                self.unlock_Button.get_style_context().add_class('custom-icon-button')
+                self.unlock_Button.connect('clicked', self._unlock_doors)
+                self.button_container.pack_start(self.unlock_Button, True, True, 0)
+                self.unlock_Button.show_all()
+        else:
+            if self.unlock_Button:
+                self.button_container.remove(self.unlock_Button)
+                self.unlock_Button = None
+        
+        self.button_container.show_all()
+    
     def update_graph(self):
         self.labels['da'].queue_draw()
         return True

@@ -396,7 +396,7 @@ class Panel(ScreenPanel):
     def update_hint_temp_labels(self):
         if not self.is_calibrating:
             return
-        if self.current_temp >= self.target_temp and self.target_temp > 0:
+        if self.current_temp >= self.target_temp or self.target_temp == 0:
             self.widgets["bottom_exit_btn"].set_sensitive(True)
             self.right_container.set_visible_child_name("right_progress")
         if self.hint_stack.get_visible_child_name() == "start" and hasattr(self, "current_temp_label_start"):

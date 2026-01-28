@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KlipperScreen\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-11 17:15+0800\n"
+"POT-Creation-Date: 2025-12-23 17:39+0800\n"
 "PO-Revision-Date: 2024-06-03 19:09+0000\n"
 "Last-Translator: wsj20050623 <2129426599@qq.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
@@ -188,6 +188,9 @@ msgstr "您确定要取消此测试吗？"
 
 msgid "Are you sure you wish to disable motors?"
 msgstr "您确定要关闭电机吗？"
+
+msgid "Are you sure you wish to enable motors?"
+msgstr "您确定要使能电机吗？"
 
 msgid "Are you sure you wish to reboot the system?"
 msgstr "您确定要重启系统吗？"
@@ -434,6 +437,9 @@ msgstr "已用时间："
 
 msgid "Emergency Stop"
 msgstr "紧急停止"
+
+msgid "Enable Motors"
+msgstr "使能电机"
 
 msgid "Enable Registration Code"
 msgstr "启用注册码"
