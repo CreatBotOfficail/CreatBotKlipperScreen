@@ -36,13 +36,28 @@ switch slider {
     border: 0;
 }
 
-switch,
+switch, 
 treeview.view check {
     margin: 0.75em;
     min-width: 6em;
     min-height: 3em;
     border: 0;
     border-radius: 3em;
+}
+
+.toggle-switch-card {
+    background-color: @white-opa-10;
+    border: 1px solid @white-opa-20;
+    border-radius: 0.1em;
+    box-shadow: none;
+    margin: 0;
+    padding: 0;
+}
+
+.toggle-switch-card switch {
+    min-width: 3.0em;
+    min-height: 1.5em;
+    margin: 0.3em;
 }
 
 treeview.view check {

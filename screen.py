@@ -280,6 +280,8 @@ class KlipperScreen(Gtk.Window):
                 "exclude_object": ["current_object", "objects", "excluded_objects"],
                 "manual_probe": ['is_active'],
                 "screws_tilt_adjust": ['results', 'error'],
+                "ktamv": ['calibration_status'],
+                "stepper_enable": ['steppers'],
                 "save_variables": ['variables'],
             }
         }
@@ -305,6 +307,8 @@ class KlipperScreen(Gtk.Window):
             requested_updates['objects'][p] = ["value"]
         for led in self.printer.get_leds():
             requested_updates['objects'][led] = ["color_data"]
+        for d in self.printer.get_doors():
+            requested_updates['objects'][d] = ["doors"]
 
         self._ws.klippy.object_subscription(requested_updates)
 
@@ -317,7 +321,7 @@ class KlipperScreen(Gtk.Window):
             raise FileNotFoundError(os.strerror(2), "\n" + panel_path)
         return import_module(f"panels.{panel}")
 
-    def show_panel(self, panel, title=None, remove_all=False, panel_name=None, **kwargs):
+    def show_panel(self, panel, title=None, remove_all=False, panel_name=None, keep_stack=False, remove_current=False, **kwargs):
         if panel_name is None:
             panel_name = panel
         try:
@@ -331,6 +335,8 @@ class KlipperScreen(Gtk.Window):
                         self.gtk.remove_dialog(dialog)
             else:
                 self._remove_current_panel()
+                if remove_current and self._cur_panels:
+                    del self._cur_panels[-1]
             if panel_name not in self.panels:
                 try:
                     self.panels[panel_name] = self._load_panel(panel).Panel(self, title, **kwargs)
@@ -341,8 +347,12 @@ class KlipperScreen(Gtk.Window):
                 logging.info(f"Reinitializing panel {panel}")
                 self.panels[panel_name].__init__(self, title, **kwargs)
                 self.panels_reinit.remove(panel_name)
+            else:
+                for key, value in kwargs.items():
+                    if hasattr(self.panels[panel_name], key):
+                        setattr(self.panels[panel_name], key, value)
             panels_to_keep = ['move', 'extrude', 'gcodes', 'more']
-            if (len(self._cur_panels) > 1 and panel_name in panels_to_keep):
+            if (not keep_stack and len(self._cur_panels) > 1 and panel_name in panels_to_keep):
                 while len(self._cur_panels) > 1:
                     self._remove_current_panel()
                     del self._cur_panels[-1]
@@ -1114,6 +1124,7 @@ class KlipperScreen(Gtk.Window):
             'manual_probe',
             'probe_eddy_ng',
             'save_variables',
+            'stepper_enable',
             *self.printer.get_tools(),
             *self.printer.get_heaters(),
             *self.printer.get_eddy_sensors(),
@@ -1123,6 +1134,7 @@ class KlipperScreen(Gtk.Window):
             *self.printer.get_filament_sensors(),
             *self.printer.get_output_pins(),
             *self.printer.get_leds(),
+            *self.printer.get_doors(),
         )
 
         data = self.apiclient.send_request("printer/objects/query?" + "&".join(items))

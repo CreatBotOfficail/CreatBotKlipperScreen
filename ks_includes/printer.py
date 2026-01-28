@@ -232,11 +232,17 @@ class Printer:
     def get_temp_fans(self):
         return self.get_config_section_list("temperature_fan")
 
-    def get_eddy_sensors(self):
-        return self.get_config_section_list("probe_eddy_ng")
+    def get_temp_eddy(self):
+        return self.get_config_section_list("temperature_probe")
 
     def get_temp_sensors(self):
         return self.get_config_section_list("temperature_sensor")
+
+    def get_eddy_sensors(self):
+        return self.get_config_section_list("probe_eddy_ng")
+    
+    def get_doors(self):
+        return self.get_config_section_list("door")
 
     def get_filament_sensors(self):
         if self.sensors is None:
@@ -286,6 +292,16 @@ class Printer:
                 "wifi_available": wifi_available,
             },
         }
+
+    def get_locks(self):
+        locks = []
+        door_devices = self.get_config_section_list("door")
+        for door_device in door_devices:
+            door_name = door_device.split(" ")[-1]
+            door_config = self.get_config_section(door_device)
+            if door_config and 'lock_pin' in door_config:
+                locks.append(door_name)
+        return locks
 
     def get_leds(self):
         return [
@@ -391,7 +407,7 @@ class Printer:
                 for device in self.tools
                 if not device.startswith('extruder_stepper')
             ]
-            self.temp_devices = devices + self.get_heaters() + self.get_temp_sensors() + self.get_temp_fans()
+            self.temp_devices = devices + self.get_heaters() + self.get_temp_sensors() + self.get_temp_fans() + self.get_temp_eddy()
         return self.temp_devices
 
     def get_tools(self):
