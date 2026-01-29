@@ -344,10 +344,10 @@ class Panel(ScreenPanel):
             self._switch_to_print_test()
 
     def _switch_to_print_test(self):
-        self.title_label.set_text(_("Print Test"))
+        self.title_label.set_text(_("Print verification"))
         self.right_container.set_visible_child_name("print")
         self.left_button_box.set_visible_child_name("empty")
-        logging.info("Switched to print test interface")
+        logging.info("Switched to print verification interface")
 
     def _switch_to_default(self):
         self.title_label.set_text(_("Dual Color Calibration"))
