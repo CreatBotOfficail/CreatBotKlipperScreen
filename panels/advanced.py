@@ -328,10 +328,12 @@ class Panel(ScreenPanel):
                         self._config.set("main", "auto_door_lock", "False")
                         self._config.save_user_config_options()
 
-            if "interior_lighting" in variables:
-                self.menu_list["led_control"].set_active(variables["interior_lighting"])
-            else:
-                self.menu_list["led_control"].set_active(False)
+            leds = self._printer.get_leds()
+            if leds and len(leds) > 0:
+                if "interior_lighting" in variables:
+                    self.menu_list["led_control"].set_active(variables["interior_lighting"])
+                else:
+                    self.menu_list["led_control"].set_active(True)
 
             if self._printer.get_macro("_door_detection") or self._printer.get_config_section_list("door"):
                 if "door_detect" in variables:
