@@ -93,10 +93,13 @@ class Panel(ScreenPanel):
             Gst.init(None)
 
         class VideoWidget(Gtk.DrawingArea):
-            def __init__(self):
+            def __init__(self, width, height):
                 super().__init__()
+                self.set_size_request(width, height)
                 self.connect("draw", self.on_draw)
                 self.pixbuf = None
+                self.width = width
+                self.height = height
 
             def on_draw(self, widget, cr):
                 if self.pixbuf:
@@ -128,26 +131,24 @@ class Panel(ScreenPanel):
                     self_inner.loop.quit()
 
         self.mpv = GstPlayer()
-        self.mpv.video_widget = VideoWidget()
         
         screen = Gdk.Screen.get_default()
         width = screen.get_width() if screen else 1024
         height = screen.get_height() if screen else 600
         
+        self.mpv.video_widget = VideoWidget(width, height)
+
         pipeline_parts = []
         if url.startswith("rtsp"):
-            # Hardware accelerated pipeline for RTSP as requested
             pipeline_parts.append(f"rtspsrc location={url} latency=0")
-            pipeline_parts.append("rtph264depay")
-            pipeline_parts.append("h264parse")
-            pipeline_parts.append("mppvideodec")
-            pipeline_parts.append("videoconvert")
-            pipeline_parts.append("video/x-raw,format=RGB")
+            pipeline_parts.append("decodebin")
+            pipeline_parts.append("queue max-size-buffers=1 leaky=downstream")
         else:
-            # Generic fallback
             pipeline_parts.append(f"urisourcebin uri={url}")
             pipeline_parts.append("decodebin")
-            pipeline_parts.append("videoconvert")
+            pipeline_parts.append("queue max-size-buffers=1 leaky=downstream")
+
+        pipeline_parts.append(f"videoscale ! video/x-raw,width={width},height={height}")
 
         if cam["flip_horizontal"]:
             pipeline_parts.append("videoflip method=horizontal-flip")
@@ -162,8 +163,8 @@ class Panel(ScreenPanel):
         elif rot == 270:
             pipeline_parts.append("videoflip method=counterclockwise")
 
-        # Force format and scale
-        pipeline_parts.append(f"videoscale ! video/x-raw,width={width},height={height}")
+        pipeline_parts.append("videoconvert")
+        pipeline_parts.append("video/x-raw,format=RGB")
         pipeline_parts.append("gdkpixbufsink name=sink")
 
         try:
