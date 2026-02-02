@@ -247,7 +247,8 @@ class KlippyFactory:
         source_file = "/opt/printer_data/config/config_variables.cfg"
         backup_dir = "/oem/config"
         backup_file = os.path.join(backup_dir, "config_variables.cfg")
-        variables_to_backup = ["nozzle_x_offset_val", "nozzle_y_offset_val", "nozzle_z_offset_val"]
+        variables_to_backup = ["nozzle_x_offset_val", "nozzle_y_offset_val", "nozzle_z_offset_val", \
+            "nozzle_z_offset_compensation", "camera_x_offset_val", "camera_y_offset_val", "camera_z_offset_val"]
 
         try:
             if not os.path.exists(source_file):
