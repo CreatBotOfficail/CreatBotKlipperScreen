@@ -58,6 +58,10 @@ except Exception as e:
 
 
 def get_software_version():
+    version = get_version_from_file()
+    if version:
+        return version
+    
     prog = ('git', '-C', os.path.dirname(__file__), 'describe', '--always', '--tags', '--long', '--dirty')
     try:
         process = subprocess.Popen(prog, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -79,6 +83,19 @@ def get_software_version():
         logging.exception("Error running git describe")
     return "?"
 
+def get_version_from_file():
+    version_file = os.path.join(os.path.dirname(os.path.dirname(__file__)), '.version')
+    try:
+        with open(version_file, 'r') as f:
+            version = f.read().strip()
+            if version:
+                logging.info(f"Got version from file: {version}")
+                return version
+    except FileNotFoundError:
+        logging.debug(f"Version file not found: {version_file}")
+    except Exception as e:
+        logging.debug(f"Error reading version file: {e}")
+    return None
 
 def parse_bool(value):
     return value.lower() == "true"
