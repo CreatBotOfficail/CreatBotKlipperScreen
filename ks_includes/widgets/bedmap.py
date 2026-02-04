@@ -2,7 +2,7 @@ import logging
 import gi
 
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk
+from gi.repository import Gtk, Pango, PangoCairo
 
 
 class BedMap(Gtk.DrawingArea):
@@ -106,7 +106,13 @@ class BedMap(Gtk.DrawingArea):
         if self.bm is None:
             ctx.move_to(self.font_spacing, height / 2)
             ctx.set_source_rgb(0.5, 0.5, 0.5)
-            ctx.show_text(_("No mesh has been loaded"))
+            
+            layout = PangoCairo.create_layout(ctx)
+            layout.set_text(_("No mesh has been loaded"))
+            desc = Pango.FontDescription(f"Sans {self.font_size}")
+            layout.set_font_description(desc)
+            PangoCairo.show_layout(ctx, layout)
+            
             ctx.stroke()
             return
 
