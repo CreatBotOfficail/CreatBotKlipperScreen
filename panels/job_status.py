@@ -576,8 +576,10 @@ class Panel(ScreenPanel):
                 if 'unlock_all' in self.buttons:
                     if any_locked:
                         self.buttons['unlock_all'].set_image(self._gtk.Image("lock"))
+                        self.buttons['unlock_all'].set_sensitive(True)
                     else:
                         self.buttons['unlock_all'].set_image(self._gtk.Image("unlock"))
+                        self.buttons['unlock_all'].set_sensitive(False)
 
         if "save_variables" in data and "variables" in data["save_variables"]:
             variables = data["save_variables"]["variables"]

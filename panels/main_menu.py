@@ -282,8 +282,10 @@ class Panel(MenuPanel):
                 if self.unlock_Button:
                     if any_locked:
                         self.unlock_Button.set_image(self._gtk.Image("lock"))
+                        self.unlock_Button.set_sensitive(True)
                     else:
                         self.unlock_Button.set_image(self._gtk.Image("unlock"))
+                        self.unlock_Button.set_sensitive(False)
         if "save_variables" in data:
             variables = data["save_variables"].get("variables", {})
             if "auto_door_lock" in variables:
