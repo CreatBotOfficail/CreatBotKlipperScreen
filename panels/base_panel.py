@@ -285,7 +285,10 @@ class BasePanel(ScreenPanel):
         self.control['more'].set_visible(not printing and connected)
         self.control['home'].set_visible(connected)
         self.show_shortcut(connected)
-        self.show_heaters(connected)
+
+        is_main_menu = self._screen._cur_panels[-1] in ('main_menu', 'job_status')
+        self.show_heaters(not is_main_menu and connected)
+        self.titlelbl.set_halign(Gtk.Align.START if is_main_menu else Gtk.Align.CENTER)
         for control in ('back', 'home'):
             self.set_control_sensitive(len(self._screen._cur_panels) > 1, control=control)
         panels_has_back = ['gcodes', 'temperature', 'filament_chamber']
