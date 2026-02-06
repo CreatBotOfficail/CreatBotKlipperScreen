@@ -209,6 +209,12 @@ class Panel(ScreenPanel):
                             target = self.preheat_options[setting]["bed"]
                     if self.validate(heater, target, max_temp):
                         self._screen._ws.klippy.set_bed_temp(target)
+                elif heater.startswith("heater_chamber"):
+                    if target is None:
+                        with suppress(KeyError):
+                            target = self.preheat_options[setting]["chamber"]
+                    if self.validate(heater, target, max_temp):
+                        self._screen._ws.klippy.set_heater_temp(name, target)
                 elif heater.startswith("heater_generic "):
                     if target is None:
                         with suppress(KeyError):
