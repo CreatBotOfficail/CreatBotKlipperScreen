@@ -3,11 +3,13 @@
 # Alfredo Monclus (alfrix) 2024
 import subprocess
 import logging
+import ipaddress
 
 import sdbus
 from sdbus_block.networkmanager import (
     NetworkManager,
     NetworkDeviceGeneric,
+    NetworkDeviceWired,
     NetworkDeviceWireless,
     NetworkConnectionSettings,
     NetworkManagerSettings,
@@ -18,7 +20,7 @@ from sdbus_block.networkmanager import (
     enums,
     exceptions,
 )
-from gi.repository import GLib
+from gi.repository import GLib, Gio
 from uuid import uuid4
 
 NONE = 0  # The access point has no special security requirements.
@@ -106,16 +108,63 @@ class SdbusNm:
         self.wifi_state = -1
         self.popup = popup_callback
 
-    def ensure_nm_running(self):
+    def _get_dbus_property(self, object_path, interface_name, property_name):
+        """Get a DBus property using Gio.DBusProxy."""
         try:
-            status = subprocess.run(
-                ["systemctl", "is-active", "--quiet", "NetworkManager"]
+            proxy = Gio.DBusProxy.new_for_bus_sync(
+                Gio.BusType.SYSTEM,
+                Gio.DBusProxyFlags.NONE,
+                None,
+                'org.freedesktop.NetworkManager',
+                object_path,
+                'org.freedesktop.DBus.Properties',
+                None
             )
-            if status.returncode != 0:
-                raise RuntimeError("Failed to detect NetworkManager service")
-        except FileNotFoundError as e:
-            logging.exception(f"{e}")
-            raise RuntimeError(f"{e}") from e
+            result = proxy.call_sync(
+                'Get',
+                GLib.Variant('(ss)', (interface_name, property_name)),
+                Gio.DBusCallFlags.NONE,
+                -1,
+                None
+            )
+            return result.unpack()[0]
+        except Exception as e:
+            logging.debug(f"Failed to get DBus property {interface_name}.{property_name}: {e}")
+            return None
+
+    def _get_wired_device_path(self, interface):
+        """Get the DBus path for a wired interface."""
+        for device_path in self.nm.get_devices():
+            device = NetworkDeviceGeneric(device_path)
+            if device.device_type == enums.DeviceType.ETHERNET:
+                if device.interface == interface:
+                    return device_path
+        return None
+
+    def ensure_nm_running(self):
+        """Check if NetworkManager is running by trying to connect to it via DBus."""
+        try:
+            proxy = Gio.DBusProxy.new_for_bus_sync(
+                Gio.BusType.SYSTEM,
+                Gio.DBusProxyFlags.NONE,
+                None,
+                'org.freedesktop.NetworkManager',
+                '/org/freedesktop/NetworkManager',
+                'org.freedesktop.DBus.Properties',
+                None
+            )
+            # Try to get the Version property to verify the service is running
+            result = proxy.call_sync(
+                'Get',
+                GLib.Variant('(ss)', ('org.freedesktop.NetworkManager', 'Version')),
+                Gio.DBusCallFlags.NONE,
+                5000,  # 5 second timeout
+                None
+            )
+            logging.debug(f"NetworkManager version: {result.unpack()[0]}")
+        except Exception as e:
+            logging.exception(f"Failed to detect NetworkManager service: {e}")
+            raise RuntimeError(f"Failed to detect NetworkManager service: {e}") from e
 
     def is_wifi_enabled(self):
         return self.nm.wireless_enabled
@@ -143,6 +192,600 @@ class SdbusNm:
             )
         gateway = ActiveConnection(self.nm.primary_connection).devices[0]
         return NetworkDeviceGeneric(gateway).interface
+
+    def get_wired_interfaces(self):
+        devices = {path: NetworkDeviceGeneric(path) for path in self.nm.get_devices()}
+        return [
+            device.interface
+            for device in devices.values()
+            if device.device_type == enums.DeviceType.ETHERNET
+        ]
+
+    def get_wired_interface(self):
+        interfaces = self.get_wired_interfaces()
+        return interfaces[0] if interfaces else None
+
+    def get_wired_carrier_state(self, interface):
+        """Get the carrier (cable connected) state for a wired interface using DBus."""
+        if not interface:
+            return False
+        device_path = self._get_wired_device_path(interface)
+        if not device_path:
+            return False
+        carrier = self._get_dbus_property(
+            device_path,
+            'org.freedesktop.NetworkManager.Device.Wired',
+            'Carrier'
+        )
+        if carrier is None:
+            # Fallback to checking device state
+            device = NetworkDeviceWired(device_path)
+            return device.state == 100  # NM_DEVICE_STATE_ACTIVATED
+        return bool(carrier)
+
+    def get_wired_mac_address(self, interface):
+        """Get the MAC address of the wired interface using DBus."""
+        if not interface:
+            return "--:--:--:--:--:--"
+        device_path = self._get_wired_device_path(interface)
+        if not device_path:
+            return "--:--:--:--:--:--"
+        try:
+            device = NetworkDeviceWired(device_path)
+            return device.hw_address or "--:--:--:--:--:--"
+        except Exception as e:
+            logging.debug(f"Failed to get MAC address: {e}")
+            return "--:--:--:--:--:--"
+
+    def get_wireless_mac_address(self):
+        if self.wlan_device:
+            return self.wlan_device.hw_address
+        return "--:--:--:--:--:--"
+
+    def get_wireless_ip_address(self):
+        if self.wlan_device:
+            if self.wlan_device.active_connection and self.wlan_device.active_connection != "/":
+                active_connection = ActiveConnection(self.wlan_device.active_connection)
+                if active_connection.ip4_config and active_connection.ip4_config != "/":
+                    ip_info = IPv4Config(active_connection.ip4_config)
+                    if ip_info.address_data:
+                        return ip_info.address_data[0]["address"][1]
+        return "?"
+
+    def get_wireless_connection_name(self):
+        """Get the connection name for the wireless interface using DBus."""
+        if not self.wlan_device:
+            return None
+        try:
+            if self.wlan_device.active_connection and self.wlan_device.active_connection != "/":
+                active_connection = ActiveConnection(self.wlan_device.active_connection)
+                return active_connection.id
+        except Exception as e:
+            logging.debug(f"Failed to get wireless connection name: {e}")
+        return None
+
+    def get_wireless_dhcp_state(self):
+        """Check if wireless connection is using DHCP using DBus."""
+        try:
+            if self.wlan_device and self.wlan_device.active_connection and self.wlan_device.active_connection != "/":
+                active_connection = ActiveConnection(self.wlan_device.active_connection)
+                if active_connection.connection and active_connection.connection != "/":
+                    settings = NetworkConnectionSettings(active_connection.connection)
+                    profile = settings.get_profile()
+                    return profile.ipv4.method == 'auto'
+        except Exception as e:
+            logging.debug(f"Failed to get wireless DHCP state: {e}")
+        return True
+
+    def get_wireless_connection_info(self):
+        """Get wireless connection network info using DBus."""
+        info = {
+            "ip_address": "",
+            "netmask": "",
+            "gateway": "",
+            "dns": "",
+        }
+
+        if not self.wlan_device:
+            return info
+
+        try:
+            # Get IP info from active connection
+            if self.wlan_device.active_connection and self.wlan_device.active_connection != "/":
+                active_connection = ActiveConnection(self.wlan_device.active_connection)
+
+                # Get IP configuration
+                if active_connection.ip4_config and active_connection.ip4_config != "/":
+                    ip4_config = IPv4Config(active_connection.ip4_config)
+
+                    # Get address
+                    if ip4_config.address_data:
+                        addr_data = ip4_config.address_data[0]
+                        info["ip_address"] = addr_data.get("address", ("s", ""))[1]
+                        prefix = addr_data.get("prefix", ("u", 0))[1]
+                        info["netmask"] = self.prefix_to_netmask(str(prefix))
+
+                    # Get gateway
+                    try:
+                        gateway = ip4_config.gateway
+                        if gateway:
+                            info["gateway"] = gateway
+                    except Exception:
+                        pass
+
+                    # Get DNS
+                    try:
+                        dns_data = ip4_config.nameserver_data
+                        if dns_data:
+                            dns_list = [d.get("address", ("s", ""))[1] for d in dns_data]
+                            info["dns"] = ", ".join(dns_list)
+                    except Exception:
+                        pass
+
+            # If no active connection or missing info, try connection settings
+            if not info["ip_address"] and active_connection.connection and active_connection.connection != "/":
+                settings = NetworkConnectionSettings(active_connection.connection)
+                profile = settings.get_profile()
+
+                if profile.ipv4.addresses:
+                    addr = profile.ipv4.addresses[0] if profile.ipv4.addresses else None
+                    address, prefix = self._parse_profile_ipv4_address(addr)
+                    if address and prefix:
+                        info["ip_address"] = address
+                        info["netmask"] = self.prefix_to_netmask(prefix)
+
+                if profile.ipv4.gateway:
+                    info["gateway"] = profile.ipv4.gateway
+
+                if profile.ipv4.dns:
+                    info["dns"] = ", ".join(self._dns_to_text_list(profile.ipv4.dns))
+
+        except Exception as e:
+            logging.debug(f"Failed to get wireless connection info: {e}")
+
+        return info
+
+    def _set_ipv4_address(self, profile, address, prefix, gateway=None):
+        """Set IPv4 address in legacy DBus format: [[addr_u32, prefix, gw_u32]]."""
+        gateway_u32 = self._ipv4_to_u32(gateway) if gateway and self.is_valid_ipv4(gateway) else 0
+        profile.ipv4.addresses = [[self._ipv4_to_u32(address), int(prefix), gateway_u32]]
+        profile.ipv4.address_data = []
+
+    @staticmethod
+    def _ipv4_to_u32(address):
+        """Convert dotted IPv4 string to DBus uint32 representation."""
+        return int.from_bytes(ipaddress.IPv4Address(address).packed, byteorder='little')
+
+    @staticmethod
+    def _u32_to_ipv4(value):
+        """Convert DBus uint32 IPv4 value to dotted string."""
+        return str(ipaddress.IPv4Address(int(value).to_bytes(4, byteorder='little')))
+
+    def _dns_to_u32_list(self, dns_values):
+        """Normalize DNS values to uint32 list expected by NetworkManager settings."""
+        return [self._ipv4_to_u32(dns) for dns in dns_values if self.is_valid_ipv4(dns)]
+
+    def _dns_to_text_list(self, dns_values):
+        """Normalize profile DNS values into dotted IPv4 strings."""
+        result = []
+        for dns in dns_values:
+            if isinstance(dns, int):
+                try:
+                    result.append(self._u32_to_ipv4(dns))
+                except Exception:
+                    continue
+            elif isinstance(dns, str) and self.is_valid_ipv4(dns):
+                result.append(dns)
+        return result
+
+    def _parse_profile_ipv4_address(self, address_entry):
+        """Parse profile.ipv4.addresses entry from either legacy int-array or string format."""
+        if isinstance(address_entry, str):
+            if '/' in address_entry:
+                return address_entry.rsplit('/', 1)
+            return None, None
+
+        if isinstance(address_entry, (list, tuple)) and len(address_entry) >= 2:
+            try:
+                address = self._u32_to_ipv4(address_entry[0])
+                prefix = str(int(address_entry[1]))
+                return address, prefix
+            except Exception:
+                return None, None
+
+        return None, None
+
+    def set_wireless_dhcp(self, enable=True):
+        """Enable or disable DHCP for wireless connection using DBus."""
+        if not self.wlan_device or not self.wlan_device.active_connection or self.wlan_device.active_connection == "/":
+            return {"error": "no_connection", "message": _("No wireless connection available")}
+
+        try:
+            active_connection = ActiveConnection(self.wlan_device.active_connection)
+            conn_path = active_connection.connection
+
+            if not conn_path or conn_path == "/":
+                return {"error": "no_connection", "message": _("No wireless connection available")}
+
+            settings = NetworkConnectionSettings(conn_path)
+            profile = settings.get_profile()
+
+            if enable:
+                profile.ipv4.method = 'auto'
+                profile.ipv4.address_data = []
+                profile.ipv4.addresses = None
+                profile.ipv4.gateway = None
+                profile.ipv4.dns = []
+            else:
+                info = self.get_wireless_connection_info()
+                ip = info.get("ip_address", "")
+                netmask = info.get("netmask", "")
+                gateway = info.get("gateway", "")
+                dns = info.get("dns", "")
+
+                if not self.is_valid_ipv4(ip):
+                    ip = "0.0.0.0"
+                if not netmask or not self.is_valid_ipv4(netmask):
+                    netmask = "255.255.255.0"
+
+                prefix = self.netmask_to_prefix(netmask)
+                if prefix is None:
+                    return {"error": "invalid_netmask", "message": _("Invalid subnet mask")}
+
+                profile.ipv4.method = 'manual'
+                valid_gateway = gateway if self.is_valid_ipv4(gateway) else None
+                self._set_ipv4_address(profile, ip, prefix, valid_gateway)
+
+                if valid_gateway:
+                    profile.ipv4.gateway = valid_gateway
+                else:
+                    profile.ipv4.gateway = None
+
+                if dns:
+                    dns_ips = [d.strip() for d in dns.split(",") if self.is_valid_ipv4(d)]
+                    profile.ipv4.dns = self._dns_to_u32_list(dns_ips)
+                else:
+                    profile.ipv4.dns = []
+
+            settings.update_profile(profile, save_to_disk=True)
+
+            # Activate the connection
+            self.nm.activate_connection(conn_path)
+
+            return {"status": "success"}
+
+        except Exception as e:
+            logging.exception("Failed to set wireless DHCP")
+            return {"error": "dbus_error", "message": str(e)}
+
+    def set_wireless_manual(self, address, netmask, gateway, dns_list):
+        """Set static IP for wireless connection using DBus."""
+        if not self.wlan_device or not self.wlan_device.active_connection or self.wlan_device.active_connection == "/":
+            return {"error": "no_connection", "message": _("No wireless connection available")}
+
+        prefix = self.netmask_to_prefix(netmask)
+        if prefix is None:
+            return {"error": "invalid_netmask", "message": _("Invalid subnet mask")}
+
+        try:
+            active_connection = ActiveConnection(self.wlan_device.active_connection)
+            conn_path = active_connection.connection
+
+            if not conn_path or conn_path == "/":
+                return {"error": "no_connection", "message": _("No wireless connection available")}
+
+            settings = NetworkConnectionSettings(conn_path)
+            profile = settings.get_profile()
+
+            profile.ipv4.method = 'manual'
+            valid_gateway = gateway if self.is_valid_ipv4(gateway) else None
+            self._set_ipv4_address(profile, address, prefix, valid_gateway)
+
+            if valid_gateway:
+                profile.ipv4.gateway = valid_gateway
+            else:
+                profile.ipv4.gateway = None
+
+            filtered_dns_list = [dns for dns in dns_list if self.is_valid_ipv4(dns)]
+            profile.ipv4.dns = self._dns_to_u32_list(filtered_dns_list)
+
+            settings.update_profile(profile, save_to_disk=True)
+
+            # Activate the connection
+            self.nm.activate_connection(conn_path)
+
+            return {"status": "success"}
+
+        except Exception as e:
+            logging.exception("Failed to set wireless manual IP")
+            return {"error": "dbus_error", "message": str(e)}
+
+    def _get_wired_connection_settings(self, interface):
+        """Get the connection settings path for a wired interface using DBus."""
+        device_path = self._get_wired_device_path(interface)
+        if not device_path:
+            return None
+
+        try:
+            device = NetworkDeviceWired(device_path)
+            if device.active_connection and device.active_connection != "/":
+                active_connection = ActiveConnection(device.active_connection)
+                if active_connection.connection and active_connection.connection != "/":
+                    return active_connection.connection
+
+            # Try to find from available connections
+            for conn_path in device.available_connections:
+                settings = NetworkConnectionSettings(conn_path)
+                profile = settings.get_profile()
+                if profile.connection.interface_name == interface:
+                    return conn_path
+
+        except Exception as e:
+            logging.debug(f"Failed to get wired connection settings: {e}")
+
+        return None
+
+    def _ensure_wired_connection(self, interface):
+        """Ensure a wired connection exists for the interface, create if needed."""
+        conn_path = self._get_wired_connection_settings(interface)
+        if conn_path:
+            return conn_path
+
+        # Try to find existing connection
+        try:
+            nm_settings = NetworkManagerSettings()
+            for path in nm_settings.list_connections():
+                settings = NetworkConnectionSettings(path)
+                profile = settings.get_profile()
+                if (profile.connection.connection_type == '802-3-ethernet' and
+                    profile.connection.interface_name == interface):
+                    return path
+
+            # Create a new connection profile
+            device_path = self._get_wired_device_path(interface)
+            if device_path:
+                device = NetworkDeviceWired(device_path)
+                # Add connection via NetworkManager
+                conn_path = self.nm.add_and_activate_connection2(
+                    {
+                        'connection': {
+                            'id': ('s', f'wired-{interface}'),
+                            'type': ('s', '802-3-ethernet'),
+                            'interface-name': ('s', interface),
+                            'autoconnect': ('b', True),
+                        },
+                        'ipv4': {'method': ('s', 'auto')},
+                        'ipv6': {'method': ('s', 'auto')},
+                    },
+                    device_path,
+                    "/"
+                )
+                return conn_path
+
+        except Exception as e:
+            logging.exception(f"Failed to ensure wired connection: {e}")
+
+        return None
+
+    def netmask_to_prefix(self, netmask):
+        if not netmask:
+            return None
+        try:
+            return ipaddress.IPv4Network(f"0.0.0.0/{netmask}").prefixlen
+        except (ValueError, ipaddress.AddressValueError, ipaddress.NetmaskValueError):
+            return None
+
+    def prefix_to_netmask(self, prefix):
+        try:
+            return str(ipaddress.IPv4Network(f"0.0.0.0/{prefix}").netmask)
+        except Exception:
+            return "?"
+
+    def is_valid_ipv4(self, address):
+        """Check if the given string is a valid IPv4 address."""
+        if not address or address in ["?", "0.0.0.0", ""]:
+            return False
+        try:
+            ipaddress.IPv4Address(address)
+            return True
+        except Exception:
+            return False
+
+    def get_wired_dhcp_state(self, interface):
+        """Check if wired connection is using DHCP using DBus."""
+        conn_path = self._get_wired_connection_settings(interface)
+        if not conn_path:
+            return True
+        try:
+            settings = NetworkConnectionSettings(conn_path)
+            profile = settings.get_profile()
+            return profile.ipv4.method == 'auto'
+        except Exception as e:
+            logging.debug(f"Failed to get wired DHCP state: {e}")
+            return True
+
+    def get_wired_info(self, interface):
+        """Get wired connection network info using DBus."""
+        info = {
+            "ip_address": "",
+            "netmask": "",
+            "gateway": "",
+            "dns": "",
+        }
+
+        device_path = self._get_wired_device_path(interface)
+        if not device_path:
+            return info
+
+        try:
+            device = NetworkDeviceWired(device_path)
+
+            # Get IP info from active connection
+            if device.active_connection and device.active_connection != "/":
+                active_connection = ActiveConnection(device.active_connection)
+
+                # Get IP configuration
+                if active_connection.ip4_config and active_connection.ip4_config != "/":
+                    ip4_config = IPv4Config(active_connection.ip4_config)
+
+                    # Get address
+                    if ip4_config.address_data:
+                        addr_data = ip4_config.address_data[0]
+                        info["ip_address"] = addr_data.get("address", ("s", ""))[1]
+                        prefix = addr_data.get("prefix", ("u", 0))[1]
+                        info["netmask"] = self.prefix_to_netmask(str(prefix))
+
+                    # Get gateway
+                    try:
+                        gateway = ip4_config.gateway
+                        if gateway:
+                            info["gateway"] = gateway
+                    except Exception:
+                        pass
+
+                    # Get DNS
+                    try:
+                        dns_data = ip4_config.nameserver_data
+                        if dns_data:
+                            dns_list = [d.get("address", ("s", ""))[1] for d in dns_data]
+                            info["dns"] = ", ".join(dns_list)
+                    except Exception:
+                        pass
+
+            # If no active connection or missing info, try connection settings
+            if not info["ip_address"]:
+                conn_path = self._get_wired_connection_settings(interface)
+                if conn_path:
+                    settings = NetworkConnectionSettings(conn_path)
+                    profile = settings.get_profile()
+
+                if profile.ipv4.addresses:
+                    addr = profile.ipv4.addresses[0] if profile.ipv4.addresses else None
+                    address, prefix = self._parse_profile_ipv4_address(addr)
+                    if address and prefix:
+                        info["ip_address"] = address
+                        info["netmask"] = self.prefix_to_netmask(prefix)
+
+                    if profile.ipv4.gateway:
+                        info["gateway"] = profile.ipv4.gateway
+
+                    if profile.ipv4.dns:
+                        info["dns"] = ", ".join(self._dns_to_text_list(profile.ipv4.dns))
+
+        except Exception as e:
+            logging.debug(f"Failed to get wired info: {e}")
+
+        return info
+
+    def set_wired_dhcp(self, interface, enable=True):
+        """Enable or disable DHCP for wired connection using DBus."""
+        conn_path = self._ensure_wired_connection(interface)
+        if not conn_path:
+            return {"error": "no_connection", "message": _("No wired connection available")}
+
+        try:
+            settings = NetworkConnectionSettings(conn_path)
+            profile = settings.get_profile()
+
+            if enable:
+                profile.ipv4.method = 'auto'
+                profile.ipv4.address_data = []
+                profile.ipv4.addresses = None
+                profile.ipv4.gateway = None
+                profile.ipv4.dns = []
+            else:
+                info = self.get_wired_info(interface)
+                ip = info.get("ip_address", "")
+                netmask = info.get("netmask", "")
+                gateway = info.get("gateway", "")
+                dns = info.get("dns", "")
+
+                if not self.is_valid_ipv4(ip):
+                    ip = "0.0.0.0"
+                if not netmask or not self.is_valid_ipv4(netmask):
+                    netmask = "255.255.255.0"
+
+                prefix = self.netmask_to_prefix(netmask)
+                if prefix is None:
+                    return {"error": "invalid_netmask", "message": _("Invalid subnet mask")}
+
+                profile.ipv4.method = 'manual'
+                valid_gateway = gateway if self.is_valid_ipv4(gateway) else None
+                self._set_ipv4_address(profile, ip, prefix, valid_gateway)
+
+                if valid_gateway:
+                    profile.ipv4.gateway = valid_gateway
+                else:
+                    profile.ipv4.gateway = None
+
+                if dns:
+                    dns_ips = [d.strip() for d in dns.split(",") if self.is_valid_ipv4(d)]
+                    profile.ipv4.dns = self._dns_to_u32_list(dns_ips)
+                else:
+                    profile.ipv4.dns = []
+
+            settings.update_profile(profile, save_to_disk=True)
+
+            # Try to activate the connection
+            try:
+                device_path = self._get_wired_device_path(interface)
+                if device_path:
+                    self.nm.activate_connection(conn_path)
+            except Exception as e:
+                # Ignore errors if device has no carrier
+                if "no carrier" not in str(e).lower():
+                    logging.debug(f"Failed to activate connection: {e}")
+
+            return {"status": "success"}
+
+        except Exception as e:
+            logging.exception("Failed to set wired DHCP")
+            return {"error": "dbus_error", "message": str(e)}
+
+    def set_wired_manual(self, interface, address, netmask, gateway, dns_list):
+        """Set static IP for wired connection using DBus."""
+        conn_path = self._ensure_wired_connection(interface)
+        if not conn_path:
+            return {"error": "no_connection", "message": _("No wired connection available")}
+
+        prefix = self.netmask_to_prefix(netmask)
+        if prefix is None:
+            return {"error": "invalid_netmask", "message": _("Invalid subnet mask")}
+
+        try:
+            settings = NetworkConnectionSettings(conn_path)
+            profile = settings.get_profile()
+
+            profile.ipv4.method = 'manual'
+            valid_gateway = gateway if self.is_valid_ipv4(gateway) else None
+            self._set_ipv4_address(profile, address, prefix, valid_gateway)
+
+            if valid_gateway:
+                profile.ipv4.gateway = valid_gateway
+            else:
+                profile.ipv4.gateway = None
+
+            filtered_dns_list = [dns for dns in dns_list if self.is_valid_ipv4(dns)]
+            profile.ipv4.dns = self._dns_to_u32_list(filtered_dns_list)
+
+            settings.update_profile(profile, save_to_disk=True)
+
+            # Try to activate the connection
+            try:
+                device_path = self._get_wired_device_path(interface)
+                if device_path:
+                    self.nm.activate_connection(conn_path)
+            except Exception as e:
+                # Ignore errors if device has no carrier
+                if "no carrier" not in str(e).lower():
+                    logging.debug(f"Failed to activate connection: {e}")
+
+            return {"status": "success"}
+
+        except Exception as e:
+            logging.exception("Failed to set wired manual IP")
+            return {"error": "dbus_error", "message": str(e)}
+        return {"status": "success"}
 
     @staticmethod
     def get_known_networks():
