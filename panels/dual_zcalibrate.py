@@ -66,8 +66,8 @@ class Panel(ScreenPanel):
         left_vertical_box.pack_start(left_panel, False, False, 0)
         self.top_hbox.pack_start(left_vertical_box, True, True, 0)
 
-        self.right_container.set_valign(Gtk.Align.START)
-        self.top_hbox.pack_start(self.right_container, False, False, 0)
+        self.right_container.set_valign(Gtk.Align.CENTER)
+        self.top_hbox.pack_start(self.right_container, False, False, 20)
 
         self.main_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)
         self.main_box.set_margin_left(10)
@@ -139,9 +139,7 @@ class Panel(ScreenPanel):
         save_box.set_halign(Gtk.Align.END)
         save_box.set_margin_right(30)
         save_box.set_margin_bottom(30)
-        self.widgets["btn_save"] = self._create_button(_("Save"), callback=self.on_save_config)
         self.widgets["btn_recalibrate"] = self._create_button(_("Recalibrate"), callback=self.on_recalibrate)
-        save_box.pack_start(self.widgets["btn_save"], False, False, 0)
         save_box.pack_start(self.widgets["btn_recalibrate"], False, False, 0)
         return save_box
 
@@ -242,21 +240,16 @@ class Panel(ScreenPanel):
         self.right_container.set_visible_child_name("right_progress")
         self.right_container.queue_draw()
         self.content.queue_draw()
-        
         self._screen._ws.klippy.gcode_script("DUAL_Z_PROBE_CALIBRATE")
 
     def start_calibration(self, widget):
         logging.info("dual Z offset calibration started")
+        self._screen._ws.klippy.gcode_script("CLEAN_NOZZLE")
         self._start_calibration_state()
 
     def exit_calibration(self, widget=None):
         logging.info("Exit the calibration process of dual Z offset")
         self._screen._menu_go_back()
-        self.right_container.set_visible_child_name("right_default")
-        self.bottom_container.set_visible_child_name("empty")
-
-    def on_save_config(self, widget):
-        self.set_nozzle_offset("nozzle_z_offset_val", self.finish_offset)
         self.right_container.set_visible_child_name("right_default")
         self.bottom_container.set_visible_child_name("empty")
 
@@ -277,6 +270,7 @@ class Panel(ScreenPanel):
 
         self.auto_action = "sample"
         self.right_container.set_visible_child_name("right_default")
+        self.bottom_container.set_visible_child_name("empty")
         self.right_container.show_all()
         self._screen.show_panel("offset_manage", print_test=True, remove_current=True)
 
@@ -327,11 +321,9 @@ class Panel(ScreenPanel):
                     self.widgets["desc_label_report_bed"].set_text(display_text)
                 self.bottom_container.set_visible_child_name("save")
                 self.widgets["progress_stack"].set_visible_child_name("report_bed")
-                self.widgets["btn_save"].set_sensitive(False)
             else:
-                original_text = _("Everything is ready! Click [Save] to apply nozzle offset.\n\n")
                 if "desc_label_report_good" in self.widgets:
-                    self.widgets["desc_label_report_good"].set_text(original_text + display_text)
+                    self.widgets["desc_label_report_good"].set_text(display_text)
                 
                 final_offset_line = next((line for line in lines if "final dual-nozzle offset" in line.lower()), None)
                 if final_offset_line and ": " in final_offset_line:
@@ -346,7 +338,6 @@ class Panel(ScreenPanel):
                 if self.auto_action != "sample":
                     self.countdown = 3
                     self.countdown_running = True
-                    self.widgets["btn_save"].set_sensitive(False)
                     self.widgets["btn_recalibrate"].set_label(_("Next ({})").format(self.countdown))
                     self.widgets["btn_recalibrate"].set_sensitive(True)
 

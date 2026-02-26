@@ -132,12 +132,11 @@ class Panel(ScreenPanel):
         return img
 
     def _right_default_panel(self):
-        box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=0, valign=Gtk.Align.CENTER, halign=Gtk.Align.CENTER)
-        box.set_margin_left(30)
+        box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=0, valign=Gtk.Align.CENTER, halign=Gtk.Align.END)
         box.pack_start(self._create_tip_title(), False, False, 0)
-        box.pack_start(self._create_tip_text1(), False, False, 10)
-        box.pack_start(self._create_offset_box("current"), False, False, 10)
-        box.pack_start(self._create_tip_text2(), False, False, 10)
+        box.pack_start(self._create_tip_text1(), False, False, 5)
+        box.pack_start(self._create_offset_box("current"), False, False, 5)
+        box.pack_start(self._create_tip_text2(), False, False, 5)
         return box
 
     def _right_tip_panel(self):
@@ -164,7 +163,7 @@ class Panel(ScreenPanel):
             vbox.set_margin_start(20)
 
             hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=8)
-            icon = self._gtk.Image(icon_name, *self._scaled(0.03, 0.04))
+            icon = self._gtk.Image(icon_name, *self._scaled(0.06, 0.06))
             title = self._create_label(title_text, markup=True, halign=Gtk.Align.START)
             hbox.pack_start(icon, False, False, 5)
             hbox.pack_start(title, False, False, 0)
@@ -180,11 +179,51 @@ class Panel(ScreenPanel):
             self.widgets["progress_stack"].add_named(vbox, stack_name)
             return vbox
 
-        _create_state_panel(
-            "run-waiting",
-            _("<span font-size='large'>Calibration in progress...</span>"),
-            "in_progress"
+        in_progress_stack = Gtk.Stack()
+        in_progress_stack.set_transition_type(Gtk.StackTransitionType.CROSSFADE)
+
+        def _create_calibration_header(vbox):
+            hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=8)
+            icon = self._gtk.Image("run-waiting", *self._scaled(0.03, 0.04))
+            title = self._create_label(
+                _("<span font-size='large'>Calibration in progress...</span>"), 
+                markup=True, 
+                halign=Gtk.Align.START
+            )
+            hbox.pack_start(icon, False, False, 0)
+            hbox.pack_start(title, False, False, 0)
+            vbox.pack_start(hbox, False, False, 0)
+        
+        default_vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=5)
+        default_vbox.set_halign(Gtk.Align.START)
+        _create_calibration_header(default_vbox)
+        
+        data_label = self._create_label(
+            "", halign=Gtk.Align.START, line_wrap=True, max_width_chars=40
         )
+        self.widgets["progress_data_in_progress"] = data_label
+        self.widgets["progress_data_in_progress"].set_margin_top(20)
+        default_vbox.pack_start(data_label, False, False, 0)
+
+        cleaning_vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=5)
+        cleaning_vbox.set_halign(Gtk.Align.START)
+        _create_calibration_header(cleaning_vbox)
+
+        temp_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=15)
+        cleaning_vbox.pack_start(temp_box, False, False, 0)
+
+        step_label = self._create_label("", halign=Gtk.Align.START)
+        cleaning_vbox.pack_start(step_label, False, False, 10)
+
+        self.widgets["cleaning_temp_box"] = temp_box
+        self.widgets["cleaning_step_label"] = step_label
+
+        in_progress_stack.add_named(default_vbox, "default")
+        in_progress_stack.add_named(cleaning_vbox, "cleaning")
+        in_progress_stack.set_visible_child_name("default")
+        self.widgets["progress_stack"].add_named(in_progress_stack, "in_progress")
+        self.widgets["in_progress_stack"] = in_progress_stack
+
         _create_state_panel(
             "result-good",
             _("<span color='green' font-size='x-large'>Calibration Succeeded!</span>"),
@@ -206,30 +245,26 @@ class Panel(ScreenPanel):
         self.widgets["progress_stack"].set_visible_child_name("in_progress")
         return panel
 
+    def _get_offset_text(self):
+        return _("right nozzle offsets: X:{}  Y:{}").format(self.x_offset, self.y_offset)
+
     def _create_offset_box(self, prefix):
-        result_text = self._create_label(
-            _('Current tool offset'),
+        offset_label = self._create_label(
+            self._get_offset_text(),
             markup=True,
+            halign=Gtk.Align.START,
+            line_wrap=True
         )
-        x_label = self._create_label(
-            f"<span>X:{self.x_offset}</span>",
-            markup=True,
-        )
-        y_label = self._create_label(
-            f"<span>Y:{self.y_offset}</span>",
-            markup=True
-        )
-        setattr(self, f"{prefix}_x_offset_label", x_label)
-        setattr(self, f"{prefix}_y_offset_label", y_label)
+        setattr(self, f"{prefix}_offset_label", offset_label)
 
         box = Gtk.Box(
-            orientation=Gtk.Orientation.HORIZONTAL,
-            spacing=8,
-            halign=Gtk.Align.CENTER
+            orientation=Gtk.Orientation.VERTICAL,
+            spacing=5,
+            halign=Gtk.Align.CENTER,
+            margin=20
         )
-        box.pack_start(result_text, False, False, 0)
-        box.pack_start(x_label, False, False, 0)
-        box.pack_start(y_label, False, False, 0)
+        box.get_style_context().add_class("toggle-switch-card")
+        box.pack_start(offset_label, False, False, 15)
         return box
 
     def _create_tip_title(self):
@@ -271,14 +306,15 @@ class Panel(ScreenPanel):
             max_width_chars=35,
             line_wrap_mode=Pango.WrapMode.WORD
         )
-        box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=5)
-        box.pack_start(label, False, False, 20)
+        box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=0)
+        box.set_margin_top(15)
+        box.pack_start(label, False, False, 0)
         return box
 
     def _bottom_start_panel(self):
         box = Gtk.Box(
             orientation=Gtk.Orientation.HORIZONTAL,
-            spacing=10,
+            spacing=0,
             halign=Gtk.Align.END,
             margin_right=30,
         )
@@ -418,14 +454,50 @@ class Panel(ScreenPanel):
         if action == "notify_status_update":
             if "save_variables" in data:
                 variables = data["save_variables"].get("variables", {})
+                offset_updated = False
                 if "nozzle_x_offset_val" in variables:
                     self.x_offset = variables["nozzle_x_offset_val"]
-                    self.current_x_offset_label.set_markup(f"<span>X:{self.x_offset}</span>")
+                    offset_updated = True
                 if "nozzle_y_offset_val" in variables:
                     self.y_offset = variables["nozzle_y_offset_val"]
-                    self.current_y_offset_label.set_markup(f"<span>Y:{self.y_offset}</span>")
+                    offset_updated = True
+
+                if offset_updated and hasattr(self, "current_offset_label"):
+                    self.current_offset_label.set_markup(self._get_offset_text())
             if "ktamv" in data:
                 self._update_calibration_status(data["ktamv"].get("calibration_status", {}))
+
+            for extruder in self._printer.get_tools():
+                if f"temp_label_{extruder}" in self.widgets:
+                    temp = round(self._printer.get_stat(extruder, "temperature"))
+                    target = self._printer.get_stat(extruder, "target")
+                    temp_target = round(target) if target else 0
+                    temp_state = f"{temp}°/{temp_target}°"
+                    self.widgets[f"temp_label_{extruder}"].set_text(temp_state)
+            
+            if "in_progress_stack" in self.widgets and self.widgets["in_progress_stack"].get_visible_child_name() == "cleaning":
+                all_extruders_have_target = True
+                extruders = self._printer.get_tools()
+                for extruder in extruders:
+                    target = self._printer.get_stat(extruder, "target")
+                    if not target or target == 0:
+                        all_extruders_have_target = False
+                        break
+
+                current_extruder = self._printer.get_stat("toolhead", "extruder")
+                
+                if all_extruders_have_target and len(extruders) >= 2:
+                    display_text = _("Waiting for nozzle clean temperature")
+                else:
+                    if current_extruder == "extruder":
+                        display_text = _("Cleaning left nozzle")
+                    elif current_extruder == "extruder1":
+                        display_text = _("Cleaning right nozzle")
+                    else:
+                        display_text = _("Cleaning nozzles")
+                
+                if "cleaning_step_label" in self.widgets:
+                    self.widgets["cleaning_step_label"].set_text(display_text)
 
         elif action == "notify_gcode_response":
             cleaned_data = "\n".join([
@@ -441,7 +513,7 @@ class Panel(ScreenPanel):
                     x_offset = match.group(1)
                     y_offset = match.group(2)
                     self.widgets["progress_data_success"].set_text(
-                        f"X: {x_offset}  Y: {y_offset}\n{cleaned_data}"
+                        f"X: {x_offset}  Y: {y_offset}\n\n{cleaned_data}"
                     )
                     self.bottom_container.set_visible_child_name("finish")
                     if self.finish_action:
@@ -453,8 +525,13 @@ class Panel(ScreenPanel):
                         self.widgets["btn_print"].set_sensitive(True)
                         self.countdown_timer_id = GLib.timeout_add_seconds(1, self._countdown_timer)
             elif any(keyword in data.lower() for keyword in ["pixel", "uv:"]):
-                self.widgets["progress_stack"].set_visible_child_name("in_progress")
-                self.widgets["progress_data_in_progress"].set_text(cleaned_data)
+                if "in_progress_stack" in self.widgets:
+                    self.widgets["in_progress_stack"].set_visible_child_name("default")
+                progress_data = self.widgets["progress_data_in_progress"]
+                progress_data.set_text(cleaned_data)
+                if "progress_stack" in self.widgets:
+                    self.widgets["progress_stack"].set_visible_child_name("in_progress")
+                    self.widgets["progress_stack"].show_all()
 
     def activate(self):
         self.init_cam_tip()
@@ -483,7 +560,37 @@ class Panel(ScreenPanel):
                 self.bottom_container.set_visible_child_name("finish")
             else:
                 step_description = calibration_status.get("step_description", "Calibration in progress...")
-                self.widgets["progress_data_in_progress"].set_text(step_description)
+                if "cleaning the nozzle" in step_description.lower():
+                    self.widgets["in_progress_stack"].set_visible_child_name("cleaning")
+                    temp_box = self.widgets["cleaning_temp_box"]
+                    for child in temp_box.get_children():
+                        temp_box.remove(child)
+                    
+                    for i, extruder in enumerate(self._printer.get_tools()):
+                        temp = round(self._printer.get_stat(extruder, "temperature"))
+                        target = self._printer.get_stat(extruder, "target")
+                        temp_target = round(target) if target else 0
+                        extruder_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=2)
+                        image = self._gtk.Image(f"extruder-{i}", *self._scaled(0.1, 0.1))
+                        extruder_box.pack_start(image, False, False, 10)
+                        temp_label = self._create_label(
+                            f"{temp}°/{temp_target}°", 
+                            halign=Gtk.Align.CENTER
+                        )
+                        extruder_box.pack_start(temp_label, False, False, 10)
+                        self.widgets[f"temp_label_{extruder}"] = temp_label
 
+                        temp_box.pack_start(extruder_box, False, False, 10)
+                    
+                    temp_box.show_all()
+                else:
+                    self.widgets["in_progress_stack"].set_visible_child_name("default")
+                    
+                    if step_description:
+                        self.widgets["progress_data_in_progress"].set_text(step_description)
+                    
+                    if "progress_stack" in self.widgets:
+                        self.widgets["progress_stack"].set_visible_child_name("in_progress")
+                        self.widgets["progress_stack"].show_all()
     def deactivate(self):
         self.cam_controller.deactivate()

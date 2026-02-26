@@ -92,10 +92,14 @@ class Panel(ScreenPanel):
             markup=True,
             halign=Gtk.Align.CENTER,
             margin_top=10,
-            margin_bottom=20,
+            margin_bottom=10,
         )
 
-        self.left_container = self._left_cam_panel()
+        left_panels = [
+            ("camera", self._left_cam_panel),
+            ("image", self._left_image_panel)
+        ]
+        self.left_container = self._create_stack(left_panels)
 
         right_panels = [
             ("default", self._right_default_panel),
@@ -110,33 +114,48 @@ class Panel(ScreenPanel):
             valign=Gtk.Align.CENTER,
             halign=Gtk.Align.CENTER
         )
-        bottom_panels = [
-            ("position", self._bottom_position_panel),
-            ("empty", self._bottom_empty_panel)
-        ]
-        self.left_button_box = self._create_stack(bottom_panels)
         self.cam_box = self.cam_controller.create_camera_display_area()
-        left_vbox.pack_start(self.cam_box, False, False, 30)
-        left_vbox.pack_start(self.left_button_box, False, False, 0)
-        
+        left_vbox.pack_start(self.cam_box, False, False, 20)
         return left_vbox
 
-    def _bottom_empty_panel(self):
-        return Gtk.Box(height_request=20)
-    
-    def _bottom_position_panel(self):
-        left_button_box = Gtk.Box(
-            orientation=Gtk.Orientation.HORIZONTAL,
-            spacing=15,
-            halign=Gtk.Align.CENTER,
-            valign=Gtk.Align.CENTER,
-            margin_top=10
+    def _add_instruction_item(self, instructions_box, text):
+        label = self._create_label(
+            text,
+            halign=Gtk.Align.START,
+            xalign=0.0,
+            line_wrap=True,
+            max_width_chars=45,
+            line_wrap_mode=Pango.WrapMode.WORD
         )
-        position_check_btn = self._create_button(_("Position Check"), None, "color1", self.on_position_check)
-        datum_calib_btn = self._create_button(_("Datum Align"), None, "color3", self.on_datum_calibration)
-        left_button_box.pack_start(position_check_btn, False, False, 0)
-        left_button_box.pack_start(datum_calib_btn, False, False, 0)
-        return left_button_box
+        instructions_box.pack_start(label, False, False, 2)
+
+    def _left_image_panel(self):
+        left_vbox = Gtk.Box(
+            orientation=Gtk.Orientation.VERTICAL,
+            spacing=5,
+            valign=Gtk.Align.START,
+            halign=Gtk.Align.CENTER
+        )
+        
+        # Add instructions with small font
+        instructions_box = Gtk.Box(
+            orientation=Gtk.Orientation.VERTICAL,
+            spacing=5,
+            halign=Gtk.Align.START
+        )
+        
+        # Add instruction items using the same format as align_datum.py
+        self._add_instruction_item(instructions_box, _("1. Set nozzle and bed temperature before printing validation."))
+        self._add_instruction_item(instructions_box, _("2. Load filament in the Filament Settings if needed."))
+        self._add_instruction_item(instructions_box, _("3. Tap Start Print to run the validation model."))
+        self._add_instruction_item(instructions_box, _("4. Tap Save to skip printing validation."))
+        self._add_instruction_item(instructions_box, _("5. Tap Discard to discard right nozzle offsets."))
+        
+        
+        image = self._gtk.Image("nozzle-aglin", *self._scaled(0.25, 0.25))
+        left_vbox.pack_start(image, False, False, 5)
+        left_vbox.pack_start(instructions_box, False, False, 0)
+        return left_vbox
 
     def _right_default_panel(self):
         right_vbox = Gtk.Box(
@@ -174,8 +193,8 @@ class Panel(ScreenPanel):
             line_wrap=True,
             max_width_chars=40,
             halign=Gtk.Align.CENTER,
-            margin_top=20,
-            margin_bottom=10,
+            margin_top=5,
+            margin_bottom=5,
         )
 
         self.instructions_label = self._create_label(
@@ -185,10 +204,10 @@ class Panel(ScreenPanel):
             line_wrap=True,
             max_width_chars=40,
             halign=Gtk.Align.START,
-            margin_left=10,
-            margin_right=10,
-            margin_top=30,
-            margin_bottom=30,
+            margin_left=20,
+            margin_right=20,
+            margin_top=20,
+            margin_bottom=5,
         )
         self.instructions_label.override_font(Pango.FontDescription("small"))
 
@@ -264,19 +283,8 @@ class Panel(ScreenPanel):
         temp_icons_box.attach(create_temp_device_button("bed", "heater_bed"), 2, 0, 1, 1)
         right_vbox.pack_start(temp_icons_box, True, True, 5)
 
-        filament_btn = self._create_button(_("Go to Filament Settings"), "filament", "color1", self.on_jump_to_filament_settings)
+        filament_btn = self._create_button(_("Filament Settings"), "filament", "color1", self.on_jump_to_filament_settings)
         right_vbox.pack_start(filament_btn, True, True, 10)
-
-        temperature_instruction = self._create_label(
-            _("Please adjust the temperature according to the filament "
-            "printing parameters and ensure the filament in both nozzles is consistent"),
-            halign=Gtk.Align.CENTER,
-            line_wrap=True,
-            max_width_chars=40,
-            margin_bottom=5
-        )
-        temperature_instruction.override_font(Pango.FontDescription("small"))
-        right_vbox.pack_start(temperature_instruction, False, False, 0)
         
         self.offset_label = self._create_label(
             self._get_offset_text(),
@@ -317,13 +325,6 @@ class Panel(ScreenPanel):
         main_box.pack_start(self.top_container, True, True, 0)
 
         self.content.add(main_box)
-
-    def on_position_check(self, widget):
-        self.start_btn_active = True
-        self._screen._ws.klippy.gcode_script("KTAMV_MOVE_DATUM_CENTER")
-    
-    def on_datum_calibration(self, widget):
-        self._screen.show_panel("align_datum", start_btn_active=self.start_btn_active)
     
     def on_cancel(self, widget):
         self.print_test = False
@@ -334,25 +335,26 @@ class Panel(ScreenPanel):
         self.last_y_offset = self.y_offset
         self.last_z_offset = self.z_offset
         if self.xy_offset_calibration:
+            self._screen._ws.klippy.gcode_script("KTAMV_MOVE_DATUM_CENTER")
             if self.z_offset_calibration:
-                self._screen.show_panel("xy_calibrate", finish_action="continue_z")
+                self._screen.show_panel("align_datum", finish_action="continue_z", remove_current=True)
             else:
-                self._screen.show_panel("xy_calibrate", finish_action="print_test")
+                self._screen.show_panel("align_datum", finish_action="print_test", remove_current=True)
         elif self.z_offset_calibration:
-            self._screen.show_panel("dual_zcalibrate", auto_action="print_test")
+            self._screen.show_panel("dual_zcalibrate", auto_action="print_test", remove_current=True)
         else:
             self._switch_to_print_test()
 
     def _switch_to_print_test(self):
         self.title_label.set_text(_("Print verification"))
         self.right_container.set_visible_child_name("print")
-        self.left_button_box.set_visible_child_name("empty")
+        self.left_container.set_visible_child_name("image")
         logging.info("Switched to print verification interface")
 
     def _switch_to_default(self):
         self.title_label.set_text(_("Dual Color Calibration"))
-        self.left_button_box.set_visible_child_name("position")
         self.right_container.set_visible_child_name("default")
+        self.left_container.set_visible_child_name("camera")
     
     def on_jump_to_filament_settings(self, widget):
         self._screen.show_panel("extrude", remove_all=False, keep_stack=True)
@@ -380,7 +382,7 @@ class Panel(ScreenPanel):
         self.z_offset_calibration = active
 
     def _get_offset_text(self):
-        return _("Current tool offset X:{} Y:{} Z:{}").format(
+        return _("Current right nozzle offsets:\n\n X:{}  Y:{}  Z:{}").format(
             self.x_offset, self.y_offset, self.z_offset
         )
     
