@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KlipperScreen\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-22 13:48+0800\n"
+"POT-Creation-Date: 2026-02-28 16:32+0800\n"
 "PO-Revision-Date: 2024-06-03 19:09+0000\n"
 "Last-Translator: wsj20050623 <2129426599@qq.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
@@ -30,13 +30,6 @@ msgid "(default)"
 msgstr "（默认）"
 
 msgid ""
-"1. Advanced setting: Use only when necessary (e.g., nozzle/hotend "
-"replacement, post-collision, or mechanical zero adjustment)."
-msgstr ""
-"1、高级设置：仅在必要时使用（例如喷嘴/热端更换、碰撞后或调整机械零位后等场"
-"景）。"
-
-msgid ""
 "1. Ensure that all fixed components have been properly removed before "
 "proceeding."
 msgstr "1、确认所有固件已经被拆除后再继续"
@@ -50,6 +43,14 @@ msgid "1. Keep filament dry to prevent print failures and nozzle clogs."
 msgstr "1. 保持耗材干燥可有效避免打印失败和喷嘴堵塞。"
 
 msgid ""
+"1. Please adjust strictly according to the example above to ensure optimal "
+"visual recognition. "
+msgstr "1、请严格按照上方示例进行调整，以确保最佳视觉识别效果。"
+
+msgid "1. Set nozzle and bed temperature before printing validation."
+msgstr "1、打印验证前请根据耗材的打印参数设置喷嘴和热床温度。"
+
+msgid ""
 "1.Please ensure that the <b>Probe Calibrate</b> has been performed!\n"
 "\n"
 msgstr ""
@@ -60,11 +61,14 @@ msgid "2. Dry filament periodically when humidity exceeds 50%."
 msgstr "2. 建议在湿度高于50%的环境中对耗材进行定期干燥。"
 
 msgid ""
-"2. Follow the image guide strictly during calibration to avoid damaging the "
-"vision module or causing print errors."
+"2. If the real-time view shows the nozzle is centered and clean, you can "
+"skip the datum point check and go directly to the next calibration. "
 msgstr ""
-"2、如需校准请严格按照上图示例操作，否则将会造成视觉模组损坏或者打印异常等问"
-"题。"
+"2、如果实时画面显示喷嘴位置居中且喷嘴无耗材残留，可跳过基准点检测，直接进行后"
+"续校准。"
+
+msgid "2. Load filament in the Filament Settings if needed."
+msgstr "2、如需加载耗材请点击耗材设置"
 
 msgid ""
 "2. Once the disassembly is complete, click the 'Next' button to proceed."
@@ -84,13 +88,22 @@ msgstr "24小时制"
 msgid "3. Always set the proper temperature for your filament!"
 msgstr "3. 需根据耗材特性设置合适的温度!"
 
-msgid "3. If you have any questions, please contact customer service."
-msgstr "3、如有疑惑请联系售后支持。"
-
 msgid ""
 "3. Once the operation is complete, click the 'Finish' button to conclude the "
 "process."
 msgstr "3、操作完成后，点击 '结束' 按钮以结束整个过程。"
+
+msgid "3. Please contact after-sales support if you have any questions."
+msgstr "3、如有任何疑问，请联系售后支持。"
+
+msgid "3. Tap Start Print to run the validation model."
+msgstr "3、点击开始打印以运行校验模型。"
+
+msgid "4. Tap Save to skip printing validation."
+msgstr "4、点击保存可跳过打印校验。"
+
+msgid "5. Tap Discard to discard right nozzle offsets."
+msgstr "5、点击放弃，不应用右喷嘴偏移校准结果。"
 
 msgid ""
 "<b>Start the Dual Z offset calibrate?</b>\n"
@@ -284,9 +297,6 @@ msgstr "自动"
 msgid "Auto Bed Leveling"
 msgstr "自动调平"
 
-msgid "Auto Calibration"
-msgstr "自动校准"
-
 msgid "Auto Change Nozzle"
 msgstr "断料自动切换喷头"
 
@@ -298,9 +308,6 @@ msgstr "当耗材用尽时自动切换喷头"
 
 msgid "Auto-Off After Print"
 msgstr "打印结束自动关闭"
-
-msgid "Auto-calibrate"
-msgstr "自动校准"
 
 msgid "Auto-close notifications"
 msgstr "自动关闭通知"
@@ -350,11 +357,11 @@ msgstr "校准喷嘴XY偏移值"
 msgid "Calibrate Nozzle Z Offset"
 msgstr "校准喷嘴Z偏移值"
 
-msgid "Calibrated"
-msgstr "已校准"
-
 msgid "Calibrating"
 msgstr "正在校准"
+
+msgid "Calibration datum"
+msgstr "校准基准"
 
 msgid ""
 "Calibration is only required if dual-color printing malfunctions.\n"
@@ -402,6 +409,15 @@ msgstr "请检查加速度计的连线"
 
 msgid "Checking for updates, please wait..."
 msgstr "正在检查更新，请稍等..."
+
+msgid "Cleaning left nozzle"
+msgstr "正在清洁左喷嘴"
+
+msgid "Cleaning nozzles"
+msgstr "正在清洁喷嘴"
+
+msgid "Cleaning right nozzle"
+msgstr "正在清洁右喷嘴"
 
 msgid "Clear"
 msgstr "清除"
@@ -479,11 +495,14 @@ msgstr "当前Z偏移"
 msgid "Current percentage and graph line"
 msgstr "当前百分比和走线"
 
-msgid "Current tool offset"
-msgstr "当前工具偏移"
-
-msgid "Current tool offset X:{} Y:{} Z:{}"
-msgstr "当前右喷头偏移 X:{} Y:{} Z:{}"
+msgid ""
+"Current right nozzle offsets:\n"
+"\n"
+" X:{}  Y:{}  Z:{}"
+msgstr ""
+"当前右喷头偏移:\n"
+"\n"
+"       X:{}  Y:{}  Z:{}"
 
 msgid "Current value:"
 msgstr "当前值："
@@ -516,7 +535,7 @@ msgid "Disable Motors"
 msgstr "关闭电机"
 
 msgid "Disable for 12hs with am / pm"
-msgstr "在十二小时显示模式中不现实AM/PM"
+msgstr "在十二小时显示模式中不显示AM/PM"
 
 msgid "Disabled"
 msgstr "禁用"
@@ -554,9 +573,6 @@ msgstr "开门保护模式"
 
 msgid "Dual Color Calibration"
 msgstr "双喷头校准"
-
-msgid "Eddy Calibrate"
-msgstr "涡流校准"
 
 msgid "Eddy calibration"
 msgstr "涡流校准"
@@ -704,6 +720,9 @@ msgstr "耗材"
 msgid "Filament Chamber Settings"
 msgstr "耗材仓设置"
 
+msgid "Filament Settings"
+msgstr "耗材设置"
+
 msgid "Filament Used"
 msgstr "已用耗材"
 
@@ -772,9 +791,6 @@ msgstr "获取IP地址"
 
 msgid "Go Back"
 msgstr "返回"
-
-msgid "Go to Filament Settings"
-msgstr "前往耗材设置"
 
 msgid "Height:"
 msgstr "高度："
@@ -983,6 +999,9 @@ msgstr "最大速度"
 msgid "Maximum"
 msgstr "最大"
 
+msgid "Measure "
+msgstr "测量 "
+
 msgid "Measure Both"
 msgstr "同时测量"
 
@@ -1107,9 +1126,6 @@ msgstr "不一定所有屏幕都支持这项功能"
 msgid "Not working or not configured"
 msgstr "不工作或未配置"
 
-msgid "Notes:"
-msgstr "注意："
-
 msgid "Nothing selected"
 msgstr "未选择任何内容"
 
@@ -1195,11 +1211,6 @@ msgid "Place the camera in the indicated position"
 msgstr "将摄像头放置于指示位置"
 
 msgid ""
-"Please adjust the temperature according to the filament printing parameters "
-"and ensure the filament in both nozzles is consistent"
-msgstr "请根据耗材的打印参数调整温度，并确保两个喷嘴中的耗材一致"
-
-msgid ""
 "Please check the logs for more information.\n"
 "\n"
 msgstr ""
@@ -1241,9 +1252,6 @@ msgstr "请重新编译并更新微控制器固件。"
 msgid "Please wait"
 msgstr "请稍候"
 
-msgid "Position Check"
-msgstr "位置检查"
-
 msgid "Power"
 msgstr "电源"
 
@@ -1252,6 +1260,9 @@ msgstr "断电续打"
 
 msgid "Power On Printer"
 msgstr "打印机通电"
+
+msgid "Precautions:"
+msgstr "注意事项："
 
 msgid "Preheat"
 msgstr "预热"
@@ -1425,9 +1436,6 @@ msgstr "保存并重启"
 msgid "Save configuration?"
 msgstr "是否保存设置？"
 
-msgid "Save settings"
-msgstr "保存设置"
-
 msgid "Saved"
 msgstr "已保存"
 
@@ -1494,6 +1502,9 @@ msgstr "大小"
 msgid "Skip"
 msgstr "跳过"
 
+msgid "Skip check"
+msgstr "跳过检查"
+
 msgid "Slicer"
 msgstr "切片软件"
 
@@ -1529,9 +1540,6 @@ msgstr "待机"
 
 msgid "Start"
 msgstr "开始"
-
-msgid "Start Calibration"
-msgstr "开始校准"
 
 msgid "Start Printing"
 msgstr "开始打印"
@@ -1699,6 +1707,9 @@ msgstr "正在验证传感器精度，测试将自动完成。"
 msgid "Version Selection"
 msgstr "版本选择"
 
+msgid "Waiting for nozzle clean temperature"
+msgstr "正在加热至喷嘴清洁温度"
+
 msgid "WebRTC is not supported by the backend trying Stream"
 msgstr "不支持传送WebRTC至后台"
 
@@ -1817,6 +1828,9 @@ msgstr "mm³/s"
 msgid "offset fine tune"
 msgstr "偏移值微调"
 
+msgid "right nozzle offsets: X:{}  Y:{}"
+msgstr "右喷嘴偏移: X:{}  Y:{}"
+
 msgid "right nozzle probing ..."
 msgstr "右喷嘴探测中..."
 
@@ -1835,6 +1849,55 @@ msgstr "○ 打开应用--点击“+”添加打印机"
 
 msgid "○ Rescan left QR to add printe"
 msgstr "○ 使用APP再次扫描左侧二维码，添加打印机"
+
+#~ msgid ""
+#~ "1. Advanced setting: Use only when necessary (e.g., nozzle/hotend "
+#~ "replacement, post-collision, or mechanical zero adjustment)."
+#~ msgstr ""
+#~ "1、高级设置：仅在必要时使用（例如喷嘴/热端更换、碰撞后或调整机械零位后等场"
+#~ "景）。"
+
+#~ msgid ""
+#~ "2. Follow the image guide strictly during calibration to avoid damaging "
+#~ "the vision module or causing print errors."
+#~ msgstr ""
+#~ "2、如需校准请严格按照上图示例操作，否则将会造成视觉模组损坏或者打印异常等"
+#~ "问题。"
+
+#~ msgid "3. If you have any questions, please contact customer service."
+#~ msgstr "3、如有疑惑请联系售后支持。"
+
+#~ msgid "Auto Calibration"
+#~ msgstr "自动校准"
+
+#~ msgid "Auto-calibrate"
+#~ msgstr "自动校准"
+
+#~ msgid "Calibrated"
+#~ msgstr "已校准"
+
+#~ msgid "Current tool offset"
+#~ msgstr "当前工具偏移"
+
+#~ msgid "Eddy Calibrate"
+#~ msgstr "涡流校准"
+
+#~ msgid "Notes:"
+#~ msgstr "注意："
+
+#~ msgid ""
+#~ "Please adjust the temperature according to the filament printing "
+#~ "parameters and ensure the filament in both nozzles is consistent"
+#~ msgstr "请根据耗材的打印参数调整温度，并确保两个喷嘴中的耗材一致"
+
+#~ msgid "Position Check"
+#~ msgstr "位置检查"
+
+#~ msgid "Save settings"
+#~ msgstr "保存设置"
+
+#~ msgid "Start Calibration"
+#~ msgstr "开始校准"
 
 #~ msgid "Print Test"
 #~ msgstr "打印验证"
@@ -1969,9 +2032,6 @@ msgstr "○ 使用APP再次扫描左侧二维码，添加打印机"
 
 #~ msgid "Fullscreen"
 #~ msgstr "全屏"
-
-#~ msgid "Actions"
-#~ msgstr "控制"
 
 #~ msgid "Configuration"
 #~ msgstr "设置"

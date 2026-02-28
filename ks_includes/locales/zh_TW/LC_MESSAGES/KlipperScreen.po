@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KlipperScreen\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-22 13:48+0800\n"
+"POT-Creation-Date: 2026-02-28 16:32+0800\n"
 "PO-Revision-Date: 2024-06-01 12:09+0000\n"
 "Last-Translator: 峻瑜哥 <a728728728@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <https://hosted.weblate.org/projects/"
@@ -30,13 +30,6 @@ msgid "(default)"
 msgstr "(預設)"
 
 msgid ""
-"1. Advanced setting: Use only when necessary (e.g., nozzle/hotend "
-"replacement, post-collision, or mechanical zero adjustment)."
-msgstr ""
-"1、高級設置：僅在必要時使用（例如噴嘴/熱端更換、碰撞后或調整機械零位后等場"
-"景）。"
-
-msgid ""
 "1. Ensure that all fixed components have been properly removed before "
 "proceeding."
 msgstr ""
@@ -50,6 +43,14 @@ msgid "1. Keep filament dry to prevent print failures and nozzle clogs."
 msgstr "1. 保持耗材幹燥可有效避免打印失敗和噴嘴堵塞。"
 
 msgid ""
+"1. Please adjust strictly according to the example above to ensure optimal "
+"visual recognition. "
+msgstr "1、請嚴格按照上方示例進行調整，以確保最佳視覺識別效果。"
+
+msgid "1. Set nozzle and bed temperature before printing validation."
+msgstr "1、打印驗證前請根據耗材的打印參數設置噴嘴和熱床溫度。"
+
+msgid ""
 "1.Please ensure that the <b>Probe Calibrate</b> has been performed!\n"
 "\n"
 msgstr ""
@@ -60,10 +61,14 @@ msgid "2. Dry filament periodically when humidity exceeds 50%."
 msgstr "2. 建議在濕度高於50%的環境中對耗材進行定期幹燥。"
 
 msgid ""
-"2. Follow the image guide strictly during calibration to avoid damaging the "
-"vision module or causing print errors."
+"2. If the real-time view shows the nozzle is centered and clean, you can "
+"skip the datum point check and go directly to the next calibration. "
 msgstr ""
-"2、如需校準請嚴格按照上圖示例操作，否則將會造成視覺模組損壞或打印異常等問題。"
+"2、若實時畫面顯示噴嘴位置居中且噴嘴無耗材殘留，可跳過基準點檢測，直接進行後續"
+"操作。續校準。"
+
+msgid "2. Load filament in the Filament Settings if needed."
+msgstr "2、如需加載耗材請點擊耗材設定"
 
 msgid ""
 "2. Once the disassembly is complete, click the 'Next' button to proceed."
@@ -83,13 +88,22 @@ msgstr "使用24小時制"
 msgid "3. Always set the proper temperature for your filament!"
 msgstr "3. 需根據耗材特性設置合適的溫度!"
 
-msgid "3. If you have any questions, please contact customer service."
-msgstr "3、如有疑惑請聯系售後支持"
-
 msgid ""
 "3. Once the operation is complete, click the 'Finish' button to conclude the "
 "process."
 msgstr "3、操作完成後，點擊 '結束' 按鈕以結束整個過程。"
+
+msgid "3. Please contact after-sales support if you have any questions."
+msgstr "3、如有任何疑問，請聯系售後支持。"
+
+msgid "3. Tap Start Print to run the validation model."
+msgstr "3、點擊開始列印以運行校驗模型。"
+
+msgid "4. Tap Save to skip printing validation."
+msgstr "4、點擊保存可跳過列印校驗。"
+
+msgid "5. Tap Discard to discard right nozzle offsets."
+msgstr "5、點擊放弃，不應用右噴嘴偏移校準結果。"
 
 msgid ""
 "<b>Start the Dual Z offset calibrate?</b>\n"
@@ -283,9 +297,6 @@ msgstr "自動"
 msgid "Auto Bed Leveling"
 msgstr "自動調平"
 
-msgid "Auto Calibration"
-msgstr "自動校準"
-
 msgid "Auto Change Nozzle"
 msgstr "斷料自動切換噴頭"
 
@@ -297,9 +308,6 @@ msgstr "當耗材用盡時自動切換噴頭"
 
 msgid "Auto-Off After Print"
 msgstr "打印結束自動關閉"
-
-msgid "Auto-calibrate"
-msgstr "自動校準"
 
 msgid "Auto-close notifications"
 msgstr "自動關閉通知"
@@ -349,11 +357,11 @@ msgstr "校準噴嘴XY偏移值"
 msgid "Calibrate Nozzle Z Offset"
 msgstr "校準噴嘴Z偏移值"
 
-msgid "Calibrated"
-msgstr "已校準"
-
 msgid "Calibrating"
 msgstr "正在校準"
+
+msgid "Calibration datum"
+msgstr "校準基準"
 
 msgid ""
 "Calibration is only required if dual-color printing malfunctions.\n"
@@ -401,6 +409,15 @@ msgstr "檢查ADXL的接線"
 
 msgid "Checking for updates, please wait..."
 msgstr "正在檢查更新，請稍等..."
+
+msgid "Cleaning left nozzle"
+msgstr "正在清潔左噴嘴“"
+
+msgid "Cleaning nozzles"
+msgstr "正在清潔噴嘴"
+
+msgid "Cleaning right nozzle"
+msgstr "正在清潔右噴嘴"
 
 msgid "Clear"
 msgstr "清除"
@@ -478,11 +495,14 @@ msgstr "當前Z偏移"
 msgid "Current percentage and graph line"
 msgstr "當前百分比和折線圖"
 
-msgid "Current tool offset"
-msgstr "當前工具偏移"
-
-msgid "Current tool offset X:{} Y:{} Z:{}"
-msgstr "當前右噴頭偏移 X:{} Y:{} Z:{}"
+msgid ""
+"Current right nozzle offsets:\n"
+"\n"
+" X:{}  Y:{}  Z:{}"
+msgstr ""
+"當前右噴頭偏移:\n"
+"\n"
+"       X:{}  Y:{}  Z:{}"
 
 msgid "Current value:"
 msgstr "當前值："
@@ -553,9 +573,6 @@ msgstr "開門保護模式"
 
 msgid "Dual Color Calibration"
 msgstr "雙噴頭校準"
-
-msgid "Eddy Calibrate"
-msgstr "渦流校準"
 
 msgid "Eddy calibration"
 msgstr "渦流校準"
@@ -703,6 +720,9 @@ msgstr "耗材"
 msgid "Filament Chamber Settings"
 msgstr "耗材倉設置"
 
+msgid "Filament Settings"
+msgstr "耗材設定"
+
 msgid "Filament Used"
 msgstr "已消耗耗材"
 
@@ -771,9 +791,6 @@ msgstr "獲取IP地址"
 
 msgid "Go Back"
 msgstr "返回"
-
-msgid "Go to Filament Settings"
-msgstr "前往耗材設定"
 
 msgid "Height:"
 msgstr "高度："
@@ -982,6 +999,9 @@ msgstr "最大速度"
 msgid "Maximum"
 msgstr "最大"
 
+msgid "Measure "
+msgstr "量測 "
+
 msgid "Measure Both"
 msgstr "同時測量"
 
@@ -1106,9 +1126,6 @@ msgstr "不一定所有屏幕都支持這項功能"
 msgid "Not working or not configured"
 msgstr "不工作或未配置"
 
-msgid "Notes:"
-msgstr "注意："
-
 msgid "Nothing selected"
 msgstr "未選擇任何內容"
 
@@ -1194,11 +1211,6 @@ msgid "Place the camera in the indicated position"
 msgstr "將監視器放置於訓示位置"
 
 msgid ""
-"Please adjust the temperature according to the filament printing parameters "
-"and ensure the filament in both nozzles is consistent"
-msgstr "請根據耗材的列印參數調整溫度，並確保兩個噴嘴中的耗材一致"
-
-msgid ""
 "Please check the logs for more information.\n"
 "\n"
 msgstr ""
@@ -1240,9 +1252,6 @@ msgstr "請重新編譯並燒錄微控制器。"
 msgid "Please wait"
 msgstr "請稍候"
 
-msgid "Position Check"
-msgstr "位置檢查"
-
 msgid "Power"
 msgstr "電源"
 
@@ -1251,6 +1260,9 @@ msgstr "斷電續打"
 
 msgid "Power On Printer"
 msgstr "啟動列印機"
+
+msgid "Precautions:"
+msgstr "注意事項："
 
 msgid "Preheat"
 msgstr "预热"
@@ -1424,9 +1436,6 @@ msgstr "保存並重啓"
 msgid "Save configuration?"
 msgstr "是否儲存設定？"
 
-msgid "Save settings"
-msgstr "保存設置"
-
 msgid "Saved"
 msgstr "已儲存"
 
@@ -1493,6 +1502,9 @@ msgstr "大小"
 msgid "Skip"
 msgstr "跳過"
 
+msgid "Skip check"
+msgstr "跳過檢查"
+
 msgid "Slicer"
 msgstr "切片軟體"
 
@@ -1528,9 +1540,6 @@ msgstr "待機"
 
 msgid "Start"
 msgstr "開始"
-
-msgid "Start Calibration"
-msgstr "開始校準"
 
 msgid "Start Printing"
 msgstr "開始列印"
@@ -1698,6 +1707,9 @@ msgstr "正在驗證感測器精度，測試將自動完成。"
 msgid "Version Selection"
 msgstr "版本選擇"
 
+msgid "Waiting for nozzle clean temperature"
+msgstr "正在加熱至噴嘴清潔溫度"
+
 msgid "WebRTC is not supported by the backend trying Stream"
 msgstr "不支持傳送WebRTC至後臺"
 
@@ -1816,6 +1828,9 @@ msgstr "mm³/s"
 msgid "offset fine tune"
 msgstr "偏移值微調"
 
+msgid "right nozzle offsets: X:{}  Y:{}"
+msgstr "右噴嘴偏移：X:{} Y:{}"
+
 msgid "right nozzle probing ..."
 msgstr "右噴嘴探測中. .."
 
@@ -1834,6 +1849,55 @@ msgstr "○ 打開應用--點擊「+」添加打印機"
 
 msgid "○ Rescan left QR to add printe"
 msgstr "○ 使用APP再次掃描左側二維碼，添加打印機"
+
+#~ msgid ""
+#~ "1. Advanced setting: Use only when necessary (e.g., nozzle/hotend "
+#~ "replacement, post-collision, or mechanical zero adjustment)."
+#~ msgstr ""
+#~ "1、高級設置：僅在必要時使用（例如噴嘴/熱端更換、碰撞后或調整機械零位后等場"
+#~ "景）。"
+
+#~ msgid ""
+#~ "2. Follow the image guide strictly during calibration to avoid damaging "
+#~ "the vision module or causing print errors."
+#~ msgstr ""
+#~ "2、如需校準請嚴格按照上圖示例操作，否則將會造成視覺模組損壞或打印異常等問"
+#~ "題。"
+
+#~ msgid "3. If you have any questions, please contact customer service."
+#~ msgstr "3、如有疑惑請聯系售後支持"
+
+#~ msgid "Auto Calibration"
+#~ msgstr "自動校準"
+
+#~ msgid "Auto-calibrate"
+#~ msgstr "自動校準"
+
+#~ msgid "Calibrated"
+#~ msgstr "已校準"
+
+#~ msgid "Current tool offset"
+#~ msgstr "當前工具偏移"
+
+#~ msgid "Eddy Calibrate"
+#~ msgstr "渦流校準"
+
+#~ msgid "Notes:"
+#~ msgstr "注意："
+
+#~ msgid ""
+#~ "Please adjust the temperature according to the filament printing "
+#~ "parameters and ensure the filament in both nozzles is consistent"
+#~ msgstr "請根據耗材的列印參數調整溫度，並確保兩個噴嘴中的耗材一致"
+
+#~ msgid "Position Check"
+#~ msgstr "位置檢查"
+
+#~ msgid "Save settings"
+#~ msgstr "保存設置"
+
+#~ msgid "Start Calibration"
+#~ msgstr "開始校準"
 
 #~ msgid "<span font-size='x-large'>Calibration Camera View</span>"
 #~ msgstr "<span font-size='x-large'>校準監視器畫面</span>"
@@ -1938,9 +2002,6 @@ msgstr "○ 使用APP再次掃描左側二維碼，添加打印機"
 
 #~ msgid "Fullscreen"
 #~ msgstr "全螢幕"
-
-#~ msgid "Actions"
-#~ msgstr "控制"
 
 #~ msgid "Configuration"
 #~ msgstr "设置"

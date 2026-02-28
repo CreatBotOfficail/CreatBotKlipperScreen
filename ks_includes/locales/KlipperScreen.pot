@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-22 13:48+0800\n"
+"POT-Creation-Date: 2026-02-28 16:32+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -29,11 +29,6 @@ msgid "(default)"
 msgstr ""
 
 msgid ""
-"1. Advanced setting: Use only when necessary (e.g., nozzle/hotend "
-"replacement, post-collision, or mechanical zero adjustment)."
-msgstr ""
-
-msgid ""
 "1. Ensure that all fixed components have been properly removed before "
 "proceeding."
 msgstr ""
@@ -47,6 +42,14 @@ msgid "1. Keep filament dry to prevent print failures and nozzle clogs."
 msgstr ""
 
 msgid ""
+"1. Please adjust strictly according to the example above to ensure optimal "
+"visual recognition. "
+msgstr ""
+
+msgid "1. Set nozzle and bed temperature before printing validation."
+msgstr ""
+
+msgid ""
 "1.Please ensure that the <b>Probe Calibrate</b> has been performed!\n"
 "\n"
 msgstr ""
@@ -55,8 +58,11 @@ msgid "2. Dry filament periodically when humidity exceeds 50%."
 msgstr ""
 
 msgid ""
-"2. Follow the image guide strictly during calibration to avoid damaging the "
-"vision module or causing print errors."
+"2. If the real-time view shows the nozzle is centered and clean, you can "
+"skip the datum point check and go directly to the next calibration. "
+msgstr ""
+
+msgid "2. Load filament in the Filament Settings if needed."
 msgstr ""
 
 msgid ""
@@ -77,12 +83,21 @@ msgstr ""
 msgid "3. Always set the proper temperature for your filament!"
 msgstr ""
 
-msgid "3. If you have any questions, please contact customer service."
-msgstr ""
-
 msgid ""
 "3. Once the operation is complete, click the 'Finish' button to conclude the "
 "process."
+msgstr ""
+
+msgid "3. Please contact after-sales support if you have any questions."
+msgstr ""
+
+msgid "3. Tap Start Print to run the validation model."
+msgstr ""
+
+msgid "4. Tap Save to skip printing validation."
+msgstr ""
+
+msgid "5. Tap Discard to discard right nozzle offsets."
 msgstr ""
 
 msgid ""
@@ -268,9 +283,6 @@ msgstr ""
 msgid "Auto Bed Leveling"
 msgstr ""
 
-msgid "Auto Calibration"
-msgstr ""
-
 msgid "Auto Change Nozzle"
 msgstr ""
 
@@ -281,9 +293,6 @@ msgid "Auto change nozzle when filament runout"
 msgstr ""
 
 msgid "Auto-Off After Print"
-msgstr ""
-
-msgid "Auto-calibrate"
 msgstr ""
 
 msgid "Auto-close notifications"
@@ -334,10 +343,10 @@ msgstr ""
 msgid "Calibrate Nozzle Z Offset"
 msgstr ""
 
-msgid "Calibrated"
+msgid "Calibrating"
 msgstr ""
 
-msgid "Calibrating"
+msgid "Calibration datum"
 msgstr ""
 
 msgid ""
@@ -383,6 +392,15 @@ msgid "Check ADXL Wiring"
 msgstr ""
 
 msgid "Checking for updates, please wait..."
+msgstr ""
+
+msgid "Cleaning left nozzle"
+msgstr ""
+
+msgid "Cleaning nozzles"
+msgstr ""
+
+msgid "Cleaning right nozzle"
 msgstr ""
 
 msgid "Clear"
@@ -461,10 +479,10 @@ msgstr ""
 msgid "Current percentage and graph line"
 msgstr ""
 
-msgid "Current tool offset"
-msgstr ""
-
-msgid "Current tool offset X:{} Y:{} Z:{}"
+msgid ""
+"Current right nozzle offsets:\n"
+"\n"
+" X:{}  Y:{}  Z:{}"
 msgstr ""
 
 msgid "Current value:"
@@ -535,9 +553,6 @@ msgid "Door Open Protection Mode"
 msgstr ""
 
 msgid "Dual Color Calibration"
-msgstr ""
-
-msgid "Eddy Calibrate"
 msgstr ""
 
 msgid "Eddy calibration"
@@ -681,6 +696,9 @@ msgstr ""
 msgid "Filament Chamber Settings"
 msgstr ""
 
+msgid "Filament Settings"
+msgstr ""
+
 msgid "Filament Used"
 msgstr ""
 
@@ -748,9 +766,6 @@ msgid "Getting IP address"
 msgstr ""
 
 msgid "Go Back"
-msgstr ""
-
-msgid "Go to Filament Settings"
 msgstr ""
 
 msgid "Height:"
@@ -957,6 +972,9 @@ msgstr ""
 msgid "Maximum"
 msgstr ""
 
+msgid "Measure "
+msgstr ""
+
 msgid "Measure Both"
 msgstr ""
 
@@ -1079,9 +1097,6 @@ msgstr ""
 msgid "Not working or not configured"
 msgstr ""
 
-msgid "Notes:"
-msgstr ""
-
 msgid "Nothing selected"
 msgstr ""
 
@@ -1168,11 +1183,6 @@ msgid "Place the camera in the indicated position"
 msgstr ""
 
 msgid ""
-"Please adjust the temperature according to the filament printing parameters "
-"and ensure the filament in both nozzles is consistent"
-msgstr ""
-
-msgid ""
 "Please check the logs for more information.\n"
 "\n"
 msgstr ""
@@ -1208,9 +1218,6 @@ msgstr ""
 msgid "Please wait"
 msgstr ""
 
-msgid "Position Check"
-msgstr ""
-
 msgid "Power"
 msgstr ""
 
@@ -1218,6 +1225,9 @@ msgid "Power Loss Recovery"
 msgstr ""
 
 msgid "Power On Printer"
+msgstr ""
+
+msgid "Precautions:"
 msgstr ""
 
 msgid "Preheat"
@@ -1387,9 +1397,6 @@ msgstr ""
 msgid "Save configuration?"
 msgstr ""
 
-msgid "Save settings"
-msgstr ""
-
 msgid "Saved"
 msgstr ""
 
@@ -1456,6 +1463,9 @@ msgstr ""
 msgid "Skip"
 msgstr ""
 
+msgid "Skip check"
+msgstr ""
+
 msgid "Slicer"
 msgstr ""
 
@@ -1490,9 +1500,6 @@ msgid "Standby"
 msgstr ""
 
 msgid "Start"
-msgstr ""
-
-msgid "Start Calibration"
 msgstr ""
 
 msgid "Start Printing"
@@ -1655,6 +1662,9 @@ msgstr ""
 msgid "Version Selection"
 msgstr ""
 
+msgid "Waiting for nozzle clean temperature"
+msgstr ""
+
 msgid "WebRTC is not supported by the backend trying Stream"
 msgstr ""
 
@@ -1774,6 +1784,9 @@ msgid "mm³/s"
 msgstr ""
 
 msgid "offset fine tune"
+msgstr ""
+
+msgid "right nozzle offsets: X:{}  Y:{}"
 msgstr ""
 
 msgid "right nozzle probing ..."
