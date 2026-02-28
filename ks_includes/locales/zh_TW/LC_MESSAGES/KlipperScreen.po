@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KlipperScreen\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-28 16:32+0800\n"
+"POT-Creation-Date: 2026-02-28 17:05+0800\n"
 "PO-Revision-Date: 2024-06-01 12:09+0000\n"
 "Last-Translator: 峻瑜哥 <a728728728@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <https://hosted.weblate.org/projects/"
@@ -345,6 +345,12 @@ msgstr "測試版本"
 msgid "Both"
 msgstr "雙向"
 
+msgid "Cable Connected"
+msgstr "網路線已連接"
+
+msgid "Cable Disconnected"
+msgstr "網路線已中斷"
+
 msgid "Calibrate"
 msgstr "校準"
 
@@ -443,6 +449,9 @@ msgstr "Cloud"
 msgid "Complete"
 msgstr "完成"
 
+msgid "Configuration saved"
+msgstr "設定已儲存"
+
 msgid "Confirm Disable"
 msgstr "確認禁用"
 
@@ -506,6 +515,12 @@ msgstr ""
 
 msgid "Current value:"
 msgstr "當前值："
+
+msgid "DHCP"
+msgstr "DHCP"
+
+msgid "DNS"
+msgstr "DNS"
 
 msgid "DPMS has failed to load and has been disabled"
 msgstr "DPMS 載入失敗並已停用"
@@ -630,6 +645,9 @@ msgstr "預估時間"
 msgid "Estimated Time Method"
 msgstr "估算剩餘時間方式"
 
+msgid "Ethernet"
+msgstr "乙太網路"
+
 msgid "Everything is ready! Click 'Save and Restart' to start your printing."
 msgstr "一切就緒！ 點擊[保存並重啓]按鈕，開始您的列印吧。"
 
@@ -701,9 +719,15 @@ msgstr "初始化失敗"
 msgid "Failed to read image version!"
 msgstr "無法讀取到鏡像版本！"
 
+msgid "Failed to save configuration"
+msgstr "儲存設定失敗"
+
 #, python-format
 msgid "Failed to scan USB device: %s"
 msgstr "無法掃描USB設備：%s"
+
+msgid "Failed to update network"
+msgstr "更新網路失敗"
 
 msgid "Failed, adjust position first"
 msgstr "失敗，請先調整位置"
@@ -783,6 +807,9 @@ msgstr "發現更新鏡像："
 msgid "Full Update"
 msgstr "全部更新"
 
+msgid "Gateway"
+msgstr "閘道"
+
 msgid "Gcodes"
 msgstr "g代碼"
 
@@ -828,6 +855,9 @@ msgstr "主機名："
 msgid "ID"
 msgstr "ID"
 
+msgid "IP Address"
+msgstr "IP 位址"
+
 msgid "IP Address:"
 msgstr "IP地址："
 
@@ -857,14 +887,17 @@ msgstr "已裝載"
 msgid "Insufficient privileges"
 msgstr "權限不足"
 
-msgid "Interface"
-msgstr "介面"
-
 msgid "Invalid"
 msgstr "無效"
 
+msgid "Invalid IP address"
+msgstr "IP 位址無效"
+
 msgid "Invalid password"
 msgstr "密碼無效"
+
+msgid "Invalid subnet mask"
+msgstr "子網路遮罩無效"
 
 msgid "Inversely affects the icon size"
 msgstr "和預覽圖大小成反比"
@@ -974,6 +1007,12 @@ msgstr "日誌匯出成功！"
 
 msgid "Lost Connection to Moonraker"
 msgstr "與Moonraker失去連接"
+
+msgid "MAC"
+msgstr "MAC"
+
+msgid "MAC Address"
+msgstr "MAC 位址"
 
 msgid "Macros"
 msgstr "巨集"
@@ -1105,8 +1144,20 @@ msgstr "未找到日誌資料夾！"
 msgid "No mesh has been loaded"
 msgstr "未載入網床"
 
+msgid "No network options available"
+msgstr "沒有可用的網路選項"
+
 msgid "No update image found in USB device!"
 msgstr "未在USB設備中找到更新鏡像！"
+
+msgid "No wired connection available"
+msgstr "沒有可用的有線連線"
+
+msgid "No wired interface has been found"
+msgstr "找不到有線網路介面"
+
+msgid "No wireless connection available"
+msgstr "沒有可用的無線連線"
 
 msgid "No wireless interface has been found"
 msgstr "未找到wifi介面"
@@ -1556,6 +1607,9 @@ msgstr "開始更新"
 msgid "State:"
 msgstr "狀態："
 
+msgid "Subnet Mask"
+msgstr "子網路遮罩"
+
 msgid "System"
 msgstr "系統"
 
@@ -1716,6 +1770,9 @@ msgstr "不支持傳送WebRTC至後臺"
 msgid "Welcome"
 msgstr "歡迎使用"
 
+msgid "WiFi"
+msgstr "WiFi"
+
 msgid "Working"
 msgstr "工作中"
 
@@ -1849,6 +1906,9 @@ msgstr "○ 打開應用--點擊「+」添加打印機"
 
 msgid "○ Rescan left QR to add printe"
 msgstr "○ 使用APP再次掃描左側二維碼，添加打印機"
+
+#~ msgid "Interface"
+#~ msgstr "介面"
 
 #~ msgid ""
 #~ "1. Advanced setting: Use only when necessary (e.g., nozzle/hotend "
@@ -1986,9 +2046,6 @@ msgstr "○ 使用APP再次掃描左側二維碼，添加打印機"
 #~ msgid "dBm"
 #~ msgstr "dBm"
 
-#~ msgid "Bed screw configuration:"
-#~ msgstr "熱床螺絲設定："
-
 #~ msgid ""
 #~ "Not supported for auto-detection, it needs to be configured in "
 #~ "klipperscreen.conf"
@@ -2002,9 +2059,6 @@ msgstr "○ 使用APP再次掃描左側二維碼，添加打印機"
 
 #~ msgid "Fullscreen"
 #~ msgstr "全螢幕"
-
-#~ msgid "Configuration"
-#~ msgstr "设置"
 
 #~ msgid "Homing"
 #~ msgstr "归零"

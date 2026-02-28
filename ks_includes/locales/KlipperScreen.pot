@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-28 16:32+0800\n"
+"POT-Creation-Date: 2026-02-28 17:05+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -331,6 +331,12 @@ msgstr ""
 msgid "Both"
 msgstr ""
 
+msgid "Cable Connected"
+msgstr ""
+
+msgid "Cable Disconnected"
+msgstr ""
+
 msgid "Calibrate"
 msgstr ""
 
@@ -427,6 +433,9 @@ msgstr ""
 msgid "Complete"
 msgstr ""
 
+msgid "Configuration saved"
+msgstr ""
+
 msgid "Confirm Disable"
 msgstr ""
 
@@ -486,6 +495,12 @@ msgid ""
 msgstr ""
 
 msgid "Current value:"
+msgstr ""
+
+msgid "DHCP"
+msgstr ""
+
+msgid "DNS"
 msgstr ""
 
 msgid "DPMS has failed to load and has been disabled"
@@ -611,6 +626,9 @@ msgstr ""
 msgid "Estimated Time Method"
 msgstr ""
 
+msgid "Ethernet"
+msgstr ""
+
 msgid "Everything is ready! Click 'Save and Restart' to start your printing."
 msgstr ""
 
@@ -677,8 +695,14 @@ msgstr ""
 msgid "Failed to read image version!"
 msgstr ""
 
+msgid "Failed to save configuration"
+msgstr ""
+
 #, python-format
 msgid "Failed to scan USB device: %s"
+msgstr ""
+
+msgid "Failed to update network"
 msgstr ""
 
 msgid "Failed, adjust position first"
@@ -759,6 +783,9 @@ msgstr ""
 msgid "Full Update"
 msgstr ""
 
+msgid "Gateway"
+msgstr ""
+
 msgid "Gcodes"
 msgstr ""
 
@@ -804,6 +831,9 @@ msgstr ""
 msgid "ID"
 msgstr ""
 
+msgid "IP Address"
+msgstr ""
+
 msgid "IP Address:"
 msgstr ""
 
@@ -831,13 +861,16 @@ msgstr ""
 msgid "Insufficient privileges"
 msgstr ""
 
-msgid "Interface"
-msgstr ""
-
 msgid "Invalid"
 msgstr ""
 
+msgid "Invalid IP address"
+msgstr ""
+
 msgid "Invalid password"
+msgstr ""
+
+msgid "Invalid subnet mask"
 msgstr ""
 
 msgid "Inversely affects the icon size"
@@ -946,6 +979,12 @@ msgid "Logs exported successfully!"
 msgstr ""
 
 msgid "Lost Connection to Moonraker"
+msgstr ""
+
+msgid "MAC"
+msgstr ""
+
+msgid "MAC Address"
 msgstr ""
 
 msgid "Macros"
@@ -1076,7 +1115,19 @@ msgstr ""
 msgid "No mesh has been loaded"
 msgstr ""
 
+msgid "No network options available"
+msgstr ""
+
 msgid "No update image found in USB device!"
+msgstr ""
+
+msgid "No wired connection available"
+msgstr ""
+
+msgid "No wired interface has been found"
+msgstr ""
+
+msgid "No wireless connection available"
 msgstr ""
 
 msgid "No wireless interface has been found"
@@ -1517,6 +1568,9 @@ msgstr ""
 msgid "State:"
 msgstr ""
 
+msgid "Subnet Mask"
+msgstr ""
+
 msgid "System"
 msgstr ""
 
@@ -1669,6 +1723,9 @@ msgid "WebRTC is not supported by the backend trying Stream"
 msgstr ""
 
 msgid "Welcome"
+msgstr ""
+
+msgid "WiFi"
 msgstr ""
 
 msgid "Working"
