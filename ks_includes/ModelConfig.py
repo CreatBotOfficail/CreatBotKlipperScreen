@@ -231,10 +231,9 @@ class ModelConfig:
 
         os.system(f"rm -f /opt/printer_data/config/printer.cfg")
         os.system(f"rm -rf /opt/printer_data/config/config_variables.cfg")
+        os.system(f"rm -rf /opt/moonraker/config/moonraker.conf")
         os.system("systemctl restart auto-hostname")
-        os.system("systemctl restart klipper.service")
-        os.system("systemctl restart moonraker.service")
-        os.system("systemctl restart KlipperScreen.service")
+        os.system("systemctl restart machine-config-build.service")
         return True
 
     def generate_config(self, model, version):
