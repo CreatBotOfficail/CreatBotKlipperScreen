@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-22 13:48+0800\n"
+"POT-Creation-Date: 2026-02-28 17:18+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -195,15 +195,7 @@ msgstr ""
 msgid "All"
 msgstr ""
 
-msgid "All user data will be cleared."
-msgstr ""
-
 msgid "Always On"
-msgstr ""
-
-msgid ""
-"An unexpected error occurred during the upgrade process.\n"
-"\n"
 msgstr ""
 
 msgid "Apply"
@@ -218,12 +210,6 @@ msgid "Apply %s%.3f offset to Probe?"
 msgstr ""
 
 msgid "Archived"
-msgstr ""
-
-msgid "Are you sure to restart: "
-msgstr ""
-
-msgid "Are you sure to update to version {} ?"
 msgstr ""
 
 msgid "Are you sure you want to exclude the object?"
@@ -253,9 +239,6 @@ msgstr ""
 msgid "Are you sure you wish to shutdown the system?"
 msgstr ""
 
-msgid "Are you sure?"
-msgstr ""
-
 msgid "Are you sure?\n"
 msgstr ""
 
@@ -266,9 +249,6 @@ msgid "Auto"
 msgstr ""
 
 msgid "Auto Bed Leveling"
-msgstr ""
-
-msgid "Auto Calibration"
 msgstr ""
 
 msgid "Auto Change Nozzle"
@@ -316,10 +296,13 @@ msgstr ""
 msgid "Beta"
 msgstr ""
 
-msgid "Beta Version"
+msgid "Both"
 msgstr ""
 
-msgid "Both"
+msgid "Cable Connected"
+msgstr ""
+
+msgid "Cable Disconnected"
 msgstr ""
 
 msgid "Calibrate"
@@ -391,9 +374,6 @@ msgstr ""
 msgid "Clear Internal G-code Files"
 msgstr ""
 
-msgid "Clear internal storage files"
-msgstr ""
-
 msgid "Click Start to begin the calibration process!"
 msgstr ""
 
@@ -407,6 +387,9 @@ msgid "Cloud"
 msgstr ""
 
 msgid "Complete"
+msgstr ""
+
+msgid "Configuration saved"
 msgstr ""
 
 msgid "Confirm Disable"
@@ -470,6 +453,12 @@ msgstr ""
 msgid "Current value:"
 msgstr ""
 
+msgid "DHCP"
+msgstr ""
+
+msgid "DNS"
+msgstr ""
+
 msgid "DPMS has failed to load and has been disabled"
 msgstr ""
 
@@ -515,14 +504,6 @@ msgstr ""
 msgid "Distance (mm)"
 msgstr ""
 
-msgid "Do not power off the device!"
-msgstr ""
-
-msgid ""
-"Do not power off the device!\n"
-"\n"
-msgstr ""
-
 #, python-format
 msgid "Do you want to forget or disconnect %s?"
 msgstr ""
@@ -535,9 +516,6 @@ msgid "Door Open Protection Mode"
 msgstr ""
 
 msgid "Dual Color Calibration"
-msgstr ""
-
-msgid "Eddy Calibrate"
 msgstr ""
 
 msgid "Eddy calibration"
@@ -572,13 +550,7 @@ msgstr ""
 msgid "Error clearing active spool"
 msgstr ""
 
-msgid "Error code:"
-msgstr ""
-
 msgid "Error getting active spool"
-msgstr ""
-
-msgid "Error message:"
 msgstr ""
 
 msgid "Error setting active spool"
@@ -594,6 +566,9 @@ msgid "Estimated Time"
 msgstr ""
 
 msgid "Estimated Time Method"
+msgstr ""
+
+msgid "Ethernet"
 msgstr ""
 
 msgid "Everything is ready! Click 'Save and Restart' to start your printing."
@@ -616,18 +591,6 @@ msgstr ""
 msgid "Exit"
 msgstr ""
 
-msgid "Export"
-msgstr ""
-
-msgid "Export Logs"
-msgstr ""
-
-msgid ""
-"Exporting logs, please wait...\n"
-"\n"
-"This will take some time."
-msgstr ""
-
 msgid "Extra Large"
 msgstr ""
 
@@ -643,27 +606,16 @@ msgstr ""
 msgid "Extrusion -"
 msgstr ""
 
-msgid "Factory Reset"
-msgstr ""
-
-#, python-format
-msgid "Factory reset failed: %s"
-msgstr ""
-
 msgid "Failed to delete connection"
-msgstr ""
-
-msgid "Failed to export logs!"
 msgstr ""
 
 msgid "Failed to initialize"
 msgstr ""
 
-msgid "Failed to read image version!"
+msgid "Failed to save configuration"
 msgstr ""
 
-#, python-format
-msgid "Failed to scan USB device: %s"
+msgid "Failed to update network"
 msgstr ""
 
 msgid "Failed, adjust position first"
@@ -696,9 +648,6 @@ msgstr ""
 msgid "File"
 msgstr ""
 
-msgid "File saved to:"
-msgstr ""
-
 msgid "File:"
 msgstr ""
 
@@ -720,9 +669,6 @@ msgstr ""
 msgid "Firmware Restart"
 msgstr ""
 
-msgid "Firmware version:"
-msgstr ""
-
 msgid "Flow:"
 msgstr ""
 
@@ -735,10 +681,10 @@ msgstr ""
 msgid "Forget"
 msgstr ""
 
-msgid "Found update image: "
+msgid "Full Update"
 msgstr ""
 
-msgid "Full Update"
+msgid "Gateway"
 msgstr ""
 
 msgid "Gcodes"
@@ -789,6 +735,9 @@ msgstr ""
 msgid "ID"
 msgstr ""
 
+msgid "IP Address"
+msgstr ""
+
 msgid "IP Address:"
 msgstr ""
 
@@ -816,13 +765,16 @@ msgstr ""
 msgid "Insufficient privileges"
 msgstr ""
 
-msgid "Interface"
-msgstr ""
-
 msgid "Invalid"
 msgstr ""
 
+msgid "Invalid IP address"
+msgstr ""
+
 msgid "Invalid password"
+msgstr ""
+
+msgid "Invalid subnet mask"
 msgstr ""
 
 msgid "Inversely affects the icon size"
@@ -927,19 +879,19 @@ msgstr ""
 msgid "Loading..."
 msgstr ""
 
-msgid "Logs exported successfully!"
+msgid "Lost Connection to Moonraker"
 msgstr ""
 
-msgid "Lost Connection to Moonraker"
+msgid "MAC"
+msgstr ""
+
+msgid "MAC Address"
 msgstr ""
 
 msgid "Macros"
 msgstr ""
 
 msgid "Main Menu"
-msgstr ""
-
-msgid "Maintenance"
 msgstr ""
 
 msgid "Material"
@@ -1035,14 +987,6 @@ msgstr ""
 msgid "Next ({})"
 msgstr ""
 
-msgid "No USB device found!"
-msgstr ""
-
-msgid ""
-"No USB device found!\n"
-"Please insert a USB drive with upgrade image."
-msgstr ""
-
 msgid "No calibration options available"
 msgstr ""
 
@@ -1052,13 +996,19 @@ msgstr ""
 msgid "No info available"
 msgstr ""
 
-msgid "No log folders found!"
-msgstr ""
-
 msgid "No mesh has been loaded"
 msgstr ""
 
-msgid "No update image found in USB device!"
+msgid "No network options available"
+msgstr ""
+
+msgid "No wired connection available"
+msgstr ""
+
+msgid "No wired interface has been found"
+msgstr ""
+
+msgid "No wireless connection available"
 msgstr ""
 
 msgid "No wireless interface has been found"
@@ -1106,9 +1056,6 @@ msgstr ""
 msgid "Numpad"
 msgstr ""
 
-msgid "OK"
-msgstr ""
-
 msgid ""
 "Obtain the nozzle accurate height through multiple precision detections."
 msgstr ""
@@ -1123,9 +1070,6 @@ msgid "Offset Manage"
 msgstr ""
 
 msgid "Ok"
-msgstr ""
-
-msgid "Online Update"
 msgstr ""
 
 msgid "Only for the move panel"
@@ -1172,11 +1116,6 @@ msgid ""
 "and ensure the filament in both nozzles is consistent"
 msgstr ""
 
-msgid ""
-"Please check the logs for more information.\n"
-"\n"
-msgstr ""
-
 msgid "Please close the door and click Resume to proceed."
 msgstr ""
 
@@ -1190,13 +1129,6 @@ msgid "Please enter a key to activate"
 msgstr ""
 
 msgid "Please enter a valid number"
-msgstr ""
-
-msgid ""
-"Please insert a USB drive first!\n"
-"This will export logs to the USB device.\n"
-"\n"
-"Are you sure you want to continue?"
 msgstr ""
 
 msgid "Please load two different colored PLA filaments!"
@@ -1221,14 +1153,6 @@ msgid "Power On Printer"
 msgstr ""
 
 msgid "Preheat"
-msgstr ""
-
-msgid ""
-"Preparing for update, please wait...\n"
-"\n"
-"This may take some time.\n"
-"\n"
-"Do not power off the device!"
 msgstr ""
 
 msgid "Pressure Advance"
@@ -1315,13 +1239,7 @@ msgstr ""
 msgid "Reprint"
 msgstr ""
 
-msgid "Reset"
-msgstr ""
-
 msgid "Restart"
-msgstr ""
-
-msgid "Restart Service"
 msgstr ""
 
 msgid "Restore Factory Settings"
@@ -1510,6 +1428,9 @@ msgstr ""
 msgid "State:"
 msgstr ""
 
+msgid "Subnet Mask"
+msgstr ""
+
 msgid "System"
 msgstr ""
 
@@ -1525,24 +1446,13 @@ msgstr ""
 msgid "The last print job was not completed continue printing?"
 msgstr ""
 
-msgid "The machine will restart during update. Do not disconnect the power."
-msgstr ""
-
 msgid "The new value is not within the valid range."
 msgstr ""
 
 msgid "The system doesn't meet the minimum requirement"
 msgstr ""
 
-msgid "The system will reboot after reset."
-msgstr ""
-
 msgid "The system will reboot!"
-msgstr ""
-
-msgid ""
-"The upgrade process did not complete successfully.\n"
-"\n"
 msgstr ""
 
 msgid "This device is not activated and is available for trial use only"
@@ -1560,14 +1470,6 @@ msgid "This operation will clear the user data"
 msgstr ""
 
 msgid "This panel supports up-to 9 screws in a 3x3 Grid"
-msgstr ""
-
-msgid "This will restore factory settings!"
-msgstr ""
-
-msgid ""
-"This will update the system online.\n"
-"Are you sure?"
 msgstr ""
 
 msgid "Timeout for screen black-out or power-off"
@@ -1595,22 +1497,10 @@ msgstr ""
 msgid "Trial Time:"
 msgstr ""
 
-msgid "USB Update"
-msgstr ""
-
-msgid "USB update failed!"
-msgstr ""
-
 msgid "Unknown"
 msgstr ""
 
 msgid "Unknown Heater"
-msgstr ""
-
-msgid "Unknown error occurred during USB scan!"
-msgstr ""
-
-msgid "Unknown error occurred during log export!"
 msgstr ""
 
 msgid "Unknown security type"
@@ -1659,6 +1549,9 @@ msgid "WebRTC is not supported by the backend trying Stream"
 msgstr ""
 
 msgid "Welcome"
+msgstr ""
+
+msgid "WiFi"
 msgstr ""
 
 msgid "Working"

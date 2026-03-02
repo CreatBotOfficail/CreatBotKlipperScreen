@@ -126,17 +126,17 @@ class Panel(ScreenPanel):
             self._screen.show_popup_message(msg, level)
 
     def network_interface_refresh(self):
-        if self.interface is not None:
-            self.interface = self.sdbus_nm.get_primary_interface()
-            self.labels['interface'].set_text(_("Interface") + f': {self.interface}')
-            self.labels['ip'].set_text(f"IP: {self.sdbus_nm.get_ip_address()}")
+        mac_address = self.sdbus_nm.get_wireless_mac_address()
+        ip_address = self.sdbus_nm.get_wireless_ip_address()
+        self.labels['interface'].set_text(_("MAC") + f': {mac_address}')
+        self.labels['ip'].set_text(f"IP: {ip_address}")
 
     def handle_wifi_selection(self, list_box, row):
         index = row.get_index()
         logging.info(f"clicked SSID is {self.networks[index]['SSID']}")
         self.connect_network(list_box, self.networks[index]["SSID"])
 
-    def add_network_item(self, ssid, lock, known, signal):
+    def add_network_item(self, ssid, lock, known, signal, is_connected=False):
         self.network_rows[ssid] = {}
         self.network_rows[ssid]["row"] = Gtk.ListBoxRow()
         self.network_rows[ssid]["hbox"] = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=15)
@@ -156,6 +156,13 @@ class Panel(ScreenPanel):
         self.network_rows[ssid]["label_box"].pack_start(self.network_rows[ssid]["label_ssid"], True, False, 0)
         self.network_rows[ssid]["label_box"].pack_start(self.network_rows[ssid]["label_state"], True, False, 0)
         self.network_rows[ssid]["hbox"].pack_start(self.network_rows[ssid]["label_box"], False, True, 10)
+
+        if is_connected:
+            self.network_rows[ssid]["edit"] = self._gtk.Button("settings", None, "custom-icon-button", self.bts)
+            self.network_rows[ssid]["edit"].connect("clicked", self.show_network_config_dialog, ssid)
+            self.network_rows[ssid]["edit"].set_hexpand(False)
+            self.network_rows[ssid]["edit"].set_halign(Gtk.Align.END)
+            self.network_rows[ssid]["hbox"].pack_end(self.network_rows[ssid]["edit"], False, True, 10)
 
         if known:
             self.network_rows[ssid]["delete"] = self._gtk.Button("delete", None, "custom-icon-button", self.bts)
@@ -198,11 +205,13 @@ class Panel(ScreenPanel):
         for item in self.networks:
             ssid = item.get("SSID")
             if ssid:
+                is_connected = (ssid == ap_ssid)
                 self.add_network_item(
                     ssid,
                     item.get("security", "unknown"),
                     item.get("known", False),
                     item.get("signal_level", 0),
+                    is_connected,
                 )
         self.network_list.show_all()
 
@@ -255,7 +264,15 @@ class Panel(ScreenPanel):
 
     def back(self):
         if self.show_add:
-            self.close_add_network()
+            self._screen.remove_keyboard()
+            for child in self.content.get_children():
+                self.content.remove(child)
+            self.content.add(self.labels['main_box'])
+            self.content.show_all()
+            for i in ['add_network', 'edit_config', 'network_psk', 'network_identity']:
+                if i in self.labels:
+                    del self.labels[i]
+            self.show_add = False
             return True
         return False
 
@@ -470,3 +487,216 @@ class Panel(ScreenPanel):
             self.network_list.set_no_show_all(True)
             self.network_list.hide()
         self.network_interface_refresh()
+
+    def show_network_config_dialog(self, widget, ssid):
+        if self.show_add:
+            return
+
+        for child in self.content.get_children():
+            self.content.remove(child)
+
+        info = self.sdbus_nm.get_wireless_connection_info()
+        is_dhcp = self.sdbus_nm.get_wireless_dhcp_state()
+        self._config_ssid = ssid
+
+        scroll = self._gtk.ScrolledWindow()
+        scroll.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC)
+
+        main_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=15)
+        main_box.set_margin_start(20)
+        main_box.set_margin_end(20)
+        main_box.set_margin_top(20)
+        main_box.set_margin_bottom(20)
+
+        top_frame = Gtk.Frame()
+        top_frame.get_style_context().add_class("menu")
+        top_frame.get_style_context().add_class("elevated")
+
+        top_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=20)
+        top_box.set_margin_start(20)
+        top_box.set_margin_end(20)
+        top_box.set_margin_top(15)
+        top_box.set_margin_bottom(15)
+
+        wifi_info_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=15)
+        wifi_info_box.set_hexpand(True)
+        wifi_info_box.set_halign(Gtk.Align.START)
+
+        wifi_icon = self._gtk.Image("wifi", self._gtk.font_size * 2.5, self._gtk.font_size * 2.5)
+        wifi_info_box.pack_start(wifi_icon, False, False, 0)
+
+        ssid_label = Gtk.Label()
+        ssid_label.set_markup(f'<span weight="bold" size="large">{ssid}</span>')
+        wifi_info_box.pack_start(ssid_label, False, False, 0)
+
+        dhcp_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=10)
+        dhcp_box.set_hexpand(False)
+        dhcp_box.set_halign(Gtk.Align.END)
+
+        dhcp_label = Gtk.Label(label=_("DHCP"))
+        dhcp_label.get_style_context().add_class("settings-label")
+        dhcp_box.pack_start(dhcp_label, False, False, 0)
+
+        self.dhcp_switch = Gtk.Switch()
+        self.dhcp_switch.set_active(is_dhcp)
+        self.dhcp_switch.connect("notify::active", self.on_dhcp_switch_toggled)
+        dhcp_box.pack_start(self.dhcp_switch, False, False, 0)
+
+        top_box.pack_start(wifi_info_box, True, True, 0)
+        top_box.pack_end(dhcp_box, False, False, 0)
+        top_frame.add(top_box)
+        main_box.pack_start(top_frame, False, False, 0)
+
+        config_frame = Gtk.Frame()
+        config_frame.get_style_context().add_class("menu")
+        config_frame.get_style_context().add_class("elevated")
+        config_frame.set_vexpand(False)
+
+        config_vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=0)
+        config_vbox.set_margin_start(10)
+        config_vbox.set_margin_end(10)
+        config_vbox.set_margin_top(10)
+        config_vbox.set_margin_bottom(10)
+
+        config_list = Gtk.ListBox()
+        config_list.set_selection_mode(Gtk.SelectionMode.NONE)
+        config_list.get_style_context().add_class("settings_list")
+        config_list.set_hexpand(True)
+
+        self.ip_entry = self._create_config_row(config_list, _("IP Address"),
+                                                  info.get("ip_address", "0.0.0.0"), "192.168.1.100")
+
+        self.netmask_entry = self._create_config_row(config_list, _("Subnet Mask"),
+                                                      info.get("netmask", "255.255.255.0"), "255.255.255.0")
+
+        self.gateway_entry = self._create_config_row(config_list, _("Gateway"),
+                                                      info.get("gateway", ""), "192.168.1.1")
+
+        self.dns_entry = self._create_config_row(config_list, _("DNS"),
+                                                  info.get("dns", ""), "8.8.8.8, 8.8.4.4")
+
+        config_vbox.pack_start(config_list, True, True, 0)
+
+        hint_label = Gtk.Label()
+        hint_label.set_markup(f'<span size="small" color="gray">{_("Multiple DNS separated by comma")}</span>')
+        hint_label.set_margin_top(10)
+        hint_label.set_xalign(0)
+        hint_label.set_margin_start(5)
+        config_vbox.pack_start(hint_label, False, False, 0)
+
+        config_frame.add(config_vbox)
+        main_box.pack_start(config_frame, True, True, 0)
+
+        save_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=10)
+        save_box.set_halign(Gtk.Align.END)
+
+        save = self._gtk.Button("complete", _("Save"), "color3")
+        save.connect("clicked", self.save_network_config_inline)
+        save_box.pack_end(save, False, False, 0)
+        main_box.pack_start(save_box, False, False, 0)
+
+        scroll.add(main_box)
+        self.content.add(scroll)
+
+        self.set_ip_entries_sensitive(not is_dhcp)
+        self.ip_entry.grab_focus_without_selecting()
+        self.content.show_all()
+        self.show_add = True
+
+    def _create_config_row(self, listbox, label_text, value, placeholder):
+        row = Gtk.ListBoxRow()
+        row.set_activatable(False)
+
+        hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=10)
+        hbox.set_margin_top(12)
+        hbox.set_margin_bottom(12)
+        hbox.set_margin_start(15)
+        hbox.set_margin_end(15)
+
+        label = Gtk.Label(label=label_text, hexpand=True, halign=Gtk.Align.START)
+        label.get_style_context().add_class("settings-label")
+
+        entry = Gtk.Entry(hexpand=False, halign=Gtk.Align.END)
+        entry.set_text(value)
+        entry.set_placeholder_text(placeholder)
+        entry.connect("focus-in-event", self._on_entry_focus)
+        entry.set_width_chars(18)
+
+        hbox.pack_start(label, True, True, 0)
+        hbox.pack_end(entry, False, False, 0)
+
+        row.add(hbox)
+        listbox.add(row)
+
+        return entry
+
+    def _on_entry_focus(self, widget, event):
+        self._screen.remove_keyboard()
+        self._screen.show_keyboard(widget)
+
+    def on_dhcp_switch_toggled(self, switch, gparams):
+
+        is_dhcp = switch.get_active()
+        self.set_ip_entries_sensitive(not is_dhcp)
+
+    def set_ip_entries_sensitive(self, sensitive):
+
+        entries = [
+            self.ip_entry,
+            self.netmask_entry,
+            self.gateway_entry,
+            self.dns_entry
+        ]
+        for entry in entries:
+            entry.set_sensitive(sensitive)
+            if sensitive:
+                entry.set_opacity(1.0)
+            else:
+                entry.set_opacity(0.5)
+
+    def close_network_config(self):
+
+        if not self.show_add:
+            return
+
+        self._screen.remove_keyboard()
+        for child in self.content.get_children():
+            self.content.remove(child)
+        self.content.add(self.labels['main_box'])
+        self.content.show_all()
+        if "edit_config" in self.labels:
+            del self.labels["edit_config"]
+        self.show_add = False
+        self.delay_reload_networks(500)
+
+    def save_network_config_inline(self, widget):
+
+        self._screen.remove_keyboard()
+
+        is_dhcp = self.dhcp_switch.get_active()
+        logging.info(f"Saving network config, DHCP={is_dhcp}")
+
+        if is_dhcp:
+            logging.info("Enabling DHCP for wireless")
+            result = self.sdbus_nm.set_wireless_dhcp(True)
+        else:
+            ip = self.ip_entry.get_text().strip()
+            netmask = self.netmask_entry.get_text().strip()
+            gateway = self.gateway_entry.get_text().strip()
+            dns = self.dns_entry.get_text().strip()
+
+            if not self.sdbus_nm.is_valid_ipv4(ip):
+                self._screen.show_popup_message(_("Invalid IP address"))
+                return
+
+            logging.info(f"Setting static IP: {ip}, netmask: {netmask}, gateway: {gateway}, dns: {dns}")
+            dns_list = [d.strip() for d in dns.split(",") if d.strip()]
+            result = self.sdbus_nm.set_wireless_manual(ip, netmask, gateway, dns_list)
+
+        logging.info(f"Save result: {result}")
+        if "error" in result:
+            self._screen.show_popup_message(result.get("message", _("Failed to save configuration")))
+        else:
+            self.dhcp_switch.grab_focus()
+            self._screen.show_popup_message(_("Configuration saved"), level=1)
+            self.close_network_config()
