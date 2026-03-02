@@ -61,6 +61,8 @@ class Panel(ScreenPanel):
             self.activate_mesh(self._printer.get_stat("bed_mesh", "profile_name"))
 
     def activate_mesh(self, profile):
+        if profile.startswith("adaptive"):
+            return
         if self.active_mesh is not None:
             self.profiles[self.active_mesh]['name'].set_sensitive(True)
             self.profiles[self.active_mesh]['name'].get_style_context().remove_class("button_active")
@@ -152,6 +154,8 @@ class Panel(ScreenPanel):
     def load_meshes(self):
         bm_profiles = self._printer.get_stat("bed_mesh", "profiles")
         for prof in bm_profiles:
+            if prof.startswith("adaptive"):
+                continue
             if prof not in self.profiles:
                 self.add_profile(prof)
         for prof in self.profiles:

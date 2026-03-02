@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KlipperScreen\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-22 13:48+0800\n"
+"POT-Creation-Date: 2026-02-28 17:18+0800\n"
 "PO-Revision-Date: 2024-06-01 12:09+0000\n"
 "Last-Translator: 峻瑜哥 <a728728728@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <https://hosted.weblate.org/projects/"
@@ -208,18 +208,8 @@ msgstr "基準點對齊"
 msgid "All"
 msgstr "全部"
 
-msgid "All user data will be cleared."
-msgstr "您的所有用戶數據將被清除。"
-
 msgid "Always On"
 msgstr "常開"
-
-msgid ""
-"An unexpected error occurred during the upgrade process.\n"
-"\n"
-msgstr ""
-"陞級過程中發生意外錯誤。\n"
-"\n"
 
 msgid "Apply"
 msgstr "應用"
@@ -234,12 +224,6 @@ msgstr "將 %s%.3f 偏移量應用於探針？"
 
 msgid "Archived"
 msgstr "歸檔"
-
-msgid "Are you sure to restart: "
-msgstr "您確定要重啓嗎？"
-
-msgid "Are you sure to update to version {} ?"
-msgstr "您確定要更新到版本 {} 嗎？"
 
 msgid "Are you sure you want to exclude the object?"
 msgstr "您確定要排除該對象嗎？"
@@ -268,9 +252,6 @@ msgstr "您確定要重啟系統嗎？"
 msgid "Are you sure you wish to shutdown the system?"
 msgstr "您確定要關閉系統嗎？"
 
-msgid "Are you sure?"
-msgstr "您確定要這樣做嗎？"
-
 msgid "Are you sure?\n"
 msgstr "您確定要這樣做嗎？\n"
 
@@ -282,9 +263,6 @@ msgstr "自動"
 
 msgid "Auto Bed Leveling"
 msgstr "自動調平"
-
-msgid "Auto Calibration"
-msgstr "自動校準"
 
 msgid "Auto Change Nozzle"
 msgstr "斷料自動切換噴頭"
@@ -331,11 +309,14 @@ msgstr "床網"
 msgid "Beta"
 msgstr "測試版"
 
-msgid "Beta Version"
-msgstr "測試版本"
-
 msgid "Both"
 msgstr "雙向"
+
+msgid "Cable Connected"
+msgstr "網路線已連接"
+
+msgid "Cable Disconnected"
+msgstr "網路線已中斷"
 
 msgid "Calibrate"
 msgstr "校準"
@@ -408,9 +389,6 @@ msgstr "清除"
 msgid "Clear Internal G-code Files"
 msgstr "清空內部G-Code文件"
 
-msgid "Clear internal storage files"
-msgstr "清除內部存儲的所有檔案"
-
 msgid "Click Start to begin the calibration process!"
 msgstr "點擊[開始]啟動校準流程！"
 
@@ -425,6 +403,9 @@ msgstr "Cloud"
 
 msgid "Complete"
 msgstr "完成"
+
+msgid "Configuration saved"
+msgstr "設定已儲存"
 
 msgid "Confirm Disable"
 msgstr "確認禁用"
@@ -487,6 +468,12 @@ msgstr "當前右噴頭偏移 X:{} Y:{} Z:{}"
 msgid "Current value:"
 msgstr "當前值："
 
+msgid "DHCP"
+msgstr "DHCP"
+
+msgid "DNS"
+msgstr "DNS"
+
 msgid "DPMS has failed to load and has been disabled"
 msgstr "DPMS 載入失敗並已停用"
 
@@ -532,14 +519,6 @@ msgstr "断开"
 msgid "Distance (mm)"
 msgstr "擠出長度（mm）"
 
-msgid "Do not power off the device!"
-msgstr "請勿關閉設備電源！"
-
-msgid ""
-"Do not power off the device!\n"
-"\n"
-msgstr "請勿關閉設備電源！\n"
-
 #, python-format
 msgid "Do you want to forget or disconnect %s?"
 msgstr "您要忘記或斷開%s的連接嗎?"
@@ -553,9 +532,6 @@ msgstr "開門保護模式"
 
 msgid "Dual Color Calibration"
 msgstr "雙噴頭校準"
-
-msgid "Eddy Calibrate"
-msgstr "渦流校準"
 
 msgid "Eddy calibration"
 msgstr "渦流校準"
@@ -589,14 +565,8 @@ msgstr "錯誤"
 msgid "Error clearing active spool"
 msgstr "退出當前耗材時出錯"
 
-msgid "Error code:"
-msgstr "錯誤碼："
-
 msgid "Error getting active spool"
 msgstr "獲取當前耗材時出錯"
-
-msgid "Error message:"
-msgstr "錯誤資訊："
 
 msgid "Error setting active spool"
 msgstr "設置當前耗材時出錯"
@@ -612,6 +582,9 @@ msgstr "預估時間"
 
 msgid "Estimated Time Method"
 msgstr "估算剩餘時間方式"
+
+msgid "Ethernet"
+msgstr "乙太網路"
 
 msgid "Everything is ready! Click 'Save and Restart' to start your printing."
 msgstr "一切就緒！ 點擊[保存並重啓]按鈕，開始您的列印吧。"
@@ -635,21 +608,6 @@ msgstr "排除目標"
 msgid "Exit"
 msgstr "退出"
 
-msgid "Export"
-msgstr "匯出"
-
-msgid "Export Logs"
-msgstr "匯出日誌檔"
-
-msgid ""
-"Exporting logs, please wait...\n"
-"\n"
-"This will take some time."
-msgstr ""
-"正在匯出日誌，請稍候…\n"
-"\n"
-"這可能需要一些時間。"
-
 msgid "Extra Large"
 msgstr "特大"
 
@@ -665,28 +623,17 @@ msgstr "擠壓 +"
 msgid "Extrusion -"
 msgstr "擠壓 -"
 
-msgid "Factory Reset"
-msgstr "恢復出廠設定"
-
-#, python-format
-msgid "Factory reset failed: %s"
-msgstr "恢復出廠設定失敗：%s"
-
 msgid "Failed to delete connection"
 msgstr "刪除連接失敗"
-
-msgid "Failed to export logs!"
-msgstr "日誌匯出失敗！"
 
 msgid "Failed to initialize"
 msgstr "初始化失敗"
 
-msgid "Failed to read image version!"
-msgstr "無法讀取到鏡像版本！"
+msgid "Failed to save configuration"
+msgstr "儲存設定失敗"
 
-#, python-format
-msgid "Failed to scan USB device: %s"
-msgstr "無法掃描USB設備：%s"
+msgid "Failed to update network"
+msgstr "更新網路失敗"
 
 msgid "Failed, adjust position first"
 msgstr "失敗，請先調整位置"
@@ -718,9 +665,6 @@ msgstr "耗材："
 msgid "File"
 msgstr "檔案"
 
-msgid "File saved to:"
-msgstr "檔案已保存至："
-
 msgid "File:"
 msgstr "檔案："
 
@@ -742,9 +686,6 @@ msgstr "完成"
 msgid "Firmware Restart"
 msgstr "重啟Klipper韌體"
 
-msgid "Firmware version:"
-msgstr "固件版本："
-
 msgid "Flow:"
 msgstr "流量："
 
@@ -757,11 +698,11 @@ msgstr "字型大小"
 msgid "Forget"
 msgstr "忘記"
 
-msgid "Found update image: "
-msgstr "發現更新鏡像："
-
 msgid "Full Update"
 msgstr "全部更新"
+
+msgid "Gateway"
+msgstr "閘道"
 
 msgid "Gcodes"
 msgstr "g代碼"
@@ -811,6 +752,9 @@ msgstr "主機名："
 msgid "ID"
 msgstr "ID"
 
+msgid "IP Address"
+msgstr "IP 位址"
+
 msgid "IP Address:"
 msgstr "IP地址："
 
@@ -840,14 +784,17 @@ msgstr "已裝載"
 msgid "Insufficient privileges"
 msgstr "權限不足"
 
-msgid "Interface"
-msgstr "介面"
-
 msgid "Invalid"
 msgstr "無效"
 
+msgid "Invalid IP address"
+msgstr "IP 位址無效"
+
 msgid "Invalid password"
 msgstr "密碼無效"
+
+msgid "Invalid subnet mask"
+msgstr "子網路遮罩無效"
 
 msgid "Inversely affects the icon size"
 msgstr "和預覽圖大小成反比"
@@ -952,20 +899,20 @@ msgstr "加載校準監視器. .."
 msgid "Loading..."
 msgstr "載入中..."
 
-msgid "Logs exported successfully!"
-msgstr "日誌匯出成功！"
-
 msgid "Lost Connection to Moonraker"
 msgstr "與Moonraker失去連接"
+
+msgid "MAC"
+msgstr "MAC"
+
+msgid "MAC Address"
+msgstr "MAC 位址"
 
 msgid "Macros"
 msgstr "巨集"
 
 msgid "Main Menu"
 msgstr "主選單"
-
-msgid "Maintenance"
-msgstr "維護"
 
 msgid "Material"
 msgstr "材料"
@@ -1060,16 +1007,6 @@ msgstr "下一步"
 msgid "Next ({})"
 msgstr "下一步({})"
 
-msgid "No USB device found!"
-msgstr "未找到USB設備！"
-
-msgid ""
-"No USB device found!\n"
-"Please insert a USB drive with upgrade image."
-msgstr ""
-"未找到USB設備！\n"
-"請插入包含陞級鏡像的USB設備。"
-
 msgid "No calibration options available"
 msgstr ""
 
@@ -1079,14 +1016,20 @@ msgstr "無可用巨集:"
 msgid "No info available"
 msgstr "無可用信息"
 
-msgid "No log folders found!"
-msgstr "未找到日誌資料夾！"
-
 msgid "No mesh has been loaded"
 msgstr "未載入網床"
 
-msgid "No update image found in USB device!"
-msgstr "未在USB設備中找到更新鏡像！"
+msgid "No network options available"
+msgstr "沒有可用的網路選項"
+
+msgid "No wired connection available"
+msgstr "沒有可用的有線連線"
+
+msgid "No wired interface has been found"
+msgstr "找不到有線網路介面"
+
+msgid "No wireless connection available"
+msgstr "沒有可用的無線連線"
 
 msgid "No wireless interface has been found"
 msgstr "未找到wifi介面"
@@ -1133,9 +1076,6 @@ msgstr "噴頭偏移"
 msgid "Numpad"
 msgstr "數字鍵盤"
 
-msgid "OK"
-msgstr "確定"
-
 msgid ""
 "Obtain the nozzle accurate height through multiple precision detections."
 msgstr "通過多次精准探測獲取噴嘴的準確高度。"
@@ -1151,9 +1091,6 @@ msgstr "偏移管理"
 
 msgid "Ok"
 msgstr "確定"
-
-msgid "Online Update"
-msgstr "線上OTA更新"
 
 msgid "Only for the move panel"
 msgstr "僅移軸頁面有效"
@@ -1198,13 +1135,6 @@ msgid ""
 "and ensure the filament in both nozzles is consistent"
 msgstr "請根據耗材的列印參數調整溫度，並確保兩個噴嘴中的耗材一致"
 
-msgid ""
-"Please check the logs for more information.\n"
-"\n"
-msgstr ""
-"請檢查日誌以獲取更多資訊。\n"
-"\n"
-
 msgid "Please close the door and click Resume to proceed."
 msgstr "請關閉門，然後點擊恢復以繼續操作。"
 
@@ -1219,17 +1149,6 @@ msgstr "請輸入密鑰激活"
 
 msgid "Please enter a valid number"
 msgstr "請輸入有效的數字"
-
-msgid ""
-"Please insert a USB drive first!\n"
-"This will export logs to the USB device.\n"
-"\n"
-"Are you sure you want to continue?"
-msgstr ""
-"請先插入USB設備！\n"
-"日誌將會匯出到USB設備。\n"
-"\n"
-"您確定要繼續嗎？"
 
 msgid "Please load two different colored PLA filaments!"
 msgstr "請插入兩種不同顏色的 PLA 耗材！"
@@ -1254,19 +1173,6 @@ msgstr "啟動列印機"
 
 msgid "Preheat"
 msgstr "预热"
-
-msgid ""
-"Preparing for update, please wait...\n"
-"\n"
-"This may take some time.\n"
-"\n"
-"Do not power off the device!"
-msgstr ""
-"正在準備更新，請稍候…\n"
-"\n"
-"這可能需要一些時間。\n"
-"\n"
-"請勿關閉設備電源！"
 
 msgid "Pressure Advance"
 msgstr "壓力推進"
@@ -1352,14 +1258,8 @@ msgstr "重新命名/移動："
 msgid "Reprint"
 msgstr "再次打印"
 
-msgid "Reset"
-msgstr "重置"
-
 msgid "Restart"
 msgstr "重啟"
-
-msgid "Restart Service"
-msgstr "重啓服務"
 
 msgid "Restore Factory Settings"
 msgstr "恢復出廠設置"
@@ -1547,6 +1447,9 @@ msgstr "開始更新"
 msgid "State:"
 msgstr "狀態："
 
+msgid "Subnet Mask"
+msgstr "子網路遮罩"
+
 msgid "System"
 msgstr "系統"
 
@@ -1562,25 +1465,14 @@ msgstr "測試模式"
 msgid "The last print job was not completed continue printing?"
 msgstr "上一個打印任務未完成，是否繼續打印？"
 
-msgid "The machine will restart during update. Do not disconnect the power."
-msgstr "更新過程中機器將會重啓。 請勿斷開電源。"
-
 msgid "The new value is not within the valid range."
 msgstr "新值不在有效範圍內。"
 
 msgid "The system doesn't meet the minimum requirement"
 msgstr "系統不滿足最低要求"
 
-msgid "The system will reboot after reset."
-msgstr "系統重置後將重新啟動。"
-
 msgid "The system will reboot!"
 msgstr "系統將重新啟動！"
-
-msgid ""
-"The upgrade process did not complete successfully.\n"
-"\n"
-msgstr "陞級未成功完成。\n"
 
 msgid "This device is not activated and is available for trial use only"
 msgstr "此設備尚未激活，僅供試用"
@@ -1598,16 +1490,6 @@ msgstr "此操作將清除用戶數據"
 
 msgid "This panel supports up-to 9 screws in a 3x3 Grid"
 msgstr "這個界面支持9個調平螺絲以3x3陣列顯示"
-
-msgid "This will restore factory settings!"
-msgstr "繼續操作將恢復出廠設定！"
-
-msgid ""
-"This will update the system online.\n"
-"Are you sure?"
-msgstr ""
-"這將會線上更新系統。\n"
-"您確定要更新嗎？"
 
 msgid "Timeout for screen black-out or power-off"
 msgstr "超過倒計時後關閉屏幕"
@@ -1638,23 +1520,11 @@ msgstr "試用"
 msgid "Trial Time:"
 msgstr "試用時間："
 
-msgid "USB Update"
-msgstr "USB更新"
-
-msgid "USB update failed!"
-msgstr "USB更新失敗！"
-
 msgid "Unknown"
 msgstr "未知"
 
 msgid "Unknown Heater"
 msgstr "未知加熱器"
-
-msgid "Unknown error occurred during USB scan!"
-msgstr "USB掃描過程中發生未知錯誤！"
-
-msgid "Unknown error occurred during log export!"
-msgstr "日誌匯出過程中發生未知錯誤！"
 
 msgid "Unknown security type"
 msgstr "未知安全類型"
@@ -1703,6 +1573,9 @@ msgstr "不支持傳送WebRTC至後臺"
 
 msgid "Welcome"
 msgstr "歡迎使用"
+
+msgid "WiFi"
+msgstr "WiFi"
 
 msgid "Working"
 msgstr "工作中"
@@ -1835,6 +1708,193 @@ msgstr "○ 打開應用--點擊「+」添加打印機"
 msgid "○ Rescan left QR to add printe"
 msgstr "○ 使用APP再次掃描左側二維碼，添加打印機"
 
+#~ msgid "All user data will be cleared."
+#~ msgstr "您的所有用戶數據將被清除。"
+
+#~ msgid ""
+#~ "An unexpected error occurred during the upgrade process.\n"
+#~ "\n"
+#~ msgstr ""
+#~ "陞級過程中發生意外錯誤。\n"
+#~ "\n"
+
+#~ msgid "Are you sure to restart: "
+#~ msgstr "您確定要重啓嗎？"
+
+#~ msgid "Are you sure to update to version {} ?"
+#~ msgstr "您確定要更新到版本 {} 嗎？"
+
+#~ msgid "Are you sure?"
+#~ msgstr "您確定要這樣做嗎？"
+
+#~ msgid "Auto Calibration"
+#~ msgstr "自動校準"
+
+#~ msgid "Beta Version"
+#~ msgstr "測試版本"
+
+#~ msgid "Clear internal storage files"
+#~ msgstr "清除內部存儲的所有檔案"
+
+#~ msgid "Do not power off the device!"
+#~ msgstr "請勿關閉設備電源！"
+
+#~ msgid ""
+#~ "Do not power off the device!\n"
+#~ "\n"
+#~ msgstr "請勿關閉設備電源！\n"
+
+#~ msgid "Eddy Calibrate"
+#~ msgstr "渦流校準"
+
+#~ msgid "Error code:"
+#~ msgstr "錯誤碼："
+
+#~ msgid "Error message:"
+#~ msgstr "錯誤資訊："
+
+#~ msgid "Export"
+#~ msgstr "匯出"
+
+#~ msgid "Export Logs"
+#~ msgstr "匯出日誌檔"
+
+#~ msgid ""
+#~ "Exporting logs, please wait...\n"
+#~ "\n"
+#~ "This will take some time."
+#~ msgstr ""
+#~ "正在匯出日誌，請稍候…\n"
+#~ "\n"
+#~ "這可能需要一些時間。"
+
+#~ msgid "Factory Reset"
+#~ msgstr "恢復出廠設定"
+
+#, python-format
+#~ msgid "Factory reset failed: %s"
+#~ msgstr "恢復出廠設定失敗：%s"
+
+#~ msgid "Failed to export logs!"
+#~ msgstr "日誌匯出失敗！"
+
+#~ msgid "Failed to read image version!"
+#~ msgstr "無法讀取到鏡像版本！"
+
+#, python-format
+#~ msgid "Failed to scan USB device: %s"
+#~ msgstr "無法掃描USB設備：%s"
+
+#~ msgid "File saved to:"
+#~ msgstr "檔案已保存至："
+
+#~ msgid "Firmware version:"
+#~ msgstr "固件版本："
+
+#~ msgid "Found update image: "
+#~ msgstr "發現更新鏡像："
+
+#~ msgid "Interface"
+#~ msgstr "介面"
+
+#~ msgid "Logs exported successfully!"
+#~ msgstr "日誌匯出成功！"
+
+#~ msgid "Maintenance"
+#~ msgstr "維護"
+
+#~ msgid "No USB device found!"
+#~ msgstr "未找到USB設備！"
+
+#~ msgid ""
+#~ "No USB device found!\n"
+#~ "Please insert a USB drive with upgrade image."
+#~ msgstr ""
+#~ "未找到USB設備！\n"
+#~ "請插入包含陞級鏡像的USB設備。"
+
+#~ msgid "No log folders found!"
+#~ msgstr "未找到日誌資料夾！"
+
+#~ msgid "No update image found in USB device!"
+#~ msgstr "未在USB設備中找到更新鏡像！"
+
+#~ msgid "OK"
+#~ msgstr "確定"
+
+#~ msgid "Online Update"
+#~ msgstr "線上OTA更新"
+
+#~ msgid ""
+#~ "Please check the logs for more information.\n"
+#~ "\n"
+#~ msgstr ""
+#~ "請檢查日誌以獲取更多資訊。\n"
+#~ "\n"
+
+#~ msgid ""
+#~ "Please insert a USB drive first!\n"
+#~ "This will export logs to the USB device.\n"
+#~ "\n"
+#~ "Are you sure you want to continue?"
+#~ msgstr ""
+#~ "請先插入USB設備！\n"
+#~ "日誌將會匯出到USB設備。\n"
+#~ "\n"
+#~ "您確定要繼續嗎？"
+
+#~ msgid ""
+#~ "Preparing for update, please wait...\n"
+#~ "\n"
+#~ "This may take some time.\n"
+#~ "\n"
+#~ "Do not power off the device!"
+#~ msgstr ""
+#~ "正在準備更新，請稍候…\n"
+#~ "\n"
+#~ "這可能需要一些時間。\n"
+#~ "\n"
+#~ "請勿關閉設備電源！"
+
+#~ msgid "Reset"
+#~ msgstr "重置"
+
+#~ msgid "Restart Service"
+#~ msgstr "重啓服務"
+
+#~ msgid "The machine will restart during update. Do not disconnect the power."
+#~ msgstr "更新過程中機器將會重啓。 請勿斷開電源。"
+
+#~ msgid "The system will reboot after reset."
+#~ msgstr "系統重置後將重新啟動。"
+
+#~ msgid ""
+#~ "The upgrade process did not complete successfully.\n"
+#~ "\n"
+#~ msgstr "陞級未成功完成。\n"
+
+#~ msgid "This will restore factory settings!"
+#~ msgstr "繼續操作將恢復出廠設定！"
+
+#~ msgid ""
+#~ "This will update the system online.\n"
+#~ "Are you sure?"
+#~ msgstr ""
+#~ "這將會線上更新系統。\n"
+#~ "您確定要更新嗎？"
+
+#~ msgid "USB Update"
+#~ msgstr "USB更新"
+
+#~ msgid "USB update failed!"
+#~ msgstr "USB更新失敗！"
+
+#~ msgid "Unknown error occurred during USB scan!"
+#~ msgstr "USB掃描過程中發生未知錯誤！"
+
+#~ msgid "Unknown error occurred during log export!"
+#~ msgstr "日誌匯出過程中發生未知錯誤！"
+
 #~ msgid "<span font-size='x-large'>Calibration Camera View</span>"
 #~ msgstr "<span font-size='x-large'>校準監視器畫面</span>"
 
@@ -1922,9 +1982,6 @@ msgstr "○ 使用APP再次掃描左側二維碼，添加打印機"
 #~ msgid "dBm"
 #~ msgstr "dBm"
 
-#~ msgid "Bed screw configuration:"
-#~ msgstr "熱床螺絲設定："
-
 #~ msgid ""
 #~ "Not supported for auto-detection, it needs to be configured in "
 #~ "klipperscreen.conf"
@@ -1941,9 +1998,6 @@ msgstr "○ 使用APP再次掃描左側二維碼，添加打印機"
 
 #~ msgid "Actions"
 #~ msgstr "控制"
-
-#~ msgid "Configuration"
-#~ msgstr "设置"
 
 #~ msgid "Homing"
 #~ msgstr "归零"
