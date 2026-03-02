@@ -43,6 +43,7 @@ class Panel(ScreenPanel):
                               digits=1, hexpand=True, valign=Gtk.Align.CENTER, has_origin=True)
             scale.get_style_context().add_class("option_slider")
             scale.connect("button-release-event", self.set_opt_value, dim_freq['config'])
+            scale.set_margin_start(15)
 
             shaper_slug = dim_freq['config'].replace('_freq_', '_type_')
             menu_btn = Gtk.Button(label=SHAPERS[0])
