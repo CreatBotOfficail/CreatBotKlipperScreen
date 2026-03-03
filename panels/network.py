@@ -45,6 +45,7 @@ class Panel(ScreenPanel):
         self.reload_timer_id = None
         self.monitor_timer_id = None
         self.delay_reload_timer_id = None
+        self.config_refresh_timer_id = None
         self.init_status = False
         self.reload = False
         self.last_state = None
@@ -590,15 +591,16 @@ class Panel(ScreenPanel):
         save_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=10)
         save_box.set_halign(Gtk.Align.END)
 
-        save = self._gtk.Button("complete", _("Save"), "color3")
-        save.connect("clicked", self.save_network_config_inline)
-        save_box.pack_end(save, False, False, 0)
+        self.save_button = self._gtk.Button("complete", _("Save"), "color3")
+        self.save_button.connect("clicked", self.save_network_config_inline)
+        save_box.pack_end(self.save_button, False, False, 0)
         main_box.pack_start(save_box, False, False, 0)
 
         scroll.add(main_box)
         self.content.add(scroll)
 
         self.set_ip_entries_sensitive(not is_dhcp)
+        self.set_save_button_sensitive(not is_dhcp)
         self.ip_entry.grab_focus_without_selecting()
         self.content.show_all()
         self.show_add = True
@@ -638,6 +640,10 @@ class Panel(ScreenPanel):
 
         is_dhcp = switch.get_active()
         self.set_ip_entries_sensitive(not is_dhcp)
+        self.set_save_button_sensitive(not is_dhcp)
+
+        if is_dhcp:
+            self.save_network_config_inline(None)
 
     def set_ip_entries_sensitive(self, sensitive):
 
@@ -654,10 +660,20 @@ class Panel(ScreenPanel):
             else:
                 entry.set_opacity(0.5)
 
+    def set_save_button_sensitive(self, sensitive):
+        if not hasattr(self, "save_button") or self.save_button is None:
+            return
+        self.save_button.set_sensitive(sensitive)
+        self.save_button.set_opacity(1.0 if sensitive else 0.5)
+
     def close_network_config(self):
 
         if not self.show_add:
             return
+
+        if self.config_refresh_timer_id:
+            GLib.source_remove(self.config_refresh_timer_id)
+            self.config_refresh_timer_id = None
 
         self._screen.remove_keyboard()
         for child in self.content.get_children():
@@ -668,6 +684,25 @@ class Panel(ScreenPanel):
             del self.labels["edit_config"]
         self.show_add = False
         self.delay_reload_networks(500)
+
+    def refresh_network_config_entries(self):
+        self.config_refresh_timer_id = None
+
+        if not self.show_add:
+            return False
+
+        info = self.sdbus_nm.get_wireless_connection_info()
+        self.ip_entry.set_text(info.get("ip_address", "0.0.0.0"))
+        self.netmask_entry.set_text(info.get("netmask", "255.255.255.0"))
+        self.gateway_entry.set_text(info.get("gateway", ""))
+        self.dns_entry.set_text(info.get("dns", ""))
+        self.network_interface_refresh()
+        return False
+
+    def schedule_network_config_refresh(self, delay_ms=1500):
+        if self.config_refresh_timer_id:
+            GLib.source_remove(self.config_refresh_timer_id)
+        self.config_refresh_timer_id = GLib.timeout_add(delay_ms, self.refresh_network_config_entries)
 
     def save_network_config_inline(self, widget):
 
@@ -699,4 +734,9 @@ class Panel(ScreenPanel):
         else:
             self.dhcp_switch.grab_focus()
             self._screen.show_popup_message(_("Configuration saved"), level=1)
-            self.close_network_config()
+            # Keep config page open when save is triggered automatically by DHCP toggle.
+            if widget is not None:
+                self.close_network_config()
+            else:
+                self.delay_reload_networks(500)
+                self.schedule_network_config_refresh()
