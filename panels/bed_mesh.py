@@ -61,9 +61,12 @@ class Panel(ScreenPanel):
             self.activate_mesh(self._printer.get_stat("bed_mesh", "profile_name"))
 
     def activate_mesh(self, profile):
-        if self.active_mesh is not None:
+        if self.active_mesh is not None and self.active_mesh in self.profiles:
             self.profiles[self.active_mesh]['name'].set_sensitive(True)
             self.profiles[self.active_mesh]['name'].get_style_context().remove_class("button_active")
+        elif self.active_mesh is not None and self.active_mesh not in self.profiles:
+            # Active profile may have been removed externally; reset stale state.
+            self.active_mesh = None
         if profile == "":
             logging.info("Clearing active profile")
             self._clear_profile()
@@ -150,11 +153,11 @@ class Panel(ScreenPanel):
         return False
 
     def load_meshes(self):
-        bm_profiles = self._printer.get_stat("bed_mesh", "profiles")
+        bm_profiles = self._printer.get_stat("bed_mesh", "profiles") or {}
         for prof in bm_profiles:
             if prof not in self.profiles:
                 self.add_profile(prof)
-        for prof in self.profiles:
+        for prof in list(self.profiles):
             if prof not in bm_profiles:
                 self.remove_profile(prof)
 
@@ -171,6 +174,8 @@ class Panel(ScreenPanel):
         pos = self._get_position(profile)
         self.labels['profiles'].remove_row(pos)
         del self.profiles[profile]
+        if self.active_mesh == profile:
+            self._clear_profile()
         if not self.profiles:
             self._clear_profile()
 
