@@ -195,8 +195,10 @@ class Panel(ScreenPanel):
     def load_networks(self):
         self.connected_ap = self.sdbus_nm.get_connected_ap()
         ap_ssid = None
+        connected_signal_level = None
         if self.connected_ap:
             ap_ssid = self.connected_ap.ssid.decode("utf-8")
+            connected_signal_level = self.connected_ap.strength
         self.networks = self.move_network_to_front(self.sdbus_nm.get_networks(), ap_ssid)
         if self.last_state != self.sdbus_nm.wifi_state:
             self.last_state = self.sdbus_nm.wifi_state
@@ -207,11 +209,14 @@ class Panel(ScreenPanel):
             ssid = item.get("SSID")
             if ssid:
                 is_connected = (ssid == ap_ssid)
+                signal_level = item.get("signal_level", 0)
+                if is_connected and connected_signal_level is not None:
+                    signal_level = connected_signal_level
                 self.add_network_item(
                     ssid,
                     item.get("security", "unknown"),
                     item.get("known", False),
-                    item.get("signal_level", 0),
+                    signal_level,
                     is_connected,
                 )
         self.network_list.show_all()

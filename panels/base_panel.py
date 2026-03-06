@@ -469,17 +469,23 @@ class BasePanel(ScreenPanel):
         if self.sdbus_nm:
             self.interface = self.sdbus_nm.get_primary_interface()
             if self.interface:
-                if '?' not in self.sdbus_nm.get_ip_address(): 
-                    if self.interface == "eth0":
+                if '?' not in self.sdbus_nm.get_ip_address():
+                    wired_interfaces = set(self.sdbus_nm.get_wired_interfaces())
+                    wireless_interfaces = {
+                        iface.interface for iface in self.sdbus_nm.get_wireless_interfaces()
+                    }
+                    if self.interface in wired_interfaces:
                         self.control["network_ico"].set_from_pixbuf(self.network_icons["ethernet"])
                         self.control["network_ico"].set_visible(True)
-                    elif self.interface == "wlan0":
+                    elif self.interface in wireless_interfaces:
                         strength = self.sdbus_nm.get_signal_strength()
-                        if strength:
+                        if strength is not None:
                             self.control["network_ico"].set_from_pixbuf(self.get_signal_strength_icon(strength))
                             self.control["network_ico"].set_visible(True)
                         else:
                             self.control["network_ico"].set_visible(False)
+                    else:
+                        self.control["network_ico"].set_visible(False)
                 else:
                     self.control["network_ico"].set_visible(False)
         return True
