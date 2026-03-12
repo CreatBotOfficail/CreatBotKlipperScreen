@@ -132,9 +132,10 @@ class Panel(ScreenPanel):
             valign=Gtk.Align.CENTER
         )
         self.start_btn = self._create_button(_("Calibration datum"), None, f"color3", self.on_start_calibrate)
-        self.check_btn = self._create_button(_("Skip check"), None, f"color1", self.skip_check)
+        button_text = _("Cancel") if self.finish_action is None else _("Skip check")
+        self.check_or_cancel_btn = self._create_button(button_text, None, f"color1", self.skip_check)
         self.check_bottom_box.pack_start(self.start_btn, False, False, 10)
-        self.check_bottom_box.pack_start(self.check_btn, False, False, 10)
+        self.check_bottom_box.pack_start(self.check_or_cancel_btn, False, False, 10)
 
         self.calibrate_bottom_box = Gtk.Box(
             orientation=Gtk.Orientation.HORIZONTAL,
@@ -324,7 +325,10 @@ class Panel(ScreenPanel):
         self.cam_controller.init_cam_tip()
 
     def skip_check(self, widget):
-        self._screen.show_panel("xy_calibrate", finish_action=self.finish_action, remove_current=True)
+        if self.finish_action:
+            self._screen.show_panel("xy_calibrate", finish_action=self.finish_action, remove_current=True)
+        else:
+            self._screen._menu_go_back()
 
     def on_start_calibrate(self, widget):
         self.mode = "calibrate"
@@ -415,12 +419,16 @@ class Panel(ScreenPanel):
         if self.cam_box.get_window():
             self.cam_controller.load_camera(self.cam_box)
 
-        if hasattr(self, 'save_and_next_btn') and self.save_and_next_btn:
-            button_text = _("Save") if self.finish_action is None else _("Next")
-            label = self.save_and_next_btn.get_child()
+        self._update_button_text('save_and_next_btn', _('Save') if self.finish_action is None else _('Next'))
+        self._update_button_text('check_or_cancel_btn', _('Cancel') if self.finish_action is None else _('Skip check'))
+    
+    def _update_button_text(self, button_name, text):
+        if hasattr(self, button_name) and getattr(self, button_name):
+            button = getattr(self, button_name)
+            label = button.get_child()
             if label and hasattr(label, 'set_text'):
-                label.set_text(button_text)
-            self.save_and_next_btn.queue_draw()
+                label.set_text(text)
+            button.queue_draw()
 
     def deactivate(self):
         self.cam_controller.deactivate()
