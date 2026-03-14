@@ -63,6 +63,19 @@ class Panel(ScreenPanel):
                     ],
                 }
             },
+            {
+                "screen_rotation": {
+                    "section": "main",
+                    "name": _("Screen Rotation"),
+                    "type": "dropdown",
+                    "value": self.get_screen_rotation(),
+                    "callback": self.set_screen_rotation,
+                    "options": [
+                        {"name": _("0°"), "value": "0"},
+                        {"name": _("90°"), "value": "90"},
+                    ],
+                }
+            },
         ]
         self.settings = {}
         self.select_model = False
@@ -214,6 +227,26 @@ class Panel(ScreenPanel):
         else:
             self._screen._send_action(None, "machine.services.restart", {"service": "moonraker"})
         logging.info(f"version selection:{val}")
+
+    def get_screen_rotation(self):
+        try:
+            from machine_config import MachineConfig
+            cfg = MachineConfig()
+            rotation = cfg.get("screen_rotation", "0")
+            return str(rotation)
+        except Exception as e:
+            logging.info(f"Error getting screen rotation: {e}")
+            return "0"
+
+    def set_screen_rotation(self, val):
+        try:
+            from machine_config import MachineConfig
+            cfg = MachineConfig()
+            cfg.set_screen_rotation(int(val))
+            logging.info(f"Screen rotation set to: {val}")
+            self._screen._send_action(None, "machine.services.restart", {"service": "KlipperScreen"})
+        except Exception as e:
+            logging.error(f"Error setting screen rotation: {e}")
 
 class ConfigMoonrakerUpdateManager:
     def __init__(self):
