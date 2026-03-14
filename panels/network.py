@@ -92,11 +92,22 @@ class Panel(ScreenPanel):
         )
         self.wifi_toggle.connect("notify::active", self.toggle_wifi)
 
-        sbox = Gtk.Box(hexpand=True, vexpand=False)
-        sbox.add(self.labels['interface'])
-        sbox.add(self.labels['ip'])
-        sbox.add(self.reload_button)
-        sbox.add(self.wifi_toggle)
+        if self._screen.vertical_mode:
+            sbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, hexpand=True, vexpand=False)
+            info_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, hexpand=True, vexpand=False)
+            info_box.add(self.labels['interface'])
+            info_box.add(self.labels['ip'])
+            sbox.add(info_box)
+            controls_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, hexpand=False, vexpand=False)
+            controls_box.add(self.reload_button)
+            controls_box.add(self.wifi_toggle)
+            sbox.add(controls_box)
+        else:
+            sbox = Gtk.Box(hexpand=True, vexpand=False)
+            sbox.add(self.labels['interface'])
+            sbox.add(self.labels['ip'])
+            sbox.add(self.reload_button)
+            sbox.add(self.wifi_toggle)
 
         scroll = self._gtk.ScrolledWindow()
         self.labels['main_box'] = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, vexpand=True)
