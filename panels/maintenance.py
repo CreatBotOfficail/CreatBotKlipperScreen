@@ -71,42 +71,80 @@ class Panel(ScreenPanel):
         self.buttons["export_logs"].connect(
             "clicked", self.export_logs_clicked)
 
-        main_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=15)
-        main_box.set_margin_start(10)
-        main_box.set_margin_end(10)
-        main_box.set_margin_top(10)
-        main_box.set_margin_bottom(10)
+        if self._screen.vertical_mode:
+            main_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)
+            main_box.set_margin_start(10)
+            main_box.set_margin_end(10)
+            main_box.set_margin_top(10)
+            main_box.set_margin_bottom(10)
 
-        left_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)
-        left_box.set_hexpand(True)
+            top_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)
+            top_box.set_vexpand(False)
+            top_box.set_valign(Gtk.Align.CENTER)
 
-        function_grid = Gtk.Grid(row_homogeneous=True, column_homogeneous=True)
-        function_grid.set_row_spacing(10)
-        function_grid.set_column_spacing(10)
-        # function_grid.attach(self.buttons["online_update"], 0, 0, 1, 1) #todo
-        function_grid.attach(self.buttons["local_update"], 0, 1, 1, 1)
-        function_grid.attach(self.buttons["factory_reset"], 0, 2, 1, 1)
-        function_grid.attach(self.buttons["export_logs"], 0, 3, 1, 1)
+            function_grid = Gtk.Grid(row_homogeneous=True, column_homogeneous=True)
+            function_grid.set_row_spacing(10)
+            function_grid.set_column_spacing(10)
+            function_grid.attach(self.buttons["local_update"], 0, 0, 1, 1)
+            function_grid.attach(self.buttons["factory_reset"], 0, 1, 1, 1)
+            function_grid.attach(self.buttons["export_logs"], 0, 2, 1, 1)
 
-        left_box.pack_start(function_grid, True, True, 0)
+            top_box.pack_start(function_grid, False, False, 0)
 
-        separator = Gtk.Separator(orientation=Gtk.Orientation.VERTICAL)
-        separator.set_margin_top(0)
-        separator.set_margin_bottom(0)
+            separator = Gtk.Separator(orientation=Gtk.Orientation.HORIZONTAL)
+            separator.set_margin_start(0)
+            separator.set_margin_end(0)
 
-        right_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)
-        right_box.set_hexpand(True)
+            bottom_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)
+            bottom_box.set_hexpand(True)
+            bottom_box.set_vexpand(True)
 
-        self.service_grid = Gtk.Grid()
-        self.service_grid.set_row_spacing(10)
-        self.service_grid.set_column_spacing(15)
-        self.service_grid.set_valign(Gtk.Align.CENTER)
+            self.service_grid = Gtk.Grid()
+            self.service_grid.set_row_spacing(10)
+            self.service_grid.set_column_spacing(15)
+            self.service_grid.set_valign(Gtk.Align.CENTER)
 
-        right_box.pack_start(self.service_grid, True, False, 0)
+            bottom_box.pack_start(self.service_grid, True, False, 0)
 
-        main_box.pack_start(left_box, True, True, 0)
-        main_box.pack_start(separator, False, False, 0)
-        main_box.pack_start(right_box, True, True, 0)
+            main_box.pack_start(top_box, False, True, 0)
+            main_box.pack_start(separator, False, False, 0)
+            main_box.pack_start(bottom_box, True, True, 0)
+        else:
+            main_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=15)
+            main_box.set_margin_start(10)
+            main_box.set_margin_end(10)
+            main_box.set_margin_top(10)
+            main_box.set_margin_bottom(10)
+
+            left_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)
+            left_box.set_hexpand(True)
+
+            function_grid = Gtk.Grid(row_homogeneous=True, column_homogeneous=True)
+            function_grid.set_row_spacing(10)
+            function_grid.set_column_spacing(10)
+            function_grid.attach(self.buttons["local_update"], 0, 0, 1, 1)
+            function_grid.attach(self.buttons["factory_reset"], 0, 1, 1, 1)
+            function_grid.attach(self.buttons["export_logs"], 0, 2, 1, 1)
+
+            left_box.pack_start(function_grid, True, True, 0)
+
+            separator = Gtk.Separator(orientation=Gtk.Orientation.VERTICAL)
+            separator.set_margin_top(0)
+            separator.set_margin_bottom(0)
+
+            right_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)
+            right_box.set_hexpand(True)
+
+            self.service_grid = Gtk.Grid()
+            self.service_grid.set_row_spacing(10)
+            self.service_grid.set_column_spacing(15)
+            self.service_grid.set_valign(Gtk.Align.CENTER)
+
+            right_box.pack_start(self.service_grid, True, False, 0)
+
+            main_box.pack_start(left_box, True, True, 0)
+            main_box.pack_start(separator, False, False, 0)
+            main_box.pack_start(right_box, True, True, 0)
 
         self.content.add(main_box)
 
