@@ -177,8 +177,14 @@ class BasePanel(ScreenPanel):
             self._screen.show_panel("license", remove_all=False)
 
     def show_network_page(self, widget, event):
-        if "network" not in self._screen._cur_panels:
-            self._screen.show_panel("network", remove_all=False)
+        if self.sdbus_nm and self.interface:
+            wired_interfaces = set(self.sdbus_nm.get_wired_interfaces())
+            if self.interface in wired_interfaces:
+                if "ethernet" not in self._screen._cur_panels:
+                    self._screen.show_panel("ethernet", remove_all=False)
+            else:
+                if "network" not in self._screen._cur_panels:
+                    self._screen.show_panel("network", remove_all=False)
 
     def show_creatcloud_page(self, widget, event):
         if "creatcloud" not in self._screen._cur_panels:
