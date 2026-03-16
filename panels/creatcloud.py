@@ -56,16 +56,23 @@ class Panel(ScreenPanel):
         scrolled.set_hexpand(True)
         scrolled.set_vexpand(True)
 
-        root = Gtk.Box(
-            orientation=Gtk.Orientation.HORIZONTAL, spacing=0, homogeneous=True
-        )
+        if self._screen.vertical_mode:
+            root = Gtk.Box(
+                orientation=Gtk.Orientation.VERTICAL, spacing=0, homogeneous=False
+            )
+            root.pack_start(self._build_right(), True, True, 10)
+            root.pack_start(self._build_left(), False, False, 10)
+        else:
+            root = Gtk.Box(
+                orientation=Gtk.Orientation.HORIZONTAL, spacing=0, homogeneous=True
+            )
+            root.pack_start(self._build_left(), True, True, 10)
+            root.pack_start(self._build_right(), True, True, 10)
+
         root.set_margin_left(15)
         root.set_margin_right(15)
         root.set_margin_top(15)
         root.set_margin_bottom(15)
-
-        root.pack_start(self._build_left(), True, True, 10)
-        root.pack_start(self._build_right(), True, True, 10)
 
         scrolled.add(root)
         self.content.add(scrolled)
@@ -138,10 +145,17 @@ class Panel(ScreenPanel):
         vbox.set_margin_start(pad)
         vbox.set_margin_end(pad)
 
+        if self._screen.vertical_mode:
+            qr_hint = _("Scan the QR code below to install CreatCloud")
+            rescan_hint = _("○ Rescan the QR code below to add printer")
+        else:
+            qr_hint = _("Scan left QR to install CreatCloud")
+            rescan_hint = _("○ Rescan left QR to add printer")
+
         texts = [
-            _("Scan left QR to install CreatCloud"),
+            qr_hint,
             _("○ Open the app - click \"+\" to add a printer"),
-            _("○ Rescan left QR to add printe"),
+            rescan_hint,
             _("○ Follow the prompts to complete the setup"),
             _("[After turning on LAN only] Connect phone and printer to the same Wi-Fi, then use the APP to connect the device."),
         ]
@@ -345,7 +359,6 @@ class Panel(ScreenPanel):
     def update_local_ip(self):
         ip_address = self.cloud_status.get("local_ip") or "0.0.0.0"
         self.ip_value.set_text(str(ip_address))
-        self.generate_qr_code()
 
     def on_lan_only_toggled(self, switch, gparam):
         self._pending_lan_only = switch.get_active()
