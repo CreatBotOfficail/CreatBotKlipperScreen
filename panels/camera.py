@@ -104,7 +104,12 @@ class Panel(ScreenPanel):
             def on_draw(self, widget, cr):
                 if self.pixbuf:
                     try:
-                        Gdk.cairo_set_source_pixbuf(cr, self.pixbuf, 0, 0)
+                        alloc = widget.get_allocation()
+                        pix_width = self.pixbuf.get_width()
+                        pix_height = self.pixbuf.get_height()
+                        x_offset = (alloc.width - pix_width) // 2
+                        y_offset = (alloc.height - pix_height) // 2
+                        Gdk.cairo_set_source_pixbuf(cr, self.pixbuf, x_offset, y_offset)
                         cr.paint()
                     except Exception:
                         pass
@@ -148,8 +153,6 @@ class Panel(ScreenPanel):
             pipeline_parts.append("decodebin")
             pipeline_parts.append("queue max-size-buffers=1 leaky=downstream")
 
-        pipeline_parts.append(f"videoscale ! video/x-raw,width={width},height={height}")
-
         if cam["flip_horizontal"]:
             pipeline_parts.append("videoflip method=horizontal-flip")
         if cam["flip_vertical"]:
@@ -162,6 +165,11 @@ class Panel(ScreenPanel):
             pipeline_parts.append("videoflip method=rotate-180")
         elif rot == 270:
             pipeline_parts.append("videoflip method=counterclockwise")
+
+        if hasattr(self._screen, 'vertical_mode') and self._screen.vertical_mode:
+            pipeline_parts.append(f"videoscale ! video/x-raw,width={width}")
+        else:
+            pipeline_parts.append(f"videoscale ! video/x-raw,width={width},height={height}")
 
         pipeline_parts.append("videoconvert")
         pipeline_parts.append("video/x-raw,format=RGB")
