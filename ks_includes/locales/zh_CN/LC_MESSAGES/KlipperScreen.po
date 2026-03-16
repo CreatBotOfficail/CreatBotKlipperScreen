@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KlipperScreen\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-28 17:05+0800\n"
+"POT-Creation-Date: 2026-03-16 13:15+0800\n"
 "PO-Revision-Date: 2024-06-03 19:09+0000\n"
 "Last-Translator: wsj20050623 <2129426599@qq.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
@@ -28,6 +28,9 @@ msgstr "（双头打印时慎用）"
 
 msgid "(default)"
 msgstr "（默认）"
+
+msgid "0°"
+msgstr "0°"
 
 msgid ""
 "1. Ensure that all fixed components have been properly removed before "
@@ -105,6 +108,9 @@ msgstr "4、点击保存可跳过打印校验。"
 msgid "5. Tap Discard to discard right nozzle offsets."
 msgstr "5、点击放弃，不应用右喷嘴偏移校准结果。"
 
+msgid "90°"
+msgstr "90°"
+
 msgid ""
 "<b>Start the Dual Z offset calibrate?</b>\n"
 "\n"
@@ -159,7 +165,7 @@ msgstr "<span font-size='large'>校准进行中...</span>"
 
 #, python-brace-format
 msgid "<span font-size='small'>{label}</span>"
-msgstr ""
+msgstr "<span font-size='small'>{label}</span>"
 
 msgid "<span font-size='x-large'><b>Warning:</b></span>"
 msgstr "<span font-size='x-large'><b>警告：</b></span>"
@@ -1130,7 +1136,7 @@ msgstr ""
 "请插入包含升级镜像的USB设备。"
 
 msgid "No calibration options available"
-msgstr ""
+msgstr "无可用校准选项"
 
 msgid "No elegible macros:"
 msgstr "无可用宏："
@@ -1497,11 +1503,17 @@ msgstr "保存偏移：%s"
 msgid "Scan left QR to install CreatCloud"
 msgstr "扫描左侧二维码安装CreatCloud应用"
 
+msgid "Scan the QR code below to install CreatCloud"
+msgstr "扫描下方二维码安装CreatCloud应用"
+
 msgid "Screen DPMS"
 msgstr "屏幕省电管理系统"
 
 msgid "Screen Power Off Time"
 msgstr "自动息屏"
+
+msgid "Screen Rotation"
+msgstr "屏幕旋转"
 
 msgid "Screws Adjust"
 msgstr "螺丝调整"
@@ -1904,8 +1916,11 @@ msgstr "○ 按提示完成设置"
 msgid "○ Open the app - click \"+\" to add a printer"
 msgstr "○ 打开应用--点击“+”添加打印机"
 
-msgid "○ Rescan left QR to add printe"
-msgstr "○ 使用APP再次扫描左侧二维码，添加打印机"
+msgid "○ Rescan left QR to add printer"
+msgstr "○ 重新扫描左侧二维码添加打印机"
+
+msgid "○ Rescan the QR code below to add printer"
+msgstr "○ 重新扫描下方二维码添加打印机"
 
 #~ msgid "Interface"
 #~ msgstr "接口"

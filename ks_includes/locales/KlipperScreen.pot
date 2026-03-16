@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-28 17:05+0800\n"
+"POT-Creation-Date: 2026-03-16 13:15+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -26,6 +26,9 @@ msgid "(Disable during dual extrusion printing)"
 msgstr ""
 
 msgid "(default)"
+msgstr ""
+
+msgid "0°"
 msgstr ""
 
 msgid ""
@@ -98,6 +101,9 @@ msgid "4. Tap Save to skip printing validation."
 msgstr ""
 
 msgid "5. Tap Discard to discard right nozzle offsets."
+msgstr ""
+
+msgid "90°"
 msgstr ""
 
 msgid ""
@@ -1458,10 +1464,16 @@ msgstr ""
 msgid "Scan left QR to install CreatCloud"
 msgstr ""
 
+msgid "Scan the QR code below to install CreatCloud"
+msgstr ""
+
 msgid "Screen DPMS"
 msgstr ""
 
 msgid "Screen Power Off Time"
+msgstr ""
+
+msgid "Screen Rotation"
 msgstr ""
 
 msgid "Screws Adjust"
@@ -1863,5 +1875,8 @@ msgstr ""
 msgid "○ Open the app - click \"+\" to add a printer"
 msgstr ""
 
-msgid "○ Rescan left QR to add printe"
+msgid "○ Rescan left QR to add printer"
+msgstr ""
+
+msgid "○ Rescan the QR code below to add printer"
 msgstr ""

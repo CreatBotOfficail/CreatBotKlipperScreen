@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KlipperScreen\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-28 17:05+0800\n"
+"POT-Creation-Date: 2026-03-16 13:15+0800\n"
 "PO-Revision-Date: 2024-06-01 12:09+0000\n"
 "Last-Translator: 峻瑜哥 <a728728728@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <https://hosted.weblate.org/projects/"
@@ -29,10 +29,13 @@ msgstr "（雙頭打印時慎用）"
 msgid "(default)"
 msgstr "(預設)"
 
+msgid "0°"
+msgstr "0°"
+
 msgid ""
 "1. Ensure that all fixed components have been properly removed before "
 "proceeding."
-msgstr ""
+msgstr "1、確認所有固定件已拆除後再繼續操作"
 
 msgid ""
 "1. For first use, refer to the accompanying diagram to disassemble the fixed "
@@ -105,6 +108,9 @@ msgstr "4、點擊保存可跳過列印校驗。"
 msgid "5. Tap Discard to discard right nozzle offsets."
 msgstr "5、點擊放弃，不應用右噴嘴偏移校準結果。"
 
+msgid "90°"
+msgstr "90°"
+
 msgid ""
 "<b>Start the Dual Z offset calibrate?</b>\n"
 "\n"
@@ -159,7 +165,7 @@ msgstr "<span font-size='large'>校準進行中...</span>"
 
 #, python-brace-format
 msgid "<span font-size='small'>{label}</span>"
-msgstr ""
+msgstr "<span font-size='small'>{label}</span>"
 
 msgid "<span font-size='x-large'><b>Warning:</b></span>"
 msgstr "<span font-size='x-large'><b>警告：</b></span>"
@@ -1130,7 +1136,7 @@ msgstr ""
 "請插入包含陞級鏡像的USB設備。"
 
 msgid "No calibration options available"
-msgstr ""
+msgstr "無可用校準選項"
 
 msgid "No elegible macros:"
 msgstr "無可用巨集:"
@@ -1497,11 +1503,17 @@ msgstr "儲存偏移：%s"
 msgid "Scan left QR to install CreatCloud"
 msgstr "掃描左側二維碼安裝CreatCloud應用"
 
+msgid "Scan the QR code below to install CreatCloud"
+msgstr "掃描下方二維碼安裝CreatCloud應用"
+
 msgid "Screen DPMS"
 msgstr "螢幕省電管理系統"
 
 msgid "Screen Power Off Time"
 msgstr "關閉螢幕時間"
+
+msgid "Screen Rotation"
+msgstr "螢幕旋轉"
 
 msgid "Screws Adjust"
 msgstr "螺絲調整"
@@ -1904,8 +1916,11 @@ msgstr "○ 按提示完成設置"
 msgid "○ Open the app - click \"+\" to add a printer"
 msgstr "○ 打開應用--點擊「+」添加打印機"
 
-msgid "○ Rescan left QR to add printe"
-msgstr "○ 使用APP再次掃描左側二維碼，添加打印機"
+msgid "○ Rescan left QR to add printer"
+msgstr "○ 重新掃描左側二維碼添加打印機"
+
+msgid "○ Rescan the QR code below to add printer"
+msgstr "○ 重新掃描下方二維碼添加打印機"
 
 #~ msgid "Interface"
 #~ msgstr "介面"
