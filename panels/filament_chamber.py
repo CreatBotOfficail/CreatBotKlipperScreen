@@ -18,53 +18,98 @@ class Panel(ScreenPanel):
         self.remaining_time_seconds = 0
         self.set_duration_seconds = 0
 
-        main_box = Gtk.Box(
-            orientation=Gtk.Orientation.HORIZONTAL, spacing=0, homogeneous=True)
-        main_box.set_margin_left(10)
-        main_box.set_margin_right(10)
-        main_box.set_margin_top(10)
-        main_box.set_margin_bottom(10)
+        self.vertical_mode = self._screen.vertical_mode
+        self.is_small_screen = self._gtk.content_height < 700
 
-        left_panel = self.create_left_panel()
+        if self.vertical_mode:
+            self.main_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=5 if self.is_small_screen else 10)
+        else:
+            self.main_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=0, homogeneous=True)
 
-        self.right_panel = self.create_right_panel()
+        margin = 5 if self.is_small_screen else 10
+        self.main_box.set_margin_left(margin)
+        self.main_box.set_margin_right(margin)
+        self.main_box.set_margin_top(margin)
+        self.main_box.set_margin_bottom(margin)
 
+        self.control_panel = self.create_control_panel()
+        self.display_panel = self.create_display_panel()
         self.keypad_panel = self.create_keypad_panel()
 
-        self.right_container = Gtk.Stack()
-        self.right_container.add_named(self.right_panel, "default")
-        self.right_container.add_named(self.keypad_panel, "keypad")
-        self.right_container.set_visible_child_name("default")
+        self.display_container = Gtk.Stack()
+        self.display_container.add_named(self.display_panel, "default")
+        self.display_container.add_named(self.keypad_panel, "keypad")
+        self.display_container.set_visible_child_name("default")
 
-        main_box.pack_start(left_panel, True, True, 5)
-        main_box.pack_start(self.right_container, True, True, 5)
+        if self.vertical_mode:
+            self.main_box.pack_start(self.control_panel, False, False, 3 if self.is_small_screen else 5)
+            self.main_box.pack_start(self.display_container, True, True, 3 if self.is_small_screen else 5)
+        else:
+            self.main_box.pack_start(self.control_panel, True, True, 5)
+            self.main_box.pack_start(self.display_container, True, True, 5)
 
-        self.content.add(main_box)
+        self.content.add(self.main_box)
 
-    def create_left_panel(self):
-        left_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL,
-                           spacing=15, homogeneous=False)
-        left_box.set_hexpand(True)
-        left_box.set_vexpand(True)
-        left_box.set_margin_left(15)
-        left_box.set_margin_right(15)
+    def get_button_size(self):
+        if self.vertical_mode:
+            if self.is_small_screen:
+                return int(self._gtk.content_width * 0.42), int(self._gtk.content_height * 0.09)
+            return int(self._gtk.content_width * 0.42), int(self._gtk.content_height * 0.12)
+        else:
+            return int(self._gtk.content_width * 0.22), int(self._gtk.content_height * 0.22)
 
-        top_spacer = Gtk.Box()
-        top_spacer.set_vexpand(True)
-        left_box.pack_start(top_spacer, True, True, 0)
+    def get_image_size(self):
+        if self.vertical_mode:
+            # Small screen uses smaller image
+            if self.is_small_screen:
+                return int(self._gtk.content_width * 0.55), int(self._gtk.content_height * 0.18)
+            return int(self._gtk.content_width * 0.9), int(self._gtk.content_height * 0.35)
+        else:
+            return int(self._gtk.content_width * 0.45), int(self._gtk.content_height * 0.5)
 
-        temp_frame = Gtk.Frame()
-        temp_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=10)
-        temp_box.set_margin_left(20)
-        temp_box.set_margin_right(20)
-        temp_box.set_margin_top(20)
-        temp_box.set_margin_bottom(20)
+    def get_indicator_size(self):
+        if self.vertical_mode:
+            if self.is_small_screen:
+                return (90, 90)
+            return (120, 120)
+        else:
+            return (180, 180)
+
+    def get_icon_size(self):
+        if self.vertical_mode:
+            if self.is_small_screen:
+                return (40, 40)
+            return (50, 50)
+        else:
+            return (70, 70)
+
+    def create_control_panel(self):
+        if self.is_small_screen:
+            spacing = 3
+            margin = 3
+            inner_margin = 5
+        else:
+            spacing = 10
+            margin = 10
+            inner_margin = 15
+
+        control_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=spacing)
+        control_box.set_hexpand(True)
+        control_box.set_vexpand(not self.vertical_mode)
+        control_box.set_margin_left(margin)
+        control_box.set_margin_right(margin)
+        control_box.set_margin_top(margin)
+        control_box.set_margin_bottom(margin)
+
+        temp_timer_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=spacing, homogeneous=False)
+
+        btn_width, btn_height = self.get_button_size()
 
         temp_btn = self._gtk.Button()
         temp_btn.connect("clicked", self.on_temp_clicked)
         temp_btn.get_style_context().add_class("color1")
-        temp_btn.set_size_request(
-            int(self._gtk.content_width * 0.18), int(self._gtk.content_height * 0.20))
+        temp_btn.set_property("width-request", btn_width)
+        temp_btn.set_property("height-request", btn_height)
 
         temp_vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=0)
         temp_vbox.set_homogeneous(True)
@@ -88,8 +133,8 @@ class Panel(ScreenPanel):
         timer_btn = self._gtk.Button()
         timer_btn.connect("clicked", self.on_timer_clicked)
         timer_btn.get_style_context().add_class("color2")
-        timer_btn.set_size_request(
-            int(self._gtk.content_width * 0.18), int(self._gtk.content_height * 0.20))
+        timer_btn.set_property("width-request", btn_width)
+        timer_btn.set_property("height-request", btn_height)
 
         timer_vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=0)
         timer_vbox.set_homogeneous(True)
@@ -110,52 +155,44 @@ class Panel(ScreenPanel):
         self.remaining_timer_label.set_valign(Gtk.Align.CENTER)
         timer_vbox.pack_start(self.remaining_timer_label, True, True, 0)
 
-        temp_box.pack_start(temp_btn, False, False, 5)
-        temp_box.pack_start(timer_btn, False, False, 5)
-        temp_frame.add(temp_box)
+        temp_timer_box.pack_start(temp_btn, False, False, 0)
+        temp_timer_box.pack_start(timer_btn, False, False, 0)
+        temp_timer_box.set_halign(Gtk.Align.CENTER)
 
         auto_close_frame = Gtk.Frame()
-        auto_close_box = Gtk.Box(
-            orientation=Gtk.Orientation.HORIZONTAL, spacing=10)
-        auto_close_box.set_margin_left(20)
-        auto_close_box.set_margin_right(20)
-        auto_close_box.set_margin_top(15)
-        auto_close_box.set_margin_bottom(15)
+        auto_close_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=spacing)
+        auto_close_box.set_margin_left(inner_margin)
+        auto_close_box.set_margin_right(inner_margin)
+        auto_close_box.set_margin_top(inner_margin)
+        auto_close_box.set_margin_bottom(inner_margin)
 
-        switch_hbox = Gtk.Box(
-            orientation=Gtk.Orientation.HORIZONTAL, spacing=10)
+        switch_hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=5 if self.is_small_screen else 10)
 
         auto_close_title = Gtk.Label()
         auto_close_title.set_name("title-bold")
         text = _("Auto-Off After Print")
-        auto_close_title.set_markup(
-            f'<span weight="bold" size="small">{text}</span>')
+        auto_close_title.set_markup(f'<span weight="bold" size="small">{text}</span>')
         auto_close_title.set_halign(Gtk.Align.START)
         switch_hbox.pack_start(auto_close_title, False, False, 0)
 
         self.auto_close_switch = Gtk.Switch()
         self.auto_close_switch.set_active(False)
-        self.auto_close_switch.connect(
-            "notify::active", self.on_auto_close_toggled)
+        self.auto_close_switch.connect("notify::active", self.on_auto_close_toggled)
         self.auto_close_switch.set_halign(Gtk.Align.END)
         switch_hbox.pack_end(self.auto_close_switch, False, False, 0)
 
         auto_close_box.pack_start(switch_hbox, True, True, 0)
         auto_close_frame.add(auto_close_box)
 
-        left_box.pack_start(temp_frame, False, False, 0)
+        control_box.pack_start(temp_timer_box, False, False, 0)
+        control_box.pack_start(auto_close_frame, False, False, 0)
 
-        middle_spacer = Gtk.Box()
-        middle_spacer.set_size_request(-1, 30)
-        left_box.pack_start(middle_spacer, False, False, 0)
+        if not self.vertical_mode:
+            spacer = Gtk.Box()
+            spacer.set_vexpand(True)
+            control_box.pack_start(spacer, True, True, 0)
 
-        left_box.pack_start(auto_close_frame, False, False, 0)
-
-        bottom_spacer = Gtk.Box()
-        bottom_spacer.set_vexpand(True)
-        left_box.pack_start(bottom_spacer, True, True, 0)
-
-        return left_box
+        return control_box
 
     def format_time_display(self, seconds):
         if seconds <= 0:
@@ -167,27 +204,36 @@ class Panel(ScreenPanel):
 
         return f"{hours:02d}:{minutes:02d}:{remaining_seconds:02d}"
 
-    def create_right_panel(self):
-        right_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL,
-                            spacing=15, homogeneous=False)
-        right_box.set_hexpand(True)
-        right_box.set_vexpand(True)
-        right_box.set_margin_left(15)
-        right_box.set_margin_right(15)
+    def create_display_panel(self):
+        if self.is_small_screen:
+            spacing = 3
+            margin = 3
+            inner_margin = 5
+        else:
+            spacing = 10
+            margin = 10
+            inner_margin = 15
+
+        display_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=spacing)
+        display_box.set_hexpand(True)
+        display_box.set_vexpand(True)
+        display_box.set_margin_left(margin)
+        display_box.set_margin_right(margin)
+        display_box.set_margin_top(margin)
+        display_box.set_margin_bottom(margin)
 
         info_frame = Gtk.Frame()
-        info_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)
-        info_box.set_margin_left(20)
-        info_box.set_margin_right(20)
-        info_box.set_margin_top(15)
-        info_box.set_margin_bottom(15)
+        info_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=1 if self.is_small_screen else 2)
+        info_box.set_margin_left(inner_margin)
+        info_box.set_margin_right(inner_margin)
+        info_box.set_margin_top(inner_margin)
+        info_box.set_margin_bottom(inner_margin)
 
-        info_title_box = Gtk.Box(
-            orientation=Gtk.Orientation.HORIZONTAL, spacing=8)
+        info_title_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=1 if self.is_small_screen else 2)
         info_title_box.set_halign(Gtk.Align.START)
 
-        hint_icon = self._gtk.Image(
-            "light_hint", self._gtk.content_width * 0.03, self._gtk.content_height * 0.03)
+        hint_icon_size = min(self._gtk.content_width, self._gtk.content_height) * (0.015 if self.is_small_screen else 0.025)
+        hint_icon = self._gtk.Image("light_hint", hint_icon_size, hint_icon_size)
         hint_icon.set_valign(Gtk.Align.START)
         info_title_box.pack_start(hint_icon, False, False, 0)
 
@@ -197,18 +243,15 @@ class Panel(ScreenPanel):
         info_title.set_halign(Gtk.Align.START)
         info_title_box.pack_start(info_title, False, False, 0)
 
-        info_text1 = Gtk.Label(
-            _("1. Keep filament dry to prevent print failures and nozzle clogs."))
+        info_text1 = Gtk.Label(_("1. Keep filament dry to prevent print failures and nozzle clogs."))
         info_text1.set_halign(Gtk.Align.START)
         info_text1.set_line_wrap(True)
 
-        info_text2 = Gtk.Label(
-            _("2. Dry filament periodically when humidity exceeds 50%."))
+        info_text2 = Gtk.Label(_("2. Dry filament periodically when humidity exceeds 50%."))
         info_text2.set_halign(Gtk.Align.START)
         info_text2.set_line_wrap(True)
 
-        info_text3 = Gtk.Label(
-            _("3. Always set the proper temperature for your filament!"))
+        info_text3 = Gtk.Label(_("3. Always set the proper temperature for your filament!"))
         info_text3.set_halign(Gtk.Align.START)
         info_text3.set_line_wrap(True)
 
@@ -218,22 +261,23 @@ class Panel(ScreenPanel):
         info_box.pack_start(info_text3, False, False, 0)
         info_frame.add(info_box)
 
+        img_width, img_height = self.get_image_size()
+        indicator_width, indicator_height = self.get_indicator_size()
+        icon_width, icon_height = self.get_icon_size()
+
         overlay_frame = Gtk.Frame()
         overlay_frame.set_vexpand(True)
-        overlay_frame.set_size_request(-1, 200)
 
         overlay = Gtk.Overlay()
 
-        self.background_image = self._gtk.Image(
-            "filament_chamber", self._gtk.content_width * 0.7, self._gtk.content_height * 0.5)
+        self.background_image = self._gtk.Image("filament_chamber", img_width, img_height)
         self.background_image.set_halign(Gtk.Align.CENTER)
         self.background_image.set_valign(Gtk.Align.CENTER)
-        self.background_image.set_hexpand(True)
-        self.background_image.set_vexpand(True)
+        self.background_image.set_hexpand(False)
+        self.background_image.set_vexpand(False)
 
-        self.temp_indicator = Gtk.Box(
-            orientation=Gtk.Orientation.VERTICAL, spacing=5)
-        self.temp_indicator.set_size_request(200, 200)
+        self.temp_indicator = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=5)
+        self.temp_indicator.set_size_request(indicator_width, indicator_height)
         self.temp_indicator.set_halign(Gtk.Align.START)
         self.temp_indicator.set_valign(Gtk.Align.START)
         self.temp_indicator.set_margin_top(5)
@@ -242,18 +286,17 @@ class Panel(ScreenPanel):
         indicator_overlay = Gtk.Overlay()
 
         circle_bg = Gtk.DrawingArea()
-        circle_bg.set_size_request(200, 200)
+        circle_bg.set_size_request(indicator_width, indicator_height)
         circle_bg.connect("draw", self.on_draw_circle_background)
 
-        content_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=8)
+        content_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=5)
         content_box.set_halign(Gtk.Align.CENTER)
         content_box.set_valign(Gtk.Align.CENTER)
 
-        self.thermometer_icon = self._gtk.Image("thermometer_cool", 80, 80)
+        self.thermometer_icon = self._gtk.Image("thermometer_cool", icon_width, icon_height)
 
         self.temp_display_label = Gtk.Label(f"{self.current_temp}°C")
-        self.temp_display_label.set_markup(
-            f"<span weight='bold' size='medium'>{self.current_temp}°C</span>")
+        self.temp_display_label.set_markup(f"<span weight='bold' size='medium'>{self.current_temp}°C</span>")
 
         content_box.pack_start(self.thermometer_icon, False, False, 0)
         content_box.pack_start(self.temp_display_label, False, False, 0)
@@ -268,10 +311,10 @@ class Panel(ScreenPanel):
 
         overlay_frame.add(overlay)
 
-        right_box.pack_start(info_frame, False, False, 0)
-        right_box.pack_start(overlay_frame, True, True, 0)
+        display_box.pack_start(info_frame, False, False, 0)
+        display_box.pack_start(overlay_frame, True, True, 0)
 
-        return right_box
+        return display_box
 
     def on_draw_circle_background(self, widget, cr):
         allocation = widget.get_allocation()
@@ -312,19 +355,18 @@ class Panel(ScreenPanel):
 
     def update_background_and_indicator(self):
         if hasattr(self, 'background_image') and hasattr(self, 'thermometer_icon'):
+            img_width, img_height = self.get_image_size()
+            icon_width, icon_height = self.get_icon_size()
+
             if self.target_temp == 0:
-                new_pixbuf = self._gtk.Image(
-                    "filament_chamber", self._gtk.content_width * 0.7, self._gtk.content_height * 0.5).get_pixbuf()
+                new_pixbuf = self._gtk.Image("filament_chamber", img_width, img_height).get_pixbuf()
                 self.background_image.set_from_pixbuf(new_pixbuf)
-                new_pixbuf = self._gtk.Image(
-                    "thermometer_cool", 80, 80).get_pixbuf()
+                new_pixbuf = self._gtk.Image("thermometer_cool", icon_width, icon_height).get_pixbuf()
                 self.thermometer_icon.set_from_pixbuf(new_pixbuf)
             else:
-                new_pixbuf = self._gtk.Image(
-                    "filament_chamber_heat", self._gtk.content_width * 0.7, self._gtk.content_height * 0.5).get_pixbuf()
+                new_pixbuf = self._gtk.Image("filament_chamber_heat", img_width, img_height).get_pixbuf()
                 self.background_image.set_from_pixbuf(new_pixbuf)
-                new_pixbuf = self._gtk.Image(
-                    "thermometer_heat", 80, 80).get_pixbuf()
+                new_pixbuf = self._gtk.Image("thermometer_heat", icon_width, icon_height).get_pixbuf()
                 self.thermometer_icon.set_from_pixbuf(new_pixbuf)
 
             self.temp_indicator.queue_draw()
@@ -343,10 +385,8 @@ class Panel(ScreenPanel):
         self.keypad_title.get_style_context().add_class("section-title")
         self.keypad_title.set_halign(Gtk.Align.CENTER)
 
-        self.temp_keypad = Keypad(
-            self._screen, self.on_temp_set, None, self.hide_keypad)
-        self.timer_keypad = TimerKeypad(
-            self._screen, self.on_timer_set, self.hide_keypad)
+        self.temp_keypad = Keypad(self._screen, self.on_temp_set, None, self.hide_keypad)
+        self.timer_keypad = TimerKeypad(self._screen, self.on_timer_set, self.hide_keypad)
 
         self.keypad_stack = Gtk.Stack()
         self.keypad_stack.add_named(self.temp_keypad, "temp")
@@ -358,25 +398,23 @@ class Panel(ScreenPanel):
         return keypad_box
 
     def on_temp_clicked(self, button):
-        logging.info(
-            f"Temperature button clicked, current: {self.current_temp}°C")
+        logging.info(f"Temperature button clicked, current: {self.current_temp}°C")
         self.keypad_title.set_text(_("Set Target Temp(°C)"))
         self.keypad_stack.set_visible_child_name("temp")
         self.temp_keypad.clear()
-        self.right_container.set_visible_child_name("keypad")
+        self.display_container.set_visible_child_name("keypad")
 
     def on_timer_clicked(self, button):
         self.keypad_title.set_text(_("Set Countdown (Hours)"))
         self.keypad_stack.set_visible_child_name("timer")
         self.timer_keypad.clear()
-        self.right_container.set_visible_child_name("keypad")
+        self.display_container.set_visible_child_name("keypad")
 
     def on_temp_set(self, temp):
         try:
             if "heater_filament_chamber" in self._printer.get_temp_devices():
                 max_temp = int(
-                    float(self._printer.get_config_section(
-                        "heater_filament_chamber")["max_temp"])
+                    float(self._printer.get_config_section("heater_filament_chamber")["max_temp"])
                 )
                 if temp > max_temp:
                     temp = max_temp
@@ -428,14 +466,12 @@ class Panel(ScreenPanel):
         self.hide_keypad()
 
     def hide_keypad(self, widget=None):
-        self.right_container.set_visible_child_name("default")
+        self.display_container.set_visible_child_name("default")
 
     def on_auto_close_toggled(self, switch, gparam):
         is_active = switch.get_active()
-        script = KlippyGcodes.set_save_variables(
-            "filament_chamber_auto_cool", is_active)
-        self._screen._send_action(
-            None, "printer.gcode.script", {"script": script})
+        script = KlippyGcodes.set_save_variables("filament_chamber_auto_cool", is_active)
+        self._screen._send_action(None, "printer.gcode.script", {"script": script})
         logging.info(f"Set filament_chamber_auto_cool: {is_active}")
 
     def process_update(self, action, data):
@@ -445,13 +481,11 @@ class Panel(ScreenPanel):
                 if "temperature" in temp_data:
                     self.current_temp = int(temp_data["temperature"])
                     if hasattr(self, 'current_temp_label'):
-                        self.current_temp_label.set_text(
-                            f"{self.current_temp}°C")
+                        self.current_temp_label.set_text(f"{self.current_temp}°C")
                 if "target" in temp_data:
                     self.target_temp = int(temp_data["target"])
                     if hasattr(self, 'target_temp_label'):
-                        self.target_temp_label.set_text(
-                            f"{self.target_temp}°C")
+                        self.target_temp_label.set_text(f"{self.target_temp}°C")
                     self.update_background_and_indicator()
 
                 if "auto_turnoff" in temp_data:
@@ -460,10 +494,8 @@ class Panel(ScreenPanel):
                         self.set_duration_seconds = 0
                         self.remaining_time_seconds = 0
                     else:
-                        self.set_duration_seconds = auto_turnoff.get(
-                            "set_duration", 0)
-                        self.remaining_time_seconds = auto_turnoff.get(
-                            "remaining_time", 0)
+                        self.set_duration_seconds = auto_turnoff.get("set_duration", 0)
+                        self.remaining_time_seconds = auto_turnoff.get("remaining_time", 0)
 
                     if hasattr(self, 'set_timer_label'):
                         self.set_timer_label.set_text(
