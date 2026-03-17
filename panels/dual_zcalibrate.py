@@ -2,8 +2,9 @@ from ks_includes.screen_panel import ScreenPanel
 from ks_includes.KlippyGcodes import KlippyGcodes
 from gi.repository import Gtk, GLib
 import logging
+from .offset_manage import CalibrationPanel
 
-class Panel(ScreenPanel):
+class Panel(CalibrationPanel):
     """Dual z calibration panel."""
 
     def __init__(self, screen, title, **kwargs):
@@ -127,7 +128,7 @@ class Panel(ScreenPanel):
         bottom_buttons_hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=10)
         bottom_buttons_hbox.set_halign(Gtk.Align.CENTER)
         bottom_buttons_hbox.pack_start(self._create_button(_("Exit"), "horizontal_togglebuttons_active", self.exit_calibration), False, False, 0)
-        bottom_buttons_hbox.pack_start(self._create_button(_("Start"), "horizontal_togglebuttons_active", self.start_calibration), False, False, 0)
+        bottom_buttons_hbox.pack_start(self._create_button(_("Start"), "horizontal_togglebuttons_active", self.manual_calibration), False, False, 0)
 
         right_vbox.pack_start(Gtk.Frame(), False, False, 0)
         right_vbox.pack_start(hint_box, False, False, 0)
@@ -235,6 +236,7 @@ class Panel(ScreenPanel):
         if self.is_turning:
             return
         self.is_turning = True
+        self.start_calibration()
         if "progress_stack" in self.widgets:
             self.widgets["progress_stack"].set_visible_child_name("left_probe")
         self.right_container.set_visible_child_name("right_progress")
@@ -242,7 +244,7 @@ class Panel(ScreenPanel):
         self.content.queue_draw()
         self._screen._ws.klippy.gcode_script("DUAL_Z_PROBE_CALIBRATE")
 
-    def start_calibration(self, widget):
+    def manual_calibration(self, widget):
         logging.info("dual Z offset calibration started")
         self._screen._ws.klippy.gcode_script("CLEAN_NOZZLE")
         self._start_calibration_state()
@@ -264,6 +266,7 @@ class Panel(ScreenPanel):
     
     def _countdown_finish(self):
         self.countdown_running = False
+        self.calibrating = False
         if self.countdown_timer_id:
             GLib.source_remove(self.countdown_timer_id)
             self.countdown_timer_id = None

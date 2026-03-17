@@ -9,7 +9,27 @@ from ks_includes.KlippyGtk import find_widget
 from ks_includes.KlippyGcodes import KlippyGcodes
 from ks_includes.align_camera import CameraController
 
-class Panel(ScreenPanel):
+class CalibrationPanel(ScreenPanel):
+    def __init__(self, screen, title, **kwargs):
+        super().__init__(screen, title, **kwargs)
+        self.calibrating = False
+    
+    def _update_calibration_state(self, state):
+        if self.calibrating == state:
+            return
+        self.calibrating = state
+        if hasattr(self._screen, '_cur_panels'):
+            current_panel = self._screen._cur_panels[-1]
+            if current_panel in ('xy_calibrate', 'dual_zcalibrate', 'offset_manage'):
+                self._screen.show_panel(current_panel, remove_current=True)
+    
+    def start_calibration(self):
+        self._update_calibration_state(True)
+    
+    def finish_calibration(self):
+        self._update_calibration_state(False)
+
+class Panel(CalibrationPanel):
     """Dual color calibration panel."""
     def __init__(self, screen, title, **kwargs):
         title = title or _("Dual Color Calibration")
@@ -346,6 +366,8 @@ class Panel(ScreenPanel):
             self._switch_to_print_test()
 
     def _switch_to_print_test(self):
+        self.print_test = False
+        self.finish_calibration()
         self.title_label.set_text(_("Print verification"))
         self.right_container.set_visible_child_name("print")
         self.left_container.set_visible_child_name("image")
@@ -355,6 +377,8 @@ class Panel(ScreenPanel):
         self.title_label.set_text(_("Dual Color Calibration"))
         self.right_container.set_visible_child_name("default")
         self.left_container.set_visible_child_name("camera")
+        if self.cam_box.get_window():
+            self.cam_controller.load_camera(self.cam_box)
     
     def on_jump_to_filament_settings(self, widget):
         self._screen.show_panel("extrude", remove_all=False, keep_stack=True)

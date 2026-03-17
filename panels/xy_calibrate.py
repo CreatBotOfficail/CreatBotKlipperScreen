@@ -6,8 +6,9 @@ from gi.repository import Gtk, Gdk, Pango, GLib
 from ks_includes.KlippyGcodes import KlippyGcodes
 from ks_includes.screen_panel import ScreenPanel
 from ks_includes.align_camera import CameraController
+from .offset_manage import CalibrationPanel
 
-class Panel(ScreenPanel):
+class Panel(CalibrationPanel):
     """Camera XY offset calibration panel."""
     def __init__(self, screen, title, **kwargs):
         title = title or _("XY Calibrate")
@@ -334,11 +335,7 @@ class Panel(ScreenPanel):
         self.widgets["btn_return"] = self._create_button(
             _("Return"), self.on_return_start
         )
-        self.widgets["btn_next"] = self._create_button(
-            _("Next"), self.on_next_calibrate
-        )
         box.pack_start(self.widgets["btn_return"], False, False, 0)
-        box.pack_start(self.widgets["btn_next"], False, False, 0)
         return box
 
     def _bottom_save_panel(self):
@@ -372,14 +369,11 @@ class Panel(ScreenPanel):
         self.widgets["btn_fail_return"] = self._create_button(
             _("Return"), self.on_return_start
         )
-        self.widgets["btn_fail"] = self._create_button(
-            _("Recalibrate"), self.on_next_calibrate
-        )
         box.pack_start(self.widgets["btn_fail_return"], False, False, 0)
-        box.pack_start(self.widgets["btn_fail"], False, False, 0)
         return box
 
     def on_start_calibrate(self, widget):
+        self.start_calibration()
         mode = self._screen.connecting_to_printer.split("-")[0]
         if mode == "F430NX":
             self.left_container.set_visible_child_name("tip")
@@ -393,14 +387,6 @@ class Panel(ScreenPanel):
             self.progress_update_count = 0
             self.bottom_container.set_visible_child_name("empty")
             self._screen._ws.klippy.gcode_script("KTAMV_CALIB_NOZZLE")
-
-    def on_next_calibrate(self, widget):
-        self.left_container.set_visible_child_name("default")
-        self.widgets["progress_data_in_progress"].set_text("")
-        self.widgets["progress_stack"].set_visible_child_name("in_progress")
-        self.right_container.set_visible_child_name("progress")
-        self.bottom_container.set_visible_child_name("empty")
-        self._screen._ws.klippy.gcode_script("KTAMV_CALIB_NOZZLE")
 
     def on_save_calibrate(self, widget):
         self._screen._ws.klippy.gcode_script("KTAMV_SAVE_OFFSET")
@@ -431,8 +417,10 @@ class Panel(ScreenPanel):
 
     def on_return_start(self, widget):
         self._return_default()
+        self._screen.show_panel("offset_manage", print_test=False, remove_current=True)
     
     def _return_default(self):
+        self.calibrating = False
         self.left_container.set_visible_child_name("default")
         self.right_container.set_visible_child_name("default")
         self.bottom_container.set_visible_child_name("start")
@@ -555,6 +543,7 @@ class Panel(ScreenPanel):
                 self.widgets["progress_stack"].set_visible_child_name("fail")
                 self.widgets["progress_data_fail"].set_text(calibration_status.get("step_description", "Calibration error"))
                 self.bottom_container.set_visible_child_name("fail")
+                self.finish_calibration()
             elif calibration_status.get("current_step") == "COMPLETE":
                 self.widgets["progress_stack"].set_visible_child_name("success")
                 self.bottom_container.set_visible_child_name("finish")
