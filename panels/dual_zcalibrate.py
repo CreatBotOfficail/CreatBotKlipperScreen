@@ -102,11 +102,9 @@ class Panel(CalibrationPanel):
         hbox.pack_start(title, False, False, 0)
         return hbox
 
-    def _create_button(self, label, style_class=None, callback=None):
+    def _create_button(self, label, callback=None):
         btn = Gtk.Button(label=label)
         btn.set_size_request(int(self._gtk.content_width * 0.18), int(self._gtk.content_height * 0.1))
-        if style_class:
-            btn.get_style_context().add_class(style_class)
         if callback:
             btn.connect("clicked", callback)
         return btn
@@ -127,8 +125,8 @@ class Panel(CalibrationPanel):
 
         bottom_buttons_hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=10)
         bottom_buttons_hbox.set_halign(Gtk.Align.CENTER)
-        bottom_buttons_hbox.pack_start(self._create_button(_("Exit"), "horizontal_togglebuttons_active", self.exit_calibration), False, False, 0)
-        bottom_buttons_hbox.pack_start(self._create_button(_("Start"), "horizontal_togglebuttons_active", self.manual_calibration), False, False, 0)
+        bottom_buttons_hbox.pack_start(self._create_button(_("Exit"), self.exit_calibration), False, False, 20)
+        bottom_buttons_hbox.pack_start(self._create_button(_("Start"), self.manual_calibration), False, False, 20)
 
         right_vbox.pack_start(Gtk.Frame(), False, False, 0)
         right_vbox.pack_start(hint_box, False, False, 0)

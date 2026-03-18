@@ -50,7 +50,7 @@ class Panel(ScreenPanel):
     def _create_button(self, label, icon, color, callback, **kwargs):
         """Create a button with consistent size"""
         btn = self._gtk.Button(icon, label, color)
-        btn.set_size_request(*self._scaled(0.2, 0.08))
+        btn.set_size_request(*self._scaled(0.18, 0.06))
         btn.connect("clicked", callback)
         for key, val in kwargs.items():
             if hasattr(btn, f"set_{key}"):
@@ -134,20 +134,19 @@ class Panel(ScreenPanel):
         self.start_btn = self._create_button(_("Calibration datum"), None, f"color3", self.on_start_calibrate)
         button_text = _("Cancel") if self.finish_action is None else _("Skip check")
         self.check_or_cancel_btn = self._create_button(button_text, None, f"color1", self.skip_check)
-        self.check_bottom_box.pack_start(self.start_btn, False, False, 10)
-        self.check_bottom_box.pack_start(self.check_or_cancel_btn, False, False, 10)
+        self.check_bottom_box.pack_start(self.start_btn, False, False, 5)
+        self.check_bottom_box.pack_start(self.check_or_cancel_btn, False, False, 5)
 
         self.calibrate_bottom_box = Gtk.Box(
             orientation=Gtk.Orientation.HORIZONTAL,
-            spacing=10,
-            halign=Gtk.Align.FILL,
-            valign=Gtk.Align.START,
-            margin_bottom=10
+            spacing=5,
+            halign=Gtk.Align.CENTER,
+            valign=Gtk.Align.START
         )
 
         calibrate_left_box = Gtk.Box(
             orientation=Gtk.Orientation.VERTICAL,
-            spacing=10,
+            spacing=5,
             halign=Gtk.Align.CENTER,
             valign=Gtk.Align.START
         )
