@@ -67,9 +67,9 @@ class Panel(ScreenPanel):
             self._screen.show_panel("main_menu", remove_all=True, items=self._config.get_menu_items("__main"))
 
             try:
-                from machine_config import MachineConfig
-                cfg = MachineConfig()
-                cfg.delete("first_boot")
+                cfg = self._screen.machine_cfg
+                if cfg is not None:
+                    cfg.delete("first_boot")
             except Exception as e:
                 logging.info(f"Error deleting first_boot: {e}")
                 self._config.set("main", "onboarding", "False")

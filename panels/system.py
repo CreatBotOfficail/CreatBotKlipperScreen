@@ -96,7 +96,14 @@ class Panel(ScreenPanel):
     def machine_info(self):
         self.add_label_to_grid(self.prettify("device"), 0, bold=True)
         self.current_row -= 1
-        self.add_label_to_grid("Manufacturer: CreatBot", 1)
+        oem_name = ""
+        if self._screen.machine_cfg is not None:
+            try:
+                oem_name = self._screen.machine_cfg.get("oem_name", "")
+            except Exception:
+                pass
+        if not oem_name:
+            self.add_label_to_grid("Manufacturer: CreatBot", 1)
         event_box = Gtk.EventBox()
         event_box.connect("button-release-event", self.on_model_click)
         mode = self._screen.connecting_to_printer.split("-")[0]

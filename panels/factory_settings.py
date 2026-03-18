@@ -13,6 +13,7 @@ from gi.repository import GLib, Gtk
 from ks_includes.KlippyFactory import KlippyFactory
 from ks_includes.ModelConfig import ModelConfig
 from ks_includes.screen_panel import ScreenPanel
+from ks_includes.functions import scan_usb_for_oem
 
 
 class Panel(ScreenPanel):
@@ -50,6 +51,14 @@ class Panel(ScreenPanel):
                 }
             },
             {
+                "Set OEM Name": {
+                    "section": "main",
+                    "name": "设置 OEM",
+                    "type": "button",
+                    "callback": self.set_oem_name,
+                }
+            },
+            {
                 "version_info": {
                     "section": "main",
                     "name": _("Version Selection"),
@@ -80,6 +89,7 @@ class Panel(ScreenPanel):
         self.settings = {}
         self.select_model = False
         self.select_model_version = False
+        self.select_oem_name = False
         self.labels["setting_menu"] = self._gtk.ScrolledWindow()
         self.labels["settings"] = Gtk.Grid()
         self.labels["setting_menu"].add(self.labels["settings"])
@@ -95,6 +105,9 @@ class Panel(ScreenPanel):
         self.content.show_all()
 
     def back(self):
+        if self.select_oem_name:
+            self.hide_select_oem_name()
+            return True
         if self.select_model_version:
             self.hide_select_model_version()
             return True
@@ -176,8 +189,49 @@ class Panel(ScreenPanel):
             self.content.show_all()
         self.select_model = False
 
+    def hide_select_oem_name(self):
+        for child in self.content.get_children():
+            self.content.remove(child)
+        if "setting_menu" in self.labels:
+            self.content.add(self.labels["setting_menu"])
+            self.content.show_all()
+        self.select_oem_name = False
+
     def license_key(self, *args):
         self._screen.show_panel("license", title="license", remove_all=False, full=True)
+
+    def set_oem_name(self, *args):
+        self.oem_items = {
+            "creatbot": "",
+            "general": ""
+        }
+        usb_items = scan_usb_for_oem()
+        self.oem_items.update(usb_items)
+        oem_names = list(self.oem_items.keys())
+        self.create_list_menu(oem_names, self._on_oem_name_selected)
+        for child in self.content.get_children():
+            self.content.remove(child)
+        self.content.add(self.labels["model_menu"])
+        self.content.show_all()
+        self.select_oem_name = True
+
+    def _on_oem_name_selected(self, widget, oem_name):
+        folder_path = self.oem_items.get(oem_name, "")
+        cfg = self._screen.machine_cfg
+        if cfg is None:
+            logging.error("MachineConfig is not available")
+            return
+        try:
+            if oem_name == "creatbot":
+                cfg.set_oem_name("", "")
+            elif oem_name == "general":
+                cfg.set_oem_name(oem_name, "")
+            else:
+                cfg.set_oem_name(oem_name, folder_path)
+            logging.info(f"OEM name set to: {oem_name}, path: {folder_path}")
+        except Exception as e:
+            logging.error(f"Error setting OEM name: {e}", exc_info=True)
+        self._screen._send_action(None, "machine.services.restart", {"service": "KlipperScreen"})
 
     def reset_factory_settings(self, *args):
         buttons = [
@@ -230,8 +284,9 @@ class Panel(ScreenPanel):
 
     def get_screen_rotation(self):
         try:
-            from machine_config import MachineConfig
-            cfg = MachineConfig()
+            cfg = self._screen.machine_cfg
+            if cfg is None:
+                return "0"
             rotation = cfg.get("screen_rotation", "0")
             return str(rotation)
         except Exception as e:
@@ -240,8 +295,9 @@ class Panel(ScreenPanel):
 
     def set_screen_rotation(self, val):
         try:
-            from machine_config import MachineConfig
-            cfg = MachineConfig()
+            cfg = self._screen.machine_cfg
+            if cfg is None:
+                raise Exception("MachineConfig not available")
             cfg.set_screen_rotation(int(val))
             logging.info(f"Screen rotation set to: {val}")
             self._screen._send_action(None, "machine.services.restart", {"service": "KlipperScreen"})

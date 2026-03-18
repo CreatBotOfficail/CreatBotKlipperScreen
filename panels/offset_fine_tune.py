@@ -27,8 +27,21 @@ class Panel(ScreenPanel):
                     self.distance = self.distances[-2]
 
         self.labels["qr_code_box"] = Gtk.Grid(row_homogeneous=True, column_homogeneous=True)
-        qr_code = self._gtk.Image("wiki_qr_code", self._gtk.content_width * 0.46, self._gtk.content_height * 0.46)
-        qr_code_url = Gtk.Label(label="https://www.creatbot.com/en/faqs.html")
+
+        oem_name = ""
+        if self._screen.machine_cfg is not None:
+            try:
+                oem_name = self._screen.machine_cfg.get("oem_name", "")
+            except Exception:
+                pass
+
+        if oem_name:
+            qr_code = self._gtk.Image("wiki_qr_code_replace", self._gtk.content_width * 0.46, self._gtk.content_height * 0.46)
+            qr_code_url = Gtk.Label(label="")
+        else:
+            qr_code = self._gtk.Image("wiki_qr_code", self._gtk.content_width * 0.46, self._gtk.content_height * 0.46)
+            qr_code_url = Gtk.Label(label="https://www.creatbot.com/en/faqs.html")
+
         self.labels["qr_code_box"].attach(qr_code, 0, 0, 1, 3)
         self.labels["qr_code_box"].attach(qr_code_url, 0, 2, 1, 1)
 

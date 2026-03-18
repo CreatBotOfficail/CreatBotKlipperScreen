@@ -46,6 +46,8 @@ class KlippyGtk:
         self.button_image_scale = 1.38
         self.bsidescale = .65  # Buttons with image at the side
         self.dialog_buttons_height = round(self.height / 5)
+        self.oem_logo_path = None
+        self._setup_oem_logo()
 
         if self.font_size_type == "max":
             self.font_size = self.font_size * 1.06
@@ -88,6 +90,19 @@ class KlippyGtk:
                 rgb = [int(self.color_list[key]['base'][i:i + 2], 16) for i in range(0, 6, 2)]
                 self.color_list[key]['rgb'] = rgb
 
+    def _setup_oem_logo(self):
+        try:
+            cfg = self.screen.machine_cfg
+            if cfg is not None:
+                oem_name = cfg.get("oem_name", "")
+                if oem_name:
+                    oem_logo = f"/oem/res/logo/{oem_name}.svg"
+                    if os.path.exists(oem_logo):
+                        self.oem_logo_path = oem_logo
+                        logging.info(f"logo set to: {oem_logo}")
+        except Exception as e:
+            logging.debug(f"Failed to setup logo: {e}")
+
     def get_temp_color(self, device):
         # logging.debug("Color list %s" % self.color_list)
         if device not in self.color_list:
@@ -126,6 +141,10 @@ class KlippyGtk:
     def PixbufFromIcon(self, filename, width=None, height=None):
         width = width if width is not None else self.img_width
         height = height if height is not None else self.img_height
+        if filename == "klipper" and self.oem_logo_path:
+            pixbuf = self.PixbufFromFile(self.oem_logo_path, int(width), int(height))
+            if pixbuf is not None:
+                return pixbuf
         filename = os.path.join(self.themedir, filename)
         for ext in ["svg", "png"]:
             file = f"{filename}.{ext}"

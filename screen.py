@@ -97,6 +97,17 @@ class KlipperScreen(Gtk.Window):
 
         self._config = KlipperScreenConfig(configfile, self)
         self.lang_ltr = set_text_direction(self._config.get_main_config().get("language", None))
+
+        try:
+            from machine_config import MachineConfig
+            self.machine_cfg = MachineConfig()
+            logging.info("MachineConfig initialized successfully")
+        except ImportError as e:
+            logging.warning(f"MachineConfig module not found: {e}")
+            self.machine_cfg = None
+        except Exception as e:
+            logging.error(f"MachineConfig initialization failed: {e}", exc_info=True)
+            self.machine_cfg = None
         self.env = Environment(extensions=["jinja2.ext.i18n"], autoescape=True)
         self.env.install_gettext_translations(self._config.get_lang())
 
@@ -814,12 +825,11 @@ class KlipperScreen(Gtk.Window):
             return
         self.files.refresh_files()
         guided = self._config.get_main_config().get("onboarding", False)
-        try:
-            from machine_config import MachineConfig
-            cfg = MachineConfig()
-            guided = cfg.get("first_boot", False)
-        except Exception as e:
-            logging.info(f"Error loading MachineConfig: {e}")
+        if self.machine_cfg is not None:
+            try:
+                guided = self.machine_cfg.get("first_boot", False)
+            except Exception as e:
+                logging.info(f"Error reading MachineConfig: {e}")
         if guided == 'True':
             self.show_onboarding()
         else:

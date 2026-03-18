@@ -187,3 +187,33 @@ def setup_logging(log_file):
     logging.captureWarnings(True)
 
     return listener, fh
+
+
+def scan_usb_for_oem(base_path="/userdata/gcodes"):
+
+    valid_items = {}
+    if not os.path.exists(base_path):
+        logging.warning(f"Base path does not exist: {base_path}")
+        return valid_items
+    if not os.path.isdir(base_path):
+        logging.warning(f"Base path is not a directory: {base_path}")
+        return valid_items
+    try:
+        for usb_name in os.listdir(base_path):
+            if not usb_name.startswith("sd"):
+                continue
+            usb_path = os.path.join(base_path, usb_name)
+            if not os.path.isdir(usb_path):
+                continue
+            for folder_name in os.listdir(usb_path):
+                folder_path = os.path.join(usb_path, folder_name)
+                if not os.path.isdir(folder_path):
+                    continue
+                bmp_file = os.path.join(folder_path, f"{folder_name}.bmp")
+                svg_file = os.path.join(folder_path, f"{folder_name}.svg")
+                if os.path.exists(bmp_file) and os.path.exists(svg_file):
+                    valid_items[folder_name] = folder_path
+                    logging.info(f"Found valid OEM folder: {folder_name} at {folder_path}")
+    except Exception as e:
+        logging.warning(f"Error scanning USB drives at {base_path}: {e}")
+    return valid_items
