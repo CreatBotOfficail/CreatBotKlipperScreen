@@ -27,14 +27,6 @@ class Panel(CalibrationPanel):
 
         self._initialize_ui()
 
-    def _scaled(self, w_rate: float, h_rate=None):
-        if h_rate is None:
-            h_rate = w_rate
-        try:
-            return int(self._gtk.content_width * w_rate), int(self._gtk.content_height * h_rate)
-        except Exception:
-            return 100, 100
-
     def _initialize_ui(self):
         title_label = Gtk.Label()
         title_label.set_markup(f"<big>{_('Z calibration')}</big>")
@@ -75,15 +67,15 @@ class Panel(CalibrationPanel):
         self.main_box.set_margin_right(10)
         self.main_box.set_margin_bottom(10)
         self.main_box.pack_start(title_label, False, False, 0)
-        
+
         self.top_hbox.set_vexpand(True)
         self.main_box.pack_start(self.top_hbox, True, True, 0)
-        
+
         self.bottom_container.set_vexpand(False)
         self.main_box.pack_start(self.bottom_container, False, False, 0)
 
         self.content.add(self.main_box)
-        
+
         if self.auto_action == "auto_start":
             self.right_container.set_visible_child_name("right_progress")
             self._start_calibration_state()
@@ -97,7 +89,7 @@ class Panel(CalibrationPanel):
         title.set_line_wrap(True)
         title.set_max_width_chars(28)
         title.set_margin_bottom(20)
-        hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=15)
+        hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=5)
         hbox.pack_start(icon, False, False, 0)
         hbox.pack_start(title, False, False, 0)
         return hbox
@@ -169,17 +161,16 @@ class Panel(CalibrationPanel):
             base_key = offset_key.split('_')[1]
             self.widgets[f"{base_key}_label"] = Gtk.Label(label=f"{label_text}:")
             self.widgets[offset_key] = Gtk.Label(label=value_text)
-            
             event_box = Gtk.EventBox()
             event_box.add(self.widgets[offset_key])
             event_box.connect("button-release-event", self.change_offset, label_text, self.widgets[offset_key])
-            
+
             hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=15)
             hbox.set_halign(Gtk.Align.CENTER)
             hbox.set_margin_top(15)
             hbox.pack_start(self.widgets[f"{base_key}_label"], False, False, 0)
             hbox.pack_start(event_box, False, False, 0)
-            
+
             data_box.pack_start(hbox, False, False, 0)
         return data_box
 
@@ -192,7 +183,7 @@ class Panel(CalibrationPanel):
             vbox.set_halign(Gtk.Align.CENTER)
             vbox.set_margin_top(30)
             vbox.pack_start(self._create_icon_title_box(icon_name, title_text), False, False, 0)
-            
+
             desc_label = Gtk.Label(desc_text)
             desc_label.set_name(f"desc_label_{stack_name}")
             desc_label.set_halign(Gtk.Align.START)
@@ -201,7 +192,7 @@ class Panel(CalibrationPanel):
             desc_label.set_margin_top(20)
             self.widgets[f"desc_label_{stack_name}"] = desc_label
             vbox.pack_start(desc_label, False, False, 0)
-            
+
             self.widgets["progress_stack"].add_named(vbox, stack_name)
             return vbox
 
@@ -214,7 +205,7 @@ class Panel(CalibrationPanel):
             return vbox
 
         common_hint = _("Obtain the nozzle accurate height through multiple precision detections.")
-        
+        self._create_cleaning_stage(self.widgets["progress_stack"])
         _create_progress_stage([("light_hint", common_hint), ("run-waiting", _("left nozzle probing ..."))], "left_probe")
         _create_progress_stage([("light_hint", common_hint), ("run-finished", _("left nozzle probe completed")), ("run-waiting", _("right nozzle probing ..."))], "right_probe")
         _create_basic_stage("result-good", _("<span color='#0066CC' font-size='x-large'>Probe result: Excellent</span>"), _("Everything is ready! Click [Save] to apply nozzle offset.\n\n"), "report_good")
@@ -227,16 +218,16 @@ class Panel(CalibrationPanel):
         right_progress_panel.set_margin_left(10)
         right_progress_panel.set_margin_top(10)
         self.widgets["progress_stack"].set_visible_child_name("left_probe")
-        
+
         return right_progress_panel
 
-    def _start_calibration_state(self):
+    def _start_calibration_state(self, initial_state="left_probe"):
         if self.is_turning:
             return
         self.is_turning = True
         self.start_calibration()
         if "progress_stack" in self.widgets:
-            self.widgets["progress_stack"].set_visible_child_name("left_probe")
+            self.widgets["progress_stack"].set_visible_child_name(initial_state)
         self.right_container.set_visible_child_name("right_progress")
         self.right_container.queue_draw()
         self.content.queue_draw()
@@ -245,13 +236,12 @@ class Panel(CalibrationPanel):
     def manual_calibration(self, widget):
         logging.info("dual Z offset calibration started")
         self._screen._ws.klippy.gcode_script("CLEAN_NOZZLE")
-        self._start_calibration_state()
+        self._start_calibration_state(initial_state="cleaning")
 
     def exit_calibration(self, widget=None):
-        logging.info("Exit the calibration process of dual Z offset")
-        self._screen._menu_go_back()
         self.right_container.set_visible_child_name("right_default")
         self.bottom_container.set_visible_child_name("empty")
+        self._screen.show_panel("offset_manage", print_test=False, remove_current=True)
 
     def _countdown_timer(self):
         self.countdown -= 1
@@ -261,7 +251,7 @@ class Panel(CalibrationPanel):
         else:
             self._countdown_finish()
             return False
-    
+
     def _countdown_finish(self):
         self.countdown_running = False
         self.calibrating = False
@@ -284,66 +274,82 @@ class Panel(CalibrationPanel):
 
     def process_update(self, action, data):
         if action == "notify_status_update":
-            if ("toolhead" in data and "extruder" in data["toolhead"] and data["toolhead"]["extruder"] != self.current_extruder):
-                self.current_extruder = data["toolhead"]["extruder"]
-                if self.is_turning and "progress_stack" in self.widgets:
-                    if self.current_extruder == "extruder1":
+            self._handle_status_update(data)
+        elif action == "notify_gcode_response":
+            self._handle_gcode_response(data)
+
+    def _handle_status_update(self, data):
+        if self.is_turning and "progress_stack" in self.widgets:
+            current_stage = self.widgets["progress_stack"].get_visible_child_name()
+            if current_stage == "cleaning":
+                self._update_cleaning_display()
+            toolhead = data.get("toolhead", {})
+            new_extruder = toolhead.get("extruder")
+            if new_extruder and new_extruder != self.current_extruder:
+                self.current_extruder = new_extruder
+                if current_stage not in ["cleaning"]:
+                    if new_extruder == "extruder1":
                         self.widgets["left_image"].set_visible_child_name("right_nozzle")
                         self.widgets["progress_stack"].set_visible_child_name("right_probe")
                     else:
                         self.widgets["left_image"].set_visible_child_name("left_nozzle")
                         self.widgets["progress_stack"].set_visible_child_name("left_probe")
 
-            if "save_variables" in data and "variables" in data["save_variables"]:
-                variables = data["save_variables"]["variables"]
-                for var in ["nozzle_z_offset_val", "nozzle_z_offset_compensation"]:
-                    if var in variables:
-                        key = var.split('_z_')[1]
-                        logging.info(f"{key} update {var} to {variables[var]}")
-                        if key in self.widgets:
-                            self.widgets[key].set_text(f"{variables[var]}")
+        variables = data.get("save_variables", {}).get("variables")
+        if variables:
+            for var in ["nozzle_z_offset_val", "nozzle_z_offset_compensation"]:
+                if var in variables:
+                    key = var.split('_z_')[1]
+                    logging.info(f"{key} update {var} to {variables[var]}")
+                    if key in self.widgets:
+                        self.widgets[key].set_text(f"{variables[var]}")
 
-        elif action == "notify_gcode_response" and "final dual-nozzle offset" in data.lower():
-            self.is_turning = False
-            lines = []
-            for line in data.splitlines():
-                stripped_line = line.strip()
-                if stripped_line.startswith("//"):
-                    stripped_line = stripped_line[2:].strip()
-                if stripped_line:
-                    lines.append(stripped_line)
-            
-            if len(lines) >= 4:
-                lines.insert(3, "")
-            display_text = "\n\n".join(lines)
+    def _handle_gcode_response(self, data):
+        lower_data = data.lower()
+        if "all nozzles cleaning completed" in lower_data:
+            if self.is_turning:
+                self._handle_cleaning_completion()
+            return
+        if "final dual-nozzle offset" not in lower_data:
+            return
+        self.is_turning = False
+        lines = []
+        for line in data.splitlines():
+            stripped = line.strip()
+            if stripped.startswith("//"):
+                stripped = stripped[2:].strip()
+            if stripped:
+                lines.append(stripped)
+        if len(lines) >= 4:
+            lines.insert(3, "")
+        display_text = "\n\n".join(lines)
+        if "out of range" in lower_data:
+            if "desc_label_report_bed" in self.widgets:
+                self.widgets["desc_label_report_bed"].set_text(display_text)
+            self.bottom_container.set_visible_child_name("save")
+            self.widgets["progress_stack"].set_visible_child_name("report_bed")
+        else:
+            if "desc_label_report_good" in self.widgets:
+                self.widgets["desc_label_report_good"].set_text(display_text)
+            final_offset_line = next(
+                (line for line in lines if "final dual-nozzle offset" in line.lower()),
+                None
+            )
+            if final_offset_line and ": " in final_offset_line:
+                try:
+                    self.finish_offset = round(float(final_offset_line.split(": ")[1].strip()), 3)
+                except (IndexError, ValueError):
+                    logging.error(f"Failed to parse final offset from line: {final_offset_line}")
 
-            if "out of range" in data.lower():
-                if "desc_label_report_bed" in self.widgets:
-                    self.widgets["desc_label_report_bed"].set_text(display_text)
-                self.bottom_container.set_visible_child_name("save")
-                self.widgets["progress_stack"].set_visible_child_name("report_bed")
-            else:
-                if "desc_label_report_good" in self.widgets:
-                    self.widgets["desc_label_report_good"].set_text(display_text)
-                
-                final_offset_line = next((line for line in lines if "final dual-nozzle offset" in line.lower()), None)
-                if final_offset_line and ": " in final_offset_line:
-                    try:
-                        self.finish_offset = round(float(final_offset_line.split(": ")[1].strip()), 3)
-                    except (IndexError, ValueError):
-                        logging.error(f"Failed to parse final offset from line: {final_offset_line}")
-                
-                self.widgets["progress_stack"].set_visible_child_name("report_good")
-                self.bottom_container.set_visible_child_name("save")
-                
-                if self.auto_action != "sample":
-                    self.countdown = 3
-                    self.countdown_running = True
-                    self.widgets["btn_recalibrate"].set_label(_("Next ({})").format(self.countdown))
-                    self.widgets["btn_recalibrate"].set_sensitive(True)
-
-                    self.set_nozzle_offset("nozzle_z_offset_val", self.finish_offset)
-                    self.countdown_timer_id = GLib.timeout_add_seconds(1, self._countdown_timer)
+            self.widgets["progress_stack"].set_visible_child_name("report_good")
+            self.bottom_container.set_visible_child_name("save")
+            if self.auto_action != "sample":
+                self.countdown = 3
+                self.countdown_running = True
+                self.widgets["btn_recalibrate"].set_label(_("Next ({})").format(self.countdown))
+                self.widgets["btn_recalibrate"].set_sensitive(True)
+                self.set_nozzle_offset("nozzle_z_offset_val", self.finish_offset)
+                self.countdown_timer_id = GLib.timeout_add_seconds(1, self._countdown_timer)
 
     def change_offset(self, widget, event, title_label, offset_label):
         if self.is_turning:
@@ -353,31 +359,31 @@ class Panel(CalibrationPanel):
     def _create_input_box(self, title_label, offset_label):
         current_val = offset_label.get_text()
         title_markup = f"{title_label}<b>{_('Current value:')}</b>{current_val}"
-        
+
         for child in self.content.get_children():
             self.content.remove(child)
-            
+
         lbl = Gtk.Label(label=title_markup, halign=Gtk.Align.START, hexpand=False, use_markup=True)
-        
+
         self.labels["entry"] = Gtk.Entry(hexpand=True)
         self.labels["entry"].connect("focus-in-event", self._screen.show_keyboard)
-        
+
         save_btn = self._gtk.Button("complete", _("Save"), "color3")
         save_btn.set_hexpand(False)
         save_btn.connect("clicked", self.store_value, offset_label)
-        
+
         entry_box = Gtk.Box(spacing=5)
         entry_box.pack_start(self.labels["entry"], True, True, 0)
         entry_box.pack_start(save_btn, False, False, 0)
-        
+
         input_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=5, hexpand=True, vexpand=True, valign=Gtk.Align.CENTER)
         input_box.pack_start(lbl, True, True, 5)
         input_box.pack_start(entry_box, True, True, 5)
-        
+
         self.content.add(input_box)
         self.labels["entry"].grab_focus_without_selecting()
         self.showing_input_box = True
-                   
+
     def store_value(self, widget, offset_label):
         val_text = self.labels["entry"].get_text()
         try:

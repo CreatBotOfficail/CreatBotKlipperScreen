@@ -13,7 +13,8 @@ class CalibrationPanel(ScreenPanel):
     def __init__(self, screen, title, **kwargs):
         super().__init__(screen, title, **kwargs)
         self.calibrating = False
-    
+        self.is_turning = False
+
     def _update_calibration_state(self, state):
         if self.calibrating == state:
             return
@@ -22,12 +23,130 @@ class CalibrationPanel(ScreenPanel):
             current_panel = self._screen._cur_panels[-1]
             if current_panel in ('xy_calibrate', 'dual_zcalibrate', 'offset_manage'):
                 self._screen.show_panel(current_panel, remove_current=True)
-    
+
     def start_calibration(self):
         self._update_calibration_state(True)
-    
+
     def finish_calibration(self):
         self._update_calibration_state(False)
+
+    def _create_cleaning_stage(self, stack):
+        vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=15)
+        vbox.set_halign(Gtk.Align.CENTER)
+        vbox.set_margin_top(30)
+        vbox.pack_start(self._create_icon_title_box("run-waiting", _("Heating and cleaning nozzles before calibration")), False, False, 0)
+
+        cleaning_step_label = Gtk.Label(_("Preparing to clean nozzles"))
+        cleaning_step_label.set_name("cleaning_step_label")
+        cleaning_step_label.set_halign(Gtk.Align.CENTER)
+        cleaning_step_label.set_line_wrap(True)
+        cleaning_step_label.set_max_width_chars(35)
+        cleaning_step_label.set_margin_top(10)
+        self.widgets["cleaning_step_label"] = cleaning_step_label
+        vbox.pack_start(cleaning_step_label, False, False, 0)
+
+        temp_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=30)
+        temp_box.set_halign(Gtk.Align.CENTER)
+        self.widgets["cleaning_temp_box"] = temp_box
+        vbox.pack_start(temp_box, False, False, 20)
+
+        stack.add_named(vbox, "cleaning")
+        return vbox
+
+    def _update_cleaning_display(self):
+        if "cleaning_temp_box" not in self.widgets:
+            return
+        temp_box = self.widgets["cleaning_temp_box"]
+        for child in temp_box.get_children():
+            temp_box.remove(child)
+        for i, extruder in enumerate(self._printer.get_tools()):
+            temp = round(self._printer.get_stat(extruder, "temperature"))
+            target = self._printer.get_stat(extruder, "target")
+            temp_target = round(target) if target else 0
+            extruder_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=2)
+            image = self._gtk.Image(f"extruder-{i}", *self._scaled(0.1, 0.1))
+            extruder_box.pack_start(image, False, False, 10)
+            temp_label = Gtk.Label(label=f"{temp}°/{temp_target}°")
+            temp_label.set_halign(Gtk.Align.CENTER)
+            extruder_box.pack_start(temp_label, False, False, 10)
+            temp_box.pack_start(extruder_box, False, False, 0)
+        temp_box.show_all()
+
+        if "cleaning_step_label" in self.widgets:
+            all_extruders_have_target = True
+            extruders = self._printer.get_tools()
+            for extruder in extruders:
+                target = self._printer.get_stat(extruder, "target")
+                if not target or target == 0:
+                    all_extruders_have_target = False
+                    break
+
+            current_extruder = self._printer.get_stat("toolhead", "extruder")
+            if all_extruders_have_target and len(extruders) >= 2:
+                display_text = _("Waiting for nozzle clean temperature")
+            else:
+                if current_extruder == "extruder":
+                    display_text = _("Cleaning left nozzle")
+                elif current_extruder == "extruder1":
+                    display_text = _("Cleaning right nozzle")
+                else:
+                    display_text = _("Cleaning nozzles")
+            self.widgets["cleaning_step_label"].set_text(display_text)
+
+    def _handle_cleaning_completion(self, stack_name="left_probe"):
+        if "progress_stack" in self.widgets:
+            self.widgets["progress_stack"].set_visible_child_name(stack_name)
+            self.current_extruder = "extruder0"
+            if "left_image" in self.widgets:
+                self.widgets["left_image"].set_visible_child_name("left_nozzle")
+
+    def _create_icon_title_box(self, icon_name, title_text):
+        title = Gtk.Label()
+        title.set_markup(title_text)
+        title.set_line_wrap(True)
+        title.set_max_width_chars(28)
+        title.set_margin_bottom(20)
+        hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=5)
+        icon = self._gtk.Image(icon_name, *self._scaled(0.1, 0.1))
+        hbox.pack_start(icon, False, False, 0)
+        hbox.pack_start(title, False, False, 0)
+        return hbox
+
+    def _scaled(self, w_rate: float, h_rate=None):
+        h_rate = h_rate or w_rate
+        try:
+            return (int(self._gtk.content_width * w_rate),
+                    int(self._gtk.content_height * h_rate))
+        except Exception:
+            return (int(400 * w_rate), int(300 * h_rate))
+
+    def _create_stack(self, panels_config):
+        stack = Gtk.Stack()
+        for name, create_func in panels_config:
+            stack.add_named(create_func(), name)
+        stack.set_visible_child_name(panels_config[0][0])
+        return stack
+
+    def _create_label(self, text, markup=False, **kwargs):
+        label = Gtk.Label()
+        if markup:
+            label.set_markup(text)
+        else:
+            label.set_text(text)
+        for key, val in kwargs.items():
+            if hasattr(label, f"set_{key}"):
+                getattr(label, f"set_{key}")(val)
+        return label
+
+    def _create_button(self, label, callback=None, icon=None, color=None, **kwargs):
+        btn = self._gtk.Button(icon, label, color)
+        btn.set_size_request(*self._scaled(0.16, 0.1))
+        if callback:
+            btn.connect("clicked", callback)
+        for key, val in kwargs.items():
+            if hasattr(btn, f"set_{key}"):
+                getattr(btn, f"set_{key}")(val)
+        return btn
 
 class Panel(CalibrationPanel):
     """Dual color calibration panel."""
@@ -51,42 +170,7 @@ class Panel(CalibrationPanel):
 
         self.cam_controller.init_cam_tip()
         GLib.timeout_add_seconds(1, self.cam_controller.load_camera)
-    
-    def _scaled(self, w_rate: float, h_rate=None):
-        h_rate = h_rate or w_rate
-        try:
-            return (int(self._gtk.content_width * w_rate),
-                    int(self._gtk.content_height * h_rate))
-        except Exception:
-            return (100, 100)
-    
-    def _create_label(self, text, markup=False, **kwargs):
-        label = Gtk.Label()
-        if markup:
-            label.set_markup(text)
-        else:
-            label.set_text(text)
-        for key, val in kwargs.items():
-            if hasattr(label, f"set_{key}"):
-                getattr(label, f"set_{key}")(val)
-        return label
-    
-    def _create_button(self, label, icon, color, callback, **kwargs):
-        btn = self._gtk.Button(icon, label, color)
-        btn.set_size_request(*self._scaled(0.16, 0.06))
-        btn.connect("clicked", callback)
-        for key, val in kwargs.items():
-            if hasattr(btn, f"set_{key}"):
-                getattr(btn, f"set_{key}")(val)
-        return btn
-    
-    def _create_stack(self, panels_config):
-        stack = Gtk.Stack()
-        for name, create_func in panels_config:
-            stack.add_named(create_func(), name)
-        stack.set_visible_child_name(panels_config[0][0])
-        return stack
-    
+
     def _create_toggle_switch(self, label, active=False, callback=None):
         content_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=10, margin=0)
         content_box.set_hexpand(True)
@@ -103,7 +187,7 @@ class Panel(CalibrationPanel):
         if callback:
             toggle_switch.connect("notify::active", callback)
         content_box.pack_end(toggle_switch, False, False, 20)
-        
+
         return content_box
 
     def _init_containers(self):
@@ -156,22 +240,19 @@ class Panel(CalibrationPanel):
             valign=Gtk.Align.START,
             halign=Gtk.Align.CENTER
         )
-        
-        # Add instructions with small font
+
         instructions_box = Gtk.Box(
             orientation=Gtk.Orientation.VERTICAL,
             spacing=5,
             halign=Gtk.Align.START
         )
-        
-        # Add instruction items using the same format as align_datum.py
+
         self._add_instruction_item(instructions_box, _("1. Set nozzle and bed temperature before printing validation."))
         self._add_instruction_item(instructions_box, _("2. Load filament in the Filament Settings if needed."))
         self._add_instruction_item(instructions_box, _("3. Tap Start Print to run the validation model."))
         self._add_instruction_item(instructions_box, _("4. Tap Save to skip printing validation."))
         self._add_instruction_item(instructions_box, _("5. Tap Discard to discard right nozzle offsets."))
-        
-        
+
         image = self._gtk.Image("nozzle-aglin", *self._scaled(0.25, 0.25))
         left_vbox.pack_start(image, False, False, 5)
         left_vbox.pack_start(instructions_box, False, False, 0)
@@ -198,7 +279,7 @@ class Panel(CalibrationPanel):
             active=True,
             callback=self.on_toggle_xy_offset
         )
-        
+
         self.z_offset_toggle = self._create_toggle_switch(
             _("Right Nozzle Z Offset Calibration"),
             active=True,
@@ -232,8 +313,8 @@ class Panel(CalibrationPanel):
         self.instructions_label.override_font(Pango.FontDescription("small"))
 
         right_default_btns = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=15, margin=30)
-        cancel_btn = self._create_button(_("Cancel"), None, "color2", self.on_cancel)
-        start_calib_btn = self._create_button(_("Start"), None, "color4", self.on_start_calibration)
+        cancel_btn = self._create_button(_("Cancel"), self.on_cancel, None, "color2")
+        start_calib_btn = self._create_button(_("Start"), self.on_start_calibration, None, "color4")
         right_default_btns.pack_start(cancel_btn, False, False, 0)
         right_default_btns.pack_start(start_calib_btn, False, False, 0)
 
@@ -241,7 +322,7 @@ class Panel(CalibrationPanel):
         right_vbox.pack_start(self.default_offset_label, False, False, 0)
         right_vbox.pack_start(self.instructions_label, False, False, 0)
         right_vbox.pack_start(right_default_btns, False, False, 0)
-        
+
         return right_vbox
 
     def _right_print_panel(self):
@@ -275,11 +356,11 @@ class Panel(CalibrationPanel):
             target = Gtk.Label()
             target.set_halign(Gtk.Align.CENTER)
             target.set_valign(Gtk.Align.CENTER)
-            
+
             icon = self._gtk.Image(icon_name, *self._scaled(0.08, 0.1))
             icon.set_halign(Gtk.Align.FILL)
             icon.set_hexpand=True
-            
+
             temp = Gtk.Label()
             temp.set_halign(Gtk.Align.CENTER)
             temp.set_valign(Gtk.Align.CENTER)
@@ -295,7 +376,7 @@ class Panel(CalibrationPanel):
                 "target": target,
                 "temp": temp
             }
-            
+
             return device_box
 
         temp_icons_box.attach(create_temp_device_button("extruder-0", "extruder"), 0, 0, 1, 1)
@@ -303,9 +384,8 @@ class Panel(CalibrationPanel):
         temp_icons_box.attach(create_temp_device_button("bed", "heater_bed"), 2, 0, 1, 1)
         right_vbox.pack_start(temp_icons_box, True, True, 5)
 
-        filament_btn = self._create_button(_("Filament Settings"), "filament", "color1", self.on_jump_to_filament_settings)
+        filament_btn = self._create_button(_("Filament Settings"), self.on_jump_to_filament_settings, "filament", "color1")
         right_vbox.pack_start(filament_btn, True, True, 10)
-        
         self.offset_label = self._create_label(
             self._get_offset_text(),
             halign=Gtk.Align.CENTER,
@@ -316,9 +396,9 @@ class Panel(CalibrationPanel):
         right_vbox.pack_start(self.offset_label, False, False, 0)
 
         right_print_btns = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=15)
-        discard_btn = self._create_button(_("Discard"), None, "color2", self.on_discard)
-        save_btn = self._create_button(_("Save"), None, "color3", self.on_save)
-        self.start_calib_btn = self._create_button(_("Start Printing"), None, "color4", self.on_start_print)
+        discard_btn = self._create_button(_("Discard"), self.on_discard, None, "color2")
+        save_btn = self._create_button(_("Save"), self.on_save, None, "color3")
+        self.start_calib_btn = self._create_button(_("Start Printing"), self.on_start_print, None, "color4")
         self.start_calib_btn.set_sensitive(False)
         right_print_btns.pack_start(discard_btn, False, False, 0)
         right_print_btns.pack_start(save_btn, False, False, 0)
@@ -345,15 +425,16 @@ class Panel(CalibrationPanel):
         main_box.pack_start(self.top_container, True, True, 0)
 
         self.content.add(main_box)
-    
+
     def on_cancel(self, widget):
         self.print_test = False
         self._screen._menu_go_back()
-    
+
     def on_start_calibration(self, widget):
         self.last_x_offset = self.x_offset
         self.last_y_offset = self.y_offset
         self.last_z_offset = self.z_offset
+        self.calibrating = True
         if self.xy_offset_calibration:
             self._screen._ws.klippy.gcode_script("KTAMV_MOVE_DATUM_CENTER")
             if self.z_offset_calibration:
@@ -379,10 +460,9 @@ class Panel(CalibrationPanel):
         self.left_container.set_visible_child_name("camera")
         if self.cam_box.get_window():
             self.cam_controller.load_camera(self.cam_box)
-    
     def on_jump_to_filament_settings(self, widget):
         self._screen.show_panel("extrude", remove_all=False, keep_stack=True)
-    
+
     def on_discard(self, widget):
         for axis in ['x', 'y', 'z']:
             setattr(self, f"{axis}_offset", getattr(self, f"last_{axis}_offset"))
@@ -393,14 +473,14 @@ class Panel(CalibrationPanel):
     def on_save(self, widget):
         self.print_test = False
         self._switch_to_default()
-    
+
     def on_start_print(self, widget):
         self._screen._ws.klippy.gcode_script("_NOZZLE_XY_OFFSET_CALIBRATE")
 
     def on_toggle_xy_offset(self, widget, param):
         active = widget.get_active()
         self.xy_offset_calibration = active
-    
+
     def on_toggle_z_offset(self, widget, param):
         active = widget.get_active()
         self.z_offset_calibration = active
@@ -409,7 +489,7 @@ class Panel(CalibrationPanel):
         return _("Current right nozzle offsets:\n\n X:{}  Y:{}  Z:{}").format(
             self.x_offset, self.y_offset, self.z_offset
         )
-    
+
     def process_update(self, action, data):
         if action == "notify_status_update":
             if "save_variables" in data:
@@ -437,11 +517,11 @@ class Panel(CalibrationPanel):
                             self._printer.get_stat(device, "target"),
                             self._printer.get_stat(device, "power"),
                         )
-    
+
     def update_temp(self, dev, temp, target, power, lines=1, digits=1):
         temp_label_text = f"{temp or 0:.{digits}f}℃"
         target_label_text = "0℃"
-        
+
         if self._printer.device_has_target(dev) and target:
              target_label_text = f"{target:.0f}℃"
 
@@ -450,13 +530,13 @@ class Panel(CalibrationPanel):
             self.temp_devices[dev]["temp"].set_text(temp_label_text)
 
         self._check_extruder_temperatures()
-    
+
     def _check_extruder_temperatures(self):
         if not hasattr(self, 'start_calib_btn'):
             return
         all_extruders_have_target = True
         extruder_devices = ["extruder", "extruder1"]
-        
+
         for device in extruder_devices:
             if device in self.temp_devices:
                 target = self._printer.get_stat(device, "target")
@@ -464,13 +544,14 @@ class Panel(CalibrationPanel):
                     all_extruders_have_target = False
                     break
         self.start_calib_btn.set_sensitive(all_extruders_have_target)
-    
+
     def activate(self):
         self.cam_controller.init_cam_tip()
         if self.cam_box.get_window():
             self.cam_controller.load_camera(self.cam_box)
         if self.print_test:
             self._switch_to_print_test()
-    
+
     def deactivate(self):
+        self.print_test = False
         self.cam_controller.deactivate()

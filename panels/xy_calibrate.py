@@ -28,41 +28,6 @@ class Panel(CalibrationPanel):
         self.cam_controller.init_cam_tip()
         GLib.timeout_add_seconds(1, self.cam_controller.delayed_load_camera)
 
-    def _scaled(self, w_rate: float, h_rate=None):
-        h_rate = h_rate or w_rate
-        try:
-            return (int(self._gtk.content_width * w_rate),
-                    int(self._gtk.content_height * h_rate))
-        except Exception:
-            return (100, 100)
-
-    def _create_label(self, text, markup=False, **kwargs):
-        label = Gtk.Label()
-        if markup:
-            label.set_markup(text)
-        else:
-            label.set_text(text)
-
-        for key, val in kwargs.items():
-            if hasattr(label, f"set_{key}"):
-                getattr(label, f"set_{key}")(val)
-        return label
-
-    def _create_button(self, label, callback,** kwargs):
-        btn = self._gtk.Button(label=label)
-        btn.set_size_request(*self._scaled(0.2, 0.1))
-        btn.connect("clicked", callback)
-        for key, val in kwargs.items():
-            if hasattr(btn, f"set_{key}"):
-                getattr(btn, f"set_{key}")(val)
-        return btn
-
-    def _create_stack(self, panels_config):
-        stack = Gtk.Stack()
-        for name, create_func in panels_config:
-            stack.add_named(create_func(), name)
-        stack.set_visible_child_name(panels_config[0][0])
-        return stack
 
     def _init_containers(self):
         left_panels = [
@@ -187,18 +152,18 @@ class Panel(CalibrationPanel):
             hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=8)
             icon = self._gtk.Image("run-waiting", *self._scaled(0.03, 0.04))
             title = self._create_label(
-                _("<span font-size='large'>Calibration in progress...</span>"), 
-                markup=True, 
+                _("<span font-size='large'>Calibration in progress...</span>"),
+                markup=True,
                 halign=Gtk.Align.START
             )
             hbox.pack_start(icon, False, False, 0)
             hbox.pack_start(title, False, False, 0)
             vbox.pack_start(hbox, False, False, 0)
-        
+
         default_vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=5)
         default_vbox.set_halign(Gtk.Align.START)
         _create_calibration_header(default_vbox)
-        
+
         data_label = self._create_label(
             "", halign=Gtk.Align.START, line_wrap=True, max_width_chars=40
         )
@@ -393,7 +358,7 @@ class Panel(CalibrationPanel):
         self.left_container.set_visible_child_name("default")
         self.right_container.set_visible_child_name("default")
         self.bottom_container.set_visible_child_name("start")
-    
+
     def _countdown_timer(self):
         self.countdown -= 1
         if self.countdown > 0:
@@ -402,7 +367,7 @@ class Panel(CalibrationPanel):
         else:
             self._countdown_finish()
             return False
-    
+
     def _countdown_finish(self):
         self.countdown_running = False
         if hasattr(self, 'countdown_timer_id') and self.countdown_timer_id:
@@ -418,7 +383,7 @@ class Panel(CalibrationPanel):
     def on_return_start(self, widget):
         self._return_default()
         self._screen.show_panel("offset_manage", print_test=False, remove_current=True)
-    
+
     def _return_default(self):
         self.calibrating = False
         self.left_container.set_visible_child_name("default")
@@ -462,30 +427,9 @@ class Panel(CalibrationPanel):
                     temp_target = round(target) if target else 0
                     temp_state = f"{temp}°/{temp_target}°"
                     self.widgets[f"temp_label_{extruder}"].set_text(temp_state)
-            
-            if "in_progress_stack" in self.widgets and self.widgets["in_progress_stack"].get_visible_child_name() == "cleaning":
-                all_extruders_have_target = True
-                extruders = self._printer.get_tools()
-                for extruder in extruders:
-                    target = self._printer.get_stat(extruder, "target")
-                    if not target or target == 0:
-                        all_extruders_have_target = False
-                        break
 
-                current_extruder = self._printer.get_stat("toolhead", "extruder")
-                
-                if all_extruders_have_target and len(extruders) >= 2:
-                    display_text = _("Waiting for nozzle clean temperature")
-                else:
-                    if current_extruder == "extruder":
-                        display_text = _("Cleaning left nozzle")
-                    elif current_extruder == "extruder1":
-                        display_text = _("Cleaning right nozzle")
-                    else:
-                        display_text = _("Cleaning nozzles")
-                
-                if "cleaning_step_label" in self.widgets:
-                    self.widgets["cleaning_step_label"].set_text(display_text)
+            if "in_progress_stack" in self.widgets and self.widgets["in_progress_stack"].get_visible_child_name() == "cleaning":
+                self._update_cleaning_display()
 
         elif action == "notify_gcode_response":
             cleaned_data = "\n".join([
@@ -550,36 +494,15 @@ class Panel(CalibrationPanel):
             else:
                 step_description = calibration_status.get("step_description", "Calibration in progress...")
                 if "cleaning the nozzle" in step_description.lower():
-                    self.widgets["in_progress_stack"].set_visible_child_name("cleaning")
-                    temp_box = self.widgets["cleaning_temp_box"]
-                    for child in temp_box.get_children():
-                        temp_box.remove(child)
-                    
-                    for i, extruder in enumerate(self._printer.get_tools()):
-                        temp = round(self._printer.get_stat(extruder, "temperature"))
-                        target = self._printer.get_stat(extruder, "target")
-                        temp_target = round(target) if target else 0
-                        extruder_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=2)
-                        image = self._gtk.Image(f"extruder-{i}", *self._scaled(0.1, 0.1))
-                        extruder_box.pack_start(image, False, False, 10)
-                        temp_label = self._create_label(
-                            f"{temp}°/{temp_target}°", 
-                            halign=Gtk.Align.CENTER
-                        )
-                        extruder_box.pack_start(temp_label, False, False, 10)
-                        self.widgets[f"temp_label_{extruder}"] = temp_label
-
-                        temp_box.pack_start(extruder_box, False, False, 10)
-                    
-                    temp_box.show_all()
+                    if "in_progress_stack" in self.widgets:
+                        self.widgets["in_progress_stack"].set_visible_child_name("cleaning")
+                    self._update_cleaning_display()
                 else:
                     self.widgets["in_progress_stack"].set_visible_child_name("default")
-                    
-                    if step_description:
+                    if not step_description.startswith("Calculating"):
                         self.widgets["progress_data_in_progress"].set_text(step_description)
-                    
-                    if "progress_stack" in self.widgets:
-                        self.widgets["progress_stack"].set_visible_child_name("in_progress")
-                        self.widgets["progress_stack"].show_all()
+                        if "progress_stack" in self.widgets:
+                            self.widgets["progress_stack"].set_visible_child_name("in_progress")
+                            self.widgets["progress_stack"].show_all()
     def deactivate(self):
         self.cam_controller.deactivate()
