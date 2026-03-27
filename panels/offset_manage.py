@@ -436,6 +436,7 @@ class Panel(CalibrationPanel):
         self.last_z_offset = self.z_offset
         self.calibrating = True
         if self.xy_offset_calibration:
+            self._screen._ws.klippy.gcode_script("G28")
             self._screen._ws.klippy.gcode_script("KTAMV_MOVE_DATUM_CENTER")
             if self.z_offset_calibration:
                 self._screen.show_panel("align_datum", finish_action="continue_z", remove_current=True)

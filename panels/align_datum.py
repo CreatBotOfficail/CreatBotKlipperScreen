@@ -331,6 +331,9 @@ class Panel(ScreenPanel):
 
     def on_start_calibrate(self, widget):
         self.mode = "calibrate"
+        if self.finish_action is None:
+            self._screen._ws.klippy.gcode_script("G28")
+            self._screen._ws.klippy.gcode_script("KTAMV_MOVE_DATUM_CENTER")
         self.title_label.set_markup(_("Datum Calibration"))
         self.right_stack.set_visible_child_name("calibrate")
         self.bottom_stack.set_visible_child_name("calibrate")
