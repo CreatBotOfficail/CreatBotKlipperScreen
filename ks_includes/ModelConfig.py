@@ -217,12 +217,14 @@ class ModelConfig:
             ("D1000HS_KIT", "CreatBot_D1000_V0"),
             ("D1000ProHS", "CreatBot_D1000Pro"),
             ("P800", "CreatBot_P800"),
+            ("PEEK-650HT", "CreatLabs_PEEK-650HT"),
+            ("D800Ultra", "CreatLabs_D800Ultra"),
+            ("D1200Ultra", "CreatLabs_D1200Ultra"),
         ]
 
         cfg = MachineConfig()
         for m, folder in config_list:
             if model == m:
-                print(f"Model: {m}, Config Folder: {folder}")
                 cfg.set("model", m)
                 cfg.set("config_dir", folder)
                 cfg.set("version", version)

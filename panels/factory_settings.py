@@ -149,7 +149,20 @@ class Panel(ScreenPanel):
             self.add_option("model", self.models, value, self.models[value])
 
     def show_select_model(self, widget=None, option=None):
-        self.create_list_menu(self.model_list_config.sections(), self._on_model_selected)
+        oem_name = ""
+        if hasattr(self._screen, "machine_cfg") and self._screen.machine_cfg:
+            oem_name = self._screen.machine_cfg.get("oem_name", "")
+        oem_name_lower = oem_name.lower() if oem_name else ""
+
+        all_sections = self.model_list_config.sections()
+        if oem_name_lower == "":
+            filtered_models = [m for m in all_sections if m.startswith("CreatBot_")]
+        elif oem_name_lower == "creatlabs":
+            filtered_models = [m for m in all_sections if m.startswith("CreatLabs_")]
+        else:
+            filtered_models = all_sections
+
+        self.create_list_menu(filtered_models, self._on_model_selected)
         for child in self.content.get_children():
             self.content.remove(child)
         self.content.add(self.labels["model_menu"])
@@ -203,6 +216,7 @@ class Panel(ScreenPanel):
     def set_oem_name(self, *args):
         self.oem_items = {
             "creatbot": "",
+            "creatlabs": "",
             "general": ""
         }
         usb_items = scan_usb_for_oem()
@@ -224,7 +238,7 @@ class Panel(ScreenPanel):
         try:
             if oem_name == "creatbot":
                 cfg.set_oem_name("", "")
-            elif oem_name == "general":
+            elif oem_name == "general" or oem_name == "creatlabs":
                 cfg.set_oem_name(oem_name, "")
             else:
                 cfg.set_oem_name(oem_name, folder_path)

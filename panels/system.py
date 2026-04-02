@@ -106,7 +106,7 @@ class Panel(ScreenPanel):
             self.add_label_to_grid("Manufacturer: CreatBot", 1)
         event_box = Gtk.EventBox()
         event_box.connect("button-release-event", self.on_model_click)
-        mode = self._screen.connecting_to_printer.split("-")[0]
+        mode = self._screen.connecting_to_printer.rsplit("-", 1)[0]
         label = Gtk.Label(label=f"Model: {mode}", use_markup=True, xalign=0, wrap=True)
         self.grid.attach(event_box, 1, self.current_row, 1, 1)
         self.current_row += 1

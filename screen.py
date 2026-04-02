@@ -226,7 +226,17 @@ class KlipperScreen(Gtk.Window):
         self.printer.state = "disconnected"
 
     def connect_printer(self, name):
-        self.connecting_to_printer = name
+        oem_name = ""
+        if self.machine_cfg is not None:
+            try:
+                oem_name = self.machine_cfg.get("oem_name", "")
+            except Exception:
+                pass
+
+        if not oem_name or oem_name.lower() == "creatlabs":
+            self.connecting_to_printer = name
+        else:
+            self.connecting_to_printer = "Printer"
         if self._ws is not None and self._ws.connected:
             self.printer_initializing("Waiting Websocket closure")
             self.close_websocket()
