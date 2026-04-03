@@ -86,7 +86,10 @@ class CalibrationPanel(ScreenPanel):
                 display_text = _("Waiting for nozzle clean temperature")
             else:
                 if current_extruder == "extruder":
-                    display_text = _("Cleaning left nozzle")
+                    if self._printer.get_stat("extruder1", "target") == 0:
+                        display_text = _("Waiting for homing complete")
+                    else:
+                        display_text = _("Cleaning left nozzle")
                 elif current_extruder == "extruder1":
                     display_text = _("Cleaning right nozzle")
                 else:
