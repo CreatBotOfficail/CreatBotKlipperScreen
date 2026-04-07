@@ -176,7 +176,7 @@ class Panel(ScreenPanel):
         switch_hbox.pack_start(auto_close_title, False, False, 0)
 
         self.auto_close_switch = Gtk.Switch()
-        self.auto_close_switch.set_active(False)
+        self.auto_close_switch.set_active(True)
         self.auto_close_switch.connect("notify::active", self.on_auto_close_toggled)
         self.auto_close_switch.set_halign(Gtk.Align.END)
         switch_hbox.pack_end(self.auto_close_switch, False, False, 0)
