@@ -43,6 +43,8 @@ class Panel(MenuPanel):
         self.labels['menu'].pack_start(button_container, True, True, 0)
         self._update_unlock_button_visibility()
         self.labels['da'] = HeaterGraph(self._screen, self._printer, self._gtk.font_size)
+        if self._screen.height <= 480:
+            self.labels['da'].set_margin_bottom(20)
         self.labels['devices'] = self.create_top_panel(self.labels['da'])
 
         logging.info("### Making MainMenu")
