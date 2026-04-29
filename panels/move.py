@@ -160,7 +160,7 @@ class Panel(ScreenPanel):
     
     def toggle_motors(self, widget):
         if self.stepper_enable:
-            script = {"script": "M18"}
+            script = {"script": "M84"}
             self._screen._confirm_send_action(
                 widget,
                 _("Are you sure you wish to disable motors?"),
