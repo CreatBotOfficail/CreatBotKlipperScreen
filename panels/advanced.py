@@ -141,7 +141,7 @@ class Panel(ScreenPanel):
         self.content.add(self.labels["advanced_menu"])
 
         if "door_open_detection" in self.menu_list:
-            self.menu_list["door_open_detection"].connect("notify::popup-shown", self.on_popup_shown)
+            self.menu_list["door_open_detection"].popover.connect("notify::visible", self.on_popup_shown)
 
     def reset_factory_settings(self, *args):
         text = _("Confirm factory reset?\n") + "\n\n" + _("The system will reboot!")
@@ -185,21 +185,21 @@ class Panel(ScreenPanel):
         if response_id == Gtk.ResponseType.OK:
             KlippyFactory.user_factory_reset(self._screen._ws.klippy, self._config, clear_files_checkbox.get_active())
 
-    def on_popup_shown(self, combo_box, param):
-        if combo_box.get_property("popup-shown"):
+    def on_popup_shown(self, popover, param):
+        if popover.get_visible():
             logging.debug("Dropdown popup show")
             self.last_drop_time = datetime.now()
         else:
             elapsed = (datetime.now() - self.last_drop_time).total_seconds()
             if elapsed < 0.1:
                 logging.debug(f"Dropdown closed too fast ({elapsed}s)")
-                GLib.timeout_add(50, lambda: self.dropdown_keep_open(combo_box))
+                GLib.timeout_add(50, lambda: self.dropdown_keep_open(popover))
                 return
             logging.debug("Dropdown popup close")
 
-    def dropdown_keep_open(self, combo_box):
-        if isinstance(combo_box, Gtk.ComboBox):
-            combo_box.popup()
+    def dropdown_keep_open(self, popover):
+        if isinstance(popover, Gtk.Popover):
+            popover.popup()
         return False
 
     def door_open_detection(self, str):

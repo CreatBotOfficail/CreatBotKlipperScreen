@@ -99,7 +99,7 @@ class Panel(ScreenPanel):
             self.option_res.update(self.add_option("settings", self.settings, name, option[name]))
 
         version_dropdown = self.option_res.get("version_info")
-        version_dropdown.connect("notify::popup-shown", self.on_popup_shown)
+        version_dropdown.popover.connect("notify::visible", self.on_popup_shown)
 
         self.content.add(self.labels["setting_menu"])
         self.content.show_all()
@@ -116,21 +116,21 @@ class Panel(ScreenPanel):
             return True
         return False
 
-    def on_popup_shown(self, combo_box, param):
-        if combo_box.get_property("popup-shown"):
+    def on_popup_shown(self, popover, param):
+        if popover.get_visible():
             logging.debug("Dropdown popup show")
             self.last_drop_time = datetime.now()
         else:
             elapsed = (datetime.now() - self.last_drop_time).total_seconds()
             if elapsed < 0.2:
                 logging.debug(f"Dropdown closed too fast ({elapsed}s)")
-                GLib.timeout_add(50, lambda: self.dropdown_keep_open(combo_box))
+                GLib.timeout_add(50, lambda: self.dropdown_keep_open(popover))
                 return
             logging.debug("Dropdown popup close")
 
-    def dropdown_keep_open(self, combo_box):
-        if isinstance(combo_box, Gtk.ComboBox):
-            combo_box.popup()
+    def dropdown_keep_open(self, popover):
+        if isinstance(popover, Gtk.Popover):
+            popover.popup()
         return False
 
     def create_list_menu(self, menu_list, callback=None):

@@ -170,6 +170,12 @@ combobox box button {
     padding: .5em 1em;
 }
 
+button.dropdown {
+    border: .05em solid @lines;
+    padding: .5em 1em;
+    margin: .25em;
+}
+
 combobox arrow {
     min-width: 1em;
     background-color: @bg;

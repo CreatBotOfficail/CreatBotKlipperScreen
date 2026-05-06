@@ -157,7 +157,8 @@ combobox window.popup {
 
 combobox button,
 combobox menuitem,
-combobox box button {
+combobox box button,
+button.dropdown {
     background-color: @bg_opa_100;
     border-color: @border;
 }

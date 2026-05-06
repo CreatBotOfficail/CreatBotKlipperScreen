@@ -100,6 +100,17 @@ class ScreenPanel:
             return True
         return False
 
+    def on_popover_dropdown_change(self, listbox, row, button, section, option, callback=None):
+        value = row.get_name()
+        name = find_widget(row, Gtk.Label).get_text()
+        logging.debug(f"[{section}] {option} changed to {value}")
+        self._config.set(section, option, value)
+        self._config.save_user_config_options()
+        find_widget(button, Gtk.Label).set_text(name)
+        button.popover.popdown()
+        if callback is not None:
+            callback(value)
+
     def on_dropdown_change(self, combo, section, option, callback=None):
         tree_iter = combo.get_active_iter()
         if tree_iter is not None:
@@ -244,16 +255,52 @@ class ScreenPanel:
             row_box.add(switch)
             setting = {opt_name: switch}
         elif option['type'] == "dropdown":
-            dropdown = Gtk.ComboBoxText()
-            for i, opt in enumerate(option['options']):
-                dropdown.append(opt['value'], opt['name'])
-                if opt['value'] == self._config.get_config()[option['section']].get(opt_name, option['value']):
-                    dropdown.set_active(i)
-            dropdown.connect("changed", self.on_dropdown_change, option['section'], opt_name,
-                             option['callback'] if "callback" in option else None)
-            dropdown.set_entry_text_column(0)
-            row_box.add(dropdown)
-            setting = {opt_name: dropdown}
+            current_value = self._config.get_config()[option['section']].get(opt_name, option['value'])
+            current_name = current_value
+            for opt in option['options']:
+                if opt['value'] == current_value:
+                    current_name = opt['name']
+                    break
+
+            btn_box = Gtk.Box(spacing=5)
+            btn_label = Gtk.Label(label=current_name)
+            btn_arrow = Gtk.Image.new_from_icon_name("pan-down-symbolic", Gtk.IconSize.BUTTON)
+            btn_box.pack_start(btn_label, True, True, 0)
+            btn_box.pack_end(btn_arrow, False, False, 0)
+            dropdown_btn = Gtk.Button()
+            dropdown_btn.add(btn_box)
+            dropdown_btn.set_vexpand(False)
+            dropdown_btn.set_valign(Gtk.Align.CENTER)
+            dropdown_btn.get_style_context().add_class("dropdown")
+
+            popover = Gtk.Popover()
+            popover.set_relative_to(dropdown_btn)
+
+            listbox = Gtk.ListBox()
+            listbox.set_selection_mode(Gtk.SelectionMode.NONE)
+            for opt in option['options']:
+                row = Gtk.ListBoxRow()
+                row_label = Gtk.Label(label=opt['name'], xalign=0)
+                row_label.set_margin_top(8)
+                row_label.set_margin_bottom(8)
+                row_label.set_margin_start(12)
+                row_label.set_margin_end(12)
+                row.add(row_label)
+                row.set_name(opt['value'])
+                if opt['value'] == current_value:
+                    row_label.set_markup(f"<b>{opt['name']}</b>")
+                listbox.add(row)
+
+            listbox.connect("row-activated", self.on_popover_dropdown_change,
+                            dropdown_btn, option['section'], opt_name,
+                            option.get('callback'))
+            listbox.show_all()
+            popover.add(listbox)
+
+            dropdown_btn.connect("clicked", lambda btn, pop=popover: pop.popup())
+            dropdown_btn.popover = popover
+            row_box.add(dropdown_btn)
+            setting = {opt_name: dropdown_btn}
         elif option['type'] == "scale":
             row_box.set_orientation(Gtk.Orientation.VERTICAL)
             scale = Gtk.Scale.new_with_range(Gtk.Orientation.HORIZONTAL,
