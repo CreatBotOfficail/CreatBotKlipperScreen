@@ -9,6 +9,7 @@ import pathlib
 import locale
 
 from io import StringIO
+from ks_includes.functions import dpms_loaded
 
 SCREEN_BLANKING_OPTIONS = [
     60,     # 1 Minute
@@ -321,6 +322,12 @@ class KlipperScreenConfig:
         ]
 
         self.configurable_options.extend(panel_options)
+
+        if not dpms_loaded:
+            for opt in self.configurable_options:
+                key = list(opt)[0]
+                if key in ("screen_blanking", "screen_blanking_printing", "use_dpms"):
+                    opt[key]['type'] = None
 
         i0 = i1 = i2 = None
         for i, option in enumerate(self.configurable_options):
