@@ -74,6 +74,20 @@ class KlipperScreen(Gtk.Window):
     notification_log = []
     prompt = None
 
+    @property
+    def display_printer_name(self):
+        if self.connecting_to_printer is None:
+            return None
+        oem_name = ""
+        if self.machine_cfg is not None:
+            try:
+                oem_name = self.machine_cfg.get("oem_name", "")
+            except Exception:
+                pass
+        if oem_name and oem_name.lower() != "creatlabs":
+            return "Printer"
+        return self.connecting_to_printer
+
     def __init__(self, args):
         self.server_info = None
         try:
@@ -226,17 +240,7 @@ class KlipperScreen(Gtk.Window):
         self.printer.state = "disconnected"
 
     def connect_printer(self, name):
-        oem_name = ""
-        if self.machine_cfg is not None:
-            try:
-                oem_name = self.machine_cfg.get("oem_name", "")
-            except Exception:
-                pass
-
-        if not oem_name or oem_name.lower() == "creatlabs":
-            self.connecting_to_printer = name
-        else:
-            self.connecting_to_printer = "Printer"
+        self.connecting_to_printer = name
         if self._ws is not None and self._ws.connected:
             self.printer_initializing("Waiting Websocket closure")
             self.close_websocket()
@@ -277,7 +281,7 @@ class KlipperScreen(Gtk.Window):
             self.files.reinit()
 
         self.reinit_count = 0
-        self.printer_initializing(_("Connecting to %s") % name, True)
+        self.printer_initializing(_("Connecting to %s") % self.display_printer_name, True)
         self.connect_to_moonraker()
 
     def ws_subscribe(self):
@@ -1060,7 +1064,7 @@ class KlipperScreen(Gtk.Window):
                 self._init_printer(_("Cannot connect to Moonraker") + "\n\n"
                                    + _("Retrying") + f" #{self.reinit_count}")
             else:
-                self._init_printer(_("Connecting to %s") % self.connecting_to_printer)
+                self._init_printer(_("Connecting to %s") % self.display_printer_name)
             self.initializing = False
             self.reinit_count += 1
             return False
