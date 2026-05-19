@@ -810,9 +810,14 @@ class SdbusNm:
         active_connection_path = self.nm.primary_connection
         if not active_connection_path or active_connection_path == "/":
             return "?"
-        active_connection = ActiveConnection(active_connection_path)
-        ip_info = IPv4Config(active_connection.ip4_config)
-        return ip_info.address_data[0]["address"][1]
+        try:
+            active_connection = ActiveConnection(active_connection_path)
+            ip_info = IPv4Config(active_connection.ip4_config)
+            if not ip_info.address_data:
+                return "?"
+            return ip_info.address_data[0]["address"][1]
+        except Exception:
+            return "?"
 
     def get_networks(self):
         networks = []
