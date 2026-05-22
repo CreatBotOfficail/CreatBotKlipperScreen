@@ -220,6 +220,7 @@ class ModelConfig:
             ("PEEK-650HT", "CreatLabs_PEEK-650HT"),
             ("D800Ultra", "CreatLabs_D800Ultra"),
             ("D1200Ultra", "CreatLabs_D1200Ultra"),
+            ("D400", "CreatBot_D400"),
         ]
 
         cfg = MachineConfig()
