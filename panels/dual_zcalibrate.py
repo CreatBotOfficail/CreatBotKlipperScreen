@@ -235,8 +235,9 @@ class Panel(CalibrationPanel):
 
     def manual_calibration(self, widget):
         logging.info("dual Z offset calibration started")
-        script = "G28\n CLEAN_NOZZLE"
-        self._screen._ws.klippy.gcode_script(script)
+        if self._printer.get_stat("toolhead", "reliable_axes") != "xyz":
+            self._screen._ws.klippy.gcode_script("G28")
+        self._screen._ws.klippy.gcode_script("CLEAN_NOZZLE")
         self._start_calibration_state(initial_state="cleaning")
 
     def exit_calibration(self, widget=None):

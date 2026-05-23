@@ -439,7 +439,8 @@ class Panel(CalibrationPanel):
         self.last_z_offset = self.z_offset
         self.calibrating = True
         if self.xy_offset_calibration:
-            self._screen._ws.klippy.gcode_script("G28")
+            if self._printer.get_stat("toolhead", "reliable_axes") != "xyz":
+                self._screen._ws.klippy.gcode_script("G28")
             if self.z_offset_calibration:
                 self._screen.show_panel("xy_calibrate", finish_action="continue_z", remove_current=True)
             else:

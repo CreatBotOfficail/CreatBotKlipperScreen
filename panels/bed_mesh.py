@@ -236,7 +236,8 @@ class Panel(ScreenPanel):
 
         widget.set_sensitive(False)
         self._screen.show_popup_message(_("Calibrating"), level=1)
-        self._screen._ws.klippy.gcode_script("G28")
+        if self._printer.get_stat("toolhead", "reliable_axes") != "xyz":
+            self._screen._ws.klippy.gcode_script("G28")
 
         res = self._printer.get_config_section("bed_mesh")
         cmd = self.generate_bed_mesh_command(res)
@@ -253,7 +254,8 @@ class Panel(ScreenPanel):
     def calibrate_mesh(self, widget):
         widget.set_sensitive(False)
         self._screen.show_popup_message(_("Calibrating"), level=1)
-        self._screen._ws.klippy.gcode_script("G28")
+        if self._printer.get_stat("toolhead", "reliable_axes") != "xyz":
+            self._screen._ws.klippy.gcode_script("G28")
         method= "rapid_scan" if self._printer.get_eddy_sensors() else "automatic"
         command = f"BED_MESH_CALIBRATE  METHOD={method} "
         self._screen._send_action(widget, "printer.gcode.script", {"script": command})
