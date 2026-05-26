@@ -277,15 +277,6 @@ class KlipperScreenConfig:
             {"24htime": {"section": "main", "name": _("24 Hour Time"), "type": "binary",
                          "tooltip": _("Disable for 12hs with am / pm"),
                          "value": "True"}},
-            {"font_size": {
-                "section": "main", "name": _("Font Size"), "type": "dropdown",
-                "tooltip": _("Inversely affects the icon size"),
-                "value": "small", "callback": screen.restart_ks, "options": [
-                    {"name": _("Small") + " " + _("(default)"),"value": "small"},
-                    {"name": _("Medium"), "value": "medium"},
-                    {"name": _("Large"), "value": "large"},
-                    {"name": _("Extra Large"), "value": "extralarge"},
-                    {"name": _("Maximum"), "value": "max"}]}},
             {"confirm_estop": {"section": "main", "name": _("Confirm Emergency Stop"), "type": "binary",
                                "tooltip": _("Asks for confirmation before stopping"),
                                "value": "True"}},

@@ -36,7 +36,7 @@ class KlippyGtk:
         self.screen = screen
         self.themedir = os.path.join(pathlib.Path(__file__).parent.resolve().parent, "styles", screen.theme, "images")
         self.cursor = screen.show_cursor
-        self.font_size_type = screen._config.get_main_config().get("font_size", "medium")
+        self.font_size_type = screen._config.get_main_config().get("font_size", "small")
         self.width = screen.width
         self.height = screen.height
         self.ultra_tall = (self.height / self.width) >= 3
