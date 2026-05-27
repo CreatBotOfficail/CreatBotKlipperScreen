@@ -327,8 +327,18 @@ class Panel(ScreenPanel):
 
     def execute_local_update(self):
         try:
+            ui_rotation = None
+            try:
+                cfg = self._screen.machine_cfg
+                if cfg:
+                    rotation = cfg.get("screen_rotation", "0")
+                    if str(rotation) == "90":
+                        ui_rotation = 3
+            except Exception:
+                pass
+
             upgrade_result = self.update_engine.run_upgrade(
-                self.upload_file, reboot=True)
+                self.upload_file, reboot=True, ui_rotation=ui_rotation)
 
             if hasattr(self, 'upgrade_dialog'):
                 self._gtk.remove_dialog(self.upgrade_dialog)
