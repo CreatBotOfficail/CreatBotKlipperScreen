@@ -82,22 +82,22 @@ class Panel(ScreenPanel):
                 }
             )
 
-            leds = self._printer.get_leds()
-            if leds and len(leds) > 0:
-                self.advanced_options.append(
-                    {
-                        "led_control": {
-                            "section": "main",
-                            "name": _("Lighting Control"),
-                            "type": "binary",
-                            "tooltip": _(
-                                "Toggle chamber lighting on or off"
-                            ),
-                            "value": False,
-                            "callback": self.set_led_control,
-                        }
+        leds = self._printer.get_leds()
+        if leds and len(leds) > 0:
+            self.advanced_options.append(
+                {
+                    "led_control": {
+                        "section": "main",
+                        "name": _("Lighting Control"),
+                        "type": "binary",
+                        "tooltip": _(
+                            "Toggle chamber lighting on or off"
+                        ),
+                        "value": False,
+                        "callback": self.set_led_control,
                     }
-                )
+                }
+            )
 
         try:
             if hasattr(self._printer, 'get_locks'):
@@ -319,7 +319,7 @@ class Panel(ScreenPanel):
                         self._config.save_user_config_options()
 
             leds = self._printer.get_leds()
-            if leds and len(leds) > 0:
+            if leds and len(leds) > 0 and "led_control" in self.menu_list:
                 if "interior_lighting" in variables:
                     self.menu_list["led_control"].set_active(variables["interior_lighting"])
                 else:
