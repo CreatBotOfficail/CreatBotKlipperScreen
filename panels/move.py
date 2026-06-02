@@ -146,6 +146,11 @@ class Panel(ScreenPanel):
             self.stepper_enable = steppers.get("stepper_x", True) and steppers.get("stepper_y", True)
             self.update_motor_button()
     
+        printing = self._printer and self._printer.state in {"printing", "paused"}
+        self.buttons["z-"].set_sensitive(not printing)
+        self.buttons["home"].set_sensitive(not printing)
+        self.buttons["motors_switch"].set_sensitive(not printing)
+    
     def update_motor_button(self):
         res = self._screen.apiclient.send_request("printer/objects/query?gcode_move")
         data = res.get('status', {})
