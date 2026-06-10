@@ -142,6 +142,24 @@ class Panel(ScreenPanel):
 
         if "door_open_detection" in self.menu_list:
             self.menu_list["door_open_detection"].popover.connect("notify::visible", self.on_popup_shown)
+            variables = self._printer.get_stat("save_variables", "variables")
+            if variables and "door_detect" in variables:
+                self._update_door_detect_display(variables["door_detect"])
+
+    def _update_door_detect_display(self, door_detect_value):
+        if "door_open_detection" in self.menu_list:
+            dropdown_btn = self.menu_list["door_open_detection"]
+            if hasattr(dropdown_btn, 'popover'):
+                popover = dropdown_btn.popover
+                listbox = popover.get_child()
+                for row in listbox.get_children():
+                    if row.get_name() == door_detect_value:
+                        row_label = row.get_child()
+                        btn_box = dropdown_btn.get_child()
+                        if btn_box:
+                            btn_label = btn_box.get_children()[0]
+                            btn_label.set_text(row_label.get_text())
+                        break
 
     def reset_factory_settings(self, *args):
         text = _("Confirm factory reset?\n") + "\n\n" + _("The system will reboot!")
@@ -337,9 +355,6 @@ class Panel(ScreenPanel):
 
             if self._printer.get_macro("_door_detection") or self._printer.get_config_section_list("door"):
                 if "door_detect" in variables:
-                    model = self.menu_list["door_open_detection"].get_model()
-                    for i, row in enumerate(model):
-                        if row[0] == _(variables["door_detect"]):
-                            self.menu_list["door_open_detection"].set_active(i)
+                    self._update_door_detect_display(variables["door_detect"])
             self.is_initialized = True
 
