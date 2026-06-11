@@ -221,6 +221,8 @@ class ModelConfig:
             ("D800Ultra", "CreatLabs_D800Ultra"),
             ("D1200Ultra", "CreatLabs_D1200Ultra"),
             ("D400HS", "CreatBot_D400"),
+            ("LT100", "CreatBot_LT100"),
+            ("D600SE", "CreatBot_D600SE"),
         ]
 
         cfg = MachineConfig()
