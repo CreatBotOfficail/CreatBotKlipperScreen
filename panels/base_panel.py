@@ -205,8 +205,10 @@ class BasePanel(ScreenPanel):
         try:
             for child in self.control['temp_box'].get_children():
                 self.control['temp_box'].remove(child)
+            if not show or self._printer is None:
+                return
             devices = self._printer.get_temp_devices()
-            if not show or not devices:
+            if not devices:
                 return
 
             img_size = self._gtk.img_scale * self.bts
