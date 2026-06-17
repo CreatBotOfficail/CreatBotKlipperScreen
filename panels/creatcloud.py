@@ -317,8 +317,11 @@ class Panel(ScreenPanel):
 
         width, height = img.size
         data = img.tobytes()
-        pixbuf_original = GdkPixbuf.Pixbuf.new_from_data(
-            data,
+        # 用 GLib.Bytes 包装数据，确保 pixbuf 持有强引用，
+        # 避免 Python GC 回收 bytes 导致 pixbuf 指向无效内存
+        gbytes = GLib.Bytes.new(data)
+        pixbuf_original = GdkPixbuf.Pixbuf.new_from_bytes(
+            gbytes,
             GdkPixbuf.Colorspace.RGB,
             False,
             8,
