@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KlipperScreen\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-03 11:33+0800\n"
+"POT-Creation-Date: 2026-06-17 17:43+0800\n"
 "PO-Revision-Date: 2024-06-03 19:09+0000\n"
 "Last-Translator: wsj20050623 <2129426599@qq.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
@@ -513,6 +513,15 @@ msgstr "当前百分比和走线"
 msgid ""
 "Current right nozzle offsets:\n"
 "\n"
+"         X:{}  Y:{}"
+msgstr ""
+"当前右喷头偏移:\n"
+"\n"
+"           X:{}  Y:{}"
+
+msgid ""
+"Current right nozzle offsets:\n"
+"\n"
 " X:{}  Y:{}  Z:{}"
 msgstr ""
 "当前右喷头偏移:\n"
@@ -691,9 +700,6 @@ msgstr ""
 "\n"
 "这可能需要一些时间。"
 
-msgid "Extra Large"
-msgstr "特大"
-
 msgid "Extrude"
 msgstr "挤出"
 
@@ -801,9 +807,6 @@ msgstr "流量："
 msgid "Flowrate:"
 msgstr "流速："
 
-msgid "Font Size"
-msgstr "字体大小"
-
 msgid "Forget"
 msgstr "忘记"
 
@@ -908,9 +911,6 @@ msgstr "密码无效"
 msgid "Invalid subnet mask"
 msgstr "子网掩码无效"
 
-msgid "Inversely affects the icon size"
-msgstr "和预览图大小成反比"
-
 msgid ""
 "It is recommended to check if the sensor is securely installed and "
 "recalibrate."
@@ -968,9 +968,6 @@ msgstr "加载耗材/卸载耗材 已被隐藏，请前往在挤出控制界面"
 
 msgid "Language"
 msgstr "界面语言"
-
-msgid "Large"
-msgstr "大"
 
 msgid "Last Used"
 msgstr "上次使用"
@@ -1044,9 +1041,6 @@ msgstr "最大加速度"
 msgid "Max Velocity"
 msgstr "最大速度"
 
-msgid "Maximum"
-msgstr "最大"
-
 msgid "Measure "
 msgstr "测量 "
 
@@ -1058,9 +1052,6 @@ msgstr "测量X轴"
 
 msgid "Measure Y"
 msgstr "测量Y轴"
-
-msgid "Medium"
-msgstr "中"
 
 msgid "Memory"
 msgstr "内存"
@@ -1580,9 +1571,6 @@ msgstr "切片软件"
 msgid "Slicer:"
 msgstr "切片软件："
 
-msgid "Small"
-msgstr "小"
-
 msgid "Smooth time"
 msgstr "平滑时间"
 
@@ -1930,6 +1918,27 @@ msgstr "○ 重新扫描左侧二维码添加打印机"
 
 msgid "○ Rescan the QR code below to add printer"
 msgstr "○ 重新扫描下方二维码添加打印机"
+
+#~ msgid "Extra Large"
+#~ msgstr "特大"
+
+#~ msgid "Font Size"
+#~ msgstr "字体大小"
+
+#~ msgid "Inversely affects the icon size"
+#~ msgstr "和预览图大小成反比"
+
+#~ msgid "Large"
+#~ msgstr "大"
+
+#~ msgid "Maximum"
+#~ msgstr "最大"
+
+#~ msgid "Medium"
+#~ msgstr "中"
+
+#~ msgid "Small"
+#~ msgstr "小"
 
 #~ msgid "Interface"
 #~ msgstr "接口"

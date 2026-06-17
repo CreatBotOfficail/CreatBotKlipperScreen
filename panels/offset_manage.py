@@ -166,6 +166,7 @@ class Panel(CalibrationPanel):
         self.z_offset = self.last_z_offset = 0.0
         self.offset_label = None
         self.print_test = kwargs.get("print_test", False)
+        self._has_z_offset = self._printer.config_section_exists("dual_zcalibrate")
         self.cam_controller = CameraController(self)
 
         self._init_containers()
@@ -282,15 +283,16 @@ class Panel(CalibrationPanel):
             active=True,
             callback=self.on_toggle_xy_offset
         )
-
-        self.z_offset_toggle = self._create_toggle_switch(
-            _("Right Nozzle Z Offset Calibration"),
-            active=True,
-            callback=self.on_toggle_z_offset
-        )
+        if self._has_z_offset:
+            self.z_offset_toggle = self._create_toggle_switch(
+                _("Right Nozzle Z Offset Calibration"),
+                active=True,
+                callback=self.on_toggle_z_offset
+            )
 
         switches_card_box.pack_start(self.xy_offset_toggle, False, False, 0)
-        switches_card_box.pack_start(self.z_offset_toggle, False, False, 0)
+        if self._has_z_offset:
+            switches_card_box.pack_start(self.z_offset_toggle, False, False, 0) 
 
         self.default_offset_label = self._create_label(
             self._get_offset_text(),
@@ -490,8 +492,12 @@ class Panel(CalibrationPanel):
         self.z_offset_calibration = active
 
     def _get_offset_text(self):
-        return _("Current right nozzle offsets:\n\n X:{}  Y:{}  Z:{}").format(
-            self.x_offset, self.y_offset, self.z_offset
+        if self._has_z_offset:
+            return _("Current right nozzle offsets:\n\n X:{}  Y:{}  Z:{}").format(
+                self.x_offset, self.y_offset, self.z_offset
+            )
+        return _("Current right nozzle offsets:\n\n         X:{}  Y:{}").format(
+            self.x_offset, self.y_offset
         )
 
     def process_update(self, action, data):
