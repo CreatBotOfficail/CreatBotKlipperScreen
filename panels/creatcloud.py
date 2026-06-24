@@ -34,6 +34,7 @@ class Panel(ScreenPanel):
         self._ensure_required_keys()
         self._lan_only_timer = None
         self._pending_lan_only = None
+        self._last_qr_payload = None
         self.qr_url = "https://www.creatbot.com/creatcloud"
         self.create_ui()
 
