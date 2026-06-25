@@ -443,11 +443,11 @@ class Panel(CalibrationPanel):
         if self.xy_offset_calibration:
             if self._printer.get_stat("toolhead", "reliable_axes") != "xyz":
                 self._screen._ws.klippy.gcode_script("G28")
-            if self.z_offset_calibration:
+            if self.z_offset_calibration and self._has_z_offset:
                 self._screen.show_panel("xy_calibrate", finish_action="continue_z", remove_current=True)
             else:
                 self._screen.show_panel("xy_calibrate", finish_action="print_test", remove_current=True)
-        elif self.z_offset_calibration:
+        elif self.z_offset_calibration and self._has_z_offset:
             self._screen.show_panel("dual_zcalibrate", auto_action="print_test", remove_current=True)
         else:
             self._switch_to_print_test()
