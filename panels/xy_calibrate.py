@@ -16,6 +16,7 @@ class Panel(CalibrationPanel):
         self.widgets = {}
         self.x_offset = self.y_offset = 0.0
         self.finish_action = kwargs.get("finish_action", None)
+        self.offset_saved = False
         self.cam_controller = CameraController(self)
 
         self.countdown_running = False
@@ -338,6 +339,7 @@ class Panel(CalibrationPanel):
         return box
 
     def on_start_calibrate(self, widget):
+        self.offset_saved = False
         self.start_calibration()
         mode = self._screen.connecting_to_printer.split("-")[0]
         if mode == "F430NX":
@@ -354,10 +356,10 @@ class Panel(CalibrationPanel):
             self._screen._ws.klippy.gcode_script("KTAMV_CALIB_NOZZLE")
 
     def on_save_calibrate(self, widget):
-        self._screen._ws.klippy.gcode_script("KTAMV_SAVE_OFFSET")
-        self.left_container.set_visible_child_name("default")
-        self.right_container.set_visible_child_name("default")
-        self.bottom_container.set_visible_child_name("start")
+        if not self.offset_saved:
+            self._screen._ws.klippy.gcode_script("KTAMV_SAVE_OFFSET")
+            self.offset_saved = True
+        self._countdown_finish()
 
     def _countdown_timer(self):
         self.countdown -= 1
@@ -449,7 +451,9 @@ class Panel(CalibrationPanel):
                     )
                     self.bottom_container.set_visible_child_name("finish")
                     if self.finish_action:
-                        self._screen._ws.klippy.gcode_script("KTAMV_SAVE_OFFSET")
+                        if not self.offset_saved:
+                            self._screen._ws.klippy.gcode_script("KTAMV_SAVE_OFFSET")
+                            self.offset_saved = True
                         self.countdown = 3
                         self.countdown_running = True
                         self.widgets["btn_print"].set_label(_("Next ({})").format(self.countdown))

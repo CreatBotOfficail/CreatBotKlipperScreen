@@ -19,10 +19,6 @@ class CalibrationPanel(ScreenPanel):
         if self.calibrating == state:
             return
         self.calibrating = state
-        if hasattr(self._screen, '_cur_panels'):
-            current_panel = self._screen._cur_panels[-1]
-            if current_panel in ('xy_calibrate', 'dual_zcalibrate', 'offset_manage'):
-                self._screen.show_panel(current_panel, remove_current=True)
 
     def start_calibration(self):
         self._update_calibration_state(True)
