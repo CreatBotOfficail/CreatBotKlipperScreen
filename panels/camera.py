@@ -215,7 +215,7 @@ class Panel(ScreenPanel):
         def quit_player(*args):
              self.mpv.terminate()
 
-        self.mpv.window.connect("button-press-event", quit_player)
+        self.mpv.window.connect("button-release-event", quit_player)
         self.mpv.window.connect("destroy", quit_player)
 
         bus = self.mpv.pipeline.get_bus()

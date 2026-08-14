@@ -20,8 +20,8 @@ class HeaterGraph(Gtk.DrawingArea):
         self.printer = printer
         self.store = {} if store is None else store
         self.connect('draw', self.draw_graph)
-        self.add_events(Gdk.EventMask.TOUCH_MASK)
         self.add_events(Gdk.EventMask.BUTTON_PRESS_MASK)
+        self.add_events(Gdk.EventMask.BUTTON_RELEASE_MASK)
         self.connect('button_press_event', screen.reset_screensaver_timeout)
         self.connect('button_press_event', self.event_cb)
         self.font_size = round(font_size * 0.75)
