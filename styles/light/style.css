@@ -397,6 +397,11 @@ textview .time {
     background-color: @color1;
 }
 
+.keyboard_pad.keyboard_pressed,
+.keyboard_pad.keyboard_locked {
+    background-color: @active;
+}
+
 .dialog {
     border: @border;
     background-color: @border;

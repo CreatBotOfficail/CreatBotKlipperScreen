@@ -408,6 +408,11 @@ trough {
     border-radius: 0.7em;
 }
 
+.keyboard_pad.keyboard_pressed,
+.keyboard_pad.keyboard_locked {
+    background-color: @active;
+}
+
 .message_popup_popover {
     border: 0;
     background-color: Transparent;

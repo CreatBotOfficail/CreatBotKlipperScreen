@@ -358,6 +358,12 @@ textview .time {
     background-color: @white-opa-20;
 }
 
+.keyboard_pad.keyboard_pressed,
+.keyboard_pad.keyboard_locked {
+    background-color: @blue-opa-100;
+    border-color: @blue-opa-100;
+}
+
 .dialog-error {
     border-bottom-color: @red-opa-100;
 }

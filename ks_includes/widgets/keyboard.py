@@ -141,6 +141,10 @@ class Keyboard(Gtk.Box):
         return "en"
 
     def set_pallet(self, p):
+        for pallet in self.buttons:
+            for row in pallet:
+                for button in row:
+                    button.get_style_context().remove_class("keyboard_pressed")
         for _ in range(len(self.keys[self.pallet_nr]) + 1):
             self.keyboard.remove_row(0)
         self.pallet_nr = p
@@ -158,7 +162,8 @@ class Keyboard(Gtk.Box):
 
     def repeat(self, widget, event, key):
         # Button-press
-        widget.get_style_context().add_class("active")
+        style_context = widget.get_style_context()
+        style_context.add_class("keyboard_pressed")
         self.update_entry(widget, key)
         if self.timeout is None and key == "⌫":
             # Hold for repeat, hold longer to clear the field
@@ -170,14 +175,13 @@ class Keyboard(Gtk.Box):
 
     def release(self, widget, event):
         # Button-release
+        widget.get_style_context().remove_class("keyboard_pressed")
         if self.timeout is not None:
             GLib.source_remove(self.timeout)
             self.timeout = None
         if self.clear_timeout is not None:
             GLib.source_remove(self.clear_timeout)
             self.clear_timeout = None
-        if widget not in self.shift:
-            widget.get_style_context().remove_class("active")
 
     def clear(self, widget=None):
         self.entry.set_text("")
@@ -205,22 +209,18 @@ class Keyboard(Gtk.Box):
         elif key == "abc":
             if self.shift_active:
                 self.toggle_shift()
-            widget.get_style_context().remove_class("active")
             self.set_pallet(0)
         elif key == "ABC":
             if not self.shift_active:
                 self.toggle_shift()
-            widget.get_style_context().remove_class("active")
             self.set_pallet(1)
         elif key == "123":
             if self.shift_active:
                 self.toggle_shift()
-            widget.get_style_context().remove_class("active")
             self.set_pallet(2)
         elif key == "#+=":
             if not self.shift_active:
                 self.toggle_shift()
-            widget.get_style_context().remove_class("active")
             self.set_pallet(3)
         else:
             Gtk.Entry.do_insert_at_cursor(self.entry, key)
@@ -230,6 +230,6 @@ class Keyboard(Gtk.Box):
         widget: Gtk.Widget
         for widget in self.shift:
             if self.shift_active:
-                widget.get_style_context().add_class("active")
+                widget.get_style_context().add_class("keyboard_locked")
             else:
-                widget.get_style_context().remove_class("active")
+                widget.get_style_context().remove_class("keyboard_locked")
