@@ -596,19 +596,20 @@ class KlipperScreen(Gtk.Window):
         logging.info(f"#### Go to submenu {name}")
         # Find current menu item
         if "main_menu" in self._cur_panels:
-            menu = "__main"
+            menus = ["__main"]
         elif "splash_screen" in self._cur_panels:
-            menu = "__splashscreen"
+            menus = ["__splashscreen"]
         else:
-            menu = "__print"
+            menus = ["__print", "__main"]
 
-        logging.info(f"#### Menu {menu}")
-        disname = self._config.get_menu_name(menu, name)
-        menuitems = self._config.get_menu_items(menu, name)
-        if len(menuitems) != 0:
-            self.show_panel("menu", disname, panel_name=name, items=menuitems)
-        else:
-            logging.info("No items in menu")
+        for menu in menus:
+            disname = self._config.get_menu_name(menu, name)
+            menuitems = self._config.get_menu_items(menu, name)
+            if len(menuitems) != 0:
+                logging.info(f"#### Menu {menu}")
+                self.show_panel("menu", disname, panel_name=name, items=menuitems)
+                return
+            logging.info(f"#### Menu {menu}: No items in menu")
 
     def _remove_all_panels(self):
         logging.debug("Removing all panels")
