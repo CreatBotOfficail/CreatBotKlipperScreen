@@ -162,7 +162,8 @@ class Panel(CalibrationPanel):
         self.z_offset = self.last_z_offset = 0.0
         self.offset_label = None
         self.print_test = kwargs.get("print_test", False)
-        self._has_z_offset = self._printer.config_section_exists("dual_zcalibrate")
+        _zcal_sections = {"dual_zcalibrate", "nozzles_z_calibrate"}
+        self._has_z_offset = any(s in _zcal_sections for s in self._printer.get_config_section_list())
         self.cam_controller = CameraController(self)
 
         self._init_containers()

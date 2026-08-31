@@ -314,10 +314,7 @@ class BasePanel(ScreenPanel):
         calibrating_panels = ('xy_calibrate', 'dual_zcalibrate')
         is_calibrating = getattr(panel, 'calibrating', False) and self._screen._cur_panels[-1] in calibrating_panels
         if is_calibrating:
-            self.control['estop'].set_visible(True)
-            for name in ('move', 'extrude', 'files', 'more', 'back', 'home'):
-                self.control[name].set_visible(False)
-            self.show_shortcut(False)
+            self.show_estop_only()
 
         self.current_panel = panel
         self.set_title(panel.title)
@@ -432,6 +429,14 @@ class BasePanel(ScreenPanel):
     def hide_action_bar(self):
         self.action_bar.set_size_request(-1, -1)
         self.control['home'].set_visible(False)
+
+    def show_estop_only(self):
+        """Show only the estop button in the action bar (calibration mode)."""
+        self.show_action_bar()
+        self.control['estop'].set_visible(True)
+        for name in ('move', 'extrude', 'files', 'more', 'back', 'home'):
+            self.control[name].set_visible(False)
+        self.show_shortcut(False)
 
     def show_printer_select(self, show=True):
         self.control['printer_select'].set_visible(

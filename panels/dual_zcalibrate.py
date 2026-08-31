@@ -14,12 +14,20 @@ class Panel(CalibrationPanel):
         self.finish_offset = 0.0
         self.current_extruder = None
         self.is_turning = False
-        self.offset_data = [
-            (_("Offset Compensation"), "offset_compensation", "0"),
-            (_("Current Z Offset"), "offset_val", "0"),
-        ]
         self.showing_input_box = False
         self.auto_action = kwargs.get("auto_action", "sample")
+
+        config_sections = self._printer.get_config_section_list()
+        self.use_nozzles_z_calibrate = any("nozzles_z_calibrate" in s for s in config_sections)
+        if self.use_nozzles_z_calibrate:
+            self.calibrate_command = "NOZZLES_Z_CALIBRATE CLEAN=0"
+        else:
+            self.calibrate_command = "DUAL_Z_PROBE_CALIBRATE"
+
+        self.offset_data = []
+        if not self.use_nozzles_z_calibrate:
+            self.offset_data.append((_("Offset Compensation"), "offset_compensation", "0"))
+        self.offset_data.append((_("Current Z Offset"), "offset_val", "0"))
 
         self.countdown_running = False
         self.countdown_timer_id = None
@@ -130,7 +138,11 @@ class Panel(CalibrationPanel):
         save_box.set_halign(Gtk.Align.END)
         save_box.set_margin_right(30)
         save_box.set_margin_bottom(30)
+        self.widgets["btn_discard"] = self._create_button(_("Discard"), callback=self.on_discard)
+        self.widgets["btn_save"] = self._create_button(_("Save"), callback=self.on_save_config)
         self.widgets["btn_recalibrate"] = self._create_button(_("Recalibrate"), callback=self.on_recalibrate)
+        save_box.pack_start(self.widgets["btn_discard"], False, False, 0)
+        save_box.pack_start(self.widgets["btn_save"], False, False, 0)
         save_box.pack_start(self.widgets["btn_recalibrate"], False, False, 0)
         return save_box
 
@@ -226,12 +238,13 @@ class Panel(CalibrationPanel):
             return
         self.is_turning = True
         self.start_calibration()
+        self._screen.base_panel.show_estop_only()
         if "progress_stack" in self.widgets:
             self.widgets["progress_stack"].set_visible_child_name(initial_state)
         self.right_container.set_visible_child_name("right_progress")
         self.right_container.queue_draw()
         self.content.queue_draw()
-        self._screen._ws.klippy.gcode_script("DUAL_Z_PROBE_CALIBRATE")
+        self._screen._ws.klippy.gcode_script(self.calibrate_command)
 
     def manual_calibration(self, widget):
         logging.info("dual Z offset calibration started")
@@ -241,6 +254,9 @@ class Panel(CalibrationPanel):
         self._start_calibration_state(initial_state="cleaning")
 
     def exit_calibration(self, widget=None):
+        if self.auto_action == "sample":
+            self.back()
+            return
         self.right_container.set_visible_child_name("right_default")
         self.bottom_container.set_visible_child_name("empty")
         self._screen.show_panel("offset_manage", print_test=False, remove_current=True)
@@ -273,6 +289,22 @@ class Panel(CalibrationPanel):
         else:
             self.bottom_container.set_visible_child_name("empty")
             self._start_calibration_state()
+
+    def on_save_config(self, widget=None):
+        if self.countdown_running:
+            self._countdown_finish()
+            return
+        self.set_nozzle_offset("nozzle_z_offset_val", self.finish_offset)
+        self.is_turning = False
+        self.right_container.set_visible_child_name("right_default")
+        self.bottom_container.set_visible_child_name("empty")
+        self.widgets["left_image"].set_visible_child_name("left_nozzle")
+
+    def on_discard(self, widget=None):
+        self.is_turning = False
+        self.right_container.set_visible_child_name("right_default")
+        self.bottom_container.set_visible_child_name("empty")
+        self.widgets["left_image"].set_visible_child_name("left_nozzle")
 
     def process_update(self, action, data):
         if action == "notify_status_update":
@@ -312,7 +344,8 @@ class Panel(CalibrationPanel):
             if self.is_turning:
                 self._handle_cleaning_completion()
             return
-        if "final dual-nozzle offset" not in lower_data:
+        if ("final nozzles z offset" not in lower_data
+                and "final dual-nozzle offset" not in lower_data):
             return
         self.is_turning = False
         lines = []
@@ -321,7 +354,7 @@ class Panel(CalibrationPanel):
             if stripped.startswith("//"):
                 stripped = stripped[2:].strip()
             if stripped:
-                lines.append(stripped)
+                lines.append(stripped.replace("dual-nozzle offset", "nozzles Z offset"))
         if len(lines) >= 4:
             lines.insert(3, "")
         display_text = "\n\n".join(lines)
@@ -329,12 +362,16 @@ class Panel(CalibrationPanel):
             if "desc_label_report_bed" in self.widgets:
                 self.widgets["desc_label_report_bed"].set_text(display_text)
             self.bottom_container.set_visible_child_name("save")
+            self.widgets["btn_save"].set_sensitive(False)
+            self.widgets["btn_save"].set_visible(self.auto_action == "sample")
+            self.widgets["btn_discard"].set_visible(self.auto_action == "sample")
             self.widgets["progress_stack"].set_visible_child_name("report_bed")
         else:
             if "desc_label_report_good" in self.widgets:
                 self.widgets["desc_label_report_good"].set_text(display_text)
             final_offset_line = next(
-                (line for line in lines if "final dual-nozzle offset" in line.lower()),
+                (line for line in lines
+                 if "final nozzles z offset" in line.lower()),
                 None
             )
             if final_offset_line and ": " in final_offset_line:
@@ -345,6 +382,9 @@ class Panel(CalibrationPanel):
 
             self.widgets["progress_stack"].set_visible_child_name("report_good")
             self.bottom_container.set_visible_child_name("save")
+            self.widgets["btn_save"].set_sensitive(True)
+            self.widgets["btn_save"].set_visible(self.auto_action == "sample")
+            self.widgets["btn_discard"].set_visible(self.auto_action == "sample")
             if self.auto_action != "sample":
                 self.countdown = 3
                 self.countdown_running = True

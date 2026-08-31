@@ -341,6 +341,7 @@ class Panel(CalibrationPanel):
     def on_start_calibrate(self, widget):
         self.offset_saved = False
         self.start_calibration()
+        self._screen.base_panel.show_estop_only()
         mode = self._screen.connecting_to_printer.split("-")[0]
         if mode == "F430NX":
             self.left_container.set_visible_child_name("tip")
