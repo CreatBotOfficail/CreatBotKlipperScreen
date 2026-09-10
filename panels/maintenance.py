@@ -182,7 +182,10 @@ class Panel(ScreenPanel):
             available_services = ["klipper",
                                   "moonraker", "KlipperScreen", "go2rtc"]
 
-        for service_id in available_services:
+        ordered_services = [s for s in service_config if s in available_services]
+        ordered_services += [s for s in available_services if s not in service_config]
+
+        for service_id in ordered_services:
             if service_id in service_config:
                 self.services.append({
                     "name": service_config[service_id],
@@ -599,20 +602,15 @@ class Panel(ScreenPanel):
         if response_id == Gtk.ResponseType.OK:
             logging.info(f"Restarting service: {service_name}")
 
-            if service_name == "klipper":
-                self._screen._ws.send_method(
-                    "machine.services.restart",
-                    {"service": "klipper"}
-                )
-            elif service_name == "moonraker":
-                self._screen._ws.send_method(
-                    "machine.services.restart",
-                    {"service": "moonraker"}
-                )
-            elif service_name == "KlipperScreen":
+            if service_name == "KlipperScreen":
                 os.system("systemctl restart KlipperScreen.service")
-            elif service_name == "go2rtc":
-                self._screen._ws.send_method(
-                    "machine.services.restart",
-                    {"service": "go2rtc"}
-                )
+                return
+
+            sent = self._screen._ws.send_method(
+                "machine.services.restart",
+                {"service": service_name}
+            )
+            if not sent:
+                logging.warning(
+                    f"Moonraker not connected, restarting {service_name} locally")
+                os.system(f"systemctl restart {service_name}.service")
