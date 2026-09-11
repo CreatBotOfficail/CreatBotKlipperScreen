@@ -130,6 +130,25 @@ class Panel(ScreenPanel):
         except Exception:
             pass
 
+        clog_sensors = ("filament_motion_sensor extruder_clog",
+                        "filament_motion_sensor extruder1_clog")
+        has_clog_sensor = any(self._printer.get_config_section_list(s) for s in clog_sensors)
+        if has_clog_sensor:
+            self.advanced_options.append(
+                {
+                    "filament_clog_detect": {
+                        "section": "main",
+                        "name": _("Filament clog Detection"),
+                        "type": "binary",
+                        "tooltip": _(
+                            "Detects filament clogs through the sensor."
+                        ),
+                        "value": True,
+                        "callback": self.set_filament_clog_detect,
+                    }
+                }
+            )
+
         options = self.advanced_options
         self.labels["advanced_menu"] = self._gtk.ScrolledWindow()
         self.labels["advanced"] = Gtk.Grid()
@@ -285,6 +304,9 @@ class Panel(ScreenPanel):
     def set_auto_change_nozzle(self, *args):
         self.set_configuration_feature("auto_change_nozzle", *args)
 
+    def set_filament_clog_detect(self, *args):
+        self.set_configuration_feature("filament_clog_detect", *args)
+
     def set_led_control(self, *args):
         enable_led = any(args)
         leds = self._printer.get_leds()
@@ -332,6 +354,14 @@ class Panel(ScreenPanel):
                 self.menu_list["auto_change_nozzle"].set_active(variables["auto_change_nozzle"])
             else:
                 self.menu_list["auto_change_nozzle"].set_active(False)
+
+            if "filament_clog_detect" in self.menu_list:
+                if "filament_clog_detect" in variables:
+                    current_value = self.menu_list["filament_clog_detect"].get_active()
+                    if current_value != variables["filament_clog_detect"]:
+                        self.menu_list["filament_clog_detect"].set_active(variables["filament_clog_detect"])
+                else:
+                    self.menu_list["filament_clog_detect"].set_active(False)
 
             if "auto_door_lock" in variables:
                 if "auto_door_lock" in self.menu_list:

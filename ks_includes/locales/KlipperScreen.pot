@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-17 17:43+0800\n"
+"POT-Creation-Date: 2026-09-11 15:34+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -536,6 +536,9 @@ msgstr ""
 msgid "Delete File?"
 msgstr ""
 
+msgid "Detects filament clogs through the sensor."
+msgstr ""
+
 msgid "Dev"
 msgstr ""
 
@@ -733,6 +736,9 @@ msgid "Filament Settings"
 msgstr ""
 
 msgid "Filament Used"
+msgstr ""
+
+msgid "Filament clog Detection"
 msgstr ""
 
 msgid "Filament total:"

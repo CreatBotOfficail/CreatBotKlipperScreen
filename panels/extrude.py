@@ -19,6 +19,7 @@ class Panel(ScreenPanel):
         macros = self._printer.get_config_section_list("gcode_macro ")
         self.load_filament = any("LOAD_FILAMENT" in macro.upper() for macro in macros)
         self.unload_filament = any("UNLOAD_FILAMENT" in macro.upper() for macro in macros)
+        self.filament_clog_detect = False
 
         self.speeds = ['1', '2', '5', '25']
         self.distances = ['5', '10', '15', '25']
@@ -137,16 +138,15 @@ class Panel(ScreenPanel):
         speedbox.pack_start(self.labels['extrude_speed'], True, True, 0)
         speedbox.add(speedgrid)
 
-        filament_sensors = self._printer.get_filament_sensors()
-        res = self._screen.apiclient.send_request("printer/objects/query?" + "&".join(filament_sensors))
+        self.filament_sensors = self._printer.get_filament_sensors()
+        res = self._screen.apiclient.send_request("printer/objects/query?" + "&".join(self.filament_sensors))
         if res.get('status'):
             self._printer.data.update(res['status'])
 
-        sensors = Gtk.Grid(valign=Gtk.Align.CENTER, row_spacing=5, column_spacing=5)
-        if len(filament_sensors) > 0:
-            for s, x in enumerate(filament_sensors):
-                if s > limit:
-                    break
+        self.sensors_grid = Gtk.Grid(valign=Gtk.Align.CENTER, row_spacing=5, column_spacing=5)
+        self.sensor_limit = limit
+        if len(self.filament_sensors) > 0:
+            for x in self.filament_sensors:
                 name = x[23:].strip()
                 self.labels[x] = {
                     'label': Gtk.Label(label=_("Not Enabled"), hexpand=True, halign=Gtk.Align.CENTER,
@@ -159,7 +159,7 @@ class Panel(ScreenPanel):
                 self.labels[x]['box'].pack_start(self.labels[x]['label'], True, True, 10)
                 self.labels[x]['box'].pack_start(self.labels[x]['switch'], False, False, 0)
                 self.labels[x]['box'].get_style_context().add_class("filament_sensor")
-                sensors.attach(self.labels[x]['box'], s, 0, 1, 1)
+            self.rebuild_sensors_grid()
 
         grid = Gtk.Grid(column_homogeneous=True)
         grid.attach(xbox, 0, 0, 4, 1)
@@ -176,7 +176,7 @@ class Panel(ScreenPanel):
             grid.attach(settings_box, 0, 3, 4, 1)
             grid.attach(distbox, 0, 4, 4, 1)
             grid.attach(speedbox, 0, 5, 4, 1)
-            grid.attach(sensors, 0, 6, 4, 1)
+            grid.attach(self.sensors_grid, 0, 6, 4, 1)
         else:
             grid.attach(self.buttons['extrude'], 0, 2, 1, 1)
             grid.attach(self.buttons['load'], 1, 2, 1, 1)
@@ -184,7 +184,7 @@ class Panel(ScreenPanel):
             grid.attach(self.buttons['retract'], 3, 2, 1, 1)
             grid.attach(distbox, 0, 3, 2, 1)
             grid.attach(speedbox, 2, 3, 2, 1)
-            grid.attach(sensors, 0, 4, 4, 1)
+            grid.attach(self.sensors_grid, 0, 4, 4, 1)
 
         self.menu = ['extrude_menu']
         self.labels['extrude_menu'] = grid
@@ -195,6 +195,32 @@ class Panel(ScreenPanel):
             if button in ("pressure", "retraction", "spoolman", "temperature"):
                 continue
             self.buttons[button].set_sensitive(enable)
+
+    def is_sensor_visible(self, sensor):
+        clog_sensors = ("filament_motion_sensor extruder_clog",
+                        "filament_motion_sensor extruder1_clog")
+        switch_sensors = ("filament_switch_sensor extruder",
+                          "filament_switch_sensor extruder1")
+        if sensor in clog_sensors:
+            return self.filament_clog_detect
+        if sensor in switch_sensors:
+            return not self.filament_clog_detect
+        return True
+
+    def rebuild_sensors_grid(self):
+        for child in self.sensors_grid.get_children():
+            self.sensors_grid.remove(child)
+        col = 0
+        for x in self.filament_sensors:
+            if col > self.sensor_limit:
+                break
+            if x not in self.labels:
+                continue
+            if not self.is_sensor_visible(x):
+                continue
+            self.sensors_grid.attach(self.labels[x]['box'], col, 0, 1, 1)
+            self.labels[x]['box'].show()
+            col += 1
 
     def activate(self):
         self.enable_buttons(self._printer.state in ("ready", "paused"))
@@ -216,6 +242,13 @@ class Panel(ScreenPanel):
                     self._printer.get_stat(x, "target"),
                     self._printer.get_stat(x, "power"),
                 )
+        if "save_variables" in data and "variables" in data["save_variables"]:
+            variables = data["save_variables"]["variables"]
+            if "filament_clog_detect" in variables:
+                new_val = variables["filament_clog_detect"]
+                if new_val != self.filament_clog_detect:
+                    self.filament_clog_detect = new_val
+                    self.rebuild_sensors_grid()
         if "current_extruder" in self.labels:
             self.labels["current_extruder"].set_label(self.labels[self.current_extruder].get_label())
 

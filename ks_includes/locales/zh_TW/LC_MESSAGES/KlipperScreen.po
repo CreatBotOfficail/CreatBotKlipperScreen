@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KlipperScreen\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-17 17:43+0800\n"
+"POT-Creation-Date: 2026-09-11 15:34+0800\n"
 "PO-Revision-Date: 2024-06-01 12:09+0000\n"
 "Last-Translator: 峻瑜哥 <a728728728@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <https://hosted.weblate.org/projects/"
@@ -558,6 +558,9 @@ msgstr "刪除資料夾？"
 msgid "Delete File?"
 msgstr "刪除檔案？"
 
+msgid "Detects filament clogs through the sensor."
+msgstr "通過感應器檢測耗材阻塞"
+
 msgid "Dev"
 msgstr "開發版"
 
@@ -761,6 +764,9 @@ msgstr "耗材設定"
 
 msgid "Filament Used"
 msgstr "已消耗耗材"
+
+msgid "Filament clog Detection"
+msgstr "耗材堵头检测"
 
 msgid "Filament total:"
 msgstr "使用耗材總數："
