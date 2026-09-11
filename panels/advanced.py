@@ -47,18 +47,21 @@ class Panel(ScreenPanel):
                     "callback": self.set_power_loss_recovery,
                 }
             },
-            {
-                "auto_change_nozzle": {
-                    "section": "main",
-                    "name": _("Auto Change Nozzle"),
-                    "type": "binary",
-                    "tooltip": _("Auto change nozzle when filament runout")
-                    + _("(Disable during dual extrusion printing)"),
-                    "value": "False",
-                    "callback": self.set_auto_change_nozzle,
+        ]
+        if self._printer.extrudercount > 1:
+            self.advanced_options.append(
+                {
+                    "auto_change_nozzle": {
+                        "section": "main",
+                        "name": _("Auto Change Nozzle"),
+                        "type": "binary",
+                        "tooltip": _("Auto change nozzle when filament runout")
+                        + _("(Disable during dual extrusion printing)"),
+                        "value": "False",
+                        "callback": self.set_auto_change_nozzle,
+                    }
                 }
-            },
-	]
+            )
         if not update_engine_available:
             self.advanced_options.append(
             {
@@ -350,10 +353,11 @@ class Panel(ScreenPanel):
             if "power_loss_recovery" in variables:
                 self.menu_list["power_loss_recovery"].set_active(variables["power_loss_recovery"])
 
-            if "auto_change_nozzle" in variables:
-                self.menu_list["auto_change_nozzle"].set_active(variables["auto_change_nozzle"])
-            else:
-                self.menu_list["auto_change_nozzle"].set_active(False)
+            if "auto_change_nozzle" in self.menu_list:
+                if "auto_change_nozzle" in variables:
+                    self.menu_list["auto_change_nozzle"].set_active(variables["auto_change_nozzle"])
+                else:
+                    self.menu_list["auto_change_nozzle"].set_active(False)
 
             if "filament_clog_detect" in self.menu_list:
                 if "filament_clog_detect" in variables:
