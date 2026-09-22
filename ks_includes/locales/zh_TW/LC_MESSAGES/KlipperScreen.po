@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KlipperScreen\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-14 16:20+0800\n"
+"POT-Creation-Date: 2026-09-22 14:37+0800\n"
 "PO-Revision-Date: 2024-06-01 12:09+0000\n"
 "Last-Translator: 峻瑜哥 <a728728728@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <https://hosted.weblate.org/projects/"
@@ -605,6 +605,9 @@ msgid "Door Open Protection Mode"
 msgstr "開門保護模式"
 
 msgid "Dual Color Calibration"
+msgstr "雙噴頭校準"
+
+msgid "Dual Z Calibrate"
 msgstr "雙噴頭校準"
 
 msgid "Eddy calibration"
