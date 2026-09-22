@@ -998,9 +998,16 @@ class SdbusNm:
 
     def rescan(self):
         try:
+            if not self.nm.wireless_enabled:
+                logging.debug("Skipping wifi scan: wireless disabled")
+                return None
             return self.wlan_device.request_scan({})
         except Exception as e:
-            self.popup(f"Unexpected error: {e}")
+            msg = str(e).lower()
+            if not self.nm.wireless_enabled or "not allowed" in msg or "unavailable" in msg:
+                logging.debug(f"Skipping wifi scan: {e}")
+            else:
+                self.popup(f"Unexpected error: {e}")
 
     def get_connection_path_by_ssid(self, ssid):
         existing_networks = NetworkManagerSettings().list_connections()
