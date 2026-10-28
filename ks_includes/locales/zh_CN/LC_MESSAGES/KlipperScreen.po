@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KlipperScreen\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-23 11:31+0800\n"
+"POT-Creation-Date: 2026-10-28 14:30+0800\n"
 "PO-Revision-Date: 2024-06-03 19:09+0000\n"
 "Last-Translator: wsj20050623 <2129426599@qq.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
@@ -303,6 +303,9 @@ msgstr "您确定要这样做吗？\n"
 msgid "Asks for confirmation before stopping"
 msgstr "停止打印前需要额外确认"
 
+msgid "Assist code"
+msgstr "协助码"
+
 msgid "Auto"
 msgstr "自动"
 
@@ -537,6 +540,9 @@ msgstr ""
 msgid "Current value:"
 msgstr "当前值："
 
+msgid "Customer Notes"
+msgstr "客户须知"
+
 msgid "DHCP"
 msgstr "DHCP"
 
@@ -750,6 +756,9 @@ msgstr "保存配置失败"
 msgid "Failed to scan USB device: %s"
 msgstr "无法扫描USB设备：%s"
 
+msgid "Failed to start assist"
+msgstr "开启协助失败"
+
 msgid "Failed to update network"
 msgstr "更新网络失败"
 
@@ -842,6 +851,9 @@ msgstr "获取IP地址"
 
 msgid "Go Back"
 msgstr "返回"
+
+msgid "Got it"
+msgstr "知道了"
 
 msgid "Heating and cleaning nozzles before calibration"
 msgstr "校准前加热并清洁喷嘴"
@@ -1463,6 +1475,18 @@ msgstr "检查更新"
 msgid "Remaining Time:"
 msgstr "剩余时间："
 
+msgid "Remote Assist"
+msgstr "远程协助"
+
+msgid "Remote assist requires an internet connection"
+msgstr "远程协助需要连接互联网"
+
+msgid "Remote assistance is active"
+msgstr "远程协助进行中"
+
+msgid "Remote assistance is not active"
+msgstr "远程协助未开启"
+
 msgid "Remove network"
 msgstr "删除网络"
 
@@ -1638,6 +1662,9 @@ msgstr "设置目标温度 (°C)"
 msgid "Settings"
 msgstr "设置"
 
+msgid "Share the assist code only with our support engineer."
+msgstr "请仅将协助码告知我们的售后工程师。"
+
 msgid "Show Heater Power"
 msgstr "显示加热器功率（%）"
 
@@ -1695,11 +1722,17 @@ msgstr "待机"
 msgid "Start"
 msgstr "开始"
 
+msgid "Start Assist"
+msgstr "开启协助"
+
 msgid "Start Printing"
 msgstr "开始打印"
 
 msgid "Start testing the Z offset value of the second nozzle?\n"
 msgstr "开始测试第二个喷嘴的 Z 偏移值吗？\n"
+
+msgid "Starting assist..."
+msgstr "正在开启协助..."
 
 msgid "Starting recovery for"
 msgstr "开始恢复"
@@ -1710,8 +1743,19 @@ msgstr "开始更新"
 msgid "State:"
 msgstr "状态："
 
+msgid "Stop Assist"
+msgstr "结束协助"
+
+msgid "Stopping assist..."
+msgstr "正在结束协助..."
+
 msgid "Subnet Mask"
 msgstr "子网掩码"
+
+msgid ""
+"Support connects through an encrypted temporary tunnel; there is no standing "
+"connection otherwise."
+msgstr "工程师经加密临时隧道连接，平时与设备没有任何连接。"
 
 msgid "System"
 msgstr "系统"
@@ -1719,11 +1763,19 @@ msgstr "系统"
 msgid "System:"
 msgstr "系统"
 
+msgid "Tap Stop Assist to disconnect immediately at any time."
+msgstr "随时可点击【结束协助】立即断开。"
+
 msgid "Temperature"
 msgstr "温度"
 
 msgid "Test Mode"
 msgstr "测试模式"
+
+msgid ""
+"The assist code is valid only for this session; a new code will be generated "
+"for the next remote assist."
+msgstr "协助码仅本次有效，下次远程将会生成新协助码。"
 
 msgid "The last print job was not completed continue printing?"
 msgstr "上一个打印任务未完成，是否继续打印？"
@@ -1809,6 +1861,15 @@ msgstr "USB更新"
 
 msgid "USB update failed!"
 msgstr "USB更新失败！"
+
+msgid "Unable to Start Print"
+msgstr "无法开始打印"
+
+msgid "Unable to start print, no filament loaded on Left extruder"
+msgstr "无法开始打印, 左挤出机未装耗材"
+
+msgid "Unable to start print, no filament loaded on Right extruder"
+msgstr "无法开始打印, 右挤出机未装耗材"
 
 msgid "Unknown"
 msgstr "未知"
@@ -2354,15 +2415,3 @@ msgstr "○ 重新扫描下方二维码添加打印机"
 
 #~ msgid "Keep the printer powered on and online during the session."
 #~ msgstr "协助期间请保持打印机开机并联网。"
-
-msgid "Unable to start print, no filament loaded on Left extruder"
-msgstr "无法开始打印, 左挤出机未装耗材"
-
-msgid "Unable to start print, no filament loaded on Right extruder"
-msgstr "无法开始打印, 右挤出机未装耗材"
-
-msgid "Unable to Start Print"
-msgstr "无法开始打印"
-
-msgid "Got it"
-msgstr "知道了"

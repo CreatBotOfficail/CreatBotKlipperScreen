@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-23 11:31+0800\n"
+"POT-Creation-Date: 2026-10-28 14:30+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -289,6 +289,9 @@ msgstr ""
 msgid "Asks for confirmation before stopping"
 msgstr ""
 
+msgid "Assist code"
+msgstr ""
+
 msgid "Auto"
 msgstr ""
 
@@ -515,6 +518,9 @@ msgstr ""
 msgid "Current value:"
 msgstr ""
 
+msgid "Customer Notes"
+msgstr ""
+
 msgid "DHCP"
 msgstr ""
 
@@ -723,6 +729,9 @@ msgstr ""
 msgid "Failed to scan USB device: %s"
 msgstr ""
 
+msgid "Failed to start assist"
+msgstr ""
+
 msgid "Failed to update network"
 msgstr ""
 
@@ -814,6 +823,9 @@ msgid "Getting IP address"
 msgstr ""
 
 msgid "Go Back"
+msgstr ""
+
+msgid "Got it"
 msgstr ""
 
 msgid "Heating and cleaning nozzles before calibration"
@@ -1421,6 +1433,18 @@ msgstr ""
 msgid "Remaining Time:"
 msgstr ""
 
+msgid "Remote Assist"
+msgstr ""
+
+msgid "Remote assist requires an internet connection"
+msgstr ""
+
+msgid "Remote assistance is active"
+msgstr ""
+
+msgid "Remote assistance is not active"
+msgstr ""
+
 msgid "Remove network"
 msgstr ""
 
@@ -1596,6 +1620,9 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
+msgid "Share the assist code only with our support engineer."
+msgstr ""
+
 msgid "Show Heater Power"
 msgstr ""
 
@@ -1653,10 +1680,16 @@ msgstr ""
 msgid "Start"
 msgstr ""
 
+msgid "Start Assist"
+msgstr ""
+
 msgid "Start Printing"
 msgstr ""
 
 msgid "Start testing the Z offset value of the second nozzle?\n"
+msgstr ""
+
+msgid "Starting assist..."
 msgstr ""
 
 msgid "Starting recovery for"
@@ -1668,7 +1701,18 @@ msgstr ""
 msgid "State:"
 msgstr ""
 
+msgid "Stop Assist"
+msgstr ""
+
+msgid "Stopping assist..."
+msgstr ""
+
 msgid "Subnet Mask"
+msgstr ""
+
+msgid ""
+"Support connects through an encrypted temporary tunnel; there is no standing "
+"connection otherwise."
 msgstr ""
 
 msgid "System"
@@ -1677,10 +1721,18 @@ msgstr ""
 msgid "System:"
 msgstr ""
 
+msgid "Tap Stop Assist to disconnect immediately at any time."
+msgstr ""
+
 msgid "Temperature"
 msgstr ""
 
 msgid "Test Mode"
+msgstr ""
+
+msgid ""
+"The assist code is valid only for this session; a new code will be generated "
+"for the next remote assist."
 msgstr ""
 
 msgid "The last print job was not completed continue printing?"
@@ -1760,6 +1812,15 @@ msgid "USB Update"
 msgstr ""
 
 msgid "USB update failed!"
+msgstr ""
+
+msgid "Unable to Start Print"
+msgstr ""
+
+msgid "Unable to start print, no filament loaded on Left extruder"
+msgstr ""
+
+msgid "Unable to start print, no filament loaded on Right extruder"
 msgstr ""
 
 msgid "Unknown"
