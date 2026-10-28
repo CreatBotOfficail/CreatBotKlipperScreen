@@ -1223,8 +1223,8 @@ msgstr "偏移值"
 msgid "Offset Compensation"
 msgstr "偏移补偿"
 
-msgid "Offset Manage"
-msgstr "偏移管理"
+msgid "Nozzle Offset Calibration"
+msgstr "喷嘴偏移校准"
 
 msgid "Ok"
 msgstr "确定"
@@ -1376,8 +1376,8 @@ msgstr "打印机门被打开！"
 msgid "Printing"
 msgstr "打印中"
 
-msgid "Probe Calibrate"
-msgstr "探针偏移校准"
+msgid "Z Offset Calibration"
+msgstr "Z 偏移校准"
 
 msgid "Probe Offset"
 msgstr "探针偏移"

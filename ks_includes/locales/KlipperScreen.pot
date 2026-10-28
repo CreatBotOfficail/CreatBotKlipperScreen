@@ -1191,7 +1191,7 @@ msgstr ""
 msgid "Offset Compensation"
 msgstr ""
 
-msgid "Offset Manage"
+msgid "Nozzle Offset Calibration"
 msgstr ""
 
 msgid "Ok"
@@ -1334,7 +1334,7 @@ msgstr ""
 msgid "Printing"
 msgstr ""
 
-msgid "Probe Calibrate"
+msgid "Z Offset Calibration"
 msgstr ""
 
 msgid "Probe Offset"
