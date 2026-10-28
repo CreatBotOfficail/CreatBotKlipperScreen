@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-22 14:37+0800\n"
+"POT-Creation-Date: 2026-09-23 11:31+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,12 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+msgid "\"extruder\" not hot enough"
+msgstr ""
+
+msgid "\"extruder1\" not hot enough"
+msgstr ""
 
 #, python-format
 msgid "%s will be updated to version"
@@ -960,6 +966,9 @@ msgstr ""
 msgid "Leds"
 msgstr ""
 
+msgid "Left extrude below minimum extrude temp of 100.0℃."
+msgstr ""
+
 msgid "Left extruder detects no filament, please load filament and continue."
 msgstr ""
 
@@ -1157,6 +1166,21 @@ msgstr ""
 msgid "Nothing selected"
 msgstr ""
 
+msgid "Notice! All extruders filament has run out or is clogged."
+msgstr ""
+
+msgid "Notice! Left extruder filament has run out or is clogged."
+msgstr ""
+
+msgid "Notice! Left extruder1 filament has run out or is clogged."
+msgstr ""
+
+msgid "Notice! Right extruder filament has run out or is clogged."
+msgstr ""
+
+msgid "Notice! Right extruder1 filament has run out or is clogged."
+msgstr ""
+
 msgid "Notification log empty"
 msgstr ""
 
@@ -1170,6 +1194,9 @@ msgid "Noting! Left extruder filament has been run out."
 msgstr ""
 
 msgid "Noting! Right extruder filament has been run out."
+msgstr ""
+
+msgid "Noting! extruder filament has been run out."
 msgstr ""
 
 msgid "Nozzle Offset"
@@ -1322,13 +1349,28 @@ msgstr ""
 msgid "Printer"
 msgstr ""
 
+msgid ""
+"Printer Front Door is opened. Please close the door and then start printing."
+msgstr ""
+
+msgid ""
+"Printer Rear Door is opened. Please close the door and then start printing."
+msgstr ""
+
 msgid "Printer Select"
+msgstr ""
+
+msgid ""
+"Printer Upper Door is opened. Please close the door and then start printing."
 msgstr ""
 
 msgid "Printer door is opened. Please close the door and then start printing."
 msgstr ""
 
 msgid "Printer door is opening!"
+msgstr ""
+
+msgid "Printer not homed"
 msgstr ""
 
 msgid "Printing"
@@ -1347,6 +1389,9 @@ msgid "Quad Gantry Level"
 msgstr ""
 
 msgid "RESUME ABORTED !"
+msgstr ""
+
+msgid "RESUME aborted !!!"
 msgstr ""
 
 msgid "Raise Platform"
@@ -1400,10 +1445,50 @@ msgstr ""
 msgid "Restores your print job after a power outage"
 msgstr ""
 
+#, python-format
+msgid "Restoring \"extruder\" temperature to %3.1f°C, this may take some time"
+msgstr ""
+
+#, python-format
+msgid "Restoring \"extruder1\" temperature to %3.1f°C, this may take some time"
+msgstr ""
+
+msgid "Restoring Left extruder temperature, this may take some time."
+msgstr ""
+
+msgid "Restoring Right extruder temperature, this may take some time."
+msgstr ""
+
 msgid "Restoring activated extruder temperature, this may take some time."
 msgstr ""
 
+msgid "Restoring extruder temperature, this may take some time."
+msgstr ""
+
+msgid "Restoring heater temperature, this may take some time."
+msgstr ""
+
 msgid "Resume"
+msgstr ""
+
+msgid ""
+"Resume aborted !!! \"extruder\" detects no filament, please load filament "
+"and press RESUME"
+msgstr ""
+
+msgid ""
+"Resume aborted !!! \"extruder\" not hot enough, please heat up again and "
+"press RESUME"
+msgstr ""
+
+msgid ""
+"Resume aborted !!! \"extruder1\" detects no filament, please load filament "
+"and press RESUME"
+msgstr ""
+
+msgid ""
+"Resume aborted !!! \"extruder1\" not hot enough, please heat up again and "
+"press RESUME"
 msgstr ""
 
 msgid "Retract"
@@ -1431,6 +1516,9 @@ msgid "Right Nozzle XY Offset Calibration"
 msgstr ""
 
 msgid "Right Nozzle Z Offset Calibration"
+msgstr ""
+
+msgid "Right extrude below minimum extrude temp of 100.0℃."
 msgstr ""
 
 msgid "Right extruder detects no filament, please load filament and continue."
@@ -1814,6 +1902,10 @@ msgid "day"
 msgid_plural "days"
 msgstr[0] ""
 msgstr[1] ""
+
+msgid ""
+"extruder not hot enough, Please confirm whether the temperature is normal."
+msgstr ""
 
 msgid "factory settings"
 msgstr ""

@@ -102,6 +102,7 @@ class KlipperScreen(Gtk.Window):
         self.apiclient = None
         self.dialogs = []
         self.confirm = None
+        self.print_start_error_dialog = None
         self.panels_reinit = []
         self.last_popup_time = datetime.now()
         self.license = LicenseManager()
@@ -471,6 +472,46 @@ class KlipperScreen(Gtk.Window):
         self.popup_message = None
         return False
 
+    def print_start_callback(self, response, *args):
+        # Callback for printer.print.start requests: shows an error
+        # interface when moonraker refuses to start the job
+        if isinstance(response, dict) and 'error' in response:
+            err = response['error']
+            message = err.get('message', '') if isinstance(err, dict) else str(err)
+            self.show_print_start_error_dialog(message or "Unknown error")
+
+    def show_print_start_error_dialog(self, message):
+        logging.error(f"Print start refused: {message}")
+        if self.print_start_error_dialog is not None:
+            self.close_print_start_error_dialog()
+        body = GLib.markup_escape_text(_(message))
+        label = Gtk.Label(wrap=True, wrap_mode=Pango.WrapMode.WORD_CHAR,
+                          hexpand=True, vexpand=True, halign=Gtk.Align.CENTER,
+                          valign=Gtk.Align.CENTER)
+        label.set_markup(f"<span size='x-large'><b>"
+                         f"{_('Unable to Start Print')}"
+                         f"</b></span>\n\n<span size='large'>{body}</span>")
+        scroll = self.gtk.ScrolledWindow()
+        scroll.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC)
+        scroll.add(label)
+        buttons = [
+            {"name": _("Got it"), "response": Gtk.ResponseType.CLOSE,
+             "style": "dialog-error"},
+        ]
+        self.print_start_error_dialog = self.gtk.Dialog(
+            _("Unable to Start Print"), buttons, scroll,
+            self._print_start_error_dialog_response)
+
+    def _print_start_error_dialog_response(self, dialog, response_id):
+        self.close_print_start_error_dialog()
+        return False
+
+    def close_print_start_error_dialog(self):
+        if self.print_start_error_dialog is None:
+            return
+        dialog, self.print_start_error_dialog = self.print_start_error_dialog, None
+        self.gtk.remove_dialog(dialog)
+
     def show_error_modal(self, title_msg, description="", help_msg=None):
         logging.error(f"Showing error modal: {title_msg} {description}")
 
@@ -798,6 +839,9 @@ class KlipperScreen(Gtk.Window):
         self.connecting = True
         self.connected_printer = None
         self.initialized = False
+        if self.print_start_error_dialog is not None:
+            self.gtk.remove_dialog(self.print_start_error_dialog)
+            self.print_start_error_dialog = None
         if 'printer_select' not in self._cur_panels:
             self.printer_initializing(_("Lost Connection to Moonraker"), go_to_splash=True)
             self.connect_printer(self.connecting_to_printer)

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KlipperScreen\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-22 14:37+0800\n"
+"POT-Creation-Date: 2026-09-23 11:31+0800\n"
 "PO-Revision-Date: 2024-06-03 19:09+0000\n"
 "Last-Translator: wsj20050623 <2129426599@qq.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
@@ -18,6 +18,12 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Weblate 5.6-dev\n"
+
+msgid "\"extruder\" not hot enough"
+msgstr "\"extruder\" 温度不够"
+
+msgid "\"extruder1\" not hot enough"
+msgstr "\"extruder1\" 温度不够"
 
 #, python-format
 msgid "%s will be updated to version"
@@ -990,6 +996,9 @@ msgstr "层："
 msgid "Leds"
 msgstr "灯珠"
 
+msgid "Left extrude below minimum extrude temp of 100.0℃."
+msgstr "左挤出机低于最低挤出温度 100.0℃。"
+
 msgid "Left extruder detects no filament, please load filament and continue."
 msgstr "左挤出机未检测到耗材，请加载耗材后继续。"
 
@@ -1189,6 +1198,21 @@ msgstr "不工作或未配置"
 msgid "Nothing selected"
 msgstr "未选择任何内容"
 
+msgid "Notice! All extruders filament has run out or is clogged."
+msgstr "注意! 所有挤出机耗材已用尽或堵塞"
+
+msgid "Notice! Left extruder filament has run out or is clogged."
+msgstr "注意! 左挤出机耗材已用尽或堵塞"
+
+msgid "Notice! Left extruder1 filament has run out or is clogged."
+msgstr "注意! 左挤出机1耗材已用尽或堵塞"
+
+msgid "Notice! Right extruder filament has run out or is clogged."
+msgstr "注意! 右挤出机耗材已用尽或堵塞"
+
+msgid "Notice! Right extruder1 filament has run out or is clogged."
+msgstr "注意! 右挤出机1耗材已用尽或堵塞"
+
 msgid "Notification log empty"
 msgstr "通知日志为空"
 
@@ -1203,6 +1227,9 @@ msgstr "请注意! 左挤出机耗材已用尽"
 
 msgid "Noting! Right extruder filament has been run out."
 msgstr "请注意! 右挤出机耗材已用尽"
+
+msgid "Noting! extruder filament has been run out."
+msgstr "请注意! 挤出机耗材已用尽"
 
 msgid "Nozzle Offset"
 msgstr "喷头偏移"
@@ -1364,14 +1391,29 @@ msgstr "打印验证"
 msgid "Printer"
 msgstr "打印机"
 
+msgid ""
+"Printer Front Door is opened. Please close the door and then start printing."
+msgstr "打印机前门已打开。请关门后再开始打印。"
+
+msgid ""
+"Printer Rear Door is opened. Please close the door and then start printing."
+msgstr "打印机后门已打开。请关门后再开始打印。"
+
 msgid "Printer Select"
 msgstr "打印机选择"
+
+msgid ""
+"Printer Upper Door is opened. Please close the door and then start printing."
+msgstr "打印机上门已打开。请关门后再开始打印。"
 
 msgid "Printer door is opened. Please close the door and then start printing."
 msgstr "打印机门已打开。请关闭打印机门，然后开始打印。"
 
 msgid "Printer door is opening!"
 msgstr "打印机门被打开！"
+
+msgid "Printer not homed"
+msgstr "打印机未归零"
 
 msgid "Printing"
 msgstr "打印中"
@@ -1390,6 +1432,9 @@ msgstr "龙门架调平"
 
 msgid "RESUME ABORTED !"
 msgstr "恢复中断！"
+
+msgid "RESUME aborted !!!"
+msgstr "恢复中断 !!!"
 
 msgid "Raise Platform"
 msgstr "升高平台"
@@ -1442,11 +1487,51 @@ msgstr "恢复出厂设置"
 msgid "Restores your print job after a power outage"
 msgstr "在断电后恢复您的打印作业"
 
+#, python-format
+msgid "Restoring \"extruder\" temperature to %3.1f°C, this may take some time"
+msgstr "正在将 \"extruder\" 温度恢复到 %3.1f°C，可能需要一些时间"
+
+#, python-format
+msgid "Restoring \"extruder1\" temperature to %3.1f°C, this may take some time"
+msgstr "正在将 \"extruder1\" 温度恢复到 %3.1f°C，可能需要一些时间"
+
+msgid "Restoring Left extruder temperature, this may take some time."
+msgstr "恢复左挤出机温度，可能需要一些时间。"
+
+msgid "Restoring Right extruder temperature, this may take some time."
+msgstr "恢复右挤出机温度，可能需要一些时间。"
+
 msgid "Restoring activated extruder temperature, this may take some time."
 msgstr "恢复激活喷头的温度，可能需要一些时间。"
 
+msgid "Restoring extruder temperature, this may take some time."
+msgstr "恢复挤出机温度，可能需要一些时间。"
+
+msgid "Restoring heater temperature, this may take some time."
+msgstr "恢复加热器温度，可能需要一些时间。"
+
 msgid "Resume"
 msgstr "继续"
+
+msgid ""
+"Resume aborted !!! \"extruder\" detects no filament, please load filament "
+"and press RESUME"
+msgstr "恢复中断 !!! \"extruder\" 未检测到耗材，请装载耗材后按恢复打印"
+
+msgid ""
+"Resume aborted !!! \"extruder\" not hot enough, please heat up again and "
+"press RESUME"
+msgstr "恢复中断 !!! \"extruder\" 温度不够，请重新加热后按恢复打印"
+
+msgid ""
+"Resume aborted !!! \"extruder1\" detects no filament, please load filament "
+"and press RESUME"
+msgstr "恢复中断 !!! \"extruder1\" 未检测到耗材，请装载耗材后按恢复打印"
+
+msgid ""
+"Resume aborted !!! \"extruder1\" not hot enough, please heat up again and "
+"press RESUME"
+msgstr "恢复中断 !!! \"extruder1\" 温度不够，请重新加热后按恢复打印"
 
 msgid "Retract"
 msgstr "抽回"
@@ -1474,6 +1559,9 @@ msgstr "右喷嘴XY偏移校准"
 
 msgid "Right Nozzle Z Offset Calibration"
 msgstr "右喷嘴Z偏移校准"
+
+msgid "Right extrude below minimum extrude temp of 100.0℃."
+msgstr "右挤出机低于最低挤出温度 100.0℃。"
 
 msgid "Right extruder detects no filament, please load filament and continue."
 msgstr "右挤出机未检测到耗材，请加载耗材后继续"
@@ -1862,6 +1950,10 @@ msgid "day"
 msgid_plural "days"
 msgstr[0] "天"
 
+msgid ""
+"extruder not hot enough, Please confirm whether the temperature is normal."
+msgstr "挤出机温度不够，请确认温度是否正常。"
+
 msgid "factory settings"
 msgstr "工厂设置"
 
@@ -2043,9 +2135,6 @@ msgstr "○ 重新扫描下方二维码添加打印机"
 #~ msgid "Starting WiFi Association"
 #~ msgstr "开始WiFi连接"
 
-#~ msgid "Restoring Left extruder temperature, this may take some time"
-#~ msgstr "恢复左挤出机温度，这可能需要一些时间"
-
 #~ msgid "NOTE: Edit your printer.cfg to save manual calibration changes."
 #~ msgstr "请编辑您的 printer.cfg 文件以保存手动校准的更改"
 
@@ -2075,9 +2164,6 @@ msgstr "○ 重新扫描下方二维码添加打印机"
 
 #~ msgid "PSK for"
 #~ msgstr "PSK"
-
-#~ msgid "Printer Connections"
-#~ msgstr "已连接的打印机"
 
 #~ msgid "model select"
 #~ msgstr "型号选择"
@@ -2262,3 +2348,21 @@ msgstr "○ 重新扫描下方二维码添加打印机"
 
 #~ msgid "Load Average"
 #~ msgstr "平均负载"
+
+#~ msgid "Device SN"
+#~ msgstr "设备 SN"
+
+#~ msgid "Keep the printer powered on and online during the session."
+#~ msgstr "协助期间请保持打印机开机并联网。"
+
+msgid "Unable to start print, no filament loaded on Left extruder"
+msgstr "无法开始打印, 左挤出机未装耗材"
+
+msgid "Unable to start print, no filament loaded on Right extruder"
+msgstr "无法开始打印, 右挤出机未装耗材"
+
+msgid "Unable to Start Print"
+msgstr "无法开始打印"
+
+msgid "Got it"
+msgstr "知道了"

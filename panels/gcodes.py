@@ -353,7 +353,8 @@ class Panel(ScreenPanel):
                         )
                     return
             logging.info(f"Starting print: {filename}")
-            self._screen._ws.klippy.print_start(filename)
+            self._screen._ws.klippy.print_start(
+                filename, self._screen.print_start_callback)
 
     def get_info_str(self, item, path):
         info = ""
