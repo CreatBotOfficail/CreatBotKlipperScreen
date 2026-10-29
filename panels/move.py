@@ -10,8 +10,8 @@ from ks_includes.screen_panel import ScreenPanel
 
 
 class Panel(ScreenPanel):
-    distances = [".1", ".5", "1", "5", "10", "25", "50"]
-    distance = distances[-2]
+    distances = [".1", ".5", "1", "5", "10", "25", "50", "100"]
+    distance = "25"
 
     def __init__(self, screen, title):
         title = title or _("Move")
@@ -21,7 +21,7 @@ class Panel(ScreenPanel):
             dis = self.ks_printer_cfg.get("move_distances", "")
             if re.match(r"^[0-9,\.\s]+$", dis):
                 dis = [str(i.strip()) for i in dis.split(",")]
-                if 1 < len(dis) <= 7:
+                if 1 < len(dis) <= 8:
                     self.distances = dis
                     self.distance = self.distances[-2]
 
