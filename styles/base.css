@@ -352,6 +352,11 @@ trough {
     min-height: 350px;
 }
 
+/* Compact heater list (vertical screens with many heaters): all devices on one screen */
+.heatergraph-compact {
+    min-height: 150px;
+}
+
 .heater-list scrollbar slider{
     min-width: 1.5em;
 }
@@ -370,6 +375,16 @@ trough {
     margin: .2em;
     min-height: 2.9em;
     padding: 0 .5em;
+}
+
+.heater-grid-compact button {
+    margin: .1em;
+    min-height: 1.9em;
+    padding: 0 .4em;
+}
+
+.heater-grid-compact label {
+    font-size: .9em;
 }
 
 .keyboard_matchbox {

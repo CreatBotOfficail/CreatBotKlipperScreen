@@ -133,7 +133,8 @@ class Panel(MenuPanel):
         if self._show_heater_power and self._printer.device_has_power(device):
             self.labels['da'].add_object(device, "powers", rgb, True, False)
 
-        name = self._gtk.Button(image, self.prettify(devname), None, self.bts, Gtk.PositionType.LEFT, 1)
+        scale = self.bts * (0.8 if getattr(self, "compact", False) else 1)
+        name = self._gtk.Button(image, self.prettify(devname), None, scale, Gtk.PositionType.LEFT, 1)
         name.connect("clicked", self.toggle_visibility, device)
         name.set_alignment(0, .5)
         name.get_style_context().add_class(class_name)
@@ -229,8 +230,14 @@ class Panel(MenuPanel):
 
     def create_left_panel(self):
 
+        temp_devices = self._printer.get_temp_devices()
+        # Vertical screens with many heaters: compact the rows so all of them fit without scrolling
+        self.compact = self._screen.vertical_mode and len(temp_devices) >= 5
+
         self.labels['devices'] = Gtk.Grid(vexpand=False)
         self.labels['devices'].get_style_context().add_class('heater-grid')
+        if self.compact:
+            self.labels['devices'].get_style_context().add_class('heater-grid-compact')
 
         name = Gtk.Label()
         temp = Gtk.Label(label=_("Temp (°C)"))
@@ -239,6 +246,8 @@ class Panel(MenuPanel):
         self.labels['devices'].attach(temp, 1, 0, 1, 1)
 
         self.labels['da'] = HeaterGraph(self._screen, self._printer, self._gtk.font_size)
+        if self.compact:
+            self.labels['da'].get_style_context().add_class('heatergraph-compact')
 
         scroll = self._gtk.ScrolledWindow(steppers=False)
         scroll.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC)
@@ -248,7 +257,7 @@ class Panel(MenuPanel):
         self.left_panel = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
         self.left_panel.add(scroll)
 
-        for d in self._printer.get_temp_devices():
+        for d in temp_devices:
             self.add_device(d)
 
         return self.left_panel
