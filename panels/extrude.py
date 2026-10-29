@@ -36,6 +36,15 @@ class Panel(ScreenPanel):
                     self.speeds = vel
         self.distance = int(self.distances[1])
         self.speed = int(self.speeds[1])
+        # Buttons that must not be shown on some machines (e.g. P800: no retract/load/unload allowed)
+        self.hidden_buttons = set()
+        if self.ks_printer_cfg is not None:
+            hide = self.ks_printer_cfg.get("hide_extrude_buttons", "")
+            for name in re.split(r"[,\s]+", hide.strip().lower()):
+                if name in ("load", "unload", "retract"):
+                    self.hidden_buttons.add(name)
+            if self.hidden_buttons:
+                logging.info(f"Hidden extrude buttons: {', '.join(sorted(self.hidden_buttons))}")
         self.buttons = {
             'extrude': self._gtk.Button("extrude", _("Extrude"), "color4"),
             'load': self._gtk.Button("arrow-down", _("Load"), "color3"),
@@ -174,24 +183,36 @@ class Panel(ScreenPanel):
         grid = Gtk.Grid(column_homogeneous=True)
         grid.attach(xbox, 0, 0, 4, 1)
 
+        # Build the action rows from the buttons that are not hidden, so the layout stays compact
         if self._screen.vertical_mode:
-            grid.attach(self.buttons['extrude'], 0, 1, 2, 1)
-            grid.attach(self.buttons['retract'], 2, 1, 2, 1)
-            grid.attach(self.buttons['load'], 0, 2, 2, 1)
-            grid.attach(self.buttons['unload'], 2, 2, 2, 1)
+            action_buttons = [
+                self.buttons[key] for key in ("extrude", "retract", "load", "unload")
+                if key not in self.hidden_buttons
+            ]
+            row = 1
+            if len(action_buttons) == 1:
+                grid.attach(action_buttons[0], 0, row, 4, 1)
+                row += 1
+            else:
+                for i, button in enumerate(action_buttons):
+                    if i and i % 2 == 0:
+                        row += 1
+                    grid.attach(button, (i % 2) * 2, row, 2, 1)
+                row += 1
             settings_box = Gtk.Box(homogeneous=True)
             settings_box.add(self.buttons['pressure'])
             if self._printer.get_config_section("firmware_retraction"):
                 settings_box.add(self.buttons['retraction'])
-            grid.attach(settings_box, 0, 3, 4, 1)
-            grid.attach(distbox, 0, 4, 4, 1)
-            grid.attach(speedbox, 0, 5, 4, 1)
-            grid.attach(sensors, 0, 6, 4, 1)
+            grid.attach(settings_box, 0, row, 4, 1)
+            grid.attach(distbox, 0, row + 1, 4, 1)
+            grid.attach(speedbox, 0, row + 2, 4, 1)
+            grid.attach(sensors, 0, row + 3, 4, 1)
         else:
-            grid.attach(self.buttons['extrude'], 0, 2, 1, 1)
-            grid.attach(self.buttons['load'], 1, 2, 1, 1)
-            grid.attach(self.buttons['unload'], 2, 2, 1, 1)
-            grid.attach(self.buttons['retract'], 3, 2, 1, 1)
+            action_box = Gtk.Box(homogeneous=True)
+            for key in ("extrude", "load", "unload", "retract"):
+                if key not in self.hidden_buttons:
+                    action_box.add(self.buttons[key])
+            grid.attach(action_box, 0, 2, 4, 1)
             grid.attach(distbox, 0, 3, 2, 1)
             grid.attach(speedbox, 2, 3, 2, 1)
             grid.attach(sensors, 0, 4, 4, 1)
@@ -203,6 +224,8 @@ class Panel(ScreenPanel):
     def enable_buttons(self, enable):
         for button in self.buttons:
             if button in ("pressure", "retraction", "spoolman", "temperature"):
+                continue
+            if button in self.hidden_buttons:
                 continue
             self.buttons[button].set_sensitive(enable)
 
