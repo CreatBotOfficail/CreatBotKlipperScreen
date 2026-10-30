@@ -11,22 +11,21 @@ import logging
 import os
 import random
 import re
+import shutil
 import signal
 import string
 import subprocess
 import threading
 import time
 
-BASE_DIR = "/opt/remote_assist"
-FRPC_BIN = BASE_DIR + "/bin/frpc"
-RUN_DIR = BASE_DIR + "/run"
-KEYS_FILE = BASE_DIR + "/keys.conf"
+FRPC_BIN = "frpc"
+KEYS_FILE = "/etc/frp/keys.conf"
 
 # ---- Site-specific parameter (not secret) ----
 SERVER_PORT = 7000                         # frps bindPort
 
 # Secrets (auth_token / dev_key) are NOT stored in this repo. They live in
-# BASE_DIR/keys.conf on the printer (chmod 600, deployed via a private
+# /etc/frp/keys.conf on the printer (chmod 600, deployed via a private
 # channel / buildroot overlay), keeping them out of any public repository.
 # Device owners can always extract them from the device itself - the point
 # is only to keep them out of source control.
@@ -157,8 +156,8 @@ class AssistSession:
     next _launch.
     """
 
-    def __init__(self, base_dir=BASE_DIR):
-        self.run_dir = os.path.join(base_dir, "run")
+    def __init__(self, run_dir="/tmp/frpc"):
+        self.run_dir = run_dir
         self.conf_file = os.path.join(self.run_dir, "frpc-current.toml")
         self.pid_file = os.path.join(self.run_dir, "frpc.pid")
         self.code_file = os.path.join(self.run_dir, "code")
@@ -209,6 +208,32 @@ class AssistSession:
         finally:
             proc.stdout.close()
 
+    def _kill_stale(self):
+        """Kill any leftover frpc still running with a session config.
+
+        Covers processes the pid file lost track of: an old run_dir path
+        (e.g. after an upgrade moved the state dir), a /tmp cleanup after
+        reboot with frpc still alive, or a pid file deleted while frpc
+        kept running. Matched by cmdline so unrelated frpc usage elsewhere
+        on the printer is never touched.
+        """
+        for entry in os.listdir("/proc"):
+            if not entry.isdigit():
+                continue
+            try:
+                with open("/proc/%s/cmdline" % entry, "rb") as f:
+                    cmdline = f.read().replace(b"\0", b" ").decode("utf-8", "replace")
+            except OSError:
+                continue
+            if "frpc" not in cmdline or "frpc-current.toml" not in cmdline:
+                continue
+            try:
+                os.kill(int(entry), signal.SIGTERM)
+                logging.warning("killed stale frpc pid %s", entry)
+            except (OSError, ValueError):
+                pass
+        time.sleep(1)
+
     def _launch(self, code, keys):
         """Render a fresh config and start frpc (new session entry point;
         also clears the stop flag left by the previous stop)."""
@@ -218,6 +243,7 @@ class AssistSession:
             os.remove(self.stop_flag)
         except OSError:
             pass
+        self._kill_stale()
         conf = FRPC_TEMPLATE.format(
             server_addr=keys["server_addr"], server_port=SERVER_PORT,
             auth_token=keys["auth_token"], code=code, dev_key=keys["dev_key"],
@@ -247,6 +273,10 @@ class AssistSession:
             except OSError:
                 pass
             time.sleep(0.5)
+        if self._pid() is None:
+            # pid file is gone but the process may have been reparented
+            # without exiting (race); sweep by cmdline as a last resort
+            self._kill_stale()
         return self._pid() is None
 
     # ----------------------------------------------------------- watchdog
@@ -293,7 +323,7 @@ class AssistSession:
                 # frpc alive but session files missing = broken session,
                 # tear it down and start over
                 self._stop_locked()
-            if not os.access(FRPC_BIN, os.X_OK):
+            if shutil.which(FRPC_BIN) is None:
                 raise SessionError("missing_frpc")
             keys = _load_keys()
             code = code or _rand(string.digits, 6)
