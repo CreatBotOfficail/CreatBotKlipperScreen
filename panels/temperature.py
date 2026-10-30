@@ -390,6 +390,9 @@ class Panel(ScreenPanel):
 
         self.labels["da"].add_object(device, "temperatures", rgb, False, False)
         temp = self._gtk.Button(label="", lines=1)
+        if getattr(self, "compact", False):
+            name.set_vexpand(False)
+            temp.set_vexpand(False)
         find_widget(temp, Gtk.Label).set_ellipsize(False)
 
         if self._printer.device_has_target(device):
@@ -547,6 +550,9 @@ class Panel(ScreenPanel):
 
         scroll = self._gtk.ScrolledWindow(steppers=False)
         scroll.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC)
+        if self.compact:
+            scroll.set_vexpand(False)
+            scroll.set_propagate_natural_height(True)
         scroll.get_style_context().add_class("heater-list")
         scroll.add(self.labels["devices"])
 
