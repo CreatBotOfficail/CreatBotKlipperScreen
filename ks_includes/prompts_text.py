@@ -44,6 +44,7 @@ prompts_text = [
     _("Ok"),
     _("Disabled"),
     _("Pause Print"),
+    _("Unable to Start Print"),
     _("Unable to start print, no filament loaded on Left extruder"),
     _("Unable to start print, no filament loaded on Right extruder"),
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KlipperScreen\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-30 09:47+0800\n"
+"POT-Creation-Date: 2026-11-03 16:39+0800\n"
 "PO-Revision-Date: 2024-06-03 19:09+0000\n"
 "Last-Translator: wsj20050623 <2129426599@qq.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
@@ -848,9 +848,6 @@ msgstr "获取IP地址"
 
 msgid "Go Back"
 msgstr "返回"
-
-msgid "Got it"
-msgstr "知道了"
 
 msgid "Heating and cleaning nozzles before calibration"
 msgstr "校准前加热并清洁喷嘴"
@@ -2077,6 +2074,9 @@ msgstr "○ 重新扫描左侧二维码添加打印机"
 
 msgid "○ Rescan the QR code below to add printer"
 msgstr "○ 重新扫描下方二维码添加打印机"
+
+#~ msgid "Got it"
+#~ msgstr "知道了"
 
 #~ msgid "Align datum"
 #~ msgstr "基准点对齐"
