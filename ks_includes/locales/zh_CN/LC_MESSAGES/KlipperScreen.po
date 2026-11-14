@@ -774,6 +774,9 @@ msgstr "耗材"
 msgid "Filament Chamber Settings"
 msgstr "耗材仓设置"
 
+msgid "Filament Error!"
+msgstr "耗材错误！"
+
 msgid "Filament Settings"
 msgstr "耗材设置"
 
@@ -782,6 +785,15 @@ msgstr "已用耗材"
 
 msgid "Filament clog Detection"
 msgstr "耗材堵头检测"
+
+msgid "Filament has run out in all extruders."
+msgstr "所有挤出机耗材已用尽"
+
+msgid "Filament has run out or is clogged in all extruders."
+msgstr "所有挤出机耗材已用尽或堵塞"
+
+msgid "Filament has run out."
+msgstr "耗材已用尽"
 
 msgid "Filament total:"
 msgstr "使用耗材总数："
@@ -1007,6 +1019,12 @@ msgstr "左挤出机低于最低挤出温度 100.0℃。"
 
 msgid "Left extruder detects no filament, please load filament and continue."
 msgstr "左挤出机未检测到耗材，请加载耗材后继续。"
+
+msgid "Left extruder filament has run out or is clogged."
+msgstr "左挤出机耗材已用尽或堵塞"
+
+msgid "Left extruder filament has run out."
+msgstr "左挤出机耗材已用尽"
 
 msgid "Left extruder not hot enough, will reheat and continue."
 msgstr "左挤出机温度不足，将重新加热后继续"
@@ -1581,6 +1599,12 @@ msgstr "右挤出机低于最低挤出温度 100.0℃。"
 msgid "Right extruder detects no filament, please load filament and continue."
 msgstr "右挤出机未检测到耗材，请加载耗材后继续"
 
+msgid "Right extruder filament has run out or is clogged."
+msgstr "右挤出机耗材已用尽或堵塞"
+
+msgid "Right extruder filament has run out."
+msgstr "右挤出机耗材已用尽"
+
 msgid "Right extruder not hot enough, will reheat and continue."
 msgstr "右挤出机温度不足，将重新加热后继续"
 
@@ -2075,36 +2099,6 @@ msgstr "○ 重新扫描左侧二维码添加打印机"
 msgid "○ Rescan the QR code below to add printer"
 msgstr "○ 重新扫描下方二维码添加打印机"
 
-#~ msgid "Got it"
-#~ msgstr "知道了"
-
-#~ msgid "Align datum"
-#~ msgstr "基准点对齐"
-
-#~ msgid "Extra Large"
-#~ msgstr "特大"
-
-#~ msgid "Font Size"
-#~ msgstr "字体大小"
-
-#~ msgid "Inversely affects the icon size"
-#~ msgstr "和预览图大小成反比"
-
-#~ msgid "Large"
-#~ msgstr "大"
-
-#~ msgid "Maximum"
-#~ msgstr "最大"
-
-#~ msgid "Medium"
-#~ msgstr "中"
-
-#~ msgid "Small"
-#~ msgstr "小"
-
-#~ msgid "Interface"
-#~ msgstr "接口"
-
 #~ msgid ""
 #~ "1. Advanced setting: Use only when necessary (e.g., nozzle/hotend "
 #~ "replacement, post-collision, or mechanical zero adjustment)."
@@ -2122,46 +2116,87 @@ msgstr "○ 重新扫描下方二维码添加打印机"
 #~ msgid "3. If you have any questions, please contact customer service."
 #~ msgstr "3、如有疑惑请联系售后支持。"
 
+#~ msgid "<span font-size='x-large'>Calibration Camera View</span>"
+#~ msgstr "<span font-size='x-large'>校准摄像头画面</span>"
+
+#~ msgid "?"
+#~ msgstr "?"
+
+#~ msgid "Add Printer"
+#~ msgstr "添加打印机"
+
+#~ msgid "Add profile"
+#~ msgstr "添加配置文件"
+
+#~ msgid "Align datum"
+#~ msgstr "基准点对齐"
+
 #~ msgid "Auto Calibration"
 #~ msgstr "自动校准"
 
 #~ msgid "Auto-calibrate"
 #~ msgstr "自动校准"
 
+#~ msgid "Bltouch found applied offset"
+#~ msgstr "Bltouch 发现应用的偏移量"
+
 #~ msgid "Calibrated"
 #~ msgstr "已校准"
+
+#~ msgid "Calibrated, save configuration to make it permanent"
+#~ msgstr "已校准，保存配置后生效"
+
+#~ msgid "Camera Calibrate"
+#~ msgstr "摄像头校准"
+
+#~ msgid "Cancel Change"
+#~ msgstr "取消更改"
+
+#~ msgid "Channel"
+#~ msgstr "群组"
+
+#~ msgid ""
+#~ "Check /tmp/KlipperScreen.log for more information.\n"
+#~ "Please submit an issue on GitHub for help."
+#~ msgstr ""
+#~ "检查/tmp/KlipperScreen.log以获取更多信息。\n"
+#~ "请在GitHub上提交问题以寻求帮助。"
+
+#~ msgid "Connected"
+#~ msgstr "已连接"
+
+#~ msgid "Control"
+#~ msgstr "控制"
 
 #~ msgid "Current tool offset"
 #~ msgstr "当前工具偏移"
 
+#~ msgid "Decrease"
+#~ msgstr "减少"
+
+#~ msgid "Delete"
+#~ msgstr "删除"
+
+#~ msgid "Device SN"
+#~ msgstr "设备 SN"
+
+#~ msgid "Displayed Macros"
+#~ msgstr "宏命令显示开关"
+
+#~ msgid "Do you want to let KlipperScreen try to solve the issue?"
+#~ msgstr "你想让KlipperScreen尝试解决这个问题吗?"
+
+#~ msgid "Duration Only"
+#~ msgstr "持续时间"
+
 #~ msgid "Eddy Calibrate"
 #~ msgstr "涡流校准"
 
-#~ msgid "Notes:"
-#~ msgstr "注意："
+#~ msgid "Enabled successfully"
+#~ msgstr "启用成功"
 
-#~ msgid ""
-#~ "Please adjust the temperature according to the filament printing "
-#~ "parameters and ensure the filament in both nozzles is consistent"
-#~ msgstr "请根据耗材的打印参数调整温度，并确保两个喷嘴中的耗材一致"
-
-#~ msgid "Position Check"
-#~ msgstr "位置检查"
-
-#~ msgid "Save settings"
-#~ msgstr "保存设置"
-
-#~ msgid "Start Calibration"
-#~ msgstr "开始校准"
-
-#~ msgid "Print Test"
-#~ msgstr "打印验证"
-
-#~ msgid "<span font-size='x-large'>Calibration Camera View</span>"
-#~ msgstr "<span font-size='x-large'>校准摄像头画面</span>"
-
-#~ msgid "Camera Calibrate"
-#~ msgstr "摄像头校准"
+#~ msgid "Ended official support in June 2023"
+#~ msgstr "2023年6月结束官方支持"
 
 #~ msgid "Error: Camera not found!"
 #~ msgstr "未发现摄像头！"
@@ -2169,35 +2204,59 @@ msgstr "○ 重新扫描下方二维码添加打印机"
 #~ msgid "Everything is ready! Click [Save] to apply nozzle offset."
 #~ msgstr "一切就绪!点击[保存]按钮应用喷嘴偏移。"
 
-#~ msgid "Add profile"
-#~ msgstr "添加配置文件"
+#~ msgid "Extra Large"
+#~ msgstr "特大"
 
-#~ msgid "Profile Name:"
-#~ msgstr "配置文件名称："
+#~ msgid "Fan Off"
+#~ msgstr "关闭风扇"
 
-#~ msgid "Klipper Restart"
-#~ msgstr "重启Klipper"
+#~ msgid "Fan On"
+#~ msgstr "打开风扇"
 
-#~ msgid "Leveling only in the actual print area"
-#~ msgstr "仅在实际打印区域进行床调平"
+#~ msgid "Fast"
+#~ msgstr "加速"
 
-#~ msgid "System Restart"
-#~ msgstr "重启系统"
+#~ msgid "File Estimation (default)"
+#~ msgstr "文件 (默认)"
 
-#~ msgid "System Shutdown"
-#~ msgstr "关闭系统"
+#~ msgid "Font Size"
+#~ msgstr "字体大小"
 
-#~ msgid "Enabled successfully"
-#~ msgstr "启用成功"
+#~ msgid "Fullscreen"
+#~ msgstr "全屏"
 
-#~ msgid "Connected"
-#~ msgstr "已连接"
+#~ msgid "Got it"
+#~ msgstr "知道了"
 
-#~ msgid "Starting WiFi Association"
-#~ msgstr "开始WiFi连接"
+#~ msgid "Hidden"
+#~ msgstr "隐藏的"
 
-#~ msgid "NOTE: Edit your printer.cfg to save manual calibration changes."
-#~ msgstr "请编辑您的 printer.cfg 文件以保存手动校准的更改"
+#~ msgid "Hide"
+#~ msgstr "隐藏"
+
+#~ msgid "Homing"
+#~ msgstr "归零"
+
+#~ msgid "IPv4"
+#~ msgstr "IPv4 地址"
+
+#~ msgid "IPv6"
+#~ msgstr "IPv6 地址"
+
+#~ msgid "Increase"
+#~ msgstr "增加"
+
+#~ msgid "Initializing"
+#~ msgstr "初始化"
+
+#~ msgid "Insufficient priviledges detected"
+#~ msgstr "检测到权限不足"
+
+#~ msgid "Interface"
+#~ msgstr "接口"
+
+#~ msgid "Inversely affects the icon size"
+#~ msgstr "和预览图大小成反比"
 
 #~ msgid "Invert X"
 #~ msgstr "反转X轴"
@@ -2208,148 +2267,11 @@ msgstr "○ 重新扫描下方二维码添加打印机"
 #~ msgid "Invert Z"
 #~ msgstr "反转Z轴"
 
-#~ msgid "Lower Bed"
-#~ msgstr "降床"
+#~ msgid "Keep the printer powered on and online during the session."
+#~ msgstr "协助期间请保持打印机开机并联网。"
 
-#~ msgid "Lower Nozzle"
-#~ msgstr "降低喷嘴"
-
-#~ msgid "Raise Bed"
-#~ msgstr "升床"
-
-#~ msgid "Raise Nozzle"
-#~ msgstr "升高喷嘴"
-
-#~ msgid "Channel"
-#~ msgstr "群组"
-
-#~ msgid "PSK for"
-#~ msgstr "PSK"
-
-#~ msgid "model select"
-#~ msgstr "型号选择"
-
-#~ msgid "Do you want to let KlipperScreen try to solve the issue?"
-#~ msgstr "你想让KlipperScreen尝试解决这个问题吗?"
-
-#~ msgid "Hide"
-#~ msgstr "隐藏"
-
-#~ msgid "Insufficient priviledges detected"
-#~ msgstr "检测到权限不足"
-
-#~ msgid "Macro shortcut on sidebar"
-#~ msgstr "在侧边栏显示宏按钮"
-
-#~ msgid "Part Fan"
-#~ msgstr "模型风扇"
-
-#~ msgid "Set Temp"
-#~ msgstr "设定温度"
-
-#~ msgid "Show"
-#~ msgstr "显示"
-
-#~ msgid "Ended official support in June 2023"
-#~ msgstr "2023年6月结束官方支持"
-
-#~ msgid "Hidden"
-#~ msgstr "隐藏的"
-
-#~ msgid "KlipperScreen will drop support in June 2024"
-#~ msgstr "KlipperScreen将于2024 年6月停止适配"
-
-#~ msgid "Warning"
-#~ msgstr "警告"
-
-#~ msgid "dBm"
-#~ msgstr "dBm"
-
-#~ msgid ""
-#~ "Not supported for auto-detection, it needs to be configured in "
-#~ "klipperscreen.conf"
-#~ msgstr "不支持自动检测，需要在klpperscreen.conf中进行配置"
-
-#~ msgid "Unknown screw position"
-#~ msgstr "未知螺丝位置"
-
-#~ msgid "Max Acceleration to Deceleration"
-#~ msgstr "最大加速至减速"
-
-#~ msgid "Fullscreen"
-#~ msgstr "全屏"
-
-#~ msgid "Homing"
-#~ msgstr "归零"
-
-#~ msgid "Slicer Time correction (%)"
-#~ msgstr "切片软件时间校正(%)"
-
-#~ msgid "Calibrated, save configuration to make it permanent"
-#~ msgstr "已校准，保存配置后生效"
-
-#~ msgid "Decrease"
-#~ msgstr "减少"
-
-#~ msgid "Increase"
-#~ msgstr "增加"
-
-#, python-format
-#~ msgid "Sending Power ON signal to: %s"
-#~ msgstr "打开: %s"
-
-#~ msgid "Sort:"
-#~ msgstr "排序:"
-
-#, python-format
-#~ msgid "Retry #%s"
-#~ msgstr "重试 #%s"
-
-#~ msgid "Add Printer"
-#~ msgstr "添加打印机"
-
-#~ msgid "Initializing"
-#~ msgstr "初始化"
-
-#~ msgid "Delete"
-#~ msgstr "删除"
-
-#~ msgid "Off"
-#~ msgstr "关闭"
-
-#~ msgid "View Mesh"
-#~ msgstr "查看热床网格"
-
-#~ msgid "Sort by: "
-#~ msgstr "排序: "
-
-#~ msgid "Bltouch found applied offset"
-#~ msgstr "Bltouch 发现应用的偏移量"
-
-#~ msgid ""
-#~ "Check /tmp/KlipperScreen.log for more information.\n"
-#~ "Please submit an issue on GitHub for help."
-#~ msgstr ""
-#~ "检查/tmp/KlipperScreen.log以获取更多信息。\n"
-#~ "请在GitHub上提交问题以寻求帮助。"
-
-#~ msgid "Probe found applied offset"
-#~ msgstr "找到探头偏移"
-
-#~ msgid "Tool"
-#~ msgstr "工具"
-
-#~ msgid "Displayed Macros"
-#~ msgstr "宏命令显示开关"
-
-#~ msgid "IPv4"
-#~ msgstr "IPv4 地址"
-
-#~ msgid "IPv6"
-#~ msgstr "IPv6 地址"
-
-#~ msgid "Duration Only"
-#~ msgstr "持续时间"
+#~ msgid "Klipper Restart"
+#~ msgstr "重启Klipper"
 
 #~ msgid ""
 #~ "Klipper has encountered an error with the micro-controller.\n"
@@ -2368,50 +2290,152 @@ msgstr "○ 重新扫描下方二维码添加打印机"
 #~ msgid "KlipperScreen Version"
 #~ msgstr "KlipperScreen 版本"
 
-#~ msgid "Show Only Heaters in Temp."
-#~ msgstr "仅显示使用中的加热器."
+#~ msgid "KlipperScreen will drop support in June 2024"
+#~ msgstr "KlipperScreen将于2024 年6月停止适配"
 
-#~ msgid "Temp"
-#~ msgstr "温度"
+#~ msgid "Large"
+#~ msgstr "大"
 
-#~ msgid "Number Pad"
-#~ msgstr "数字键盘"
-
-#~ msgid "Screen will show in less than one second"
-#~ msgstr "屏幕将在1秒内显示"
-
-#~ msgid "Medium (default)"
-#~ msgstr "中 (默认)"
-
-#~ msgid "File Estimation (default)"
-#~ msgstr "文件 (默认)"
-
-#~ msgid "Fan Off"
-#~ msgstr "关闭风扇"
-
-#~ msgid "Fan On"
-#~ msgstr "打开风扇"
-
-#~ msgid "Fast"
-#~ msgstr "加速"
-
-#~ msgid "Slow"
-#~ msgstr "减速"
-
-#~ msgid "?"
-#~ msgstr "?"
-
-#~ msgid "Cancel Change"
-#~ msgstr "取消更改"
-
-#~ msgid "Control"
-#~ msgstr "控制"
+#~ msgid "Leveling only in the actual print area"
+#~ msgstr "仅在实际打印区域进行床调平"
 
 #~ msgid "Load Average"
 #~ msgstr "平均负载"
 
-#~ msgid "Device SN"
-#~ msgstr "设备 SN"
+#~ msgid "Lower Bed"
+#~ msgstr "降床"
 
-#~ msgid "Keep the printer powered on and online during the session."
-#~ msgstr "协助期间请保持打印机开机并联网。"
+#~ msgid "Lower Nozzle"
+#~ msgstr "降低喷嘴"
+
+#~ msgid "Macro shortcut on sidebar"
+#~ msgstr "在侧边栏显示宏按钮"
+
+#~ msgid "Max Acceleration to Deceleration"
+#~ msgstr "最大加速至减速"
+
+#~ msgid "Maximum"
+#~ msgstr "最大"
+
+#~ msgid "Medium"
+#~ msgstr "中"
+
+#~ msgid "Medium (default)"
+#~ msgstr "中 (默认)"
+
+#~ msgid "NOTE: Edit your printer.cfg to save manual calibration changes."
+#~ msgstr "请编辑您的 printer.cfg 文件以保存手动校准的更改"
+
+#~ msgid ""
+#~ "Not supported for auto-detection, it needs to be configured in "
+#~ "klipperscreen.conf"
+#~ msgstr "不支持自动检测，需要在klpperscreen.conf中进行配置"
+
+#~ msgid "Notes:"
+#~ msgstr "注意："
+
+#~ msgid "Number Pad"
+#~ msgstr "数字键盘"
+
+#~ msgid "Off"
+#~ msgstr "关闭"
+
+#~ msgid "PSK for"
+#~ msgstr "PSK"
+
+#~ msgid "Part Fan"
+#~ msgstr "模型风扇"
+
+#~ msgid ""
+#~ "Please adjust the temperature according to the filament printing "
+#~ "parameters and ensure the filament in both nozzles is consistent"
+#~ msgstr "请根据耗材的打印参数调整温度，并确保两个喷嘴中的耗材一致"
+
+#~ msgid "Position Check"
+#~ msgstr "位置检查"
+
+#~ msgid "Print Test"
+#~ msgstr "打印验证"
+
+#~ msgid "Probe found applied offset"
+#~ msgstr "找到探头偏移"
+
+#~ msgid "Profile Name:"
+#~ msgstr "配置文件名称："
+
+#~ msgid "Raise Bed"
+#~ msgstr "升床"
+
+#~ msgid "Raise Nozzle"
+#~ msgstr "升高喷嘴"
+
+#, python-format
+#~ msgid "Retry #%s"
+#~ msgstr "重试 #%s"
+
+#~ msgid "Save settings"
+#~ msgstr "保存设置"
+
+#~ msgid "Screen will show in less than one second"
+#~ msgstr "屏幕将在1秒内显示"
+
+#, python-format
+#~ msgid "Sending Power ON signal to: %s"
+#~ msgstr "打开: %s"
+
+#~ msgid "Set Temp"
+#~ msgstr "设定温度"
+
+#~ msgid "Show"
+#~ msgstr "显示"
+
+#~ msgid "Show Only Heaters in Temp."
+#~ msgstr "仅显示使用中的加热器."
+
+#~ msgid "Slicer Time correction (%)"
+#~ msgstr "切片软件时间校正(%)"
+
+#~ msgid "Slow"
+#~ msgstr "减速"
+
+#~ msgid "Small"
+#~ msgstr "小"
+
+#~ msgid "Sort by: "
+#~ msgstr "排序: "
+
+#~ msgid "Sort:"
+#~ msgstr "排序:"
+
+#~ msgid "Start Calibration"
+#~ msgstr "开始校准"
+
+#~ msgid "Starting WiFi Association"
+#~ msgstr "开始WiFi连接"
+
+#~ msgid "System Restart"
+#~ msgstr "重启系统"
+
+#~ msgid "System Shutdown"
+#~ msgstr "关闭系统"
+
+#~ msgid "Temp"
+#~ msgstr "温度"
+
+#~ msgid "Tool"
+#~ msgstr "工具"
+
+#~ msgid "Unknown screw position"
+#~ msgstr "未知螺丝位置"
+
+#~ msgid "View Mesh"
+#~ msgstr "查看热床网格"
+
+#~ msgid "Warning"
+#~ msgstr "警告"
+
+#~ msgid "dBm"
+#~ msgstr "dBm"
+
+#~ msgid "model select"
+#~ msgstr "型号选择"

@@ -747,6 +747,9 @@ msgstr ""
 msgid "Filament Chamber Settings"
 msgstr ""
 
+msgid "Filament Error!"
+msgstr ""
+
 msgid "Filament Settings"
 msgstr ""
 
@@ -754,6 +757,15 @@ msgid "Filament Used"
 msgstr ""
 
 msgid "Filament clog Detection"
+msgstr ""
+
+msgid "Filament has run out in all extruders."
+msgstr ""
+
+msgid "Filament has run out or is clogged in all extruders."
+msgstr ""
+
+msgid "Filament has run out."
 msgstr ""
 
 msgid "Filament total:"
@@ -820,6 +832,9 @@ msgid "Getting IP address"
 msgstr ""
 
 msgid "Go Back"
+msgstr ""
+
+msgid "Got it"
 msgstr ""
 
 msgid "Heating and cleaning nozzles before calibration"
@@ -976,6 +991,12 @@ msgid "Left extrude below minimum extrude temp of 100.0℃."
 msgstr ""
 
 msgid "Left extruder detects no filament, please load filament and continue."
+msgstr ""
+
+msgid "Left extruder filament has run out or is clogged."
+msgstr ""
+
+msgid "Left extruder filament has run out."
 msgstr ""
 
 msgid "Left extruder not hot enough, will reheat and continue."
@@ -1537,6 +1558,12 @@ msgid "Right extrude below minimum extrude temp of 100.0℃."
 msgstr ""
 
 msgid "Right extruder detects no filament, please load filament and continue."
+msgstr ""
+
+msgid "Right extruder filament has run out or is clogged."
+msgstr ""
+
+msgid "Right extruder filament has run out."
 msgstr ""
 
 msgid "Right extruder not hot enough, will reheat and continue."

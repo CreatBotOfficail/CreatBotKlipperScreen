@@ -48,4 +48,16 @@ prompts_text = [
     _("Unable to start print, no filament loaded on Left extruder"),
     _("Unable to start print, no filament loaded on Right extruder"),
 
+    # _RUNOUT_RESPOND macro prompt title
+    _("Filament Error!"),
+    # _RUNOUT_RESPOND macro MSG params (old versions, without "or is clogged")
+    _("Left extruder filament has run out."),
+    _("Right extruder filament has run out."),
+    _("Filament has run out in all extruders."),
+    _("Filament has run out."),
+    # _RUNOUT_RESPOND macro MSG params (new versions, with "or is clogged")
+    _("Left extruder filament has run out or is clogged."),
+    _("Right extruder filament has run out or is clogged."),
+    _("Filament has run out or is clogged in all extruders."),
+
 ]
