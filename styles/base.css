@@ -327,6 +327,19 @@ trough {
     margin-top: 1em;
 }
 
+.dialog button.zone-card {
+    padding: 0;
+    margin: 0;
+    min-height: 0;
+}
+
+.dialog button.picker-arrow {
+    padding: 0;
+    margin: 0;
+    min-height: 2.6em;
+    border-radius: .4em;
+}
+
 .horizontal_togglebuttons_active {
     background-color: @active;
     font-weight: 600;

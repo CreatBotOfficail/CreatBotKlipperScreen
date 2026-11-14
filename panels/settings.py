@@ -3,19 +3,29 @@ import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 from ks_includes.screen_panel import ScreenPanel
+from panels import date_time
 
 
 class Panel(ScreenPanel):
     def __init__(self, screen, title):
         title = title or _("Settings")
         super().__init__(screen, title)
+        if getattr(self, "datetime_page", None) is not None:
+            self.datetime_page.stop()
         self.printers = self.settings = self.langs = {}
         self.menu = ['settings_menu']
-        options = self._config.get_configurable_options().copy()
+        options = [
+            option for option in self._config.get_configurable_options() if "24htime" not in option
+        ]
         options.append({"lang": {
             "name": _("Language"),
             "type": "menu",
             "menu": "lang"
+        }})
+        options.append({"datetime": {
+            "name": _("Date & Time"),
+            "type": "menu",
+            "menu": "datetime"
         }})
         self.labels['settings_menu'] = self._gtk.ScrolledWindow()
         self.labels['settings'] = Gtk.Grid()
@@ -65,7 +75,14 @@ class Panel(ScreenPanel):
             }
             self.add_option("lang", self.langs, lang, self.langs[lang])
 
+        self.labels['datetime_menu'] = self.datetime_page = date_time.DateTimePage(self)
+
         self.content.add(self.labels['settings_menu'])
+
+    def load_menu(self, widget, name, title=None):
+        if name == "datetime":
+            self.labels['datetime_menu'].refresh()
+        super().load_menu(widget, name, title)
 
     def change_language(self, widget, lang):
         reverse_language_map = {v: k for k, v in self.language_map.items()}

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KlipperScreen\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-03 16:39+0800\n"
+"POT-Creation-Date: 2026-11-14 14:50+0800\n"
 "PO-Revision-Date: 2024-06-03 19:09+0000\n"
 "Last-Translator: wsj20050623 <2129426599@qq.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
@@ -336,6 +336,12 @@ msgstr "自整定完成"
 msgid "Auto-tuning in progress ..."
 msgstr "自整定进行中..."
 
+msgid "Automatic Date & Time"
+msgstr "自动获取日期与时间"
+
+msgid "Automatic Time Zone"
+msgstr "自动获取时区"
+
 msgid "Automatic compensation based on the data of the bed mesh"
 msgstr "基于床面网格数据的自动补偿"
 
@@ -552,6 +558,9 @@ msgstr "屏幕省电管理系统无法加载并已禁用"
 msgid "Date"
 msgstr "日期"
 
+msgid "Date & Time"
+msgstr "日期与时间"
+
 msgid "Datum"
 msgstr "基准"
 
@@ -560,6 +569,9 @@ msgstr "基准对齐"
 
 msgid "Datum Calibration"
 msgstr "基准点校准"
+
+msgid "Day"
+msgstr "日"
 
 msgid "Delete Directory?"
 msgstr "删除文件夹？"
@@ -734,6 +746,12 @@ msgstr "恢复出厂设置"
 msgid "Factory reset failed: %s"
 msgstr "恢复出厂设置失败：%s"
 
+msgid "Failed to change automatic time"
+msgstr "修改自动时间失败"
+
+msgid "Failed to change automatic time zone"
+msgstr "修改自动时区失败"
+
 msgid "Failed to delete connection"
 msgstr "删除连接失败"
 
@@ -752,6 +770,12 @@ msgstr "保存配置失败"
 #, python-format
 msgid "Failed to scan USB device: %s"
 msgstr "无法扫描USB设备：%s"
+
+msgid "Failed to set date and time"
+msgstr "设置日期与时间失败"
+
+msgid "Failed to set time zone"
+msgstr "设置时区失败"
 
 msgid "Failed to start assist"
 msgstr "开启协助失败"
@@ -896,6 +920,9 @@ msgstr "主机"
 
 msgid "Hostname:"
 msgstr "主机名："
+
+msgid "Hour"
+msgstr "时"
 
 msgid "ID"
 msgstr "ID"
@@ -1116,8 +1143,14 @@ msgstr "最小值"
 msgid "Minus"
 msgstr "减"
 
+msgid "Minute"
+msgstr "分"
+
 msgid "Modified"
 msgstr "已修改"
+
+msgid "Month"
+msgstr "月"
 
 msgid "Moonraker: connected"
 msgstr "Moonraker: 已连接"
@@ -1671,6 +1704,9 @@ msgstr "序列号："
 msgid "Set Countdown (Hours)"
 msgstr "设置倒计时 (小时)"
 
+msgid "Set Date & Time"
+msgstr "设置日期与时间"
+
 msgid "Set Target Temp(°C)"
 msgstr "设置目标温度 (°C)"
 
@@ -1842,6 +1878,9 @@ msgstr ""
 "这将会在线更新系统。\n"
 "您确定要更新吗？"
 
+msgid "Time Zone"
+msgstr "时区"
+
 msgid "Timeout for screen black-out or power-off"
 msgstr "超过倒计时后关闭屏幕"
 
@@ -1978,6 +2017,9 @@ msgstr "XY 偏移值校准"
 
 msgid "Y Offset"
 msgstr "Y 偏移值"
+
+msgid "Year"
+msgstr "年"
 
 msgid "Z Calibrate"
 msgstr "Z偏移校准"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-03 16:39+0800\n"
+"POT-Creation-Date: 2026-11-14 14:50+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -322,6 +322,12 @@ msgstr ""
 msgid "Auto-tuning in progress ..."
 msgstr ""
 
+msgid "Automatic Date & Time"
+msgstr ""
+
+msgid "Automatic Time Zone"
+msgstr ""
+
 msgid "Automatic compensation based on the data of the bed mesh"
 msgstr ""
 
@@ -530,6 +536,9 @@ msgstr ""
 msgid "Date"
 msgstr ""
 
+msgid "Date & Time"
+msgstr ""
+
 msgid "Datum"
 msgstr ""
 
@@ -537,6 +546,9 @@ msgid "Datum Align"
 msgstr ""
 
 msgid "Datum Calibration"
+msgstr ""
+
+msgid "Day"
 msgstr ""
 
 msgid "Delete Directory?"
@@ -707,6 +719,12 @@ msgstr ""
 msgid "Factory reset failed: %s"
 msgstr ""
 
+msgid "Failed to change automatic time"
+msgstr ""
+
+msgid "Failed to change automatic time zone"
+msgstr ""
+
 msgid "Failed to delete connection"
 msgstr ""
 
@@ -724,6 +742,12 @@ msgstr ""
 
 #, python-format
 msgid "Failed to scan USB device: %s"
+msgstr ""
+
+msgid "Failed to set date and time"
+msgstr ""
+
+msgid "Failed to set time zone"
 msgstr ""
 
 msgid "Failed to start assist"
@@ -834,9 +858,6 @@ msgstr ""
 msgid "Go Back"
 msgstr ""
 
-msgid "Got it"
-msgstr ""
-
 msgid "Heating and cleaning nozzles before calibration"
 msgstr ""
 
@@ -871,6 +892,9 @@ msgid "Host"
 msgstr ""
 
 msgid "Hostname:"
+msgstr ""
+
+msgid "Hour"
 msgstr ""
 
 msgid "ID"
@@ -1089,7 +1113,13 @@ msgstr ""
 msgid "Minus"
 msgstr ""
 
+msgid "Minute"
+msgstr ""
+
 msgid "Modified"
+msgstr ""
+
+msgid "Month"
 msgstr ""
 
 msgid "Moonraker: connected"
@@ -1632,6 +1662,9 @@ msgstr ""
 msgid "Set Countdown (Hours)"
 msgstr ""
 
+msgid "Set Date & Time"
+msgstr ""
+
 msgid "Set Target Temp(°C)"
 msgstr ""
 
@@ -1801,6 +1834,9 @@ msgid ""
 "Are you sure?"
 msgstr ""
 
+msgid "Time Zone"
+msgstr ""
+
 msgid "Timeout for screen black-out or power-off"
 msgstr ""
 
@@ -1932,6 +1968,9 @@ msgid "XY offset Calibrate"
 msgstr ""
 
 msgid "Y Offset"
+msgstr ""
+
+msgid "Year"
 msgstr ""
 
 msgid "Z Calibrate"

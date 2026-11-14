@@ -13,6 +13,16 @@ import ctypes
 import struct
 
 dpms_loaded = False
+
+
+def timezone_signature():
+    try:
+        stat = os.stat("/etc/localtime")
+    except OSError:
+        return None
+    return os.path.realpath("/etc/localtime"), stat.st_mtime_ns, stat.st_size
+
+
 try:
     ctypes.cdll.LoadLibrary('libXext.so.6')
     libXext = ctypes.CDLL('libXext.so.6')
